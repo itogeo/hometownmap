@@ -13,7 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     // Try to load processed layer data
     const dataPath = path.join(
       process.cwd(),
-      `../../../Datasets/hometownmap/cities/${city}/processed`,
+      `../../../datasets/hometownmap/cities/${city}/processed`,
       `${layer}.geojson`
     )
 
@@ -21,7 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       // If city-specific doesn't exist, try county-level
       const countyDataPath = path.join(
         process.cwd(),
-        `../../../Datasets/hometownmap/gallatin/processed`,
+        `../../../datasets/hometownmap/gallatin/processed`,
         `${layer}.geojson`
       )
 

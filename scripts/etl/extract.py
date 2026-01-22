@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Base paths - relative to repo root
 SCRIPT_DIR = Path(__file__).parent.parent.parent  # Go up to repo root
-BASE_DATA_PATH = SCRIPT_DIR / "Datasets"
+BASE_DATA_PATH = SCRIPT_DIR / "datasets"
 
 
 def extract_zip(zip_path: Path, extract_to: Path) -> List[Path]:
@@ -196,7 +196,7 @@ def main(county: str, dataset: Optional[str], list_datasets: bool):
         zip_files = list(raw_dir.glob("*.zip"))
 
         print(f"\n{'='*60}")
-        print(f"Available Datasets in {county.title()} County")
+        print(f"Available datasets in {county.title()} County")
         print(f"{'='*60}")
 
         for i, zip_file in enumerate(zip_files, 1):
@@ -228,7 +228,7 @@ def main(county: str, dataset: Optional[str], list_datasets: bool):
         print(f"Extraction Summary")
         print(f"{'='*60}")
         print(f"County: {county.title()}")
-        print(f"Datasets loaded: {len(datasets)}")
+        print(f"datasets loaded: {len(datasets)}")
         print(f"Total features: {sum(len(gdf) for gdf in datasets.values()):,}")
         print(f"{'='*60}\n")
 

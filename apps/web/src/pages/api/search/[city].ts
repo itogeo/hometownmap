@@ -76,7 +76,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const basePath = path.join(
       process.cwd(),
-      `../../../Datasets/hometownmap/cities/${city}/processed`
+      `../../../datasets/hometownmap/cities/${city}/processed`
     )
 
     const searchResults: any[] = []

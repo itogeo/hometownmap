@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 SCRIPT_DIR = Path(__file__).parent.parent.parent  # Go up to repo root
-BASE_DATA_PATH = SCRIPT_DIR / "Datasets"
+BASE_DATA_PATH = SCRIPT_DIR / "datasets"
 BASE_REPO_PATH = SCRIPT_DIR
 
 
@@ -287,7 +287,7 @@ def main(name: str, display_name: str, county: str):
     Create scaffolding for a new city.
 
     This creates:
-    - Directory structure in /Datasets/hometownmap/cities/{name}/
+    - Directory structure in /datasets/hometownmap/cities/{name}/
     - Configuration file in /repos/hometownmap/config/cities/{name}.json
     - City-specific README
 

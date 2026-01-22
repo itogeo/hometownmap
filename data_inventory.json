@@ -1,0 +1,146 @@
+{
+  "cities": {
+    "name": "cities",
+    "shapefiles": [
+      {
+        "name": "cities.shp",
+        "size": "209.2 KB",
+        "complete": true,
+        "path": ".extracted_cities/cities.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "commissiondistricts": {
+    "name": "commissiondistricts",
+    "shapefiles": [
+      {
+        "name": "commissiondistricts.shp",
+        "size": "90.1 KB",
+        "complete": true,
+        "path": ".extracted_commissiondistricts/commissiondistricts.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "firedistricts": {
+    "name": "firedistricts",
+    "shapefiles": [
+      {
+        "name": "firedistricts.shp",
+        "size": "547.3 KB",
+        "complete": true,
+        "path": ".extracted_firedistricts/firedistricts.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "majorsubdivisions": {
+    "name": "majorsubdivisions",
+    "shapefiles": [
+      {
+        "name": "majorsubdivisions.shp",
+        "size": "3.0 MB",
+        "complete": true,
+        "path": ".extracted_majorsubdivisions/majorsubdivisions.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "minorsubdivisions": {
+    "name": "minorsubdivisions",
+    "shapefiles": [
+      {
+        "name": "minorsubdivisions.shp",
+        "size": "974.0 KB",
+        "complete": true,
+        "path": ".extracted_minorsubdivisions/minorsubdivisions.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "parcels": {
+    "name": "parcels",
+    "shapefiles": [
+      {
+        "name": "parcels.shp",
+        "size": "15.9 MB",
+        "complete": true,
+        "path": ".extracted_parcels/parcels.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "roads": {
+    "name": "roads",
+    "shapefiles": [
+      {
+        "name": "roads.shp",
+        "size": "4.4 MB",
+        "complete": true,
+        "path": ".extracted_roads/roads.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "schooldistricts": {
+    "name": "schooldistricts",
+    "shapefiles": [
+      {
+        "name": "schooldistricts.shp",
+        "size": "216.6 KB",
+        "complete": true,
+        "path": ".extracted_schooldistricts/schooldistricts.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "votingprecincts": {
+    "name": "votingprecincts",
+    "shapefiles": [
+      {
+        "name": "votingprecincts.shp",
+        "size": "299.3 KB",
+        "complete": true,
+        "path": ".extracted_votingprecincts/votingprecincts.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "water_sewer_districts": {
+    "name": "water_sewer_districts",
+    "shapefiles": [
+      {
+        "name": "water_sewer_districts.shp",
+        "size": "187.3 KB",
+        "complete": true,
+        "path": ".extracted_water_sewer_districts/water_sewer_districts.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "waterways": {
+    "name": "waterways",
+    "shapefiles": [
+      {
+        "name": "waterways.shp",
+        "size": "9.7 MB",
+        "complete": true,
+        "path": ".extracted_waterways/waterways.shp"
+      }
+    ],
+    "total_files": 8
+  },
+  "zoningdistricts": {
+    "name": "zoningdistricts",
+    "shapefiles": [
+      {
+        "name": "zoningdistricts.shp",
+        "size": "5.4 MB",
+        "complete": true,
+        "path": ".extracted_zoningdistricts/zoningdistricts.shp"
+      }
+    ],
+    "total_files": 8
+  }
+}

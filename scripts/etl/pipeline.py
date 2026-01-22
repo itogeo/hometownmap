@@ -82,10 +82,10 @@ def run_full_pipeline(city: str, county: str = "gallatin"):
         ✅ PIPELINE COMPLETE
         {'='*70}
         City: {city.upper()}
-        Datasets processed: {len(datasets)}
+        datasets processed: {len(datasets)}
         Total features: {sum(len(gdf) for gdf in datasets.values()):,}
         Duration: {duration:.1f} seconds
-        Output: /Datasets/hometownmap/cities/{city}/processed/
+        Output: /datasets/hometownmap/cities/{city}/processed/
         {'='*70}
         """)
 

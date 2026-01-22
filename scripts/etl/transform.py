@@ -169,12 +169,12 @@ def transform_city_dataset(
 
     # Find city by name
     city_boundary = cities_gdf[
-        cities_gdf['NAME'].str.lower() == city.lower().replace('-', ' ')
+        cities_gdf['CITY'].str.lower() == city.lower().replace('-', ' ')
     ]
 
     if len(city_boundary) == 0:
         logger.warning(f"City '{city}' not found in cities dataset")
-        logger.info(f"Available cities: {', '.join(cities_gdf['NAME'].tolist())}")
+        logger.info(f"Available cities: {', '.join(cities_gdf['CITY'].tolist())}")
         raise ValueError(f"City not found: {city}")
 
     logger.info(f"Found city boundary for {city}")
@@ -260,7 +260,7 @@ def transform_all_for_city(city: str, county: str = "gallatin") -> Dict[str, gpd
     logger.info(f"Transformation Summary")
     logger.info(f"{'='*60}")
     logger.info(f"City: {city.title()}")
-    logger.info(f"Datasets processed: {len(results)}/{len(all_datasets)}")
+    logger.info(f"datasets processed: {len(results)}/{len(all_datasets)}")
     logger.info(f"Total features: {sum(len(gdf) for gdf in results.values()):,}")
     logger.info(f"{'='*60}\n")
 
