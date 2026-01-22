@@ -1,0 +1,170 @@
+{
+  "id": "three-forks",
+  "name": "Three Forks",
+  "county": "gallatin",
+  "state": "montana",
+  "map": {
+    "center": [
+      -111.545,
+      45.893
+    ],
+    "zoom": 13,
+    "bounds": null
+  },
+  "modes": {
+    "resident": {
+      "enabled": true,
+      "layers": [
+        "parcels",
+        "city_boundary",
+        "zoning",
+        "schools",
+        "voting_precincts"
+      ],
+      "features": [
+        "search_address",
+        "parcel_info",
+        "zoning_lookup"
+      ]
+    },
+    "business": {
+      "enabled": true,
+      "layers": [
+        "parcels",
+        "zoning",
+        "buildings",
+        "available_properties"
+      ],
+      "features": [
+        "search_properties",
+        "filter_by_zoning",
+        "filter_by_size",
+        "demographics"
+      ]
+    },
+    "recreation": {
+      "enabled": true,
+      "layers": [
+        "parks",
+        "trails",
+        "facilities",
+        "waterways"
+      ],
+      "features": [
+        "facility_info",
+        "amenity_search"
+      ]
+    },
+    "services": {
+      "enabled": true,
+      "layers": [
+        "government_buildings",
+        "utilities",
+        "fire_districts",
+        "trash_zones"
+      ],
+      "features": [
+        "office_hours",
+        "contact_info",
+        "service_areas"
+      ]
+    },
+    "development": {
+      "enabled": true,
+      "layers": [
+        "parcels",
+        "zoning",
+        "subdivisions",
+        "floodplains",
+        "permits"
+      ],
+      "features": [
+        "permit_search",
+        "zoning_regulations",
+        "capital_projects"
+      ]
+    }
+  },
+  "layers": {
+    "parcels": {
+      "source": "county",
+      "display_name": "Property Parcels",
+      "style": {
+        "fill": "#3388ff",
+        "fill-opacity": 0.2,
+        "stroke": "#3388ff",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "owner_name",
+        "address",
+        "acres",
+        "zoning",
+        "assessed_value"
+      ]
+    },
+    "zoning": {
+      "source": "county",
+      "display_name": "Zoning Districts",
+      "style_by_field": "zone_code",
+      "styles": {
+        "R1": {
+          "fill": "#FFD700",
+          "name": "Residential Low Density"
+        },
+        "R2": {
+          "fill": "#FFA500",
+          "name": "Residential Medium Density"
+        },
+        "C1": {
+          "fill": "#FF6347",
+          "name": "Commercial"
+        },
+        "I1": {
+          "fill": "#A9A9A9",
+          "name": "Industrial"
+        },
+        "AG": {
+          "fill": "#90EE90",
+          "name": "Agricultural"
+        }
+      }
+    },
+    "buildings": {
+      "source": "microsoft",
+      "display_name": "Building Footprints",
+      "style": {
+        "fill": "#888888",
+        "fill-opacity": 0.5,
+        "stroke": "#333333"
+      }
+    },
+    "city_boundary": {
+      "source": "county",
+      "display_name": "Three Forks City Limits",
+      "style": {
+        "stroke": "#FF0000",
+        "stroke-width": 3,
+        "fill": "none"
+      }
+    }
+  },
+  "branding": {
+    "logo": null,
+    "primary_color": "#3388ff",
+    "secondary_color": "#ffffff",
+    "title": "Three Forks Interactive Map"
+  },
+  "contact": {
+    "city_hall": null,
+    "phone": null,
+    "email": null,
+    "website": null
+  },
+  "demographics": {
+    "population": null,
+    "median_income": null,
+    "median_age": null,
+    "growth_rate": null
+  }
+}

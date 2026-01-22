@@ -1,0 +1,33 @@
+{
+  "name": "hometownmap",
+  "version": "1.0.0",
+  "description": "Municipal GIS SaaS Platform for Small Cities",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "cd apps/api && npm run dev",
+    "dev:web": "cd apps/web && npm run dev",
+    "build": "npm run build:web && npm run build:api",
+    "build:web": "cd apps/web && npm run build",
+    "build:api": "cd apps/api && npm run build",
+    "start": "concurrently \"npm run start:api\" \"npm run start:web\"",
+    "start:api": "cd apps/api && npm start",
+    "start:web": "cd apps/web && npm start"
+  },
+  "keywords": [
+    "gis",
+    "mapping",
+    "municipal",
+    "saas",
+    "mapbox"
+  ],
+  "author": "Ian Van Dusen - Ito Geospatial",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
