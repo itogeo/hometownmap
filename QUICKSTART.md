@@ -19,6 +19,7 @@ pip install -r requirements.txt
 2. Sign up (free) or log in
 3. Copy your **default public token** (starts with `pk.`)
 
+pk.eyJ1IjoiaXRvZ2VvIiwiYSI6ImNta3ByZTZpNjBsbzMzZm9vb3BxeGFoNmoifQ.pHK8DdvZh5QHAkP4iRd1yw
 ---
 
 ## Step 3: Configure Environment (1 min)

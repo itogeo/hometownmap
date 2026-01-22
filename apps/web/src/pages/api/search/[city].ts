@@ -2,6 +2,70 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import path from 'path'
 
+// Fuzzy string matching function
+function fuzzyMatch(str: string, pattern: string): number {
+  const strLower = str.toLowerCase()
+  const patternLower = pattern.toLowerCase()
+
+  // Exact match
+  if (strLower === patternLower) return 100
+
+  // Starts with
+  if (strLower.startsWith(patternLower)) return 90
+
+  // Contains
+  if (strLower.includes(patternLower)) return 80
+
+  // Levenshtein-like simple scoring
+  let score = 0
+  let patternIdx = 0
+  for (let i = 0; i < strLower.length && patternIdx < patternLower.length; i++) {
+    if (strLower[i] === patternLower[patternIdx]) {
+      score += 1
+      patternIdx++
+    }
+  }
+
+  if (patternIdx === patternLower.length) {
+    return (score / patternLower.length) * 70
+  }
+
+  return 0
+}
+
+// Calculate centroid for polygon
+function getCentroid(geometry: any): [number, number] {
+  if (geometry.type === 'Point') {
+    return geometry.coordinates as [number, number]
+  }
+
+  if (geometry.type === 'Polygon') {
+    const coords = geometry.coordinates[0]
+    const sum = coords.reduce(
+      (acc: [number, number], coord: [number, number]) => [
+        acc[0] + coord[0],
+        acc[1] + coord[1],
+      ],
+      [0, 0]
+    )
+    return [sum[0] / coords.length, sum[1] / coords.length]
+  }
+
+  if (geometry.type === 'MultiPolygon') {
+    const coords = geometry.coordinates[0][0]
+    const sum = coords.reduce(
+      (acc: [number, number], coord: [number, number]) => [
+        acc[0] + coord[0],
+        acc[1] + coord[1],
+      ],
+      [0, 0]
+    )
+    return [sum[0] / coords.length, sum[1] / coords.length]
+  }
+
+  return [0, 0]
+}
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { city, q } = req.query
 
@@ -10,36 +74,81 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    // Load parcels data for searching
-    const parcelsPath = path.join(
+    const basePath = path.join(
       process.cwd(),
-      `../../../Datasets/hometownmap/cities/${city}/processed`,
-      'parcels.geojson'
+      `../../../Datasets/hometownmap/cities/${city}/processed`
     )
 
-    if (!fs.existsSync(parcelsPath)) {
-      return res.status(404).json({ error: 'Parcels data not found' })
+    const searchResults: any[] = []
+
+    // Search parcels
+    const parcelsPath = path.join(basePath, 'parcels.geojson')
+    if (fs.existsSync(parcelsPath)) {
+      const parcelsData = JSON.parse(fs.readFileSync(parcelsPath, 'utf-8'))
+
+      parcelsData.features.forEach((feature: any) => {
+        const props = feature.properties
+        const scores: number[] = []
+
+        // Search multiple fields
+        if (props.address) scores.push(fuzzyMatch(props.address, q))
+        if (props.owner_name) scores.push(fuzzyMatch(props.owner_name, q))
+        if (props.parcel_id) scores.push(fuzzyMatch(props.parcel_id, q))
+        if (props.street_name) scores.push(fuzzyMatch(props.street_name, q))
+
+        const maxScore = Math.max(...scores, 0)
+
+        if (maxScore > 50) {
+          searchResults.push({
+            type: 'parcel',
+            score: maxScore,
+            parcel_id: props.parcel_id,
+            address: props.address,
+            owner_name: props.owner_name,
+            acreage: props.acreage,
+            zoning: props.zoning,
+            center: getCentroid(feature.geometry),
+          })
+        }
+      })
     }
 
-    const parcelsData = JSON.parse(fs.readFileSync(parcelsPath, 'utf-8'))
+    // Search businesses (if exists)
+    const businessPath = path.join(basePath, 'businesses.geojson')
+    if (fs.existsSync(businessPath)) {
+      const businessData = JSON.parse(fs.readFileSync(businessPath, 'utf-8'))
 
-    // Simple search through features
-    const query = q.toLowerCase()
-    const results = parcelsData.features
-      .filter((feature: any) => {
-        const address = feature.properties.address?.toLowerCase() || ''
-        const owner = feature.properties.owner_name?.toLowerCase() || ''
-        return address.includes(query) || owner.includes(query)
+      businessData.features.forEach((feature: any) => {
+        const props = feature.properties
+        const scores: number[] = []
+
+        if (props.name) scores.push(fuzzyMatch(props.name, q))
+        if (props.category) scores.push(fuzzyMatch(props.category, q))
+        if (props.address) scores.push(fuzzyMatch(props.address, q))
+
+        const maxScore = Math.max(...scores, 0)
+
+        if (maxScore > 50) {
+          searchResults.push({
+            type: 'business',
+            score: maxScore,
+            name: props.name,
+            category: props.category,
+            address: props.address,
+            phone: props.phone,
+            center: getCentroid(feature.geometry),
+          })
+        }
       })
-      .slice(0, 10) // Limit to 10 results
-      .map((feature: any) => ({
-        parcel_id: feature.properties.parcel_id,
-        address: feature.properties.address,
-        owner_name: feature.properties.owner_name,
-        center: feature.geometry.coordinates[0], // Simplified - would need proper centroid calculation
-      }))
+    }
 
-    res.status(200).json({ results })
+    // Sort by score descending
+    searchResults.sort((a, b) => b.score - a.score)
+
+    // Limit results
+    const results = searchResults.slice(0, 15)
+
+    res.status(200).json({ results, count: results.length })
   } catch (error) {
     console.error('Search failed:', error)
     res.status(500).json({ error: 'Search failed' })

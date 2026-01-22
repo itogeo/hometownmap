@@ -156,15 +156,53 @@
     "title": "Three Forks Interactive Map"
   },
   "contact": {
-    "city_hall": null,
-    "phone": null,
-    "email": null,
-    "website": null
+    "city_hall": "206 Main Street, Three Forks, MT 59752",
+    "phone": "(406) 285-6311",
+    "email": "cityclerk@threeforks-mt.gov",
+    "website": "https://threeforks-mt.gov"
   },
   "demographics": {
-    "population": null,
-    "median_income": null,
-    "median_age": null,
-    "growth_rate": null
-  }
+    "population": 2143,
+    "median_income": 54000,
+    "median_age": 42,
+    "growth_rate": "+8% (2010-2020)"
+  },
+  "resources": [
+    {
+      "name": "Gallatin County GIS",
+      "url": "https://gallatincomt.virtualtownhall.net/gis",
+      "description": "County GIS portal and property records",
+      "icon": "🗺️"
+    },
+    {
+      "name": "Montana Cadastral",
+      "url": "https://svc.mt.gov/msl/cadastral/",
+      "description": "Statewide property ownership database",
+      "icon": "📋"
+    },
+    {
+      "name": "Three Forks City Hall",
+      "url": "https://threeforks-mt.gov",
+      "description": "Official city website and services",
+      "icon": "🏛️"
+    },
+    {
+      "name": "Gallatin County Planning",
+      "url": "https://gallatincomt.virtualtownhall.net/planning",
+      "description": "Zoning, permits, and development info",
+      "icon": "📐"
+    },
+    {
+      "name": "Property Tax Information",
+      "url": "https://revenue.mt.gov/property",
+      "description": "Montana property tax resources",
+      "icon": "💰"
+    },
+    {
+      "name": "Three Forks Chamber",
+      "url": "https://threeforkschamber.com",
+      "description": "Local business and tourism info",
+      "icon": "🏢"
+    }
+  ]
 }

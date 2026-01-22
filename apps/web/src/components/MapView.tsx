@@ -7,12 +7,18 @@ interface MapViewProps {
   cityConfig: CityConfig
   currentMode: MapMode
   visibleLayers: string[]
+  selectedLocation?: {
+    longitude: number
+    latitude: number
+    zoom?: number
+  } | null
 }
 
 export default function MapView({
   cityConfig,
   currentMode,
   visibleLayers,
+  selectedLocation,
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const [layerData, setLayerData] = useState<{ [key: string]: any }>({})
@@ -60,6 +66,17 @@ export default function MapView({
 
     loadLayers()
   }, [visibleLayers, cityConfig.id])
+
+  // Fly to selected location
+  useEffect(() => {
+    if (selectedLocation && mapRef.current) {
+      mapRef.current.flyTo({
+        center: [selectedLocation.longitude, selectedLocation.latitude],
+        zoom: selectedLocation.zoom || 17,
+        duration: 2000,
+      })
+    }
+  }, [selectedLocation])
 
   const handleClick = useCallback(
     (event: MapLayerMouseEvent) => {

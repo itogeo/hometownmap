@@ -4,6 +4,7 @@ import Head from 'next/head'
 import ModeSelector from '@/components/ModeSelector'
 import LayerControl from '@/components/LayerControl'
 import SearchBar from '@/components/SearchBar'
+import WelcomeModal from '@/components/WelcomeModal'
 import { MapMode } from '@/types'
 
 // Dynamic import to avoid SSR issues with mapbox-gl
@@ -23,6 +24,11 @@ export default function Home() {
     'city_boundary',
   ])
   const [cityConfig, setCityConfig] = useState<any>(null)
+  const [selectedLocation, setSelectedLocation] = useState<{
+    longitude: number
+    latitude: number
+    zoom?: number
+  } | null>(null)
 
   // Load city configuration
   useEffect(() => {
@@ -53,6 +59,16 @@ export default function Home() {
     )
   }
 
+  const handleSearchSelect = (result: any) => {
+    if (result.center) {
+      setSelectedLocation({
+        longitude: result.center[0],
+        latitude: result.center[1],
+        zoom: 17,
+      })
+    }
+  }
+
   if (!cityConfig) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -73,6 +89,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <WelcomeModal cityName={cityConfig.name} />
+
       <div className="relative h-screen w-screen overflow-hidden">
         {/* Header */}
         <header className="absolute top-0 left-0 right-0 z-10 bg-white shadow-md">
@@ -91,7 +109,10 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-4">
-              <SearchBar cityId={cityConfig.id} />
+              <SearchBar
+                cityId={cityConfig.id}
+                onResultSelect={handleSearchSelect}
+              />
             </div>
           </div>
 
@@ -110,6 +131,7 @@ export default function Home() {
             cityConfig={cityConfig}
             currentMode={currentMode}
             visibleLayers={visibleLayers}
+            selectedLocation={selectedLocation}
           />
         </div>
 
