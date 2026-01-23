@@ -85,14 +85,16 @@ def transform_dataset(
         gdf = clip_to_boundary(gdf, clip_boundary)
 
     # 6. Add area/length fields
-    geom_type = gdf.geometry.geom_type.iloc[0] if len(gdf) > 0 else None
+    if len(gdf) > 0:
+        geom_types = gdf.geometry.geom_type.unique()
+        has_measurable = any(gt in ['Polygon', 'MultiPolygon', 'LineString', 'MultiLineString'] for gt in geom_types)
 
-    if geom_type and ('Polygon' in geom_type or 'LineString' in geom_type):
-        gdf = add_area_length_fields(gdf)
+        if has_measurable:
+            gdf = add_area_length_fields(gdf)
 
-    # 7. Simplify geometries for web
-    if simplify and geom_type and geom_type in ['Polygon', 'MultiPolygon', 'LineString', 'MultiLineString']:
-        gdf = simplify_geometries(gdf, tolerance=tolerance)
+        # 7. Simplify geometries for web
+        if simplify:
+            gdf = simplify_geometries(gdf, tolerance=tolerance)
 
     # 8. Add metadata
     gdf['dataset'] = name

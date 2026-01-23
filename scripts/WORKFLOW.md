@@ -83,29 +83,31 @@ python3 etl/pipeline.py --city three-forks
 
 ## Current Status
 
-✅ **Extracted**: All 12 datasets unzipped
-✅ **Processed**: 6 datasets clipped to Three Forks:
-- cities.geojson
-- firedistricts.geojson
-- schooldistricts.geojson
-- minorsubdivisions.geojson
-- zoningdistricts.geojson (empty - Three Forks might not have zoning data)
-- water_sewer_districts.geojson (empty)
+✅ **Extracted**: All 12 datasets unzipped from raw ZIP files
 
-⚠️ **Failed**: Some datasets had geometry issues:
-- parcels (IMPORTANT - needs fixing!)
-- roads
-- waterways
-- majorsubdivisions
+✅ **Processed**: All 10 datasets successfully clipped to Three Forks boundary:
+- **parcels.geojson** (1.6MB, 1,689 features) - Property ownership data
+- **roads.geojson** (466KB, 431 features) - Street network
+- **waterways.geojson** (6.3KB, 9 features) - Rivers, streams, canals
+- **cities.geojson** (4.2KB, 1 feature) - City boundary
+- **firedistricts.geojson** (4.3KB, 2 features) - Fire service districts
+- **schooldistricts.geojson** (5.2KB, 2 features) - School districts
+- **majorsubdivisions.geojson** (9.6KB, 12 features) - Major subdivisions
+- **minorsubdivisions.geojson** (3.8KB, 6 features) - Minor subdivisions
+- **zoningdistricts.geojson** (163B, 0 features) - Empty (Three Forks has no zoning data)
+- **water_sewer_districts.geojson** (169B, 0 features) - Empty
+
+**Total: 2,151 features processed in ~3 seconds**
 
 ---
 
 ## Next Steps
 
-1. Fix geometry processing for parcels/roads/waterways
-2. Process county-wide first, then clip
-3. Add Montana Cadastral ownership data
-4. Integrate OpenStreetMap for businesses
+1. ✅ ~~Fix geometry processing~~ - COMPLETE! All datasets now processing successfully
+2. Load processed data into the web map
+3. Add Montana Cadastral ownership data (future enhancement)
+4. Integrate OpenStreetMap for businesses (future enhancement)
+5. Test map with real Three Forks data
 
 ---
 

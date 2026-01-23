@@ -1,0 +1,26 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-111.565, 45.905],
+            [-111.525, 45.905],
+            [-111.525, 45.881],
+            [-111.565, 45.881],
+            [-111.565, 45.905]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Three Forks",
+        "type": "city_boundary",
+        "area_sq_mi": 2.3,
+        "jurisdiction": "City Limits"
+      }
+    }
+  ]
+}

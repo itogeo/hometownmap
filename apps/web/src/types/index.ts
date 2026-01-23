@@ -38,6 +38,7 @@ export interface CityConfig {
 
 export interface ModeConfig {
   enabled: boolean
+  mapStyle?: 'satellite' | 'streets' | 'light' | 'dark'
   layers: string[]
   features: string[]
 }
@@ -45,6 +46,7 @@ export interface ModeConfig {
 export interface LayerConfig {
   source: string
   display_name: string
+  minzoom?: number
   style?: LayerStyle
   style_by_field?: string
   styles?: {

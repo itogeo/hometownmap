@@ -5,21 +5,20 @@
   "state": "montana",
   "map": {
     "center": [
-      -111.545,
-      45.893
+      -111.5514,
+      45.8925
     ],
-    "zoom": 13,
+    "zoom": 14,
     "bounds": null
   },
   "modes": {
     "resident": {
       "enabled": true,
+      "mapStyle": "satellite",
       "layers": [
-        "parcels",
-        "city_boundary",
-        "zoning",
-        "schools",
-        "voting_precincts"
+        "majorsubdivisions",
+        "minorsubdivisions",
+        "parcels"
       ],
       "features": [
         "search_address",
@@ -29,11 +28,14 @@
     },
     "business": {
       "enabled": true,
+      "mapStyle": "streets",
       "layers": [
+        "businesses",
+        "cities",
         "parcels",
-        "zoning",
         "buildings",
-        "available_properties"
+        "zoningdistricts",
+        "majorsubdivisions"
       ],
       "features": [
         "search_properties",
@@ -44,11 +46,9 @@
     },
     "recreation": {
       "enabled": true,
+      "mapStyle": "satellite",
       "layers": [
-        "parks",
-        "trails",
-        "facilities",
-        "waterways"
+        "cities"
       ],
       "features": [
         "facility_info",
@@ -57,11 +57,11 @@
     },
     "services": {
       "enabled": true,
+      "mapStyle": "streets",
       "layers": [
-        "government_buildings",
-        "utilities",
-        "fire_districts",
-        "trash_zones"
+        "cities",
+        "firedistricts",
+        "water_sewer_districts"
       ],
       "features": [
         "office_hours",
@@ -71,12 +71,14 @@
     },
     "development": {
       "enabled": true,
+      "mapStyle": "streets",
       "layers": [
+        "cities",
         "parcels",
-        "zoning",
-        "subdivisions",
-        "floodplains",
-        "permits"
+        "buildings",
+        "zoningdistricts",
+        "majorsubdivisions",
+        "minorsubdivisions"
       ],
       "features": [
         "permit_search",
@@ -86,67 +88,165 @@
     }
   },
   "layers": {
-    "parcels": {
-      "source": "county",
-      "display_name": "Property Parcels",
+    "businesses": {
+      "source": "local",
+      "display_name": "Local Businesses",
       "style": {
-        "fill": "#3388ff",
-        "fill-opacity": 0.2,
-        "stroke": "#3388ff",
-        "stroke-width": 1
+        "fill": "#3B82F6",
+        "fill-opacity": 1,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
       },
       "popup_fields": [
-        "owner_name",
+        "name",
+        "category",
         "address",
-        "acres",
-        "zoning",
-        "assessed_value"
+        "phone",
+        "website"
       ]
     },
-    "zoning": {
+    "parcels": {
+      "source": "montana_cadastral",
+      "display_name": "Property Parcels",
+      "minzoom": 14,
+      "style": {
+        "fill": "#FF0000",
+        "fill-opacity": 0,
+        "stroke": "#FF0000",
+        "stroke-width": 2,
+        "stroke-opacity": 0.5
+      },
+      "popup_fields": [
+        "ownername",
+        "gisacres",
+        "addresslin",
+        "proptype",
+        "totalvalue",
+        "legaldescr",
+        "propertyid",
+        "taxyear"
+      ]
+    },
+    "cities": {
+      "source": "county",
+      "display_name": "City Boundary",
+      "style": {
+        "fill": "#FF0000",
+        "fill-opacity": 0,
+        "stroke": "#FF0000",
+        "stroke-width": 3
+      },
+      "popup_fields": [
+        "city",
+        "area_acres"
+      ]
+    },
+    "firedistricts": {
+      "source": "county",
+      "display_name": "Fire Districts",
+      "style": {
+        "fill": "#FF4444",
+        "fill-opacity": 0.15,
+        "stroke": "#CC0000",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "area_acres"
+      ]
+    },
+    "schooldistricts": {
+      "source": "county",
+      "display_name": "School Districts",
+      "style": {
+        "fill": "#4CAF50",
+        "fill-opacity": 0.15,
+        "stroke": "#2E7D32",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "elementary",
+        "high_schoo",
+        "area_acres"
+      ]
+    },
+    "majorsubdivisions": {
+      "source": "county",
+      "display_name": "Major Subdivisions",
+      "style": {
+        "fill": "#FFA500",
+        "fill-opacity": 0.4,
+        "stroke": "#FF8C00",
+        "stroke-width": 3,
+        "stroke-opacity": 1
+      },
+      "popup_fields": [
+        "sub_name",
+        "area_acres"
+      ]
+    },
+    "minorsubdivisions": {
+      "source": "county",
+      "display_name": "Minor Subdivisions",
+      "style": {
+        "fill": "#FFFF00",
+        "fill-opacity": 0.35,
+        "stroke": "#FFD700",
+        "stroke-width": 2,
+        "stroke-opacity": 1
+      },
+      "popup_fields": [
+        "record",
+        "area_acres"
+      ]
+    },
+    "zoningdistricts": {
       "source": "county",
       "display_name": "Zoning Districts",
-      "style_by_field": "zone_code",
-      "styles": {
-        "R1": {
-          "fill": "#FFD700",
-          "name": "Residential Low Density"
-        },
-        "R2": {
-          "fill": "#FFA500",
-          "name": "Residential Medium Density"
-        },
-        "C1": {
-          "fill": "#FF6347",
-          "name": "Commercial"
-        },
-        "I1": {
-          "fill": "#A9A9A9",
-          "name": "Industrial"
-        },
-        "AG": {
-          "fill": "#90EE90",
-          "name": "Agricultural"
-        }
-      }
+      "style": {
+        "fill": "#FF9800",
+        "fill-opacity": 0.3,
+        "stroke": "#E65100",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "district_n",
+        "landuse",
+        "zoned",
+        "area_acres"
+      ]
+    },
+    "water_sewer_districts": {
+      "source": "county",
+      "display_name": "Water/Sewer Districts",
+      "style": {
+        "fill": "#00BCD4",
+        "fill-opacity": 0.2,
+        "stroke": "#0097A7",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "dist_no",
+        "area_acres"
+      ]
     },
     "buildings": {
       "source": "microsoft",
       "display_name": "Building Footprints",
       "style": {
-        "fill": "#888888",
-        "fill-opacity": 0.5,
-        "stroke": "#333333"
-      }
-    },
-    "city_boundary": {
-      "source": "county",
-      "display_name": "Three Forks City Limits",
-      "style": {
-        "stroke": "#FF0000",
-        "stroke-width": 3,
-        "fill": "none"
-      }
+        "fill": "#555555",
+        "fill-opacity": 0.7,
+        "stroke": "#000000",
+        "stroke-width": 0.5
+      },
+      "popup_fields": [
+        "area_sqm",
+        "area_acres",
+        "release",
+        "capture_dates_range"
+      ]
     }
   },
   "branding": {

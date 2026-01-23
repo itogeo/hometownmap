@@ -40,6 +40,7 @@ wheels/
 .next/
 out/
 build/
+*.tsbuildinfo
 
 # Production
 dist/
@@ -79,22 +80,50 @@ temp/
 .tmp/
 .extracted_*/
 
-# Data - Exclude raw data but keep processed/final (conditionally)
-# Raw data (large ZIP files)
-Datasets/*/raw/*.zip
-Datasets/*/*/raw/*.zip
+# ===========================================
+# DATA FILES - Keep codebase lightweight
+# ===========================================
+
+# ALL raw data files (large ZIP/SHP files)
+datasets/*/raw/
+datasets/*/*/raw/
+
+# Statewide data (200MB+)
+datasets/statewide/
+
+# County-level processed data (large)
+datasets/gallatin/
+
+# Metadata CSV files (regeneratable)
+datasets/*/*/metadata/
+*_attributes.csv
 
 # Temporary extracted files
-Datasets/*/.extracted_*/
-Datasets/*/*/.extracted_*/
+.extracted_*/
 
-# Large processed files (>5MB) - you can manually track smaller ones
-Datasets/*/processed/*.geojson
-Datasets/*/*/processed/*.geojson
+# Shapefile components (raw data)
+*.zip
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
 
-# Keep final production-ready data (comment out if files are too large)
-# !Datasets/*/final/*.geojson
-# !Datasets/*/*/final/*.geojson
+# OLD/backup files
+*_old.geojson
+
+# ===========================================
+# KEEP: City processed data (small, needed for app)
+# datasets/cities/*/processed/*.geojson - ALLOWED
+# ===========================================
+
+# ===========================================
+# KEEP ONLY:
+# - Source code
+# - Config files
+# - Scripts
+# - Documentation
+# ===========================================
 
 # Database
 *.db

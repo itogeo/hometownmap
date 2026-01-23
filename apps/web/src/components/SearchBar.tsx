@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface SearchBarProps {
   cityId: string
@@ -9,6 +9,9 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<any[]>([])
   const [isSearching, setIsSearching] = useState(false)
+  const debounceRef = useRef<NodeJS.Timeout | null>(null)
+
+  const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
   const handleSearch = async (searchQuery: string) => {
     if (searchQuery.length < 2) {
@@ -19,19 +22,68 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
     setIsSearching(true)
 
     try {
-      const response = await fetch(
+      // Search our local data
+      const localResponse = await fetch(
         `/api/search/${cityId}?q=${encodeURIComponent(searchQuery)}`
       )
 
-      if (response.ok) {
-        const data = await response.json()
-        setResults(data.results || [])
+      let localResults: any[] = []
+      if (localResponse.ok) {
+        const data = await localResponse.json()
+        localResults = data.results || []
       }
+
+      // Search Mapbox for addresses, businesses, parks (geocoding)
+      let mapboxResults: any[] = []
+      if (mapboxToken) {
+        try {
+          // Bias search to Three Forks, MT area
+          const proximity = '-111.5514,45.8925'
+          const bbox = '-111.7,-45.8,-111.4,46.0'
+          const mapboxResponse = await fetch(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?` +
+            `access_token=${mapboxToken}&` +
+            `proximity=${proximity}&` +
+            `types=address,poi,place&` +
+            `limit=5&` +
+            `country=US`
+          )
+
+          if (mapboxResponse.ok) {
+            const mapboxData = await mapboxResponse.json()
+            mapboxResults = (mapboxData.features || []).map((feature: any) => ({
+              type: feature.place_type?.[0] === 'poi' ? 'place' : 'address',
+              name: feature.text,
+              address: feature.place_name,
+              category: feature.properties?.category,
+              center: feature.center,
+              score: 75, // Give Mapbox results a reasonable score
+            }))
+          }
+        } catch (err) {
+          console.log('Mapbox geocoding failed:', err)
+        }
+      }
+
+      // Combine and sort results - local first, then Mapbox
+      const combined = [...localResults, ...mapboxResults]
+      combined.sort((a, b) => (b.score || 0) - (a.score || 0))
+      setResults(combined.slice(0, 15))
     } catch (error) {
       console.error('Search failed:', error)
     } finally {
       setIsSearching(false)
     }
+  }
+
+  // Debounced search
+  const debouncedSearch = (searchQuery: string) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
+    }
+    debounceRef.current = setTimeout(() => {
+      handleSearch(searchQuery)
+    }, 200)
   }
 
   const selectResult = (result: any) => {
@@ -49,6 +101,10 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
         return '🏠'
       case 'business':
         return '🏢'
+      case 'address':
+        return '📍'
+      case 'place':
+        return '🏛️'
       default:
         return '📍'
     }
@@ -62,7 +118,7 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value)
-            handleSearch(e.target.value)
+            debouncedSearch(e.target.value)
           }}
           placeholder="Search address, owner, business..."
           className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -88,7 +144,7 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
       </div>
 
       {results.length > 0 && (
-        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-50">
+        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-[9999]">
           <div className="px-3 py-2 text-xs text-gray-500 bg-gray-50 border-b">
             {results.length} result{results.length !== 1 ? 's' : ''}
           </div>
@@ -104,15 +160,20 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
                   {result.type === 'parcel' && (
                     <>
                       <div className="font-medium text-gray-800 truncate">
-                        {result.address || 'No address'}
+                        {result.owner_name || 'Unknown Owner'}
                       </div>
-                      {result.owner_name && (
+                      {result.address && result.address !== 'No address' && (
                         <div className="text-sm text-gray-600 truncate">
-                          Owner: {result.owner_name}
+                          {result.address}
                         </div>
                       )}
-                      <div className="flex gap-2 mt-1 text-xs text-gray-500">
-                        {result.acreage && <span>{result.acreage} acres</span>}
+                      <div className="flex flex-wrap gap-2 mt-1 text-xs text-gray-500">
+                        {result.acreage && (
+                          <span>{Number(result.acreage).toFixed(2)} acres</span>
+                        )}
+                        {result.total_value && (
+                          <span>• ${Number(result.total_value).toLocaleString()}</span>
+                        )}
                         {result.zoning && <span>• {result.zoning}</span>}
                       </div>
                     </>
@@ -129,6 +190,23 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
                       )}
                       {result.address && (
                         <div className="text-sm text-gray-600">{result.address}</div>
+                      )}
+                    </>
+                  )}
+                  {(result.type === 'address' || result.type === 'place') && (
+                    <>
+                      <div className="font-medium text-gray-800 truncate">
+                        {result.name}
+                      </div>
+                      {result.address && (
+                        <div className="text-sm text-gray-600 truncate">
+                          {result.address}
+                        </div>
+                      )}
+                      {result.category && (
+                        <div className="text-xs text-green-600 font-medium mt-1">
+                          {result.category}
+                        </div>
                       )}
                     </>
                   )}

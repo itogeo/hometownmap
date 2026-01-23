@@ -3,7 +3,12 @@ import fs from 'fs'
 import path from 'path'
 
 // Fuzzy string matching function
-function fuzzyMatch(str: string, pattern: string): number {
+function fuzzyMatch(value: any, pattern: string): number {
+  // Convert to string and handle null/undefined
+  if (value === null || value === undefined) return 0
+  const str = String(value)
+  if (!str) return 0
+
   const strLower = str.toLowerCase()
   const patternLower = pattern.toLowerCase()
 
@@ -76,13 +81,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const basePath = path.join(
       process.cwd(),
-      `../../../datasets/hometownmap/cities/${city}/processed`
+      '../../datasets/cities',
+      city,
+      'processed'
     )
 
     const searchResults: any[] = []
 
     // Search parcels
     const parcelsPath = path.join(basePath, 'parcels.geojson')
+    console.log('Search API - Looking for parcels at:', parcelsPath)
+    console.log('Search API - File exists:', fs.existsSync(parcelsPath))
+
     if (fs.existsSync(parcelsPath)) {
       const parcelsData = JSON.parse(fs.readFileSync(parcelsPath, 'utf-8'))
 
@@ -90,11 +100,23 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const props = feature.properties
         const scores: number[] = []
 
-        // Search multiple fields
-        if (props.address) scores.push(fuzzyMatch(props.address, q))
+        // Search multiple fields - Montana Cadastral field names
+        // Owner name fields
+        if (props.ownername) scores.push(fuzzyMatch(props.ownername, q))
         if (props.owner_name) scores.push(fuzzyMatch(props.owner_name, q))
+
+        // Address fields
+        if (props.addresslin) scores.push(fuzzyMatch(props.addresslin, q))
+        if (props.address) scores.push(fuzzyMatch(props.address, q))
+        if (props.citystatez) scores.push(fuzzyMatch(props.citystatez, q))
+
+        // Property ID fields
+        if (props.propertyid) scores.push(fuzzyMatch(props.propertyid, q))
         if (props.parcel_id) scores.push(fuzzyMatch(props.parcel_id, q))
-        if (props.street_name) scores.push(fuzzyMatch(props.street_name, q))
+        if (props.geocode) scores.push(fuzzyMatch(props.geocode, q))
+
+        // Legal description
+        if (props.legaldescr) scores.push(fuzzyMatch(props.legaldescr, q))
 
         const maxScore = Math.max(...scores, 0)
 
@@ -102,11 +124,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
           searchResults.push({
             type: 'parcel',
             score: maxScore,
-            parcel_id: props.parcel_id,
-            address: props.address,
-            owner_name: props.owner_name,
-            acreage: props.acreage,
-            zoning: props.zoning,
+            parcel_id: props.propertyid || props.parcel_id,
+            address: props.addresslin || props.address || 'No address',
+            owner_name: props.ownername || props.owner_name,
+            acreage: props.gisacres || props.acreage,
+            zoning: props.proptype || props.zoning,
+            total_value: props.totalvalue,
             center: getCentroid(feature.geometry),
           })
         }
@@ -149,8 +172,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const results = searchResults.slice(0, 15)
 
     res.status(200).json({ results, count: results.length })
-  } catch (error) {
-    console.error('Search failed:', error)
-    res.status(500).json({ error: 'Search failed' })
+  } catch (error: any) {
+    console.error('Search failed:', error?.message || error)
+    res.status(500).json({ error: 'Search failed', details: error?.message })
   }
 }

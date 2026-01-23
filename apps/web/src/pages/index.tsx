@@ -5,7 +5,17 @@ import ModeSelector from '@/components/ModeSelector'
 import LayerControl from '@/components/LayerControl'
 import SearchBar from '@/components/SearchBar'
 import WelcomeModal from '@/components/WelcomeModal'
+import BusinessListPanel from '@/components/BusinessListPanel'
 import { MapMode } from '@/types'
+
+interface Business {
+  name: string
+  category: string
+  address: string
+  phone?: string
+  website?: string
+  coordinates: [number, number]
+}
 
 // Dynamic import to avoid SSR issues with mapbox-gl
 const MapView = dynamic(() => import('@/components/MapView'), {
@@ -19,16 +29,15 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 
 export default function Home() {
   const [currentMode, setCurrentMode] = useState<MapMode>('resident')
-  const [visibleLayers, setVisibleLayers] = useState<string[]>([
-    'parcels',
-    'city_boundary',
-  ])
+  const [visibleLayers, setVisibleLayers] = useState<string[]>([])
   const [cityConfig, setCityConfig] = useState<any>(null)
   const [selectedLocation, setSelectedLocation] = useState<{
     longitude: number
     latitude: number
     zoom?: number
   } | null>(null)
+  const [businesses, setBusinesses] = useState<Business[]>([])
+  const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null)
 
   // Load city configuration
   useEffect(() => {
@@ -36,18 +45,39 @@ export default function Home() {
       .then((res) => res.json())
       .then((config) => {
         setCityConfig(config)
-        // Set initial layers based on mode
+        // Set initial layers based on mode - load ALL layers from config
         const modeLayers = config.modes[currentMode]?.layers || []
-        setVisibleLayers(modeLayers.slice(0, 2)) // Start with first 2 layers
+        setVisibleLayers(modeLayers)
       })
       .catch((err) => console.error('Failed to load city config:', err))
   }, [currentMode])
+
+  // Load businesses data
+  useEffect(() => {
+    fetch('/api/layers/three-forks/businesses')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.features) {
+          const bizList: Business[] = data.features.map((f: any) => ({
+            name: f.properties.name,
+            category: f.properties.category,
+            address: f.properties.address,
+            phone: f.properties.phone,
+            website: f.properties.website,
+            coordinates: f.geometry.coordinates as [number, number],
+          }))
+          setBusinesses(bizList)
+          console.log(`✅ Loaded ${bizList.length} businesses`)
+        }
+      })
+      .catch((err) => console.error('Failed to load businesses:', err))
+  }, [])
 
   const handleModeChange = (mode: MapMode) => {
     setCurrentMode(mode)
     if (cityConfig) {
       const modeLayers = cityConfig.modes[mode]?.layers || []
-      setVisibleLayers(modeLayers.slice(0, 2))
+      setVisibleLayers(modeLayers)
     }
   }
 
@@ -69,6 +99,15 @@ export default function Home() {
     }
   }
 
+  const handleBusinessSelect = (business: Business) => {
+    setSelectedBusiness(business.name)
+    setSelectedLocation({
+      longitude: business.coordinates[0],
+      latitude: business.coordinates[1],
+      zoom: 17,
+    })
+  }
+
   if (!cityConfig) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -87,6 +126,10 @@ export default function Home() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
 
       <WelcomeModal cityName={cityConfig.name} />
@@ -135,50 +178,48 @@ export default function Home() {
           />
         </div>
 
+        {/* Business List Panel (Business Mode) */}
+        {currentMode === 'business' && businesses.length > 0 && (
+          <aside className="absolute left-4 top-36 z-10 w-80 bg-white rounded-lg shadow-lg max-h-[calc(100vh-180px)] overflow-hidden flex flex-col">
+            <BusinessListPanel
+              businesses={businesses}
+              onBusinessSelect={handleBusinessSelect}
+              selectedBusiness={selectedBusiness}
+            />
+
+            {/* Demographics at bottom of panel */}
+            {cityConfig.demographics && (
+              <div className="border-t p-3 bg-gray-50">
+                <div className="text-xs font-semibold text-gray-500 mb-1">
+                  {cityConfig.name} at a Glance
+                </div>
+                <div className="flex gap-3 text-xs text-gray-600">
+                  {cityConfig.demographics.population && (
+                    <div>
+                      Pop: <span className="font-semibold">{cityConfig.demographics.population.toLocaleString()}</span>
+                    </div>
+                  )}
+                  {cityConfig.demographics.median_income && (
+                    <div>
+                      Income: <span className="font-semibold">${(cityConfig.demographics.median_income / 1000).toFixed(0)}K</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </aside>
+        )}
+
         {/* Layer Control */}
-        <aside className="absolute right-4 top-36 z-10 w-64 bg-white rounded-lg shadow-lg p-4">
+        <aside className="absolute right-4 top-36 z-10 w-64 bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-180px)] overflow-y-auto">
           <LayerControl
             layers={cityConfig.modes[currentMode]?.layers || []}
             visibleLayers={visibleLayers}
             onToggleLayer={toggleLayer}
             layerConfig={cityConfig.layers}
+            allLayers={Object.keys(cityConfig.layers)}
           />
         </aside>
-
-        {/* Demographics Card (Business Mode) */}
-        {currentMode === 'business' && cityConfig.demographics && (
-          <aside className="absolute left-4 bottom-4 z-10 w-64 bg-white rounded-lg shadow-lg p-4">
-            <h3 className="font-bold text-gray-800 mb-2">
-              {cityConfig.name} at a Glance
-            </h3>
-            <div className="space-y-1 text-sm text-gray-600">
-              {cityConfig.demographics.population && (
-                <div>
-                  Population:{' '}
-                  <span className="font-semibold">
-                    {cityConfig.demographics.population.toLocaleString()}
-                  </span>
-                </div>
-              )}
-              {cityConfig.demographics.median_income && (
-                <div>
-                  Median Income:{' '}
-                  <span className="font-semibold">
-                    ${cityConfig.demographics.median_income.toLocaleString()}
-                  </span>
-                </div>
-              )}
-              {cityConfig.demographics.growth_rate && (
-                <div>
-                  Growth Rate:{' '}
-                  <span className="font-semibold">
-                    {cityConfig.demographics.growth_rate}
-                  </span>
-                </div>
-              )}
-            </div>
-          </aside>
-        )}
       </div>
     </>
   )

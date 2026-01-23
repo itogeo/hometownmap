@@ -66,6 +66,9 @@ def validate_geometries(gdf: gpd.GeoDataFrame, fix: bool = True) -> gpd.GeoDataF
     Returns:
         GeoDataFrame with valid geometries
     """
+    if len(gdf) == 0:
+        return gdf
+
     invalid_count = (~gdf.is_valid).sum()
 
     if invalid_count == 0:
@@ -76,9 +79,23 @@ def validate_geometries(gdf: gpd.GeoDataFrame, fix: bool = True) -> gpd.GeoDataF
 
     if fix:
         logger.info("Attempting to fix invalid geometries...")
-        gdf['geometry'] = gdf['geometry'].apply(
-            lambda geom: make_valid(geom) if geom and not geom.is_valid else geom
-        )
+
+        def safe_make_valid(geom):
+            """Safely validate geometry with error handling"""
+            try:
+                if geom is None or geom.is_empty:
+                    return geom
+                if not geom.is_valid:
+                    return make_valid(geom)
+                return geom
+            except Exception as e:
+                logger.warning(f"Could not fix geometry: {e}")
+                return None
+
+        gdf['geometry'] = gdf['geometry'].apply(safe_make_valid)
+
+        # Remove any None geometries
+        gdf = gdf[gdf.geometry.notna()].copy()
 
         still_invalid = (~gdf.is_valid).sum()
         if still_invalid > 0:
@@ -108,17 +125,39 @@ def simplify_geometries(
     """
     logger.info(f"Simplifying geometries (tolerance: {tolerance})")
 
-    original_vertices = gdf.geometry.apply(lambda g: len(g.coords) if g.geom_type == 'LineString' else sum(len(p.exterior.coords) for p in ([g] if g.geom_type == 'Polygon' else g.geoms))).sum()
+    def count_vertices(geom):
+        """Count vertices in any geometry type"""
+        try:
+            if geom is None or geom.is_empty:
+                return 0
+            geom_type = geom.geom_type
+            if geom_type == 'Point':
+                return 1
+            elif geom_type == 'LineString':
+                return len(geom.coords)
+            elif geom_type == 'Polygon':
+                return len(geom.exterior.coords)
+            elif geom_type in ['MultiPoint', 'MultiLineString', 'MultiPolygon', 'GeometryCollection']:
+                return sum(count_vertices(g) for g in geom.geoms)
+            else:
+                return 0
+        except Exception:
+            return 0
+
+    original_vertices = gdf.geometry.apply(count_vertices).sum()
 
     gdf['geometry'] = gdf['geometry'].simplify(
         tolerance=tolerance,
         preserve_topology=preserve_topology
     )
 
-    simplified_vertices = gdf.geometry.apply(lambda g: len(g.coords) if g.geom_type == 'LineString' else sum(len(p.exterior.coords) for p in ([g] if g.geom_type == 'Polygon' else g.geoms))).sum()
+    simplified_vertices = gdf.geometry.apply(count_vertices).sum()
 
-    reduction = (1 - simplified_vertices / original_vertices) * 100
-    logger.info(f"Reduced vertices by {reduction:.1f}% ({original_vertices:,} → {simplified_vertices:,})")
+    if original_vertices > 0:
+        reduction = (1 - simplified_vertices / original_vertices) * 100
+        logger.info(f"Reduced vertices by {reduction:.1f}% ({original_vertices:,} → {simplified_vertices:,})")
+    else:
+        logger.info("No vertices to simplify")
 
     return gdf
 
@@ -178,6 +217,11 @@ def clip_to_boundary(
     # Clip
     clipped = gdf.clip(boundary_union)
 
+    # Remove any null or empty geometries that may result from clipping
+    if len(clipped) > 0:
+        clipped = clipped[~clipped.geometry.isna()].copy()
+        clipped = clipped[~clipped.geometry.is_empty].copy()
+
     logger.info(f"Retained {len(clipped)} features after clipping")
 
     return clipped
@@ -224,20 +268,34 @@ def add_area_length_fields(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     Returns:
         GeoDataFrame with area_sqm or length_m fields
     """
+    if len(gdf) == 0:
+        return gdf
+
     original_crs = gdf.crs
 
     # Convert to Web Mercator for accurate metric calculations
     gdf_metric = gdf.to_crs(WEB_MERCATOR)
 
-    geom_type = gdf_metric.geometry.geom_type.iloc[0]
+    # Check all geometry types in the dataset
+    geom_types = gdf_metric.geometry.geom_type.unique()
 
-    if 'Polygon' in geom_type:
-        gdf['area_sqm'] = gdf_metric.geometry.area
+    # Determine if we have polygons or lines (or both)
+    has_polygons = any('Polygon' in gt for gt in geom_types)
+    has_lines = any('LineString' in gt for gt in geom_types)
+
+    if has_polygons:
+        # Calculate area for polygon geometries
+        gdf['area_sqm'] = gdf_metric.geometry.apply(
+            lambda g: g.area if g and 'Polygon' in g.geom_type else 0
+        )
         gdf['area_acres'] = gdf['area_sqm'] * 0.000247105
         logger.info("Added area_sqm and area_acres fields")
 
-    elif 'LineString' in geom_type:
-        gdf['length_m'] = gdf_metric.geometry.length
+    if has_lines:
+        # Calculate length for line geometries
+        gdf['length_m'] = gdf_metric.geometry.apply(
+            lambda g: g.length if g and 'LineString' in g.geom_type else 0
+        )
         gdf['length_ft'] = gdf['length_m'] * 3.28084
         logger.info("Added length_m and length_ft fields")
 
