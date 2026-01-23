@@ -1,0 +1,160 @@
+======================================================================
+THREE FORKS DATA SUMMARY - ALL DATASETS
+Generated: 2026-01-23
+======================================================================
+
+PROCESSED DATASETS AVAILABLE
+======================================================================
+
+1. PARCELS (Montana Cadastral) - THE KEY DATASET!
+   File: parcels.geojson + parcels_attributes.csv
+   Records: 1,830 parcels in Three Forks expansion area
+   Columns: 48 fields including:
+      - parcelid, countyname, gisacres, taxyear, propertyid
+      - assessment, township, range, section, legaldescr
+      - subdivisio, certificat
+      - addresslin, citystatez, propaccess
+      - ownername, owneraddre, ownercity, ownerstate, ownerzipco
+      - dbaname, careoftaxp
+      - proptype, continuous, farmsiteac, forestacre, grazingacr
+      - totalbuild, totallandv, totalvalue
+      - area_sqm, area_acres
+   Data Quality:
+      - 96.9% have owner names
+      - 76.0% have addresses
+      - 100% have acreage
+      - 100% have property IDs
+
+2. BUILDINGS (Microsoft Building Footprints)
+   File: buildings.geojson + buildings_attributes.csv
+   Records: 1,251 buildings
+   Columns: 6 fields
+      - area_sqm, area_acres, release, capture_dates_range
+
+3. CITIES (City Boundary)
+   File: cities.geojson + cities_attributes.csv
+   Records: 1 feature (Three Forks boundary)
+   Columns: 6 fields
+      - city, globalid, area_sqm, area_acres, dataset, source
+
+4. SCHOOL DISTRICTS
+   File: schooldistricts.geojson + schooldistricts_attributes.csv
+   Records: 2 districts
+   Columns: 10 fields
+      - levydistri, elementary, elem_num, high_schoo, high_num
+      - acres, area_sqm, area_acres
+
+5. WATERWAYS
+   File: waterways.geojson + waterways_attributes.csv
+   Records: 9 features
+   Columns: 15 fields
+      - gcd_name, recno, dlg_status, survey_53, need_310
+      - type, com_name, origin, updated, notes, material
+      - length_m, length_ft
+
+6. ROADS
+   File: roads.geojson + roads_attributes.csv
+   Records: 431 road segments
+   Columns: 42 fields
+      - roadname, roadtype, surface, speedlimit
+      - length_m, length_ft
+
+7. FIRE DISTRICTS
+   File: firedistricts.geojson + firedistricts_attributes.csv
+   Records: 1 district
+   Columns: 11 fields
+      - name, area_acres
+
+8. MAJOR SUBDIVISIONS
+   File: majorsubdivisions.geojson + majorsubdivisions_attributes.csv
+   Records: 12 subdivisions
+   Columns: 8 fields
+      - sub_name, area_acres
+
+9. MINOR SUBDIVISIONS
+   File: minorsubdivisions.geojson + minorsubdivisions_attributes.csv
+   Records: 6 subdivisions
+   Columns: 8 fields
+      - record, area_acres
+
+10. BUSINESSES
+    File: businesses.geojson + businesses_attributes.csv
+    Records: 8 businesses
+    Columns: 5 fields
+
+11. WATER/SEWER DISTRICTS
+    File: water_sewer_districts.geojson + water_sewer_districts_attributes.csv
+    Records: 0 (no coverage in Three Forks area)
+
+12. ZONING DISTRICTS
+    File: zoningdistricts.geojson + zoningdistricts_attributes.csv
+    Records: 0 (no coverage in Three Forks area)
+
+======================================================================
+
+COUNTY-WIDE DATASETS (Gallatin County)
+======================================================================
+
+GALLATIN PARCELS (Montana Cadastral)
+   File: gallatin/processed/parcels_cadastral.geojson + parcels_cadastral_attributes.csv
+   Records: 53,312 parcels (entire Gallatin County)
+   Columns: 43 fields (same as Three Forks parcels)
+   Data Quality:
+      - 98.5% have owner names (52,526 parcels)
+      - 83.1% have addresses (44,326 parcels)
+      - 100% have acreage
+
+======================================================================
+
+FILE LOCATIONS
+======================================================================
+
+All GeoJSON files (with geometry):
+   /Users/ianvandusen/Desktop/Ito/itogeo/repos/hometownmap/datasets/cities/three-forks/processed/*.geojson
+
+All CSV files (attributes only, no geometry):
+   /Users/ianvandusen/Desktop/Ito/itogeo/repos/hometownmap/datasets/cities/three-forks/processed/metadata/*_attributes.csv
+
+Gallatin County parcel CSV:
+   /Users/ianvandusen/Desktop/Ito/itogeo/repos/hometownmap/datasets/gallatin/processed/parcels_cadastral_attributes.csv
+
+======================================================================
+
+KEY INSIGHTS
+======================================================================
+
+✅ PRIMARY DATASET: Montana Cadastral Parcels
+   - Authoritative statewide data
+   - Includes ownership info built-in (no joining required)
+   - 1,830 parcels in Three Forks expansion area (5-mile buffer)
+   - 48 attributes per parcel including owner, address, acreage, value
+
+✅ SUPPORTING LAYERS: All processed and ready
+   - Buildings: 1,251 footprints from Microsoft
+   - Waterways: 9 streams/rivers
+   - Schools: 2 districts
+   - Roads: 431 segments
+   - Subdivisions: 18 total (12 major, 6 minor)
+
+✅ DATA QUALITY: Excellent
+   - 96.9% of parcels have owner names
+   - 76.0% have full addresses
+   - All geometry validated and simplified
+   - All in WGS84 (EPSG:4326) for web display
+
+✅ FILE FORMATS: Dual format for flexibility
+   - GeoJSON: Full geographic data for mapping
+   - CSV: Attribute-only data for analysis/viewing
+
+======================================================================
+
+NEXT STEPS
+======================================================================
+
+1. View the map at http://localhost:3001
+2. Switch to Resident Mode
+3. Click on parcels to see owner info
+4. Toggle layers on/off
+5. Open CSV files in Excel/Google Sheets to explore all data
+
+======================================================================

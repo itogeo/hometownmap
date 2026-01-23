@@ -1,0 +1,21 @@
+======================================================================
+THREE FORKS DATA SUMMARY
+Generated: 2026-01-23 11:14:08
+======================================================================
+
+WATER_SEWER_DISTRICTS
+----------------------------------------------------------------------
+Features: 0
+Geometry: 
+File: hometownmap/datasets/cities/three-forks/processed/water_sewer_districts.geojson
+
+Key Fields:
+
+ZONINGDISTRICTS
+----------------------------------------------------------------------
+Features: 0
+Geometry: 
+File: hometownmap/datasets/cities/three-forks/processed/zoningdistricts.geojson
+
+Key Fields:
+

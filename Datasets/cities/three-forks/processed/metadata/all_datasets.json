@@ -1,0 +1,43 @@
+{
+  "city": "three-forks",
+  "generated_at": "2026-01-23T11:14:08.370090",
+  "total_datasets": 2,
+  "datasets": {
+    "water_sewer_districts": {
+      "dataset_name": "water_sewer_districts",
+      "file_path": "hometownmap/datasets/cities/three-forks/processed/water_sewer_districts.geojson",
+      "generated_at": "2026-01-23T11:14:08.361312",
+      "summary": {
+        "total_features": 0,
+        "geometry_types": {},
+        "coordinate_system": "EPSG:4326",
+        "bounds": {
+          "min_lon": NaN,
+          "min_lat": NaN,
+          "max_lon": NaN,
+          "max_lat": NaN
+        }
+      },
+      "columns": {},
+      "sample_features": []
+    },
+    "zoningdistricts": {
+      "dataset_name": "zoningdistricts",
+      "file_path": "hometownmap/datasets/cities/three-forks/processed/zoningdistricts.geojson",
+      "generated_at": "2026-01-23T11:14:08.369836",
+      "summary": {
+        "total_features": 0,
+        "geometry_types": {},
+        "coordinate_system": "EPSG:4326",
+        "bounds": {
+          "min_lon": NaN,
+          "min_lat": NaN,
+          "max_lon": NaN,
+          "max_lat": NaN
+        }
+      },
+      "columns": {},
+      "sample_features": []
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "dataset_name": "roads",
+  "file_path": "hometownmap/datasets/cities/three-forks/processed/roads.geojson",
+  "generated_at": "2026-01-23T11:14:08.353359",
+  "summary": {
+    "total_features": 431,
+    "geometry_types": {
+      "LineString": 428,
+      "MultiLineString": 3
+    },
+    "coordinate_system": "EPSG:4326",
+    "bounds": {
+      "min_lon": -111.579244,
+      "min_lat": 45.870145,
+      "max_lon": -111.535094,
+      "max_lat": 45.899358
+    }
+  },
+  "columns": {
+    "road_id": {
+      "data_type": "int32",
+      "filled": 
