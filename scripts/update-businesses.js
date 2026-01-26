@@ -229,6 +229,134 @@ const businesses = [
     address: "123 S Main St, Three Forks, MT 59752",
     phone: null,
     website: null
+  },
+
+  // Additional businesses from chamber
+  {
+    name: "Steer In Restaurant",
+    category: "Restaurant",
+    address: "10771 US Highway 287, Three Forks, MT 59752",
+    phone: "(406) 285-3206",
+    website: null
+  },
+  {
+    name: "The Shoppe Pastry & Coffee",
+    category: "Restaurant",
+    address: "119 S Main St, Three Forks, MT 59752",
+    phone: "(406) 285-4426",
+    website: null
+  },
+  {
+    name: "Frontier Club",
+    category: "Bar",
+    address: "213 S Main St, Three Forks, MT 59752",
+    phone: "(406) 285-3111",
+    website: null
+  },
+  {
+    name: "Three Forks Market & RV Park",
+    category: "Grocery",
+    address: "510 Highway 2 W, Three Forks, MT 59752",
+    phone: "(406) 285-3010",
+    website: "https://www.threeforksmarketmt.com"
+  },
+  {
+    name: "Three Forks Lumber & Ready Mix",
+    category: "Building Supply",
+    address: "109 N 1st Ave E, Three Forks, MT 59752",
+    phone: "(406) 285-3355",
+    website: null
+  },
+  {
+    name: "Circle S Seeds of Montana",
+    category: "Agriculture",
+    address: "14990 Madison Frontage Rd, Three Forks, MT 59752",
+    phone: "(406) 285-3269",
+    website: null
+  },
+  {
+    name: "CRH Cement",
+    category: "Manufacturing",
+    address: "Trident, MT 59752",
+    phone: "(406) 285-3211",
+    website: null
+  },
+  {
+    name: "Kanta Block Products",
+    category: "Manufacturing",
+    address: "Three Forks, MT 59752",
+    phone: "(406) 285-3212",
+    website: null
+  },
+  {
+    name: "M & W Machine Inc",
+    category: "Manufacturing",
+    address: "Three Forks, MT 59752",
+    phone: "(406) 285-6600",
+    website: null
+  },
+  {
+    name: "Woolzies",
+    category: "Retail",
+    address: "Three Forks, MT 59752",
+    phone: null,
+    website: null
+  },
+  {
+    name: "Moe Mountains",
+    category: "Retail",
+    address: "Three Forks, MT 59752",
+    phone: null,
+    website: null
+  },
+  {
+    name: "Tune In Holistic",
+    category: "Health & Wellness",
+    address: "Three Forks, MT 59752",
+    phone: null,
+    website: null
+  },
+  {
+    name: "Life Yoga",
+    category: "Health & Wellness",
+    address: "Three Forks, MT 59752",
+    phone: null,
+    website: null
+  },
+  {
+    name: "TF Mixed Martial Arts",
+    category: "Recreation",
+    address: "Three Forks, MT 59752",
+    phone: null,
+    website: null
+  },
+  {
+    name: "Three Forks School",
+    category: "Education",
+    address: "214 E Neal St, Three Forks, MT 59752",
+    phone: "(406) 285-3224",
+    website: null
+  },
+  {
+    name: "First Security Bank",
+    category: "Bank",
+    address: "Three Forks, MT 59752",
+    phone: "(406) 285-3236",
+    website: null
+  },
+  {
+    name: "American Family Insurance",
+    category: "Insurance",
+    address: "Three Forks, MT 59752",
+    phone: "(406) 285-4416",
+    website: null
+  },
+  {
+    name: "Three Forks Ambulance",
+    category: "Emergency Services",
+    address: "Three Forks, MT 59752",
+    phone: "911",
+    website: null
   }
 ];
 

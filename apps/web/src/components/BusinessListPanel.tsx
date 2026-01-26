@@ -1,5 +1,66 @@
 import { useState, useMemo } from 'react'
 
+// Business Card component - compact
+function BusinessCard({
+  business,
+  isSelected,
+  onSelect,
+  showCategory,
+  categoryIcon,
+}: {
+  business: Business
+  isSelected: boolean
+  onSelect: (business: Business) => void
+  showCategory: boolean
+  categoryIcon?: string
+}) {
+  return (
+    <div
+      className={`px-2 py-2 border-b border-gray-100 hover:bg-blue-50 transition-colors ${
+        isSelected ? 'bg-blue-100 border-l-2 border-l-blue-500' : ''
+      }`}
+    >
+      {/* Business name - clickable to zoom */}
+      <button
+        onClick={() => onSelect(business)}
+        className="text-sm font-medium text-gray-800 hover:text-blue-600 text-left w-full leading-tight"
+      >
+        {business.name}
+      </button>
+
+      {showCategory && (
+        <div className="text-xs text-gray-400">
+          {categoryIcon} {business.category}
+        </div>
+      )}
+
+      {/* Compact action row */}
+      <div className="flex gap-2 mt-1 text-xs">
+        {business.website && (
+          <a
+            href={business.website.startsWith('http') ? business.website : `https://${business.website}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Website
+          </a>
+        )}
+        <a
+          href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(business.address)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Directions
+        </a>
+      </div>
+    </div>
+  )
+}
+
 interface Business {
   name: string
   category: string
@@ -15,6 +76,8 @@ interface BusinessListPanelProps {
   selectedBusiness?: string | null
 }
 
+type SortOption = 'category' | 'alphabetical'
+
 export default function BusinessListPanel({
   businesses,
   onBusinessSelect,
@@ -22,6 +85,7 @@ export default function BusinessListPanel({
 }: BusinessListPanelProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [sortBy, setSortBy] = useState<SortOption>('category')
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -77,88 +141,88 @@ export default function BusinessListPanel({
   }
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="p-4 border-b bg-blue-50">
-        <h2 className="font-bold text-lg text-gray-800 mb-2">
-          Local Businesses
-        </h2>
-        <p className="text-sm text-gray-600 mb-3">
-          {filteredBusinesses.length} of {businesses.length} businesses
-        </p>
+    <div className="flex flex-col" style={{ maxHeight: 'calc(100vh - 220px)' }}>
+      {/* Compact Header */}
+      <div className="p-2 border-b bg-blue-50">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="font-bold text-sm text-gray-800">Businesses</h2>
+          <span className="text-xs text-gray-500">{filteredBusinesses.length}</span>
+        </div>
 
         {/* Search */}
         <input
           type="text"
-          placeholder="Search businesses..."
+          placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-2 py-1 border rounded text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
 
-        {/* Category Filter */}
-        <div className="mt-2 flex flex-wrap gap-1">
+        {/* Sort Options */}
+        <div className="mt-1 flex gap-1">
           <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-2 py-1 text-xs rounded-full ${
-              !selectedCategory
+            onClick={() => setSortBy('category')}
+            className={`px-2 py-0.5 text-xs rounded ${
+              sortBy === 'category'
                 ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                : 'bg-gray-200 text-gray-600'
             }`}
           >
-            All
+            Category
           </button>
-          {categories.slice(0, 5).map(cat => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
-              className={`px-2 py-1 text-xs rounded-full ${
-                selectedCategory === cat
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          <button
+            onClick={() => setSortBy('alphabetical')}
+            className={`px-2 py-0.5 text-xs rounded ${
+              sortBy === 'alphabetical'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-200 text-gray-600'
+            }`}
+          >
+            A-Z
+          </button>
         </div>
       </div>
 
-      {/* Business List */}
-      <div className="flex-1 overflow-y-auto">
-        {Object.entries(groupedBusinesses).map(([category, bizList]) => (
-          <div key={category} className="border-b">
-            {/* Category Header */}
-            <div className="sticky top-0 bg-gray-100 px-4 py-2 font-semibold text-sm text-gray-700 flex items-center gap-2">
-              <span>{categoryIcons[category] || '📍'}</span>
-              <span>{category}</span>
-              <span className="text-gray-400 font-normal">({bizList.length})</span>
-            </div>
+      {/* Business List - visible scrollbar */}
+      <div className="flex-1 overflow-y-scroll">
+        {sortBy === 'category' ? (
+          // Grouped by category view
+          Object.entries(groupedBusinesses).map(([category, bizList]) => (
+            <div key={category}>
+              {/* Compact Category Header */}
+              <div className="sticky top-0 bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-600 flex items-center gap-1">
+                <span>{categoryIcons[category] || '📍'}</span>
+                <span>{category}</span>
+                <span className="text-gray-400">({bizList.length})</span>
+              </div>
 
-            {/* Businesses in Category */}
-            {bizList.map((business, idx) => (
-              <button
+              {/* Businesses in Category */}
+              {bizList.map((business, idx) => (
+                <BusinessCard
+                  key={`${business.name}-${idx}`}
+                  business={business}
+                  isSelected={selectedBusiness === business.name}
+                  onSelect={onBusinessSelect}
+                  showCategory={false}
+                />
+              ))}
+            </div>
+          ))
+        ) : (
+          // Alphabetical A-Z view
+          [...filteredBusinesses]
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((business, idx) => (
+              <BusinessCard
                 key={`${business.name}-${idx}`}
-                onClick={() => onBusinessSelect(business)}
-                className={`w-full text-left px-4 py-3 border-b border-gray-100 hover:bg-blue-50 transition-colors ${
-                  selectedBusiness === business.name ? 'bg-blue-100 border-l-4 border-l-blue-500' : ''
-                }`}
-              >
-                <div className="font-medium text-gray-800">
-                  {business.name}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {business.address}
-                </div>
-                {business.phone && (
-                  <div className="text-xs text-gray-500">
-                    {business.phone}
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
-        ))}
+                business={business}
+                isSelected={selectedBusiness === business.name}
+                onSelect={onBusinessSelect}
+                showCategory={true}
+                categoryIcon={categoryIcons[business.category] || '📍'}
+              />
+            ))
+        )}
 
         {filteredBusinesses.length === 0 && (
           <div className="p-4 text-center text-gray-500">

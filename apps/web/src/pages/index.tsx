@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import Link from 'next/link'
 import ModeSelector from '@/components/ModeSelector'
 import LayerControl from '@/components/LayerControl'
 import SearchBar from '@/components/SearchBar'
 import WelcomeModal from '@/components/WelcomeModal'
 import BusinessListPanel from '@/components/BusinessListPanel'
+import TourismPanel from '@/components/TourismPanel'
 import { MapMode } from '@/types'
 
 interface Business {
@@ -14,6 +16,18 @@ interface Business {
   address: string
   phone?: string
   website?: string
+  coordinates: [number, number]
+}
+
+interface Attraction {
+  name: string
+  category: string
+  description: string
+  highlights?: string[]
+  hours?: string
+  fee?: string
+  website?: string
+  story?: string
   coordinates: [number, number]
 }
 
@@ -38,6 +52,8 @@ export default function Home() {
   } | null>(null)
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null)
+  const [attractions, setAttractions] = useState<Attraction[]>([])
+  const [selectedAttraction, setSelectedAttraction] = useState<string | null>(null)
 
   // Load city configuration
   useEffect(() => {
@@ -73,6 +89,30 @@ export default function Home() {
       .catch((err) => console.error('Failed to load businesses:', err))
   }, [])
 
+  // Load attractions data
+  useEffect(() => {
+    fetch('/api/layers/three-forks/attractions')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.features) {
+          const attractionList: Attraction[] = data.features.map((f: any) => ({
+            name: f.properties.name,
+            category: f.properties.category,
+            description: f.properties.description,
+            highlights: f.properties.highlights,
+            hours: f.properties.hours,
+            fee: f.properties.fee,
+            website: f.properties.website,
+            story: f.properties.story,
+            coordinates: f.geometry.coordinates as [number, number],
+          }))
+          setAttractions(attractionList)
+          console.log(`✅ Loaded ${attractionList.length} attractions`)
+        }
+      })
+      .catch((err) => console.error('Failed to load attractions:', err))
+  }, [])
+
   const handleModeChange = (mode: MapMode) => {
     setCurrentMode(mode)
     if (cityConfig) {
@@ -105,6 +145,15 @@ export default function Home() {
       longitude: business.coordinates[0],
       latitude: business.coordinates[1],
       zoom: 17,
+    })
+  }
+
+  const handleAttractionSelect = (attraction: Attraction) => {
+    setSelectedAttraction(attraction.name)
+    setSelectedLocation({
+      longitude: attraction.coordinates[0],
+      latitude: attraction.coordinates[1],
+      zoom: 15,
     })
   }
 
@@ -152,6 +201,13 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-4">
+              <Link
+                href="/projects"
+                className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-sm text-sm font-medium"
+              >
+                <span>🏗️</span>
+                <span>Projects</span>
+              </Link>
               <SearchBar
                 cityId={cityConfig.id}
                 onResultSelect={handleSearchSelect}
@@ -175,51 +231,124 @@ export default function Home() {
             currentMode={currentMode}
             visibleLayers={visibleLayers}
             selectedLocation={selectedLocation}
+            onAttractionSelect={handleAttractionSelect}
           />
         </div>
 
-        {/* Business List Panel (Business Mode) */}
+        {/* Business List Panel (Business Mode) - Hover to expand */}
         {currentMode === 'business' && businesses.length > 0 && (
-          <aside className="absolute left-4 top-36 z-10 w-80 bg-white rounded-lg shadow-lg max-h-[calc(100vh-180px)] overflow-hidden flex flex-col">
-            <BusinessListPanel
-              businesses={businesses}
-              onBusinessSelect={handleBusinessSelect}
-              selectedBusiness={selectedBusiness}
-            />
-
-            {/* Demographics at bottom of panel */}
-            {cityConfig.demographics && (
-              <div className="border-t p-3 bg-gray-50">
-                <div className="text-xs font-semibold text-gray-500 mb-1">
-                  {cityConfig.name} at a Glance
-                </div>
-                <div className="flex gap-3 text-xs text-gray-600">
-                  {cityConfig.demographics.population && (
-                    <div>
-                      Pop: <span className="font-semibold">{cityConfig.demographics.population.toLocaleString()}</span>
-                    </div>
-                  )}
-                  {cityConfig.demographics.median_income && (
-                    <div>
-                      Income: <span className="font-semibold">${(cityConfig.demographics.median_income / 1000).toFixed(0)}K</span>
-                    </div>
-                  )}
-                </div>
+          <aside className="absolute left-2 top-36 z-10 group/biz">
+            {/* Collapsed state - small pill */}
+            <div className="bg-blue-600 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover/biz:hidden">
+              <span>🏢</span> Businesses ({businesses.length})
+            </div>
+            {/* Expanded state on hover */}
+            <div className="hidden group-hover/biz:flex flex-col w-64 bg-white rounded-lg shadow-lg" style={{ maxHeight: 'calc(100vh - 180px)' }}>
+              <div className="flex-1 overflow-y-auto min-h-0">
+                <BusinessListPanel
+                  businesses={businesses}
+                  onBusinessSelect={handleBusinessSelect}
+                  selectedBusiness={selectedBusiness}
+                />
               </div>
-            )}
+              {/* Demographics at bottom */}
+              {cityConfig.demographics && (
+                <div className="border-t p-2 bg-gray-50 text-xs shrink-0">
+                  <div className="flex gap-3 text-gray-600">
+                    <span>Pop: <b>{cityConfig.demographics.population?.toLocaleString()}</b></span>
+                    <span>Income: <b>${(cityConfig.demographics.median_income / 1000).toFixed(0)}K</b></span>
+                  </div>
+                </div>
+              )}
+            </div>
           </aside>
         )}
 
-        {/* Layer Control */}
-        <aside className="absolute right-4 top-36 z-10 w-64 bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-180px)] overflow-y-auto">
-          <LayerControl
-            layers={cityConfig.modes[currentMode]?.layers || []}
-            visibleLayers={visibleLayers}
-            onToggleLayer={toggleLayer}
-            layerConfig={cityConfig.layers}
-            allLayers={Object.keys(cityConfig.layers)}
-          />
+        {/* Tourism Panel (Tourism Mode) - Story map style sidebar */}
+        {currentMode === 'tourism' && attractions.length > 0 && (
+          <aside className="absolute left-2 top-36 z-10 group/tour">
+            {/* Collapsed state - attractive pill */}
+            <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover/tour:hidden">
+              <span>🗺️</span> Explore ({attractions.length} attractions)
+            </div>
+            {/* Expanded state on hover */}
+            <div className="hidden group-hover/tour:flex flex-col w-80 bg-white rounded-lg shadow-xl min-h-0" style={{ maxHeight: 'calc(100vh - 180px)' }}>
+              <div className="flex-1 overflow-y-auto min-h-0">
+                <TourismPanel
+                  attractions={attractions}
+                  onAttractionSelect={handleAttractionSelect}
+                  selectedAttraction={selectedAttraction}
+                />
+              </div>
+            </div>
+          </aside>
+        )}
+
+        {/* Layer Control - Hover to expand */}
+        <aside className="absolute right-2 top-36 z-10 group/layers">
+          {/* Collapsed state */}
+          <div className="bg-gray-700 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover/layers:hidden">
+            <span>🗺️</span> Layers ({visibleLayers.length})
+          </div>
+          {/* Expanded state */}
+          <div className="hidden group-hover/layers:block w-44 bg-white rounded-lg shadow-lg p-2 max-h-[calc(100vh-160px)] overflow-y-auto">
+            <LayerControl
+              layers={cityConfig.modes[currentMode]?.layers || []}
+              visibleLayers={visibleLayers}
+              onToggleLayer={toggleLayer}
+              layerConfig={cityConfig.layers}
+              allLayers={Object.keys(cityConfig.layers)}
+            />
+          </div>
         </aside>
+
+        {/* City Hall Contact - Compact hover card */}
+        {cityConfig.contact && (
+          <aside className="absolute left-4 bottom-4 z-10 group">
+            {/* Collapsed state - small button */}
+            <div className="bg-blue-600 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover:hidden">
+              <span>🏛️</span> City Hall • {cityConfig.contact.phone}
+            </div>
+            {/* Expanded state on hover */}
+            <div className="hidden group-hover:block bg-white rounded-lg shadow-lg overflow-hidden w-64">
+              <div className="bg-blue-600 px-3 py-1.5">
+                <h3 className="font-bold text-white text-xs flex items-center gap-2">
+                  <span>🏛️</span> City Hall
+                </h3>
+              </div>
+              <div className="p-2 space-y-1.5 text-xs">
+                {cityConfig.contact.phone && (
+                  <a
+                    href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`}
+                    className="text-gray-700 hover:text-blue-600 flex items-center gap-2"
+                  >
+                    📞 {cityConfig.contact.phone}
+                  </a>
+                )}
+                {cityConfig.contact.city_hall && (
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(cityConfig.contact.city_hall)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:text-blue-600 flex items-center gap-2"
+                  >
+                    📍 Directions
+                  </a>
+                )}
+                {cityConfig.contact.website && (
+                  <a
+                    href={cityConfig.contact.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline flex items-center gap-2"
+                  >
+                    🌐 Website
+                  </a>
+                )}
+              </div>
+            </div>
+          </aside>
+        )}
       </div>
     </>
   )

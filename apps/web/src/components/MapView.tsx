@@ -13,6 +13,7 @@ interface MapViewProps {
     zoom?: number
   } | null
   onBusinessSelect?: (business: any) => void
+  onAttractionSelect?: (attraction: any) => void
 }
 
 export default function MapView({
@@ -21,6 +22,7 @@ export default function MapView({
   visibleLayers,
   selectedLocation,
   onBusinessSelect,
+  onAttractionSelect,
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
   const [layerData, setLayerData] = useState<{ [key: string]: any }>({})
@@ -34,6 +36,10 @@ export default function MapView({
 
   // Direct parcel data loading (like SimpleMap) for reliability
   const [parcelData, setParcelData] = useState<any>(null)
+  // Direct business data loading for reliability
+  const [businessData, setBusinessData] = useState<any>(null)
+  // Direct attractions data loading for tourism mode
+  const [attractionsData, setAttractionsData] = useState<any>(null)
 
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
@@ -64,6 +70,38 @@ export default function MapView({
     }
   }, [visibleLayers, cityConfig.id])
 
+  // Load businesses directly for reliability
+  useEffect(() => {
+    if (visibleLayers.includes('businesses')) {
+      console.log('🏢 Loading businesses directly...')
+      fetch(`/api/layers/${cityConfig.id}/businesses`)
+        .then(res => res.json())
+        .then(data => {
+          console.log('✅ Businesses loaded directly:', data.features?.length)
+          setBusinessData(data)
+        })
+        .catch(err => console.error('❌ Error loading businesses:', err))
+    } else {
+      setBusinessData(null)
+    }
+  }, [visibleLayers, cityConfig.id])
+
+  // Load attractions directly for tourism mode
+  useEffect(() => {
+    if (visibleLayers.includes('attractions')) {
+      console.log('🗺️ Loading attractions directly...')
+      fetch(`/api/layers/${cityConfig.id}/attractions`)
+        .then(res => res.json())
+        .then(data => {
+          console.log('✅ Attractions loaded directly:', data.features?.length)
+          setAttractionsData(data)
+        })
+        .catch(err => console.error('❌ Error loading attractions:', err))
+    } else {
+      setAttractionsData(null)
+    }
+  }, [visibleLayers, cityConfig.id])
+
   // Load layer data
   useEffect(() => {
     if (visibleLayers.length === 0) {
@@ -77,8 +115,8 @@ export default function MapView({
       console.log('🗺️ Loading layers:', visibleLayers)
 
       for (const layerId of visibleLayers) {
-        // Skip parcels - loaded separately for reliability
-        if (layerId === 'parcels') continue
+        // Skip parcels, businesses, attractions - loaded separately for reliability
+        if (layerId === 'parcels' || layerId === 'businesses' || layerId === 'attractions') continue
 
         try {
           const response = await fetch(
@@ -121,12 +159,31 @@ export default function MapView({
   const handleClick = useCallback(
     (event: MapLayerMouseEvent) => {
       const feature = event.features?.[0]
+      if (!feature) return
 
-      if (feature && feature.geometry.type === 'Point') {
+      // Get layer ID from the feature's source
+      const sourceId = feature.source as string
+      const layerId = sourceId?.replace('-source', '')
+
+      // Handle attraction clicks - open side panel instead of popup
+      if (layerId === 'attractions' && onAttractionSelect) {
         const coordinates = (feature.geometry as GeoJSON.Point).coordinates
+        onAttractionSelect({
+          name: feature.properties?.name,
+          category: feature.properties?.category,
+          description: feature.properties?.description,
+          highlights: feature.properties?.highlights,
+          hours: feature.properties?.hours,
+          fee: feature.properties?.fee,
+          website: feature.properties?.website,
+          story: feature.properties?.story,
+          coordinates: [coordinates[0], coordinates[1]] as [number, number],
+        })
+        return // Don't show popup for attractions
+      }
 
-        // Get layer ID from the feature's source layer
-        const layerId = event.features?.[0]?.source?.replace('-source', '')
+      if (feature.geometry.type === 'Point') {
+        const coordinates = (feature.geometry as GeoJSON.Point).coordinates
 
         setPopupInfo({
           longitude: coordinates[0],
@@ -136,9 +193,6 @@ export default function MapView({
         })
       } else if (feature) {
         // For polygon/line features, use click location
-        // Get layer ID from the feature's source layer
-        const layerId = event.features?.[0]?.source?.replace('-source', '')
-
         setPopupInfo({
           longitude: event.lngLat.lng,
           latitude: event.lngLat.lat,
@@ -147,7 +201,7 @@ export default function MapView({
         })
       }
     },
-    []
+    [onAttractionSelect]
   )
 
   const getLayerStyle = (layerId: string) => {
@@ -186,6 +240,7 @@ export default function MapView({
       streets: 'mapbox://styles/mapbox/streets-v12',
       light: 'mapbox://styles/mapbox/light-v11',
       dark: 'mapbox://styles/mapbox/dark-v11',
+      outdoors: 'mapbox://styles/mapbox/outdoors-v12',
     }
 
     return styleMap[stylePreference] || styleMap.satellite
@@ -208,8 +263,17 @@ export default function MapView({
           // Direct parcel layers
           'parcels-fill',
           'parcels-outline',
+          // Business markers (all clickable)
+          'businesses-point',
+          'businesses-shadow',
+          'businesses-inner',
+          'businesses-label',
+          // Attraction markers (all clickable)
+          'attractions-point',
+          'attractions-glow',
+          'attractions-icon',
           // Config-driven layers
-          ...visibleLayers.filter(id => id !== 'parcels').flatMap((id) => [
+          ...visibleLayers.filter(id => id !== 'parcels' && id !== 'businesses' && id !== 'attractions').flatMap((id) => [
             `${id}-fill`,
             `${id}-line`,
             `${id}-outline`,
@@ -232,22 +296,24 @@ export default function MapView({
                 'fill-opacity': 0
               }}
             />
-            {/* Red outline - 50% opacity */}
+            {/* Red outline - more visible */}
             <Layer
               id="parcels-outline"
               type="line"
               minzoom={14}
               paint={{
                 'line-color': '#FF0000',
-                'line-width': 2,
-                'line-opacity': 0.5
+                'line-width': 2.5,
+                'line-opacity': 0.7
               }}
             />
           </Source>
         )}
 
-        {/* Render other visible layers */}
-        {visibleLayers.filter(id => id !== 'parcels').map((layerId) => {
+        {/* Render other visible layers (excluding parcels, businesses, attractions which are rendered separately) */}
+        {visibleLayers
+          .filter(id => id !== 'parcels' && id !== 'businesses' && id !== 'attractions')
+          .map((layerId) => {
           const data = layerData[layerId]
           if (!data || !data.features || data.features.length === 0) {
             console.log(`⚠️ Skipping ${layerId}: no data or features`)
@@ -290,15 +356,20 @@ export default function MapView({
               type="geojson"
               data={data}
             >
-              {/* Render polygons - NO FILTER, just render directly */}
+              {/* Render polygons */}
               {hasPolygons && (
                 <>
+                  {/* Fill layer - use explicit style for subdivisions */}
                   <Layer
                     id={`${layerId}-fill`}
                     type="fill"
                     minzoom={layerConfig.minzoom || 0}
-                    paint={getLayerStyle(layerId) as any}
+                    paint={layerId === 'majorsubdivisions' ? {
+                      'fill-color': '#10B981',
+                      'fill-opacity': 0.4,
+                    } : getLayerStyle(layerId) as any}
                   />
+                  {/* Outline layer */}
                   <Layer
                     id={`${layerId}-outline`}
                     type="line"
@@ -306,26 +377,23 @@ export default function MapView({
                     paint={getLayerLineStyle(layerId) as any}
                   />
                   {/* Add text labels for subdivisions */}
-                  {(layerId === 'majorsubdivisions' || layerId === 'minorsubdivisions') && (
+                  {layerId === 'majorsubdivisions' && (
                     <Layer
                       id={`${layerId}-label`}
                       type="symbol"
                       minzoom={layerConfig.minzoom || 0}
                       layout={{
-                        'text-field': layerId === 'majorsubdivisions'
-                          ? ['get', 'sub_name']
-                          : ['get', 'record'],
-                        'text-size': layerId === 'majorsubdivisions' ? 14 : 11,
+                        'text-field': ['get', 'sub_name'],
+                        'text-size': 12,
                         'text-anchor': 'center',
                         'text-justify': 'center',
                         'text-max-width': 8,
                         'text-allow-overlap': false,
-                        'text-ignore-placement': false,
                       }}
                       paint={{
-                        'text-color': layerId === 'majorsubdivisions' ? '#B45309' : '#A16207',
+                        'text-color': '#047857',
                         'text-halo-color': '#ffffff',
-                        'text-halo-width': 2,
+                        'text-halo-width': 1.5,
                         'text-opacity': 0.9,
                       }}
                     />
@@ -342,47 +410,183 @@ export default function MapView({
                 />
               )}
 
-              {/* Render points - with larger, more visible markers */}
+              {/* Render points (non-business) */}
               {hasPoints && (
-                <>
-                  <Layer
-                    id={`${layerId}-point`}
-                    type="circle"
-                    paint={{
-                      'circle-radius': layerId === 'businesses' ? 10 : 6,
-                      'circle-color': layerId === 'businesses' ? '#3B82F6' : (layerConfig.style?.fill || '#3388ff'),
-                      'circle-stroke-width': layerId === 'businesses' ? 3 : 2,
-                      'circle-stroke-color': '#ffffff',
-                      'circle-opacity': 1,
-                    }}
-                  />
-                  {/* Add labels for businesses */}
-                  {layerId === 'businesses' && (
-                    <Layer
-                      id={`${layerId}-label`}
-                      type="symbol"
-                      layout={{
-                        'text-field': ['get', 'name'],
-                        'text-size': 12,
-                        'text-anchor': 'top',
-                        'text-offset': [0, 1],
-                        'text-max-width': 10,
-                        'text-allow-overlap': false,
-                      }}
-                      paint={{
-                        'text-color': '#1E40AF',
-                        'text-halo-color': '#ffffff',
-                        'text-halo-width': 2,
-                      }}
-                    />
-                  )}
-                </>
+                <Layer
+                  id={`${layerId}-point`}
+                  type="circle"
+                  paint={{
+                    'circle-radius': 6,
+                    'circle-color': layerConfig.style?.fill || '#3388ff',
+                    'circle-stroke-width': 2,
+                    'circle-stroke-color': '#ffffff',
+                    'circle-opacity': 1,
+                  }}
+                />
               )}
             </Source>
           )
         })}
 
-        {/* Popup */}
+        {/* BUSINESS MARKERS - Rendered after other layers */}
+        {businessData && visibleLayers.includes('businesses') && (
+          <Source id="businesses-source" type="geojson" data={businessData}>
+            {/* Shadow/glow effect */}
+            <Layer
+              id="businesses-shadow"
+              type="circle"
+              paint={{
+                'circle-radius': 14,
+                'circle-color': '#1E40AF',
+                'circle-opacity': 0.4,
+                'circle-blur': 0.4,
+              }}
+            />
+            {/* Main blue marker */}
+            <Layer
+              id="businesses-point"
+              type="circle"
+              paint={{
+                'circle-radius': 10,
+                'circle-color': '#3B82F6',
+                'circle-stroke-width': 2.5,
+                'circle-stroke-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+            {/* Inner white dot */}
+            <Layer
+              id="businesses-inner"
+              type="circle"
+              paint={{
+                'circle-radius': 3,
+                'circle-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+            {/* Business name labels */}
+            <Layer
+              id="businesses-label"
+              type="symbol"
+              layout={{
+                'text-field': ['get', 'name'],
+                'text-size': 10,
+                'text-anchor': 'top',
+                'text-offset': [0, 1],
+                'text-max-width': 8,
+                'text-allow-overlap': false,
+              }}
+              paint={{
+                'text-color': '#1E40AF',
+                'text-halo-color': '#ffffff',
+                'text-halo-width': 1.5,
+              }}
+            />
+          </Source>
+        )}
+
+        {/* ATTRACTION MARKERS - Tourism mode, beautiful category-colored markers */}
+        {attractionsData && visibleLayers.includes('attractions') && (
+          <Source id="attractions-source" type="geojson" data={attractionsData}>
+            {/* Outer glow based on category */}
+            <Layer
+              id="attractions-glow"
+              type="circle"
+              paint={{
+                'circle-radius': 18,
+                'circle-color': [
+                  'match',
+                  ['get', 'category'],
+                  'State Park', '#059669',
+                  'Historic Site', '#7C3AED',
+                  'Trail', '#0891B2',
+                  'Historic Landmark', '#B45309',
+                  'Museum', '#6366F1',
+                  'Recreation', '#0D9488',
+                  'City Park', '#16A34A',
+                  'Events', '#DC2626',
+                  'Lodging', '#EA580C',
+                  '#F59E0B'
+                ],
+                'circle-opacity': 0.35,
+                'circle-blur': 0.5,
+              }}
+            />
+            {/* Main marker with category color */}
+            <Layer
+              id="attractions-point"
+              type="circle"
+              paint={{
+                'circle-radius': 12,
+                'circle-color': [
+                  'match',
+                  ['get', 'category'],
+                  'State Park', '#059669',
+                  'Historic Site', '#7C3AED',
+                  'Trail', '#0891B2',
+                  'Historic Landmark', '#B45309',
+                  'Museum', '#6366F1',
+                  'Recreation', '#0D9488',
+                  'City Park', '#16A34A',
+                  'Events', '#DC2626',
+                  'Lodging', '#EA580C',
+                  '#F59E0B'
+                ],
+                'circle-stroke-width': 3,
+                'circle-stroke-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+            {/* Icon layer using category emoji */}
+            <Layer
+              id="attractions-icon"
+              type="symbol"
+              layout={{
+                'text-field': [
+                  'match',
+                  ['get', 'category'],
+                  'State Park', '🏞️',
+                  'Historic Site', '🏛️',
+                  'Trail', '🥾',
+                  'Historic Landmark', '🏨',
+                  'Museum', '🖼️',
+                  'Recreation', '🎯',
+                  'City Park', '🌳',
+                  'Events', '🎪',
+                  'Lodging', '🏕️',
+                  '📍'
+                ],
+                'text-size': 14,
+                'text-anchor': 'center',
+                'text-allow-overlap': true,
+              }}
+              paint={{
+                'text-opacity': 1,
+              }}
+            />
+            {/* Attraction name labels */}
+            <Layer
+              id="attractions-label"
+              type="symbol"
+              layout={{
+                'text-field': ['get', 'name'],
+                'text-size': 11,
+                'text-anchor': 'top',
+                'text-offset': [0, 1.8],
+                'text-max-width': 10,
+                'text-allow-overlap': false,
+                'text-font': ['DIN Pro Medium', 'Arial Unicode MS Bold'],
+              }}
+              paint={{
+                'text-color': '#1F2937',
+                'text-halo-color': '#ffffff',
+                'text-halo-width': 2,
+              }}
+            />
+          </Source>
+        )}
+
+        {/* Popup - Compact design */}
         {popupInfo && (
           <Popup
             longitude={popupInfo.longitude}
@@ -391,63 +595,62 @@ export default function MapView({
             onClose={() => setPopupInfo(null)}
             closeButton={true}
             closeOnClick={false}
-            maxWidth="400px"
+            maxWidth="260px"
           >
-            <div className="p-4">
-              {/* Popup Title */}
-              <h3 className="font-bold text-lg text-gray-900 mb-3 border-b-2 border-blue-500 pb-2">
+            <div className="p-2">
+              {/* Popup Title - Compact */}
+              <h3 className="font-semibold text-sm text-gray-900 mb-1.5 border-b border-blue-400 pb-1 leading-tight">
                 {popupInfo.properties.ownername ||
                  popupInfo.properties.name ||
                  popupInfo.properties.roadname ||
                  popupInfo.properties.city ||
                  popupInfo.properties.record ||
-                 'Property Details'}
+                 'Details'}
               </h3>
 
-              {/* Popup Content - Use popup_fields from config if available */}
+              {/* Popup Content - Compact grid layout */}
+              <div className="text-xs space-y-1">
               {(() => {
                 const layerConfig = popupInfo.layerId ? cityConfig.layers[popupInfo.layerId] : null
                 const popupFields = layerConfig?.popup_fields || []
 
+                // Short label map for compact display
+                const labelMap: { [key: string]: string } = {
+                  'ownername': 'Owner',
+                  'addresslin': 'Address',
+                  'address': 'Address',
+                  'citystatez': 'City/State',
+                  'gisacres': 'Acres',
+                  'totalvalue': 'Value',
+                  'totalbuild': 'Bldg Value',
+                  'totallandv': 'Land Value',
+                  'propertyid': 'Parcel #',
+                  'proptype': 'Type',
+                  'sub_name': 'Subdivision',
+                  'record': 'Plat',
+                  'area_acres': 'Acres',
+                  'name': 'Name',
+                  'category': 'Type',
+                  'phone': 'Phone',
+                  'website': 'Website',
+                  'district_n': 'District',
+                  'landuse': 'Use',
+                  'zoned': 'Zone',
+                }
+
                 // If popup_fields are defined, use only those fields
                 if (popupFields.length > 0) {
-                  return popupFields.map((fieldKey) => {
+                  return popupFields
+                    .filter((fieldKey) => {
+                      const value = popupInfo.properties[fieldKey]
+                      // Skip title field (already shown) and empty values
+                      if (fieldKey === 'ownername' || fieldKey === 'name') return false
+                      return value !== null && value !== undefined && value !== ''
+                    })
+                    .slice(0, 6) // Limit to 6 fields max for compact display
+                    .map((fieldKey) => {
                     const value = popupInfo.properties[fieldKey]
-
-                    // Skip null, undefined, or empty values
-                    if (value === null || value === undefined || value === '') return null
-
-                    // Format the label
-                    const labelMap: { [key: string]: string } = {
-                      'ownername': 'Owner',
-                      'addresslin': 'Address',
-                      'address': 'Address',
-                      'gisacres': 'Acreage',
-                      'totalvalue': 'Tax Assessed Value',
-                      'legaldescr': 'Legal Description',
-                      'propertyid': 'Property ID',
-                      'taxyear': 'Tax Year',
-                      'proptype': 'Property Type',
-                      'totalbuild': 'Building Value',
-                      'totallandv': 'Land Value',
-                      'citystatez': 'City/State/ZIP',
-                      'ownercity': 'Owner City',
-                      'ownerstate': 'Owner State',
-                      'area_sqm': 'Area',
-                      'area_acres': 'Area',
-                      'sub_name': 'Subdivision Name',
-                      'record': 'Record',
-                      'name': 'Name',
-                      'category': 'Category',
-                      'phone': 'Phone',
-                      'website': 'Website',
-                    }
-
-                    const label = labelMap[fieldKey] || fieldKey
-                      .replace(/_/g, ' ')
-                      .split(' ')
-                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                      .join(' ')
+                    const label = labelMap[fieldKey] || fieldKey.replace(/_/g, ' ')
 
                     // Format the value
                     let formattedValue: React.ReactNode = String(value)
@@ -455,93 +658,89 @@ export default function MapView({
                     // Format website as link
                     if (fieldKey === 'website' && value) {
                       formattedValue = (
-                        <a
-                          href={value.startsWith('http') ? value : `https://${value}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
-                        >
-                          {value.replace(/^https?:\/\//, '')}
+                        <a href={value.startsWith('http') ? value : `https://${value}`}
+                           target="_blank" rel="noopener noreferrer"
+                           className="text-blue-600 hover:underline">
+                          Link
+                        </a>
+                      )
+                    }
+                    // Format phone as clickable link
+                    else if (fieldKey === 'phone' && value) {
+                      formattedValue = (
+                        <a href={`tel:${value.replace(/\D/g, '')}`}
+                           className="text-blue-600 hover:underline">
+                          {value}
                         </a>
                       )
                     }
                     // Format acreage
-                    else if (fieldKey === 'gisacres' || fieldKey === 'area_acres' || fieldKey.includes('acres')) {
-                      formattedValue = `${Number(value).toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                        minimumFractionDigits: 2
-                      })} acres`
+                    else if (fieldKey === 'gisacres' || fieldKey === 'area_acres') {
+                      formattedValue = `${Number(value).toFixed(2)} ac`
                     }
                     // Format currency values
-                    else if (fieldKey.includes('value') || fieldKey.includes('build') || fieldKey.includes('landv')) {
+                    else if (fieldKey.includes('value') || fieldKey === 'totalbuild' || fieldKey === 'totallandv') {
                       const numValue = Number(value)
                       if (!isNaN(numValue)) {
-                        formattedValue = `$${numValue.toLocaleString(undefined, {
-                          maximumFractionDigits: 0
-                        })}`
+                        formattedValue = `$${(numValue / 1000).toFixed(0)}K`
                       }
-                    }
-                    // Format area in square meters
-                    else if (fieldKey === 'area_sqm') {
-                      formattedValue = `${Number(value).toLocaleString(undefined, {
-                        maximumFractionDigits: 0
-                      })} sq m`
-                    }
-                    // Format lengths
-                    else if (fieldKey.includes('length_')) {
-                      formattedValue = `${Number(value).toLocaleString(undefined, {
-                        maximumFractionDigits: 1
-                      })} ${fieldKey.includes('_m') ? 'm' : 'ft'}`
-                    }
-                    // Format dates (YYYYMMDD)
-                    else if ((fieldKey === 'updated' || fieldKey.includes('date')) && value.toString().length === 8) {
-                      const str = value.toString()
-                      formattedValue = `${str.slice(4,6)}/${str.slice(6,8)}/${str.slice(0,4)}`
                     }
 
                     return (
-                      <div key={fieldKey} className="mb-2">
-                        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                          {label}
-                        </div>
-                        <div className="text-sm text-gray-900 mt-0.5">
-                          {formattedValue}
-                        </div>
+                      <div key={fieldKey} className="flex justify-between gap-2">
+                        <span className="text-gray-500 shrink-0">{label}:</span>
+                        <span className="text-gray-900 text-right truncate">{formattedValue}</span>
                       </div>
                     )
                   })
                 } else {
-                  // Fallback: show all properties if no popup_fields defined
-                  return Object.entries(popupInfo.properties).map(([key, value]) => {
-                    if (
-                      key.startsWith('_') ||
-                      key === 'dataset' ||
-                      key === 'source' ||
-                      key === 'globalid' ||
-                      key === 'ownername' || // Skip since it's in title
-                      value === null ||
-                      value === ''
-                    ) return null
-
-                    const label = key
-                      .replace(/_/g, ' ')
-                      .split(' ')
-                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                      .join(' ')
-
-                    return (
-                      <div key={key} className="mb-2">
-                        <div className="text-xs font-semibold text-gray-500 uppercase">
-                          {label}
-                        </div>
-                        <div className="text-sm text-gray-900">
-                          {String(value)}
-                        </div>
+                  // Fallback: show limited properties
+                  return Object.entries(popupInfo.properties)
+                    .filter(([key, value]) => {
+                      return !key.startsWith('_') &&
+                             key !== 'dataset' && key !== 'source' && key !== 'globalid' &&
+                             key !== 'ownername' && key !== 'name' &&
+                             value !== null && value !== ''
+                    })
+                    .slice(0, 5)
+                    .map(([key, value]) => (
+                      <div key={key} className="flex justify-between gap-2">
+                        <span className="text-gray-500 shrink-0">{labelMap[key] || key}:</span>
+                        <span className="text-gray-900 text-right truncate">{String(value)}</span>
                       </div>
-                    )
-                  })
+                    ))
                 }
               })()}
+              </div>
+
+              {/* Compact action buttons */}
+              <div className="mt-2 pt-1.5 border-t border-gray-200 flex gap-1.5 text-xs">
+                {/* Directions link */}
+                {(popupInfo.properties.addresslin || popupInfo.properties.address) && (
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                      popupInfo.properties.address || popupInfo.properties.addresslin
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  >
+                    Directions
+                  </a>
+                )}
+
+                {/* County Records link - for parcels */}
+                {popupInfo.layerId === 'parcels' && popupInfo.properties.propertyid && (
+                  <a
+                    href={`https://svc.mt.gov/msl/cadastral/?searchTerm=${encodeURIComponent(popupInfo.properties.propertyid)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                  >
+                    Records
+                  </a>
+                )}
+              </div>
             </div>
           </Popup>
         )}

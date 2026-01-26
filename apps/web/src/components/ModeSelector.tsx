@@ -9,6 +9,7 @@ interface ModeSelectorProps {
 const modeIcons: { [key: string]: string } = {
   resident: '🏠',
   business: '🏢',
+  tourism: '🗺️',
   recreation: '🏞️',
   services: '🏛️',
   development: '🏗️',
@@ -17,6 +18,7 @@ const modeIcons: { [key: string]: string } = {
 const modeLabels: { [key: string]: string } = {
   resident: 'Resident',
   business: 'Business',
+  tourism: 'Tourism',
   recreation: 'Parks & Recreation',
   services: 'City Services',
   development: 'Development',

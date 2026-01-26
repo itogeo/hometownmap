@@ -1,4 +1,4 @@
-export type MapMode = 'resident' | 'business' | 'recreation' | 'services' | 'development'
+export type MapMode = 'resident' | 'business' | 'tourism' | 'services' | 'development'
 
 export interface CityConfig {
   id: string
@@ -38,7 +38,7 @@ export interface CityConfig {
 
 export interface ModeConfig {
   enabled: boolean
-  mapStyle?: 'satellite' | 'streets' | 'light' | 'dark'
+  mapStyle?: 'satellite' | 'streets' | 'light' | 'dark' | 'outdoors'
   layers: string[]
   features: string[]
 }
