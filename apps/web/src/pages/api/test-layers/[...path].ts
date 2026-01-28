@@ -9,7 +9,7 @@ export default async function handler(
   const { path: pathParts } = req.query
   const filePath = Array.isArray(pathParts) ? pathParts.join('/') : pathParts
 
-  // Base datasets directory
+  // Base datasets directory (relative to apps/web)
   const baseDir = path.join(process.cwd(), '../../datasets/cities/three-forks')
 
   // Map the request path to actual file locations

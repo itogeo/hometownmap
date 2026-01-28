@@ -33,7 +33,7 @@ const DATASETS: { [category: string]: { id: string; name: string; path: string }
     { id: 'city_boundary', name: 'City Boundary', path: 'processed/city_boundary' },
   ],
   'Districts & Zones': [
-    { id: 'zoningdistricts', name: 'Zoning Districts', path: 'processed/zoningdistricts' },
+    { id: 'zoning_from_website', name: 'Zoning (from Website)', path: 'processed/zoning_from_website' },
     { id: 'firedistricts', name: 'Fire Districts', path: 'processed/firedistricts' },
     { id: 'schooldistricts', name: 'School Districts', path: 'processed/schooldistricts' },
     { id: 'water_sewer_districts', name: 'Water/Sewer Districts', path: 'processed/water_sewer_districts' },
@@ -270,9 +270,9 @@ export default function TestMap() {
 
           {Object.entries(DATASETS).map(([category, datasets]) => (
             <div key={category} className="border-b border-gray-700">
-              <button
+              <div
                 onClick={() => toggleCategory(category)}
-                className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-800"
+                className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-800 cursor-pointer"
               >
                 <span className="font-semibold">{category}</span>
                 <div className="flex items-center gap-2">
@@ -289,7 +289,7 @@ export default function TestMap() {
                     {expandedCategories.has(category) ? '▼' : '▶'}
                   </span>
                 </div>
-              </button>
+              </div>
 
               {expandedCategories.has(category) && (
                 <div className="pb-2">
@@ -403,6 +403,7 @@ export default function TestMap() {
                   data={layer.data}
                 >
                   {/* Polygon fill - filter to only polygons */}
+                  {/* Use data-driven color for zoning districts */}
                   <Layer
                     id={`${layerId}-fill`}
                     type="fill"
@@ -411,8 +412,10 @@ export default function TestMap() {
                       ['==', ['geometry-type'], 'MultiPolygon']
                     ]}
                     paint={{
-                      'fill-color': layer.color,
-                      'fill-opacity': 0.3,
+                      'fill-color': layerId === 'zoning_from_website'
+                        ? ['coalesce', ['get', 'color'], layer.color]
+                        : layer.color,
+                      'fill-opacity': 0.4,
                     }}
                   />
                   {/* Polygon outline */}
@@ -424,7 +427,9 @@ export default function TestMap() {
                       ['==', ['geometry-type'], 'MultiPolygon']
                     ]}
                     paint={{
-                      'line-color': layer.color,
+                      'line-color': layerId === 'zoning_from_website'
+                        ? ['coalesce', ['get', 'color'], layer.color]
+                        : layer.color,
                       'line-width': 2,
                     }}
                   />
