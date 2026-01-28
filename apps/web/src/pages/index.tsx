@@ -44,6 +44,8 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 export default function Home() {
   const [currentMode, setCurrentMode] = useState<MapMode>('resident')
   const [visibleLayers, setVisibleLayers] = useState<string[]>([])
+  const [layerOrder, setLayerOrder] = useState<string[]>([])
+  const [mapStyle, setMapStyle] = useState<'satellite' | 'streets'>('streets')
   const [cityConfig, setCityConfig] = useState<any>(null)
   const [selectedLocation, setSelectedLocation] = useState<{
     longitude: number
@@ -64,6 +66,13 @@ export default function Home() {
         // Set initial layers based on mode - load ALL layers from config
         const modeLayers = config.modes[currentMode]?.layers || []
         setVisibleLayers(modeLayers)
+        // Initialize layer order (reversed so first = rendered on top)
+        setLayerOrder([...modeLayers].reverse())
+        // Set map style from mode config
+        const modeStyle = config.modes[currentMode]?.mapStyle
+        if (modeStyle === 'satellite' || modeStyle === 'streets') {
+          setMapStyle(modeStyle)
+        }
       })
       .catch((err) => console.error('Failed to load city config:', err))
   }, [currentMode])
@@ -118,6 +127,12 @@ export default function Home() {
     if (cityConfig) {
       const modeLayers = cityConfig.modes[mode]?.layers || []
       setVisibleLayers(modeLayers)
+      setLayerOrder([...modeLayers].reverse())
+      // Update map style from mode config
+      const modeStyle = cityConfig.modes[mode]?.mapStyle
+      if (modeStyle === 'satellite' || modeStyle === 'streets') {
+        setMapStyle(modeStyle)
+      }
     }
   }
 
@@ -127,6 +142,26 @@ export default function Home() {
         ? prev.filter((id) => id !== layerId)
         : [...prev, layerId]
     )
+  }
+
+  const handleReorderLayer = (layerId: string, direction: 'up' | 'down') => {
+    setLayerOrder((prev) => {
+      const index = prev.indexOf(layerId)
+      if (index === -1) return prev
+      const newOrder = [...prev]
+      if (direction === 'up' && index > 0) {
+        // Swap with previous (move up = render on top)
+        ;[newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]]
+      } else if (direction === 'down' && index < prev.length - 1) {
+        // Swap with next (move down = render below)
+        ;[newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]]
+      }
+      return newOrder
+    })
+  }
+
+  const toggleMapStyle = () => {
+    setMapStyle((prev) => (prev === 'satellite' ? 'streets' : 'satellite'))
   }
 
   const handleSearchSelect = (result: any) => {
@@ -185,33 +220,31 @@ export default function Home() {
 
       <div className="relative h-screen w-screen overflow-hidden">
         {/* Header */}
-        <header className="absolute top-0 left-0 right-0 z-10 bg-white shadow-md">
-          <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex items-center gap-3">
-              {cityConfig.branding.logo && (
-                <img
-                  src={cityConfig.branding.logo}
-                  alt={`${cityConfig.name} logo`}
-                  className="h-10 w-10"
-                />
-              )}
-              <h1 className="text-xl font-bold text-gray-800">
-                {cityConfig.branding.title}
-              </h1>
-            </div>
+        <header className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
+          <div className="flex items-center justify-between px-4 py-2">
+            <h1 className="text-lg font-semibold text-gray-900">
+              {cityConfig.name}
+            </h1>
 
-            <div className="flex items-center gap-4">
-              <Link
-                href="/projects"
-                className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-sm text-sm font-medium"
-              >
-                <span>🏗️</span>
-                <span>Projects</span>
-              </Link>
+            <div className="flex items-center gap-3">
               <SearchBar
                 cityId={cityConfig.id}
                 onResultSelect={handleSearchSelect}
               />
+              <Link
+                href="/projects"
+                className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+              >
+                Projects
+              </Link>
+              {cityConfig.contact?.phone && (
+                <a
+                  href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`}
+                  className="text-sm text-gray-500 hover:text-gray-700"
+                >
+                  {cityConfig.contact.phone}
+                </a>
+              )}
             </div>
           </div>
 
@@ -225,130 +258,92 @@ export default function Home() {
         </header>
 
         {/* Map */}
-        <div className="absolute inset-0 pt-32">
+        <div className="absolute inset-0 pt-20">
           <MapView
             cityConfig={cityConfig}
             currentMode={currentMode}
             visibleLayers={visibleLayers}
+            layerOrder={layerOrder}
+            mapStyleOverride={mapStyle}
             selectedLocation={selectedLocation}
             onAttractionSelect={handleAttractionSelect}
           />
         </div>
 
-        {/* Business List Panel (Business Mode) - Hover to expand */}
+        {/* Business List Panel */}
         {currentMode === 'business' && businesses.length > 0 && (
-          <aside className="absolute left-2 top-36 z-10 group/biz">
-            {/* Collapsed state - small pill */}
-            <div className="bg-blue-600 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover/biz:hidden">
-              <span>🏢</span> Businesses ({businesses.length})
+          <aside className="absolute left-3 top-24 z-10 w-56 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
+            <div className="p-2 border-b border-gray-100">
+              <span className="text-xs font-medium text-gray-700">{businesses.length} Businesses</span>
             </div>
-            {/* Expanded state on hover */}
-            <div className="hidden group-hover/biz:flex flex-col w-64 bg-white rounded-lg shadow-lg" style={{ maxHeight: 'calc(100vh - 180px)' }}>
-              <div className="flex-1 overflow-y-auto min-h-0">
-                <BusinessListPanel
-                  businesses={businesses}
-                  onBusinessSelect={handleBusinessSelect}
-                  selectedBusiness={selectedBusiness}
-                />
-              </div>
-              {/* Demographics at bottom */}
-              {cityConfig.demographics && (
-                <div className="border-t p-2 bg-gray-50 text-xs shrink-0">
-                  <div className="flex gap-3 text-gray-600">
-                    <span>Pop: <b>{cityConfig.demographics.population?.toLocaleString()}</b></span>
-                    <span>Income: <b>${(cityConfig.demographics.median_income / 1000).toFixed(0)}K</b></span>
-                  </div>
-                </div>
-              )}
+            <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+              <BusinessListPanel
+                businesses={businesses}
+                onBusinessSelect={handleBusinessSelect}
+                selectedBusiness={selectedBusiness}
+              />
             </div>
           </aside>
         )}
 
-        {/* Tourism Panel (Tourism Mode) - Story map style sidebar */}
+        {/* Tourism Panel */}
         {currentMode === 'tourism' && attractions.length > 0 && (
-          <aside className="absolute left-2 top-36 z-10 group/tour">
-            {/* Collapsed state - attractive pill */}
-            <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover/tour:hidden">
-              <span>🗺️</span> Explore ({attractions.length} attractions)
+          <aside className="absolute left-3 top-24 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
+            <div className="p-2 border-b border-gray-100">
+              <span className="text-xs font-medium text-gray-700">{attractions.length} Places</span>
             </div>
-            {/* Expanded state on hover */}
-            <div className="hidden group-hover/tour:flex flex-col w-80 bg-white rounded-lg shadow-xl min-h-0" style={{ maxHeight: 'calc(100vh - 180px)' }}>
-              <div className="flex-1 overflow-y-auto min-h-0">
-                <TourismPanel
-                  attractions={attractions}
-                  onAttractionSelect={handleAttractionSelect}
-                  selectedAttraction={selectedAttraction}
-                />
-              </div>
+            <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+              <TourismPanel
+                attractions={attractions}
+                onAttractionSelect={handleAttractionSelect}
+                selectedAttraction={selectedAttraction}
+              />
             </div>
           </aside>
         )}
 
-        {/* Layer Control - Hover to expand */}
-        <aside className="absolute right-2 top-36 z-10 group/layers">
-          {/* Collapsed state */}
-          <div className="bg-gray-700 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover/layers:hidden">
-            <span>🗺️</span> Layers ({visibleLayers.length})
+        {/* Layer Control */}
+        <aside className="absolute right-3 top-24 z-10 w-48 bg-white rounded shadow-lg">
+          <div className="p-2 border-b border-gray-100 flex items-center justify-between">
+            <span className="text-xs font-medium text-gray-700">Layers</span>
+            <button
+              onClick={toggleMapStyle}
+              className="text-[10px] text-gray-500 hover:text-gray-700"
+            >
+              {mapStyle === 'satellite' ? 'Satellite' : 'Streets'}
+            </button>
           </div>
-          {/* Expanded state */}
-          <div className="hidden group-hover/layers:block w-44 bg-white rounded-lg shadow-lg p-2 max-h-[calc(100vh-160px)] overflow-y-auto">
+          <div className="p-1.5 max-h-[calc(100vh-180px)] overflow-y-auto">
             <LayerControl
               layers={cityConfig.modes[currentMode]?.layers || []}
               visibleLayers={visibleLayers}
               onToggleLayer={toggleLayer}
               layerConfig={cityConfig.layers}
-              allLayers={Object.keys(cityConfig.layers)}
+              layerOrder={layerOrder}
+              onReorderLayer={handleReorderLayer}
             />
           </div>
         </aside>
 
-        {/* City Hall Contact - Compact hover card */}
-        {cityConfig.contact && (
-          <aside className="absolute left-4 bottom-4 z-10 group">
-            {/* Collapsed state - small button */}
-            <div className="bg-blue-600 text-white px-3 py-2 rounded-lg shadow-lg cursor-pointer flex items-center gap-2 text-xs font-medium group-hover:hidden">
-              <span>🏛️</span> City Hall • {cityConfig.contact.phone}
-            </div>
-            {/* Expanded state on hover */}
-            <div className="hidden group-hover:block bg-white rounded-lg shadow-lg overflow-hidden w-64">
-              <div className="bg-blue-600 px-3 py-1.5">
-                <h3 className="font-bold text-white text-xs flex items-center gap-2">
-                  <span>🏛️</span> City Hall
-                </h3>
-              </div>
-              <div className="p-2 space-y-1.5 text-xs">
-                {cityConfig.contact.phone && (
-                  <a
-                    href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`}
-                    className="text-gray-700 hover:text-blue-600 flex items-center gap-2"
-                  >
-                    📞 {cityConfig.contact.phone}
-                  </a>
-                )}
-                {cityConfig.contact.city_hall && (
-                  <a
-                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(cityConfig.contact.city_hall)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-700 hover:text-blue-600 flex items-center gap-2"
-                  >
-                    📍 Directions
-                  </a>
-                )}
-                {cityConfig.contact.website && (
-                  <a
-                    href={cityConfig.contact.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline flex items-center gap-2"
-                  >
-                    🌐 Website
-                  </a>
-                )}
-              </div>
-            </div>
-          </aside>
-        )}
+        {/* Footer links */}
+        <div className="absolute bottom-3 right-3 z-10 flex gap-2 text-[11px]">
+          <Link
+            href="/test-map"
+            className="px-2 py-1 bg-white/90 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+          >
+            Data
+          </Link>
+          {cityConfig.contact?.website && (
+            <a
+              href={cityConfig.contact.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2 py-1 bg-white/90 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+            >
+              City Website
+            </a>
+          )}
+        </div>
       </div>
     </>
   )

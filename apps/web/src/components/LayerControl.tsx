@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { LayerConfig } from '@/types'
 
 interface LayerControlProps {
@@ -6,8 +5,8 @@ interface LayerControlProps {
   visibleLayers: string[]
   onToggleLayer: (layerId: string) => void
   layerConfig: { [key: string]: LayerConfig }
-  allLayers?: string[]
-  onReorderLayers?: (newOrder: string[]) => void
+  layerOrder: string[]
+  onReorderLayer: (layerId: string, direction: 'up' | 'down') => void
 }
 
 export default function LayerControl({
@@ -15,93 +14,66 @@ export default function LayerControl({
   visibleLayers,
   onToggleLayer,
   layerConfig,
-  allLayers,
-  onReorderLayers,
+  layerOrder,
+  onReorderLayer,
 }: LayerControlProps) {
-  const [draggedLayer, setDraggedLayer] = useState<string | null>(null)
-  const [layerOrder, setLayerOrder] = useState<string[]>(allLayers || layers)
-
-  // Update layer order when allLayers changes
-  const displayLayers = layerOrder.filter(id => (allLayers || layers).includes(id))
-
-  const handleDragStart = (e: React.DragEvent, layerId: string) => {
-    setDraggedLayer(layerId)
-    e.dataTransfer.effectAllowed = 'move'
-  }
-
-  const handleDragOver = (e: React.DragEvent, layerId: string) => {
-    e.preventDefault()
-    if (!draggedLayer || draggedLayer === layerId) return
-
-    const newOrder = [...layerOrder]
-    const dragIndex = newOrder.indexOf(draggedLayer)
-    const hoverIndex = newOrder.indexOf(layerId)
-
-    if (dragIndex !== -1 && hoverIndex !== -1) {
-      newOrder.splice(dragIndex, 1)
-      newOrder.splice(hoverIndex, 0, draggedLayer)
-      setLayerOrder(newOrder)
-    }
-  }
-
-  const handleDragEnd = () => {
-    setDraggedLayer(null)
-    if (onReorderLayers) {
-      onReorderLayers(layerOrder)
-    }
-  }
+  const displayLayers = layerOrder.filter(id => layers.includes(id))
 
   return (
-    <div>
-      <h3 className="font-semibold text-xs text-gray-700 mb-1.5 flex items-center gap-1">
-        <span>🗺️</span> Layers
-      </h3>
-      <div className="space-y-0.5">
-        {displayLayers.map((layerId) => {
-          const config = layerConfig[layerId]
-          if (!config) return null
+    <div className="space-y-0.5">
+      {displayLayers.map((layerId, index) => {
+        const config = layerConfig[layerId]
+        if (!config) return null
 
-          const isVisible = visibleLayers.includes(layerId)
-          const fillColor = config.style?.fill || '#3388ff'
-          const isDragging = draggedLayer === layerId
+        const isVisible = visibleLayers.includes(layerId)
+        const color = config.style?.fill || config.style?.stroke || '#888'
 
-          return (
-            <label
-              key={layerId}
-              draggable
-              onDragStart={(e) => handleDragStart(e, layerId)}
-              onDragOver={(e) => handleDragOver(e, layerId)}
-              onDragEnd={handleDragEnd}
-              className={`flex items-center gap-1.5 cursor-pointer p-1 rounded text-xs transition-all ${
-                isDragging ? 'opacity-50 bg-blue-100' : 'hover:bg-gray-50'
-              }`}
+        return (
+          <div
+            key={layerId}
+            className="flex items-center gap-1.5 py-0.5 text-[11px]"
+          >
+            {/* Reorder */}
+            <div className="flex flex-col text-[8px] text-gray-400 leading-none">
+              <button
+                onClick={() => onReorderLayer(layerId, 'up')}
+                disabled={index === 0}
+                className={index === 0 ? 'opacity-20' : 'hover:text-gray-600'}
+              >
+                ▲
+              </button>
+              <button
+                onClick={() => onReorderLayer(layerId, 'down')}
+                disabled={index === displayLayers.length - 1}
+                className={index === displayLayers.length - 1 ? 'opacity-20' : 'hover:text-gray-600'}
+              >
+                ▼
+              </button>
+            </div>
+
+            {/* Toggle */}
+            <button
+              onClick={() => onToggleLayer(layerId)}
+              className="flex-1 flex items-center gap-1.5 text-left"
             >
-              {/* Drag handle */}
-              <span className="text-gray-300 cursor-grab active:cursor-grabbing text-[10px]">⋮⋮</span>
-              <input
-                type="checkbox"
-                checked={isVisible}
-                onChange={() => onToggleLayer(layerId)}
-                className="w-3 h-3 text-blue-600 rounded focus:ring-1 focus:ring-blue-500"
-              />
-              {/* Color dot */}
               <div
-                className="w-2.5 h-2.5 rounded-full border shrink-0"
+                className="w-2.5 h-2.5 rounded-sm border"
                 style={{
-                  backgroundColor: fillColor,
-                  borderColor: config.style?.stroke || fillColor,
+                  backgroundColor: isVisible ? color : 'transparent',
+                  borderColor: color,
+                  opacity: isVisible ? 1 : 0.4,
                 }}
               />
-              <span className={`truncate ${isVisible ? 'text-gray-800' : 'text-gray-400'}`}>
+              <span className={isVisible ? 'text-gray-900' : 'text-gray-400'}>
                 {config.display_name}
               </span>
-            </label>
-          )
-        })}
-      </div>
+            </button>
+          </div>
+        )
+      })}
 
       {displayLayers.length === 0 && (
-        <p className="text-xs text-gray-400 italic">No layers</p>
+        <p className="text-[10px] text-gray-400 py-2">No layers</p>
       )}
     </div>
   )

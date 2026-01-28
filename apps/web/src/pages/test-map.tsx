@@ -24,38 +24,41 @@ const NavigationControl = dynamic(
 
 // All available datasets organized by category
 const DATASETS: { [category: string]: { id: string; name: string; path: string }[] } = {
-  'Processed (Main)': [
+  'Core Layers': [
     { id: 'parcels', name: 'Parcels', path: 'processed/parcels' },
     { id: 'roads', name: 'Roads', path: 'processed/roads' },
     { id: 'buildings', name: 'Buildings', path: 'processed/buildings' },
     { id: 'waterways', name: 'Waterways', path: 'processed/waterways' },
     { id: 'cities', name: 'Cities', path: 'processed/cities' },
     { id: 'city_boundary', name: 'City Boundary', path: 'processed/city_boundary' },
+  ],
+  'Districts & Zones': [
     { id: 'zoningdistricts', name: 'Zoning Districts', path: 'processed/zoningdistricts' },
     { id: 'firedistricts', name: 'Fire Districts', path: 'processed/firedistricts' },
     { id: 'schooldistricts', name: 'School Districts', path: 'processed/schooldistricts' },
     { id: 'water_sewer_districts', name: 'Water/Sewer Districts', path: 'processed/water_sewer_districts' },
-    { id: 'majorsubdivisions', name: 'Major Subdivisions', path: 'processed/majorsubdivisions' },
-    { id: 'minorsubdivisions', name: 'Minor Subdivisions', path: 'processed/minorsubdivisions' },
+    { id: 'planning_juris', name: 'Planning Jurisdictions', path: 'gallatin/planning_jurisdictions' },
+  ],
+  'Subdivisions': [
+    { id: 'subdivisions', name: 'Subdivisions', path: 'processed/subdivisions' },
+    { id: 'minor_subdivisions', name: 'Minor Subdivisions', path: 'processed/minor_subdivisions' },
+  ],
+  'Points of Interest': [
     { id: 'businesses', name: 'Businesses', path: 'processed/businesses' },
     { id: 'attractions', name: 'Attractions', path: 'processed/attractions' },
     { id: 'projects', name: 'Capital Projects', path: 'processed/projects' },
   ],
-  'Gallatin County (New)': [
+  'Environmental': [
     { id: 'fema_flood', name: 'FEMA Flood Zones', path: 'gallatin/fema_flood_zones' },
     { id: 'soils', name: 'Soils (NRCS)', path: 'gallatin/soils_nrcs' },
     { id: 'landslides', name: 'Landslides', path: 'gallatin/landslides' },
+    { id: 'wui', name: 'Wildland Urban Interface', path: 'gallatin/wildland_urban_interface' },
+    { id: 'conservation', name: 'Conservation Easements', path: 'gallatin/conservation_easements' },
+  ],
+  'Water Infrastructure': [
     { id: 'groundwater_wells', name: 'Groundwater Wells', path: 'gallatin/groundwater_monitor_wells' },
     { id: 'wastewater', name: 'Wastewater Systems', path: 'gallatin/wastewater_treatment_systems' },
     { id: 'water_supply', name: 'Water Supply Systems', path: 'gallatin/water_supply_systems' },
-    { id: 'gal_subdivisions', name: 'Subdivisions', path: 'gallatin/subdivisions' },
-    { id: 'gal_minor_subs', name: 'Minor Subdivisions', path: 'gallatin/minor_subdivisions' },
-    { id: 'conservation', name: 'Conservation Easements', path: 'gallatin/conservation_easements' },
-    { id: 'wui', name: 'Wildland Urban Interface', path: 'gallatin/wildland_urban_interface' },
-    { id: 'planning_juris', name: 'Planning Jurisdictions', path: 'gallatin/planning_jurisdictions' },
-  ],
-  'Boundaries': [
-    { id: 'expansion_5mi', name: '5-Mile Expansion', path: 'boundaries/expansion_5mi' },
   ],
 }
 
@@ -89,7 +92,7 @@ export default function TestMap() {
   const [layers, setLayers] = useState<{ [id: string]: LayerData }>({})
   const [enabledLayers, setEnabledLayers] = useState<Set<string>>(new Set())
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
-    new Set(['Processed (Main)', 'Gallatin County (New)'])
+    new Set(['Core Layers', 'Districts & Zones', 'Subdivisions'])
   )
 
   // Initialize layers
@@ -114,23 +117,49 @@ export default function TestMap() {
     setLayers(initialLayers)
   }, [])
 
-  // Load a layer
+  // Load a layer - use functional state update to avoid stale closure issues
   const loadLayer = useCallback(async (layerId: string) => {
-    const layer = layers[layerId]
-    if (!layer || layer.data) return
+    // Get the layer path from DATASETS directly to avoid stale state
+    let layerPath: string | null = null
+    Object.values(DATASETS).forEach((datasets) => {
+      const found = datasets.find((d) => d.id === layerId)
+      if (found) layerPath = found.path
+    })
 
-    setLayers((prev) => ({
-      ...prev,
-      [layerId]: { ...prev[layerId], loading: true, error: null },
-    }))
+    if (!layerPath) {
+      console.error(`Layer ${layerId} not found in DATASETS`)
+      return
+    }
+
+    // Check if already loaded or loading
+    setLayers((prev) => {
+      if (prev[layerId]?.data || prev[layerId]?.loading) return prev
+      return {
+        ...prev,
+        [layerId]: { ...prev[layerId], loading: true, error: null },
+      }
+    })
 
     try {
-      const response = await fetch(`/api/test-layers/${layer.path}`)
+      console.log(`Loading layer: ${layerId} from /api/test-layers/${layerPath}`)
+      const response = await fetch(`/api/test-layers/${layerPath}`)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
       const data = await response.json()
       const featureCount = data.features?.length || 0
-      const geometryType = data.features?.[0]?.geometry?.type || null
+
+      // Detect all geometry types in the dataset
+      const geometryTypes = new Set<string>()
+      data.features?.forEach((f: any) => {
+        if (f.geometry?.type) {
+          geometryTypes.add(f.geometry.type)
+        }
+      })
+      const geometryType = geometryTypes.size > 0
+        ? Array.from(geometryTypes).join(', ')
+        : null
+
+      console.log(`Loaded ${layerId}: ${featureCount} features, types: ${geometryType}`)
 
       setLayers((prev) => ({
         ...prev,
@@ -143,6 +172,7 @@ export default function TestMap() {
         },
       }))
     } catch (error: any) {
+      console.error(`Error loading ${layerId}:`, error)
       setLayers((prev) => ({
         ...prev,
         [layerId]: {
@@ -152,7 +182,7 @@ export default function TestMap() {
         },
       }))
     }
-  }, [layers])
+  }, [])
 
   // Toggle layer visibility
   const toggleLayer = useCallback((layerId: string) => {
@@ -162,14 +192,12 @@ export default function TestMap() {
         next.delete(layerId)
       } else {
         next.add(layerId)
-        // Load if not loaded
-        if (!layers[layerId]?.data && !layers[layerId]?.loading) {
-          loadLayer(layerId)
-        }
+        // Load the layer (loadLayer will check if already loaded)
+        loadLayer(layerId)
       }
       return next
     })
-  }, [layers, loadLayer])
+  }, [loadLayer])
 
   // Toggle category expansion
   const toggleCategory = (category: string) => {
@@ -214,7 +242,7 @@ export default function TestMap() {
   return (
     <>
       <Head>
-        <title>Test Map - Dataset Viewer</title>
+        <title>Data Index - Three Forks</title>
         <link
           href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
           rel="stylesheet"
@@ -225,8 +253,8 @@ export default function TestMap() {
         {/* Sidebar - Layer List */}
         <aside className="w-80 bg-gray-900 text-white overflow-y-auto">
           <div className="p-4 border-b border-gray-700">
-            <h1 className="text-xl font-bold">Test Map</h1>
-            <p className="text-sm text-gray-400 mt-1">Dataset Visualization Tool</p>
+            <h1 className="text-xl font-bold">Data Index</h1>
+            <p className="text-sm text-gray-400 mt-1">All Available Datasets</p>
             <div className="flex gap-2 mt-3">
               <button
                 onClick={disableAll}
@@ -300,7 +328,13 @@ export default function TestMap() {
                             {layer?.data && (
                               <div className="text-xs text-gray-400">
                                 {layer.featureCount} features • {layer.geometryType}
+                                {layer.geometryType?.includes('GeometryCollection') && (
+                                  <span className="text-yellow-400"> ⚠️</span>
+                                )}
                               </div>
+                            )}
+                            {layer?.featureCount === 0 && layer?.data && (
+                              <div className="text-xs text-yellow-400">Empty dataset</div>
                             )}
                           </div>
 
@@ -347,21 +381,19 @@ export default function TestMap() {
           <Map
             mapboxAccessToken={mapboxToken}
             initialViewState={{
-              longitude: -111.5514,
-              latitude: 45.8925,
-              zoom: 13,
+              longitude: -111.5,
+              latitude: 45.85,
+              zoom: 10,
             }}
             style={{ width: '100%', height: '100%' }}
             mapStyle="mapbox://styles/mapbox/light-v11"
           >
             <NavigationControl position="top-right" />
 
-            {/* Render enabled layers */}
+            {/* Render enabled layers - render ALL geometry types for each layer */}
             {Array.from(enabledLayers).map((layerId) => {
               const layer = layers[layerId]
               if (!layer?.data) return null
-
-              const geomType = layer.geometryType
 
               return (
                 <Source
@@ -370,53 +402,62 @@ export default function TestMap() {
                   type="geojson"
                   data={layer.data}
                 >
-                  {/* Polygon fill */}
-                  {(geomType === 'Polygon' || geomType === 'MultiPolygon') && (
-                    <>
-                      <Layer
-                        id={`${layerId}-fill`}
-                        type="fill"
-                        paint={{
-                          'fill-color': layer.color,
-                          'fill-opacity': 0.3,
-                        }}
-                      />
-                      <Layer
-                        id={`${layerId}-outline`}
-                        type="line"
-                        paint={{
-                          'line-color': layer.color,
-                          'line-width': 2,
-                        }}
-                      />
-                    </>
-                  )}
+                  {/* Polygon fill - filter to only polygons */}
+                  <Layer
+                    id={`${layerId}-fill`}
+                    type="fill"
+                    filter={['any',
+                      ['==', ['geometry-type'], 'Polygon'],
+                      ['==', ['geometry-type'], 'MultiPolygon']
+                    ]}
+                    paint={{
+                      'fill-color': layer.color,
+                      'fill-opacity': 0.3,
+                    }}
+                  />
+                  {/* Polygon outline */}
+                  <Layer
+                    id={`${layerId}-outline`}
+                    type="line"
+                    filter={['any',
+                      ['==', ['geometry-type'], 'Polygon'],
+                      ['==', ['geometry-type'], 'MultiPolygon']
+                    ]}
+                    paint={{
+                      'line-color': layer.color,
+                      'line-width': 2,
+                    }}
+                  />
 
-                  {/* Line */}
-                  {(geomType === 'LineString' || geomType === 'MultiLineString') && (
-                    <Layer
-                      id={`${layerId}-line`}
-                      type="line"
-                      paint={{
-                        'line-color': layer.color,
-                        'line-width': 3,
-                      }}
-                    />
-                  )}
+                  {/* Lines - filter to only lines */}
+                  <Layer
+                    id={`${layerId}-line`}
+                    type="line"
+                    filter={['any',
+                      ['==', ['geometry-type'], 'LineString'],
+                      ['==', ['geometry-type'], 'MultiLineString']
+                    ]}
+                    paint={{
+                      'line-color': layer.color,
+                      'line-width': 3,
+                    }}
+                  />
 
-                  {/* Point */}
-                  {(geomType === 'Point' || geomType === 'MultiPoint') && (
-                    <Layer
-                      id={`${layerId}-point`}
-                      type="circle"
-                      paint={{
-                        'circle-radius': 6,
-                        'circle-color': layer.color,
-                        'circle-stroke-width': 2,
-                        'circle-stroke-color': '#ffffff',
-                      }}
-                    />
-                  )}
+                  {/* Points - filter to only points */}
+                  <Layer
+                    id={`${layerId}-point`}
+                    type="circle"
+                    filter={['any',
+                      ['==', ['geometry-type'], 'Point'],
+                      ['==', ['geometry-type'], 'MultiPoint']
+                    ]}
+                    paint={{
+                      'circle-radius': 6,
+                      'circle-color': layer.color,
+                      'circle-stroke-width': 2,
+                      'circle-stroke-color': '#ffffff',
+                    }}
+                  />
                 </Source>
               )
             })}

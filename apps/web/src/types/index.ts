@@ -1,4 +1,4 @@
-export type MapMode = 'resident' | 'business' | 'tourism' | 'services' | 'development'
+export type MapMode = 'resident' | 'services' | 'environmental' | 'tourism' | 'development' | 'business'
 
 export interface CityConfig {
   id: string
