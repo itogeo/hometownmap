@@ -245,12 +245,6 @@ export default function Home() {
                   Development
                 </Link>
                 <Link
-                  href="/projects"
-                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
-                >
-                  Projects
-                </Link>
-                <Link
                   href="/resources"
                   className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
                 >

@@ -277,12 +277,12 @@ export default function ResourcesPage() {
                 <div className="text-xs text-gray-500">Statewide property data</div>
               </a>
               <Link
-                href="/projects"
+                href="/development"
                 className="bg-white rounded-lg p-3 border border-blue-200 hover:border-blue-400 text-center"
               >
                 <div className="text-xl mb-1">🏗️</div>
-                <div className="text-sm font-medium text-gray-900">City Projects</div>
-                <div className="text-xs text-gray-500">Capital improvements</div>
+                <div className="text-sm font-medium text-gray-900">Development Guide</div>
+                <div className="text-xs text-gray-500">Permits & zoning</div>
               </Link>
             </div>
           </section>

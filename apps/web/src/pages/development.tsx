@@ -366,12 +366,12 @@ export default function DevelopmentPage() {
                 <p className="text-sm text-gray-600">Property records and surveys</p>
               </a>
               <Link
-                href="/projects"
+                href="/resources"
                 className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <div className="text-xl mb-2">🏗️</div>
-                <h3 className="font-medium text-gray-900">City Projects</h3>
-                <p className="text-sm text-gray-600">Planned infrastructure improvements</p>
+                <div className="text-xl mb-2">📞</div>
+                <h3 className="font-medium text-gray-900">City Contacts</h3>
+                <p className="text-sm text-gray-600">Who to call for help</p>
               </Link>
             </div>
           </section>
