@@ -226,25 +226,37 @@ export default function Home() {
               {cityConfig.name}
             </h1>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <SearchBar
                 cityId={cityConfig.id}
                 onResultSelect={handleSearchSelect}
               />
-              <Link
-                href="/projects"
-                className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
-              >
-                Projects
-              </Link>
-              {cityConfig.contact?.phone && (
-                <a
-                  href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`}
-                  className="text-sm text-gray-500 hover:text-gray-700"
+              <nav className="hidden md:flex items-center gap-1">
+                <Link
+                  href="/visit"
+                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
                 >
-                  {cityConfig.contact.phone}
-                </a>
-              )}
+                  Visit
+                </Link>
+                <Link
+                  href="/development"
+                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+                >
+                  Development
+                </Link>
+                <Link
+                  href="/projects"
+                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+                >
+                  Projects
+                </Link>
+                <Link
+                  href="/resources"
+                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+                >
+                  Resources
+                </Link>
+              </nav>
             </div>
           </div>
 
@@ -326,23 +338,42 @@ export default function Home() {
         </aside>
 
         {/* Footer links */}
-        <div className="absolute bottom-3 right-3 z-10 flex gap-2 text-[11px]">
-          <Link
-            href="/test-map"
-            className="px-2 py-1 bg-white/90 text-gray-600 hover:text-gray-900 rounded shadow-sm"
-          >
-            Data
-          </Link>
-          {cityConfig.contact?.website && (
-            <a
-              href={cityConfig.contact.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-2 py-1 bg-white/90 text-gray-600 hover:text-gray-900 rounded shadow-sm"
-            >
-              City Website
+        <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end">
+          {/* Left: Contact info */}
+          <div className="bg-white/95 rounded-lg shadow-sm px-3 py-2 text-[11px]">
+            <div className="font-medium text-gray-700">Three Forks City Hall</div>
+            <a href="tel:4062853431" className="text-blue-600 hover:text-blue-800">
+              (406) 285-3431
             </a>
-          )}
+            <span className="text-gray-400 mx-1">|</span>
+            <span className="text-gray-500">206 Main St</span>
+          </div>
+
+          {/* Right: Quick links */}
+          <div className="flex gap-2 text-[11px]">
+            <Link
+              href="/resources"
+              className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+            >
+              Who Do I Call?
+            </Link>
+            <Link
+              href="/test-map"
+              className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+            >
+              All Data
+            </Link>
+            {cityConfig.contact?.website && (
+              <a
+                href={cityConfig.contact.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+              >
+                City Website
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </>
