@@ -5,7 +5,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5039, 45.9253]
+        "coordinates": [-111.4980, 45.9208]
       },
       "properties": {
         "name": "Missouri Headwaters State Park",
@@ -24,7 +24,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.6175, 45.8401]
+        "coordinates": [-111.4720, 45.7943]
       },
       "properties": {
         "name": "Madison Buffalo Jump State Park",
@@ -43,7 +43,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.8686, 45.8317]
+        "coordinates": [-111.8508, 45.8229]
       },
       "properties": {
         "name": "Lewis and Clark Caverns State Park",
@@ -62,7 +62,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5445, 45.8868]
+        "coordinates": [-111.5480, 45.8950]
       },
       "properties": {
         "name": "Headwaters Trail System",
@@ -80,7 +80,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5518, 45.8918]
+        "coordinates": [-111.5515, 45.8930]
       },
       "properties": {
         "name": "Sacajawea Hotel",
@@ -96,7 +96,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5513, 45.8895]
+        "coordinates": [-111.5515, 45.8910]
       },
       "properties": {
         "name": "Headwaters Heritage Museum",
@@ -114,7 +114,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5602, 45.9012]
+        "coordinates": [-111.5450, 45.9050]
       },
       "properties": {
         "name": "Headwaters Golf Course",
@@ -131,7 +131,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5401, 45.8795]
+        "coordinates": [-111.5420, 45.9030]
       },
       "properties": {
         "name": "Three Forks Ponds",
@@ -148,7 +148,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5505, 45.8932]
+        "coordinates": [-111.5530, 45.8915]
       },
       "properties": {
         "name": "Stevenson Park",
@@ -164,7 +164,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5515, 45.8942]
+        "coordinates": [-111.5510, 45.8960]
       },
       "properties": {
         "name": "John Q. Adams Milwaukee Railroad Park",
@@ -181,7 +181,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5488, 45.9025]
+        "coordinates": [-111.5560, 45.8985]
       },
       "properties": {
         "name": "Three Forks Rodeo Arena",
@@ -197,7 +197,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5510, 45.8908]
+        "coordinates": [-111.5520, 45.8920]
       },
       "properties": {
         "name": "Veterans Memorial Park",
@@ -213,7 +213,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5522, 45.8905]
+        "coordinates": [-111.5525, 45.8905]
       },
       "properties": {
         "name": "Sacajawea Park",
@@ -229,7 +229,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5194, 45.8828]
+        "coordinates": [-111.6023, 45.9027]
       },
       "properties": {
         "name": "Three Forks KOA",
@@ -244,7 +244,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5145, 45.9165]
+        "coordinates": [-111.5050, 45.9150]
       },
       "properties": {
         "name": "Jefferson River Access",
@@ -260,7 +260,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.4752, 45.9325]
+        "coordinates": [-111.4850, 45.9280]
       },
       "properties": {
         "name": "Madison River Access",
@@ -276,7 +276,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5128, 45.9285]
+        "coordinates": [-111.4920, 45.9220]
       },
       "properties": {
         "name": "Gallatin River Access",

@@ -676,8 +676,8 @@ export default function MapView({
 
         {/* Popup */}
         {popupInfo && popupInfo.features.length > 0 && (() => {
-          // Filter out city from popup, get parcel and subdivision info
-          const validFeatures = popupInfo.features.filter(f => f.layerId !== 'cities')
+          // Filter out city and buildings from popup, get parcel and subdivision info
+          const validFeatures = popupInfo.features.filter(f => f.layerId !== 'cities' && f.layerId !== 'buildings')
           if (validFeatures.length === 0) return null
 
           const parcel = validFeatures.find(f => f.layerId === 'parcels')
@@ -712,22 +712,12 @@ export default function MapView({
                   <div>
                     <div className="font-semibold text-gray-900">{parcel.properties.ownername || 'Unknown Owner'}</div>
                     <div className="text-gray-600 mt-0.5">
-                      {parcel.properties.totalvalue && <span>${(Number(parcel.properties.totalvalue) / 1000).toFixed(0)}K</span>}
+                      {parcel.properties.totalvalue && <span>Tax Assessed: ${(Number(parcel.properties.totalvalue) / 1000).toFixed(0)}K</span>}
                       {parcel.properties.totalvalue && parcel.properties.gisacres && <span className="mx-1">·</span>}
                       {parcel.properties.gisacres && <span>{Number(parcel.properties.gisacres).toFixed(2)} ac</span>}
                     </div>
                     {parcel.properties.addresslin && (
                       <div className="text-gray-500 text-[10px] mt-1">{parcel.properties.addresslin}</div>
-                    )}
-                    {parcel.properties.propertyid && (
-                      <a
-                        href={`https://svc.mt.gov/msl/cadastral/?searchTerm=${encodeURIComponent(parcel.properties.propertyid)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[9px] text-blue-600 hover:underline mt-1 inline-block"
-                      >
-                        {parcel.properties.propertyid} →
-                      </a>
                     )}
                   </div>
                 )}
