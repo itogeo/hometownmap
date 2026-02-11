@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Map, { Source, Layer, Popup, NavigationControl } from 'react-map-gl'
 import type { MapRef, MapLayerMouseEvent } from 'react-map-gl'
 import { CityConfig, MapMode, Feature } from '@/types'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface MapViewProps {
   cityConfig: CityConfig
@@ -29,6 +30,7 @@ export default function MapView({
   onAttractionSelect,
 }: MapViewProps) {
   const mapRef = useRef<MapRef>(null)
+  const isMobile = useIsMobile()
   const [layerData, setLayerData] = useState<{ [key: string]: any }>({})
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null)
   const [popupInfo, setPopupInfo] = useState<{
@@ -843,11 +845,25 @@ export default function MapView({
               latitude={popupInfo.latitude}
               anchor={popupInfo.screenY < 300 ? 'top' : 'bottom'}
               onClose={() => setPopupInfo(null)}
-              closeButton={true}
-              closeOnClick={false}
-              maxWidth="200px"
+              closeButton={false}
+              closeOnClick={true}
+              maxWidth={isMobile ? "calc(100vw - 32px)" : "320px"}
+              className="mobile-popup"
             >
-              <div className="text-[11px]">
+              {/* Custom close button - touch friendly */}
+              <button
+                onClick={() => setPopupInfo(null)}
+                className="absolute top-1 right-1 z-10 w-8 h-8 flex items-center justify-center
+                           bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600
+                           touch-manipulation transition-colors"
+                aria-label="Close popup"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="text-[11px] max-h-[60vh] overflow-y-auto overscroll-contain pr-6">
                 {/* Subdivision header */}
                 {subdivName && (
                   <div className="bg-amber-100 text-amber-800 px-2 py-1 -mx-2.5 -mt-1 mb-1.5 text-[10px] font-medium">

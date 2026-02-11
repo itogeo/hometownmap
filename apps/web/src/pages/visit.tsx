@@ -151,7 +151,7 @@ export default function VisitPage() {
 
         <div className="max-w-7xl mx-auto px-4 py-6">
           {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 text-center">
               <div className="text-3xl mb-1">🏞️</div>
               <div className="text-2xl font-bold text-blue-600">{attractions.length}</div>
@@ -283,7 +283,7 @@ export default function VisitPage() {
                 </div>
               )}
 
-              <div className="grid grid-cols-3 gap-4 mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
                 {selectedAttraction.hours && (
                   <div>
                     <div className="text-sm text-gray-500">Hours</div>

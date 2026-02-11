@@ -8,6 +8,9 @@ import SearchBar from '@/components/SearchBar'
 import WelcomeModal from '@/components/WelcomeModal'
 import BusinessListPanel from '@/components/BusinessListPanel'
 import TourismPanel from '@/components/TourismPanel'
+import MobileMenu from '@/components/MobileMenu'
+import BottomSheet from '@/components/BottomSheet'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { MapMode } from '@/types'
 
 interface Business {
@@ -56,6 +59,9 @@ export default function Home() {
   const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null)
   const [attractions, setAttractions] = useState<Attraction[]>([])
   const [selectedAttraction, setSelectedAttraction] = useState<string | null>(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLayerSheetOpen, setIsLayerSheetOpen] = useState(false)
+  const isMobile = useIsMobile()
 
   // Load city configuration
   useEffect(() => {
@@ -218,6 +224,13 @@ export default function Home() {
 
       <WelcomeModal cityName={cityConfig.name} />
 
+      {/* Mobile Menu */}
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        cityName={cityConfig.name}
+      />
+
       <div className="relative h-screen w-screen overflow-hidden">
         {/* Header */}
         <header className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
@@ -230,6 +243,7 @@ export default function Home() {
               <SearchBar
                 cityId={cityConfig.id}
                 onResultSelect={handleSearchSelect}
+                className="w-full sm:w-80"
               />
               <nav className="hidden md:flex items-center gap-1">
                 <Link
@@ -251,6 +265,18 @@ export default function Home() {
                   Resources
                 </Link>
               </nav>
+
+              {/* Mobile menu button */}
+              <button
+                className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg
+                           bg-gray-100 hover:bg-gray-200 transition-colors touch-manipulation"
+                onClick={() => setIsMobileMenuOpen(true)}
+                aria-label="Open menu"
+              >
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -276,8 +302,8 @@ export default function Home() {
           />
         </div>
 
-        {/* Business List Panel */}
-        {currentMode === 'business' && businesses.length > 0 && (
+        {/* Business List Panel - Desktop */}
+        {currentMode === 'business' && businesses.length > 0 && !isMobile && (
           <aside className="absolute left-3 top-24 z-10 w-56 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{businesses.length} Businesses</span>
@@ -292,8 +318,25 @@ export default function Home() {
           </aside>
         )}
 
-        {/* Tourism Panel */}
-        {currentMode === 'tourism' && attractions.length > 0 && (
+        {/* Business List Panel - Mobile Bottom Sheet */}
+        {currentMode === 'business' && businesses.length > 0 && isMobile && (
+          <BottomSheet
+            isOpen={true}
+            onClose={() => {}}
+            title={`${businesses.length} Businesses`}
+            defaultHeight={40}
+            minHeight={15}
+          >
+            <BusinessListPanel
+              businesses={businesses}
+              onBusinessSelect={handleBusinessSelect}
+              selectedBusiness={selectedBusiness}
+            />
+          </BottomSheet>
+        )}
+
+        {/* Tourism Panel - Desktop */}
+        {currentMode === 'tourism' && attractions.length > 0 && !isMobile && (
           <aside className="absolute left-3 top-24 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{attractions.length} Places</span>
@@ -308,67 +351,134 @@ export default function Home() {
           </aside>
         )}
 
-        {/* Layer Control */}
-        <aside className="absolute right-3 top-24 z-10 w-48 bg-white rounded shadow-lg">
-          <div className="p-2 border-b border-gray-100 flex items-center justify-between">
-            <span className="text-xs font-medium text-gray-700">Layers</span>
-            <button
-              onClick={toggleMapStyle}
-              className="text-[10px] text-gray-500 hover:text-gray-700"
-            >
-              {mapStyle === 'satellite' ? 'Satellite' : 'Streets'}
-            </button>
-          </div>
-          <div className="p-1.5 max-h-[calc(100vh-180px)] overflow-y-auto">
-            <LayerControl
-              layers={cityConfig.modes[currentMode]?.layers || []}
-              visibleLayers={visibleLayers}
-              onToggleLayer={toggleLayer}
-              layerConfig={cityConfig.layers}
-              layerOrder={layerOrder}
-              onReorderLayer={handleReorderLayer}
+        {/* Tourism Panel - Mobile Bottom Sheet */}
+        {currentMode === 'tourism' && attractions.length > 0 && isMobile && (
+          <BottomSheet
+            isOpen={true}
+            onClose={() => {}}
+            title={`${attractions.length} Places`}
+            defaultHeight={40}
+            minHeight={15}
+          >
+            <TourismPanel
+              attractions={attractions}
+              onAttractionSelect={handleAttractionSelect}
+              selectedAttraction={selectedAttraction}
             />
-          </div>
-        </aside>
+          </BottomSheet>
+        )}
 
-        {/* Footer links */}
-        <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end">
-          {/* Left: Contact info */}
-          <div className="bg-white/95 rounded-lg shadow-sm px-3 py-2 text-[11px]">
-            <div className="font-medium text-gray-700">Three Forks City Hall</div>
-            <a href="tel:4062853431" className="text-blue-600 hover:text-blue-800">
-              (406) 285-3431
-            </a>
-            <span className="text-gray-400 mx-1">|</span>
-            <span className="text-gray-500">206 Main St</span>
-          </div>
+        {/* Layer Control - Desktop */}
+        {!isMobile && (
+          <aside className="absolute right-3 top-24 z-10 w-48 bg-white rounded shadow-lg">
+            <div className="p-2 border-b border-gray-100 flex items-center justify-between">
+              <span className="text-xs font-medium text-gray-700">Layers</span>
+              <button
+                onClick={toggleMapStyle}
+                className="text-[10px] text-gray-500 hover:text-gray-700"
+              >
+                {mapStyle === 'satellite' ? 'Satellite' : 'Streets'}
+              </button>
+            </div>
+            <div className="p-1.5 max-h-[calc(100vh-180px)] overflow-y-auto">
+              <LayerControl
+                layers={cityConfig.modes[currentMode]?.layers || []}
+                visibleLayers={visibleLayers}
+                onToggleLayer={toggleLayer}
+                layerConfig={cityConfig.layers}
+                layerOrder={layerOrder}
+                onReorderLayer={handleReorderLayer}
+              />
+            </div>
+          </aside>
+        )}
 
-          {/* Right: Quick links */}
-          <div className="flex gap-2 text-[11px]">
-            <Link
-              href="/resources"
-              className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
-            >
-              Who Do I Call?
-            </Link>
-            <Link
-              href="/test-map"
-              className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
-            >
-              All Data
-            </Link>
-            {cityConfig.contact?.website && (
-              <a
-                href={cityConfig.contact.website}
-                target="_blank"
-                rel="noopener noreferrer"
+        {/* Layer Control - Mobile Button */}
+        {isMobile && (
+          <button
+            onClick={() => setIsLayerSheetOpen(true)}
+            className="absolute right-3 top-24 z-10 w-10 h-10 bg-white rounded-lg shadow-lg
+                       flex items-center justify-center touch-manipulation"
+            aria-label="Open layers"
+          >
+            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </button>
+        )}
+
+        {/* Layer Control - Mobile Bottom Sheet */}
+        {isMobile && (
+          <BottomSheet
+            isOpen={isLayerSheetOpen}
+            onClose={() => setIsLayerSheetOpen(false)}
+            title="Layers"
+            defaultHeight={50}
+            minHeight={20}
+          >
+            <div className="p-3">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-gray-700">Map Style</span>
+                <button
+                  onClick={toggleMapStyle}
+                  className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg"
+                >
+                  {mapStyle === 'satellite' ? 'Satellite' : 'Streets'}
+                </button>
+              </div>
+              <LayerControl
+                layers={cityConfig.modes[currentMode]?.layers || []}
+                visibleLayers={visibleLayers}
+                onToggleLayer={toggleLayer}
+                layerConfig={cityConfig.layers}
+                layerOrder={layerOrder}
+                onReorderLayer={handleReorderLayer}
+              />
+            </div>
+          </BottomSheet>
+        )}
+
+        {/* Footer links - hidden on mobile when panels are open, responsive layout */}
+        {!isMobile && (
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end">
+            {/* Left: Contact info */}
+            <div className="bg-white/95 rounded-lg shadow-sm px-3 py-2 text-[11px]">
+              <div className="font-medium text-gray-700">Three Forks City Hall</div>
+              <a href="tel:4062853431" className="text-blue-600 hover:text-blue-800">
+                (406) 285-3431
+              </a>
+              <span className="text-gray-400 mx-1">|</span>
+              <span className="text-gray-500">206 Main St</span>
+            </div>
+
+            {/* Right: Quick links */}
+            <div className="flex gap-2 text-[11px]">
+              <Link
+                href="/resources"
                 className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
               >
-                City Website
-              </a>
-            )}
+                Who Do I Call?
+              </Link>
+              <Link
+                href="/test-map"
+                className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+              >
+                All Data
+              </Link>
+              {cityConfig.contact?.website && (
+                <a
+                  href={cityConfig.contact.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+                >
+                  City Website
+                </a>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   )

@@ -116,9 +116,13 @@ function AttractionDetail({
       >
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white"
+          className="absolute top-1 right-1 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30
+                     flex items-center justify-center text-white touch-manipulation"
+          aria-label="Close"
         >
-          ✕
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
         <div className="text-2xl mb-1">{config.icon}</div>
         <h2 className="text-xl font-bold">{attraction.name}</h2>

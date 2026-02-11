@@ -179,7 +179,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
           </h4>
           {project.budget > 0 ? (
             <>
-              <div className="grid grid-cols-3 gap-4 mb-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-900">{formatCurrency(project.budget)}</div>
                   <div className="text-xs text-gray-500">Total Budget</div>
@@ -411,10 +411,10 @@ export default function ProjectsPage() {
         {/* Stats Bar */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
           <div className="max-w-7xl mx-auto px-4 py-4">
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold">{projects.length}</div>
-                <div className="text-sm text-blue-100">Total Projects</div>
+                <div className="text-2xl sm:text-3xl font-bold">{projects.length}</div>
+                <div className="text-xs sm:text-sm text-blue-100">Total Projects</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold">{formatCurrency(stats.total)}</div>

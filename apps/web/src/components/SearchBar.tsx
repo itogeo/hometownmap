@@ -3,9 +3,10 @@ import { useState, useEffect, useRef } from 'react'
 interface SearchBarProps {
   cityId: string
   onResultSelect?: (result: any) => void
+  className?: string
 }
 
-export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
+export default function SearchBar({ cityId, onResultSelect, className = '' }: SearchBarProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<any[]>([])
   const [isSearching, setIsSearching] = useState(false)
@@ -96,7 +97,7 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
   }
 
   return (
-    <div className="relative w-80">
+    <div className={`relative ${className || 'w-80'}`}>
       <div className="relative">
         <input
           type="text"
