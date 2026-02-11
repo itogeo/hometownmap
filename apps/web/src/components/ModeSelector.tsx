@@ -21,17 +21,17 @@ export default function ModeSelector({
   availableModes,
 }: ModeSelectorProps) {
   return (
-    <div className="border-t border-gray-100 bg-gray-50/50">
-      <div className="flex items-center gap-1 px-3 py-1.5">
+    <div className="border-t border-tf-stone-200 bg-tf-stone-50/50">
+      <div className="flex items-center gap-1 px-3 py-1.5 overflow-x-auto">
         {availableModes.map((mode) => (
           <button
             key={mode}
             onClick={() => onModeChange(mode as MapMode)}
             className={`
-              px-3 py-1 text-xs font-medium rounded
+              px-3 py-1 text-xs font-medium rounded whitespace-nowrap
               ${currentMode === mode
-                ? 'bg-gray-900 text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                ? 'bg-tf-river-600 text-white'
+                : 'text-tf-stone-600 hover:text-tf-river-700 hover:bg-tf-stone-100'
               }
             `}
           >

@@ -27,12 +27,15 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
       let mapboxResults: any[] = []
       if (mapboxToken) {
         try {
-          // Bias search to Three Forks, MT area
+          // Bias search to Three Forks, MT area with 40-mile bounding box
           const proximity = '-111.5514,45.8925'
+          // Bounding box: ~40 miles around Three Forks (SW lon, SW lat, NE lon, NE lat)
+          const bbox = '-112.35,45.31,-110.75,46.47'
           const mapboxResponse = await fetch(
             `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?` +
             `access_token=${mapboxToken}&` +
             `proximity=${proximity}&` +
+            `bbox=${bbox}&` +
             `types=address,poi,place&` +
             `limit=10&` +
             `country=US`
@@ -107,12 +110,12 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
             debouncedSearch(e.target.value)
           }}
           placeholder="Search address, owner, business..."
-          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 pr-10 border border-tf-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-tf-river-500"
         />
 
         {isSearching && (
           <div className="absolute right-3 top-3">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-tf-river-600"></div>
           </div>
         )}
 
@@ -130,14 +133,14 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
       </div>
 
       {results.length > 0 && (
-        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-gray-200 max-h-96 overflow-y-auto z-[9999]">
-          <div className="px-3 py-2 text-xs text-gray-500 bg-gray-50 border-b">
+        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-tf-stone-200 max-h-96 overflow-y-auto z-[9999]">
+          <div className="px-3 py-2 text-xs text-tf-stone-500 bg-tf-stone-50 border-b">
             {results.length} result{results.length !== 1 ? 's' : ''}
           </div>
           {results.map((result, index) => (
             <button
               key={index}
-              className="w-full px-4 py-3 text-left hover:bg-blue-50 border-b border-gray-100 last:border-b-0 transition-colors"
+              className="w-full px-4 py-3 text-left hover:bg-tf-river-50 border-b border-tf-stone-100 last:border-b-0 transition-colors"
               onClick={() => selectResult(result)}
             >
               <div className="flex items-start gap-2">
@@ -166,31 +169,31 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
                   )}
                   {result.type === 'business' && (
                     <>
-                      <div className="font-medium text-gray-800">
+                      <div className="font-medium text-tf-river-800">
                         {result.name}
                       </div>
                       {result.category && (
-                        <div className="text-xs text-blue-600 font-medium">
+                        <div className="text-xs text-tf-river-600 font-medium">
                           {result.category}
                         </div>
                       )}
                       {result.address && (
-                        <div className="text-sm text-gray-600">{result.address}</div>
+                        <div className="text-sm text-tf-stone-600">{result.address}</div>
                       )}
                     </>
                   )}
                   {(result.type === 'address' || result.type === 'place') && (
                     <>
-                      <div className="font-medium text-gray-800 truncate">
+                      <div className="font-medium text-tf-river-800 truncate">
                         {result.name}
                       </div>
                       {result.address && (
-                        <div className="text-sm text-gray-600 truncate">
+                        <div className="text-sm text-tf-stone-600 truncate">
                           {result.address}
                         </div>
                       )}
                       {result.category && (
-                        <div className="text-xs text-green-600 font-medium mt-1">
+                        <div className="text-xs text-tf-forest-600 font-medium mt-1">
                           {result.category}
                         </div>
                       )}

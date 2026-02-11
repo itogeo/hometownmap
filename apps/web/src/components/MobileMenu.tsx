@@ -53,10 +53,10 @@ export default function MobileMenu({ isOpen, onClose, cityName = 'Three Forks' }
       {/* Menu Panel */}
       <div className="absolute right-0 top-0 bottom-0 w-72 bg-white shadow-xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
+        <div className="flex items-center justify-between px-4 py-4 border-b border-tf-stone-200">
           <div>
-            <h2 className="font-semibold text-gray-900">{cityName}</h2>
-            <p className="text-xs text-gray-500">Interactive Map</p>
+            <h2 className="font-semibold text-tf-river-800">{cityName}</h2>
+            <p className="text-xs text-tf-stone-500">Interactive Map</p>
           </div>
           <button
             onClick={onClose}
@@ -79,7 +79,7 @@ export default function MobileMenu({ isOpen, onClose, cityName = 'Three Forks' }
                   href={link.href}
                   onClick={onClose}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg
-                             text-gray-700 hover:bg-gray-100 active:bg-gray-200
+                             text-tf-river-700 hover:bg-tf-stone-100 active:bg-tf-stone-200
                              transition-colors touch-manipulation"
                 >
                   <span className="text-xl">{link.icon}</span>
@@ -91,8 +91,8 @@ export default function MobileMenu({ isOpen, onClose, cityName = 'Three Forks' }
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-4 border-t border-gray-200 safe-area-bottom">
-          <p className="text-xs text-gray-500 text-center">
+        <div className="px-4 py-4 border-t border-tf-stone-200 safe-area-bottom">
+          <p className="text-xs text-tf-stone-500 text-center">
             Powered by HometownMap
           </p>
         </div>

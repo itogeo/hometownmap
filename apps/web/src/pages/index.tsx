@@ -233,9 +233,9 @@ export default function Home() {
 
       <div className="relative h-screen w-screen overflow-hidden">
         {/* Header */}
-        <header className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-gray-200">
+        <header className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-tf-stone-200">
           <div className="flex items-center justify-between px-4 py-2">
-            <h1 className="text-lg font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold text-tf-river-800">
               {cityConfig.name}
             </h1>
 
@@ -248,19 +248,19 @@ export default function Home() {
               <nav className="hidden md:flex items-center gap-1">
                 <Link
                   href="/visit"
-                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+                  className="px-2 py-1.5 text-sm text-tf-river-600 hover:text-tf-river-800 hover:bg-tf-stone-100 rounded"
                 >
                   Visit
                 </Link>
                 <Link
                   href="/development"
-                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+                  className="px-2 py-1.5 text-sm text-tf-river-600 hover:text-tf-river-800 hover:bg-tf-stone-100 rounded"
                 >
                   Development
                 </Link>
                 <Link
                   href="/resources"
-                  className="px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded"
+                  className="px-2 py-1.5 text-sm text-tf-river-600 hover:text-tf-river-800 hover:bg-tf-stone-100 rounded"
                 >
                   Resources
                 </Link>
@@ -444,25 +444,25 @@ export default function Home() {
           <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end">
             {/* Left: Contact info */}
             <div className="bg-white/95 rounded-lg shadow-sm px-3 py-2 text-[11px]">
-              <div className="font-medium text-gray-700">Three Forks City Hall</div>
-              <a href="tel:4062853431" className="text-blue-600 hover:text-blue-800">
+              <div className="font-medium text-tf-river-700">Three Forks City Hall</div>
+              <a href="tel:4062853431" className="text-tf-forest-600 hover:text-tf-forest-700">
                 (406) 285-3431
               </a>
-              <span className="text-gray-400 mx-1">|</span>
-              <span className="text-gray-500">206 Main St</span>
+              <span className="text-tf-stone-400 mx-1">|</span>
+              <span className="text-tf-stone-500">206 Main St</span>
             </div>
 
             {/* Right: Quick links */}
             <div className="flex gap-2 text-[11px]">
               <Link
                 href="/resources"
-                className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+                className="px-2 py-1 bg-white/95 text-tf-river-600 hover:text-tf-river-800 rounded shadow-sm"
               >
                 Who Do I Call?
               </Link>
               <Link
                 href="/test-map"
-                className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+                className="px-2 py-1 bg-white/95 text-tf-river-600 hover:text-tf-river-800 rounded shadow-sm"
               >
                 All Data
               </Link>
@@ -471,7 +471,7 @@ export default function Home() {
                   href={cityConfig.contact.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2 py-1 bg-white/95 text-gray-600 hover:text-gray-900 rounded shadow-sm"
+                  className="px-2 py-1 bg-white/95 text-tf-river-600 hover:text-tf-river-800 rounded shadow-sm"
                 >
                   City Website
                 </a>
