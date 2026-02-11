@@ -76,7 +76,12 @@ export default function MapView({
   const handleClick = useCallback(
     (event: MapLayerMouseEvent) => {
       const allFeatures = event.features || []
-      if (allFeatures.length === 0) return
+
+      // If no features clicked, close the popup
+      if (allFeatures.length === 0) {
+        setPopupInfo(null)
+        return
+      }
 
       // Check if any feature is an attraction - handle separately
       const attractionFeature = allFeatures.find(f => {
@@ -564,7 +569,7 @@ export default function MapView({
             anchor={popupInfo.screenY < 300 ? 'top' : 'bottom'}
             onClose={() => setPopupInfo(null)}
             closeButton={false}
-            closeOnClick={true}
+            closeOnClick={false}
             maxWidth={isMobile ? "calc(100vw - 32px)" : "320px"}
             className="mobile-popup"
           >
