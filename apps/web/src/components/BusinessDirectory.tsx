@@ -36,7 +36,7 @@ export default function BusinessDirectory({
   const loadBusinesses = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch(`/api/layers/${cityId}/businesses`)
+      const response = await fetch(`/data/layers/${cityId}/businesses.geojson`)
       if (response.ok) {
         const data = await response.json()
         const businessList = data.features.map((f: any) => ({

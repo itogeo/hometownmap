@@ -46,14 +46,14 @@ export default function VisitPage() {
   } | null>(null)
 
   useEffect(() => {
-    fetch('/api/config/three-forks')
+    fetch('/data/config/three-forks.json')
       .then((res) => res.json())
       .then(setCityConfig)
       .catch((err) => console.error('Failed to load config:', err))
   }, [])
 
   useEffect(() => {
-    fetch('/api/layers/three-forks/attractions')
+    fetch('/data/layers/three-forks/attractions.geojson')
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {
@@ -252,7 +252,7 @@ export default function VisitPage() {
                 currentMode="tourism"
                 visibleLayers={['attractions', 'waterways', 'cities']}
                 layerOrder={['cities', 'waterways', 'attractions']}
-                mapStyleOverride="outdoors"
+                mapStyleOverride="streets"
                 selectedLocation={selectedLocation}
               />
             </div>

@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "name": "Three Forks Water & Sewer Districts",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Municipal Water District",
+        "type": "Water",
+        "provider": "City of Three Forks",
+        "phone": "(406) 285-3431"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-111.5650, 45.9050],
+          [-111.5300, 45.9050],
+          [-111.5300, 45.8750],
+          [-111.5650, 45.8750],
+          [-111.5650, 45.9050]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Municipal Sewer District",
+        "type": "Sewer",
+        "provider": "City of Three Forks",
+        "phone": "(406) 285-3431"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-111.5620, 45.9000],
+          [-111.5350, 45.9000],
+          [-111.5350, 45.8780],
+          [-111.5620, 45.8780],
+          [-111.5620, 45.9000]
+        ]]
+      }
+    }
+  ]
+}

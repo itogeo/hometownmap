@@ -1,0 +1,1583 @@
+{
+  "type": "FeatureCollection",
+  "name": "Three Forks Building Permits",
+  "source": "Montana EBIZ Portal",
+  "download_date": "2026-02-03T08:27:07.547356",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.565,
+          45.87535
+        ]
+      },
+      "properties": {
+        "id": "2023-BLDG-000368",
+        "permit_number": "2023-BLDG-000368",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2024-09-23",
+        "owner_name": "GALLATIN COUNTY",
+        "project_name": null,
+        "address": "1700 THREE FORKS AIRPORT THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53,
+          45.89535
+        ]
+      },
+      "properties": {
+        "id": "2023-BLDG-001082",
+        "permit_number": "2023-BLDG-001082",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2023-10-25",
+        "owner_name": "",
+        "project_name": null,
+        "address": "9700 PONDEROSA THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53264999999999,
+          45.890100000000004
+        ]
+      },
+      "properties": {
+        "id": "2022-BLDG-000502",
+        "permit_number": "2022-BLDG-000502",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2022-05-05",
+        "owner_name": "",
+        "project_name": null,
+        "address": "247 MADISON RIVER RD THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53875000000001,
+          45.8884
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000859",
+        "permit_number": "2020-BLDG-000859",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2022-04-25",
+        "owner_name": "",
+        "project_name": null,
+        "address": "1825 BENCH RD THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.54715,
+          45.888
+        ]
+      },
+      "properties": {
+        "id": "2022-BLDG-000412",
+        "permit_number": "2022-BLDG-000412",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2022-04-14",
+        "owner_name": "",
+        "project_name": null,
+        "address": "17 STOCKYARD THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55185,
+          45.89255
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001293",
+        "permit_number": "2021-BLDG-001293",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2022-02-15",
+        "owner_name": "ROAMMT LLC",
+        "project_name": null,
+        "address": "123 W ELM THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5526,
+          45.890499999999996
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001259",
+        "permit_number": "2021-BLDG-001259",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-12-23",
+        "owner_name": "RICK AND VALERIE LAMB",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5517,
+          45.890499999999996
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001100",
+        "permit_number": "2021-BLDG-001100",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2021-12-21",
+        "owner_name": "EVERT WIERDA",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55385000000001,
+          45.89335
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001297",
+        "permit_number": "2021-BLDG-001297",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-12-15",
+        "owner_name": "",
+        "project_name": null,
+        "address": "713 2ND AVE W THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5514,
+          45.890499999999996
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001049",
+        "permit_number": "2021-BLDG-001049",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-11-30",
+        "owner_name": "BATTLE RIDGE RENTALS LLC",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5633,
+          45.875
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001123",
+        "permit_number": "2021-BLDG-001123",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2021-11-29",
+        "owner_name": "THREE FORKS AIRPORT",
+        "project_name": null,
+        "address": "34 3 FORKS AIRPORT ROAD THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.552,
+          45.890499999999996
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-001101",
+        "permit_number": "2021-BLDG-001101",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2021-11-18",
+        "owner_name": "EVERT WIERDA",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5511,
+          45.890499999999996
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000915",
+        "permit_number": "2021-BLDG-000915",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-09-22",
+        "owner_name": "CRAIG RICKERT",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.50745,
+          45.88035
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000713",
+        "permit_number": "2021-BLDG-000713",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-09-22",
+        "owner_name": "BRIDGER BREWING COMPANY LLC",
+        "project_name": null,
+        "address": "10751 HWY 287 THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.56305,
+          45.875
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000780",
+        "permit_number": "2021-BLDG-000780",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2021-09-13",
+        "owner_name": "JOHN C PRISCU",
+        "project_name": null,
+        "address": "39 3 FORKS AIRPORT ROAD THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.48,
+          45.9
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000850",
+        "permit_number": "2021-BLDG-000850",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-09-09",
+        "owner_name": "F DOUBLE D HORSESHOE HILLS LLC",
+        "project_name": null,
+        "address": "0 HORSESHOE COTTONWOOD THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.565,
+          45.875
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000677",
+        "permit_number": "2021-BLDG-000677",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-09-09",
+        "owner_name": "GALLATIN COUNTY",
+        "project_name": null,
+        "address": "0 THREE FORKS AIRPORT THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.565,
+          45.875
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000675",
+        "permit_number": "2021-BLDG-000675",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-09-09",
+        "owner_name": "GALLATIN COUNTY",
+        "project_name": null,
+        "address": "0 THREE FORKS AIRPORT THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.565,
+          45.875
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000747",
+        "permit_number": "2021-BLDG-000747",
+        "permit_type": "Building Permit",
+        "status": "Active",
+        "issued_date": "2021-09-07",
+        "owner_name": "GALLATIN COUNTY",
+        "project_name": null,
+        "address": "0 THREE FORKS AIRPORT THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55975000000001,
+          45.88
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000803",
+        "permit_number": "2021-BLDG-000803",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-08-30",
+        "owner_name": "SPICA RISING INC DBA WHEATLAND SELF STORAGE",
+        "project_name": null,
+        "address": "5 WHEATLAND MEADOWS THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.565,
+          45.875
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000676",
+        "permit_number": "2021-BLDG-000676",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-08-27",
+        "owner_name": "GALLATIN COUNTY",
+        "project_name": null,
+        "address": "0 THREE FORKS AIRPORT THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5504,
+          45.892050000000005
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000445",
+        "permit_number": "2021-BLDG-000445",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-05-13",
+        "owner_name": "",
+        "project_name": null,
+        "address": "120 S. MAIN THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5538,
+          45.8908
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000212",
+        "permit_number": "2021-BLDG-000212",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2021-05-07",
+        "owner_name": "THREE FORKS PUBLIC SCHOOLS",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5437,
+          45.894600000000004
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000256",
+        "permit_number": "2021-BLDG-000256",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-04-12",
+        "owner_name": "AMERICAN TOWER CORPORATION",
+        "project_name": null,
+        "address": "266 COLTER THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55885,
+          45.885149999999996
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000209",
+        "permit_number": "2021-BLDG-000209",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-03-18",
+        "owner_name": "",
+        "project_name": null,
+        "address": "3323 FRONTAGE THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55885,
+          45.885149999999996
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-001197",
+        "permit_number": "2020-BLDG-001197",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-03-02",
+        "owner_name": "",
+        "project_name": null,
+        "address": "3323 FRONTAGE THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55025,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2021-BLDG-000050",
+        "permit_number": "2021-BLDG-000050",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2021-01-28",
+        "owner_name": "CARL AND NANCY PETERSEN",
+        "project_name": null,
+        "address": "223 S. MAIN THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55065,
+          45.892
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-001164",
+        "permit_number": "2020-BLDG-001164",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-12-22",
+        "owner_name": "",
+        "project_name": null,
+        "address": "15 MAIN THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55045,
+          45.892050000000005
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000960",
+        "permit_number": "2020-BLDG-000960",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-11-04",
+        "owner_name": "",
+        "project_name": null,
+        "address": "119 SOUTH MAIN STREET THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.565,
+          45.876
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000976",
+        "permit_number": "2020-BLDG-000976",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-10-21",
+        "owner_name": "",
+        "project_name": null,
+        "address": "0 POGREBA FIELD HANGER #32 THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5635,
+          45.8755
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000860",
+        "permit_number": "2020-BLDG-000860",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-10-21",
+        "owner_name": "",
+        "project_name": null,
+        "address": "30 TAXI LANE D THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5509,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000966",
+        "permit_number": "2020-BLDG-000966",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-10-09",
+        "owner_name": "",
+        "project_name": null,
+        "address": "210 SOUTH MAIN STREET THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5479,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000798",
+        "permit_number": "2020-BLDG-000798",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-09-01",
+        "owner_name": "",
+        "project_name": null,
+        "address": "212 E NEAL STREET THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5505,
+          45.8908
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000626",
+        "permit_number": "2020-BLDG-000626",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-07-30",
+        "owner_name": "",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5514,
+          45.892
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000486",
+        "permit_number": "2020-BLDG-000486",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-07-07",
+        "owner_name": "",
+        "project_name": null,
+        "address": "0 517 S MAIN STREET THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.551,
+          45.892050000000005
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000202",
+        "permit_number": "2020-BLDG-000202",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-05-29",
+        "owner_name": "",
+        "project_name": null,
+        "address": "108 MAIN STREET THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55075000000001,
+          45.892
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000356",
+        "permit_number": "2020-BLDG-000356",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-05-12",
+        "owner_name": "",
+        "project_name": null,
+        "address": "13 S. MAIN ST THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.54745000000001,
+          45.8913
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000272",
+        "permit_number": "2020-BLDG-000272",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-05-01",
+        "owner_name": "CITY OF THREE FORKS",
+        "project_name": null,
+        "address": "95691 MONTANA HIGHWAY 2 THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55885,
+          45.885149999999996
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000186",
+        "permit_number": "2020-BLDG-000186",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-03-16",
+        "owner_name": "LANCE COYLE",
+        "project_name": "LANCE COYLE Cty:(GALLATIN)",
+        "address": "3323 FRONTAGE THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55225,
+          45.8918
+        ]
+      },
+      "properties": {
+        "id": "2020-BLDG-000070",
+        "permit_number": "2020-BLDG-000070",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2020-02-06",
+        "owner_name": "",
+        "project_name": null,
+        "address": "15 E. CEDAR ST (NEXT TO SENIOR CE THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.51984999999999,
+          45.905
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-001195",
+        "permit_number": "2019-BLDG-001195",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2019-12-30",
+        "owner_name": "406 NATIVE HOLDINGS LLC",
+        "project_name": null,
+        "address": "3 ROLLING PRAIRIE THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.50745,
+          45.88035
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000641",
+        "permit_number": "2019-BLDG-000641",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2019-09-30",
+        "owner_name": "BRIDGER BREWING COMPANY",
+        "project_name": "Cty:(BROADWATER)",
+        "address": "10751 HWY 287 THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.551,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000865",
+        "permit_number": "2019-BLDG-000865",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2019-08-21",
+        "owner_name": "",
+        "project_name": null,
+        "address": "208 MAIN THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.51,
+          45.8804
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000614",
+        "permit_number": "2019-BLDG-000614",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2019-07-25",
+        "owner_name": "MAJOR BRANDS DISTRIBUTING IMPORTS INC.",
+        "project_name": null,
+        "address": "10800 HIGHWAY 287 THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55975000000001,
+          45.88525
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000596",
+        "permit_number": "2019-BLDG-000596",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2019-07-25",
+        "owner_name": "MONTANA DEPARTMENT OF TRANSPORTATION",
+        "project_name": null,
+        "address": "505 FRONTAGE THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55145,
+          45.891
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000484",
+        "permit_number": "2019-BLDG-000484",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2019-06-20",
+        "owner_name": "ROLAND E DEANE JR. & MABLE L DEANE",
+        "project_name": null,
+        "address": "11 MONTANA THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.52,
+          45.89535
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000314",
+        "permit_number": "2019-BLDG-000314",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2019-05-31",
+        "owner_name": "HEADWATERS RANCH",
+        "project_name": "HEADWATERS RANCH KEVIN MCCRACKEN KRIS NELSON SIPES CONSTRUCTION Cty:(GALLATIN)",
+        "address": "9700 CLARKSTON ROAD THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.48,
+          45.9
+        ]
+      },
+      "properties": {
+        "id": "2019-BLDG-000232",
+        "permit_number": "2019-BLDG-000232",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2019-04-02",
+        "owner_name": "F DOUBLE D HORSESHOE HILLS LLC",
+        "project_name": null,
+        "address": "0 HORSESHOE COTTONWOOD THREE FORKS MT 59715",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5504,
+          45.892050000000005
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-001046",
+        "permit_number": "2018-BLDG-001046",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2018-12-12",
+        "owner_name": "AMY ROWAN",
+        "project_name": "AMY ROWAN Cty:(GALLATIN)",
+        "address": "120 MAIN ST THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.48,
+          45.9
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000916",
+        "permit_number": "2018-BLDG-000916",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2018-10-12",
+        "owner_name": "",
+        "project_name": null,
+        "address": "0 HORSESHOE COTTONWOOD THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53224999999999,
+          45.890100000000004
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000888",
+        "permit_number": "2018-BLDG-000888",
+        "permit_type": "Building Permit",
+        "status": "Closed - Withdrawn",
+        "issued_date": "2018-10-09",
+        "owner_name": "NATHANIEL TERRY",
+        "project_name": null,
+        "address": "5255 MADISON THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.50945,
+          45.89005
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000792",
+        "permit_number": "2018-BLDG-000792",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2018-09-20",
+        "owner_name": "",
+        "project_name": "Clubhouse Building Cty:(GALLATIN)",
+        "address": "11111 JUNIPER RD THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.52575,
+          45.87025
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000491",
+        "permit_number": "2018-BLDG-000491",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2018-08-21",
+        "owner_name": "STATE OF MONTANA MONTANA FISH WILDLIFE AND PARKS",
+        "project_name": null,
+        "address": "1585 TRIDENT ROAD THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55095,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000703",
+        "permit_number": "2018-BLDG-000703",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2018-08-16",
+        "owner_name": "KAMPS JON & CHRISTINA",
+        "project_name": null,
+        "address": "209 MAIN THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.48,
+          45.9
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000613",
+        "permit_number": "2018-BLDG-000613",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2018-08-03",
+        "owner_name": "F DOUBLE D HORSESHOE HILLS",
+        "project_name": "FORONDA LORELEI Cty:(GALLATIN)",
+        "address": "0 HORSESHOE COTTONWOOD THREE FORKS MT 59752-",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.48,
+          45.9
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000550",
+        "permit_number": "2018-BLDG-000550",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2018-06-28",
+        "owner_name": "F DOUBLE D HORSESHOE HILLS LLC",
+        "project_name": "BAIRD SARAH",
+        "address": "0 HORSESHOE COTTONWOOD THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53655,
+          45.88845
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000287",
+        "permit_number": "2018-BLDG-000287",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2018-06-14",
+        "owner_name": "HEADWATERS STORAGE LLC",
+        "project_name": null,
+        "address": "1969 BENCH THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5522,
+          45.893100000000004
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000428",
+        "permit_number": "2018-BLDG-000428",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2018-06-04",
+        "owner_name": "",
+        "project_name": "JOHNSON MARTIN Cty:(GALLATIN)",
+        "address": "216 1ST AVE WEST THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55025,
+          45.892
+        ]
+      },
+      "properties": {
+        "id": "2018-BLDG-000157",
+        "permit_number": "2018-BLDG-000157",
+        "permit_type": "Building Permit",
+        "status": "Closed",
+        "issued_date": "2018-03-30",
+        "owner_name": "JUSTIN AND TARA FORSBERG",
+        "project_name": null,
+        "address": "23 SOUTH MAIN THREE FORKS MT 59752-",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5473,
+          45.8928
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-001024",
+        "permit_number": "2017-BLDG-001024",
+        "permit_type": "Building Permit",
+        "status": "Closed - Approved",
+        "issued_date": "2017-10-05",
+        "owner_name": "BBG CONTRACTORS",
+        "project_name": null,
+        "address": "34 RAILWAY THREE FORKS MT 59752-",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55125,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000599",
+        "permit_number": "2017-BLDG-000599",
+        "permit_type": "Building Permit",
+        "status": "Closed - Approved",
+        "issued_date": "2017-06-21",
+        "owner_name": "",
+        "project_name": null,
+        "address": "203 MAIN THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5541,
+          45.8914
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000543",
+        "permit_number": "2017-BLDG-000543",
+        "permit_type": "Building Permit",
+        "status": "Closed - Approved",
+        "issued_date": "2017-06-13",
+        "owner_name": "MONTANA FISH WILDLIFE AND PARKS",
+        "project_name": "Headwater Park Picnic Shelter Cty:(GALLATIN)",
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.52,
+          45.89535
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000457",
+        "permit_number": "2017-BLDG-000457",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2017-05-02",
+        "owner_name": "HEADWATERS HOPS LLC",
+        "project_name": "Headwaters Hops LLC   MATTHEW ANDERSON Cty:(GALLATIN)",
+        "address": "9700 CLARKSTON THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5535,
+          45.8914
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000416",
+        "permit_number": "2017-BLDG-000416",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2017-04-24",
+        "owner_name": "",
+        "project_name": "T-MOBILE  Powder River Development Services Cty:(GALLATIN)",
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5529,
+          45.8914
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000337",
+        "permit_number": "2017-BLDG-000337",
+        "permit_type": "Building Permit",
+        "status": "Closed - Approved",
+        "issued_date": "2017-04-24",
+        "owner_name": "",
+        "project_name": null,
+        "address": "0  THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5448,
+          45.894800000000004
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000364",
+        "permit_number": "2017-BLDG-000364",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2017-04-14",
+        "owner_name": "TOWN OF THREE FORKS",
+        "project_name": "DAVID JUSTIN",
+        "address": "644 COLTER TRAIL THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55205,
+          45.8932
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000103",
+        "permit_number": "2017-BLDG-000103",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2017-04-03",
+        "owner_name": "FOLKVORD INVESTMENTS LLC",
+        "project_name": "SACAJAWEA HOTEL   FOLKVORD INVESTMENTS LLC    BBG CONTRACTORS Cty:(GALLATIN)",
+        "address": "19 ASH THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.5476,
+          45.8928
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000245",
+        "permit_number": "2017-BLDG-000245",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2017-03-16",
+        "owner_name": "",
+        "project_name": null,
+        "address": "28 RAILWAY AVE. THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.51,
+          45.8804
+        ]
+      },
+      "properties": {
+        "id": "2017-BLDG-000069",
+        "permit_number": "2017-BLDG-000069",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2017-03-08",
+        "owner_name": "MAJOR BRANDS DISTRIBUTING IMPORTS INC.",
+        "project_name": "Major Brands Distributing Imports Inc.      CWG Architects Cty:(GALLATIN)",
+        "address": "10800 287 THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53655,
+          45.88845
+        ]
+      },
+      "properties": {
+        "id": "2016-BLDG-000765",
+        "permit_number": "2016-BLDG-000765",
+        "permit_type": "Building Permit",
+        "status": "Closed - Approved",
+        "issued_date": "2016-09-12",
+        "owner_name": "HEADWATERS STORAGE LLC",
+        "project_name": "Headwaters Storage  OWNER   STORAGE Cty:(GALLATIN)",
+        "address": "1969 BENCH THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.54275,
+          45.886050000000004
+        ]
+      },
+      "properties": {
+        "id": "2016-BLDG-000788",
+        "permit_number": "2016-BLDG-000788",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2016-09-01",
+        "owner_name": "MATTHEW AND REENA LODAHL",
+        "project_name": "HUD 309 INSPECTION  MATTHEW AND REENA LODAHL  MICHAEL METZGER  IL20160157  IDA238888 IDA238889  2516KID4383 A&B Cty:(GALLATIN)",
+        "address": "145 PRICE RD THREE FORKS MT 59714",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.53655,
+          45.88845
+        ]
+      },
+      "properties": {
+        "id": "2016-BLDG-000766",
+        "permit_number": "2016-BLDG-000766",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2016-08-31",
+        "owner_name": "HEADWATERS STORAGE LLC",
+        "project_name": "Headwaters Storage LLC Cty:(GALLATIN)",
+        "address": "1969 BENCH THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.54,
+          45.8883
+        ]
+      },
+      "properties": {
+        "id": "2016-BLDG-000679",
+        "permit_number": "2016-BLDG-000679",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2016-07-26",
+        "owner_name": "LEGACY ENTERPRISES INC.",
+        "project_name": "Legacy Telecommunications Inc Cty:(GALLATIN)",
+        "address": "1600 BENCH THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55105,
+          45.892100000000006
+        ]
+      },
+      "properties": {
+        "id": "2016-BLDG-000334",
+        "permit_number": "2016-BLDG-000334",
+        "permit_type": "Building Permit",
+        "status": "Closed - Approved",
+        "issued_date": "2016-06-07",
+        "owner_name": "GPM LLC",
+        "project_name": "V-42 Fitness LLC   Doug Baggett  LOCKER ROOMS Cty:(GALLATIN)",
+        "address": "207 S MAIN THREE FORKS MT",
+        "geocoded": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.55255,
+          45.8912
+        ]
+      },
+      "properties": {
+        "id": "2016-BLDG-000299",
+        "permit_number": "2016-BLDG-000299",
+        "permit_type": "Building Permit",
+        "status": "Closed - Completed",
+        "issued_date": "2016-06-01",
+        "owner_name": "TAYLOR IAN P & BONNIE K",
+        "project_name": "TAYLOR  Integrity Industries  FOUNDATION PERMIT Cty:(GALLATIN)",
+        "address": "9 BIRCH THREE FORKS MT 59752",
+        "geocoded": true
+      }
+    }
+  ]
+}

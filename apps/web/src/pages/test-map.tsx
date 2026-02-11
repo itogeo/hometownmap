@@ -22,43 +22,35 @@ const NavigationControl = dynamic(
   { ssr: false }
 )
 
-// All available datasets organized by category
+// All available datasets organized by category (using static data paths)
 const DATASETS: { [category: string]: { id: string; name: string; path: string }[] } = {
   'Core Layers': [
-    { id: 'parcels', name: 'Parcels', path: 'processed/parcels' },
-    { id: 'roads', name: 'Roads', path: 'processed/roads' },
-    { id: 'buildings', name: 'Buildings', path: 'processed/buildings' },
-    { id: 'waterways', name: 'Waterways', path: 'processed/waterways' },
-    { id: 'cities', name: 'Cities', path: 'processed/cities' },
-    { id: 'city_boundary', name: 'City Boundary', path: 'processed/city_boundary' },
+    { id: 'parcels', name: 'Parcels', path: 'parcels' },
+    { id: 'roads', name: 'Roads', path: 'roads' },
+    { id: 'buildings', name: 'Buildings', path: 'buildings' },
+    { id: 'waterways', name: 'Waterways', path: 'waterways' },
+    { id: 'cities', name: 'Cities', path: 'cities' },
+    { id: 'city_boundary', name: 'City Boundary', path: 'city_boundary' },
   ],
   'Districts & Zones': [
-    { id: 'zoning_from_website', name: 'Zoning (from Website)', path: 'processed/zoning_from_website' },
-    { id: 'firedistricts', name: 'Fire Districts', path: 'processed/firedistricts' },
-    { id: 'schooldistricts', name: 'School Districts', path: 'processed/schooldistricts' },
-    { id: 'water_sewer_districts', name: 'Water/Sewer Districts', path: 'processed/water_sewer_districts' },
-    { id: 'planning_juris', name: 'Planning Jurisdictions', path: 'gallatin/planning_jurisdictions' },
+    { id: 'zoning_from_website', name: 'Zoning (from Website)', path: 'zoning_from_website' },
+    { id: 'firedistricts', name: 'Fire Districts', path: 'firedistricts' },
+    { id: 'schooldistricts', name: 'School Districts', path: 'schooldistricts' },
+    { id: 'water_sewer_districts', name: 'Water/Sewer Districts', path: 'water_sewer_districts' },
   ],
   'Subdivisions': [
-    { id: 'subdivisions', name: 'Subdivisions', path: 'processed/subdivisions' },
-    { id: 'minor_subdivisions', name: 'Minor Subdivisions', path: 'processed/minor_subdivisions' },
+    { id: 'subdivisions', name: 'Subdivisions', path: 'subdivisions' },
+    { id: 'minor_subdivisions', name: 'Minor Subdivisions', path: 'minor_subdivisions' },
   ],
   'Points of Interest': [
-    { id: 'businesses', name: 'Businesses', path: 'processed/businesses' },
-    { id: 'attractions', name: 'Attractions', path: 'processed/attractions' },
-    { id: 'projects', name: 'Capital Projects', path: 'processed/projects' },
+    { id: 'businesses', name: 'Businesses', path: 'businesses' },
+    { id: 'attractions', name: 'Attractions', path: 'attractions' },
+    { id: 'projects', name: 'Capital Projects', path: 'projects' },
   ],
-  'Environmental': [
-    { id: 'fema_flood', name: 'FEMA Flood Zones', path: 'gallatin/fema_flood_zones' },
-    { id: 'soils', name: 'Soils (NRCS)', path: 'gallatin/soils_nrcs' },
-    { id: 'landslides', name: 'Landslides', path: 'gallatin/landslides' },
-    { id: 'wui', name: 'Wildland Urban Interface', path: 'gallatin/wildland_urban_interface' },
-    { id: 'conservation', name: 'Conservation Easements', path: 'gallatin/conservation_easements' },
-  ],
-  'Water Infrastructure': [
-    { id: 'groundwater_wells', name: 'Groundwater Wells', path: 'gallatin/groundwater_monitor_wells' },
-    { id: 'wastewater', name: 'Wastewater Systems', path: 'gallatin/wastewater_treatment_systems' },
-    { id: 'water_supply', name: 'Water Supply Systems', path: 'gallatin/water_supply_systems' },
+  'Infrastructure': [
+    { id: 'groundwater_wells', name: 'Groundwater Wells', path: 'groundwater_monitor_wells' },
+    { id: 'wastewater', name: 'Wastewater Systems', path: 'wastewater_treatment_systems' },
+    { id: 'water_supply', name: 'Water Supply Systems', path: 'water_supply_systems' },
   ],
 }
 
@@ -141,8 +133,8 @@ export default function TestMap() {
     })
 
     try {
-      console.log(`Loading layer: ${layerId} from /api/test-layers/${layerPath}`)
-      const response = await fetch(`/api/test-layers/${layerPath}`)
+      console.log(`Loading layer: ${layerId} from /data/layers/three-forks/${layerPath}.geojson`)
+      const response = await fetch(`/data/layers/three-forks/${layerPath}.geojson`)
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
       const data = await response.json()

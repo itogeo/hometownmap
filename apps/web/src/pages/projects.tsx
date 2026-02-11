@@ -318,7 +318,7 @@ export default function ProjectsPage() {
 
   // Load city config
   useEffect(() => {
-    fetch('/api/config/three-forks')
+    fetch('/data/config/three-forks.json')
       .then((res) => res.json())
       .then((config) => setCityConfig(config))
       .catch((err) => console.error('Failed to load config:', err))
@@ -326,7 +326,7 @@ export default function ProjectsPage() {
 
   // Load projects
   useEffect(() => {
-    fetch('/api/layers/three-forks/projects')
+    fetch('/data/layers/three-forks/projects.geojson')
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {

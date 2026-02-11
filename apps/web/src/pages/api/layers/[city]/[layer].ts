@@ -14,6 +14,19 @@ const gallatinLayerMap: { [key: string]: string } = {
   'water_supply': 'water_supply_systems',
 }
 
+// Map layer IDs to their file names in the processed folder
+// Both floodplain layers use the same source data (filtered server-side for performance)
+const processedLayerMap: { [key: string]: string } = {
+  'floodplain_100yr': 'flood_zones',
+  'floodplain_500yr': 'flood_zones',
+}
+
+// Server-side filters for floodplain layers (much faster than client-side filtering)
+const floodplainFilters: { [key: string]: string[] } = {
+  'floodplain_100yr': ['A', 'AE', 'AH', 'AO'],  // 100-year flood zones
+  'floodplain_500yr': ['X'],                     // 500-year flood zones (minimal risk)
+}
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { city, layer } = req.query
 
@@ -25,21 +38,41 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   // Paths to check in order of priority
   const pathsToTry = [
-    // 1. Processed folder (city-specific data)
+    // 1. Processed folder (mapped name - for layers like floodplain_100yr -> flood_zones)
+    processedLayerMap[layer]
+      ? path.join(baseDir, 'processed', `${processedLayerMap[layer]}.geojson`)
+      : null,
+    // 2. Processed folder (exact name)
     path.join(baseDir, 'processed', `${layer}.geojson`),
-    // 2. Gallatin county raw data (mapped name)
+    // 3. Gallatin county raw data (mapped name)
     gallatinLayerMap[layer]
       ? path.join(baseDir, 'raw/gallatin-county', `${gallatinLayerMap[layer]}.geojson`)
       : null,
-    // 3. Gallatin county raw data (exact name)
+    // 4. Gallatin county raw data (exact name)
     path.join(baseDir, 'raw/gallatin-county', `${layer}.geojson`),
   ].filter(Boolean) as string[]
 
   try {
     for (const dataPath of pathsToTry) {
       if (fs.existsSync(dataPath)) {
-        const data = fs.readFileSync(dataPath, 'utf-8')
-        return res.status(200).json(JSON.parse(data))
+        const rawData = fs.readFileSync(dataPath, 'utf-8')
+        let geojson = JSON.parse(rawData)
+
+        // Apply server-side filtering for floodplain layers
+        // This dramatically reduces data sent to client (from 6700+ to ~1200 or ~5500 features)
+        if (floodplainFilters[layer] && geojson.features) {
+          const allowedZones = floodplainFilters[layer]
+          geojson = {
+            ...geojson,
+            features: geojson.features.filter((f: any) =>
+              allowedZones.includes(f.properties?.FLD_ZONE)
+            )
+          }
+        }
+
+        // Set cache headers for better performance
+        res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400')
+        return res.status(200).json(geojson)
       }
     }
 

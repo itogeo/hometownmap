@@ -64,7 +64,7 @@ export default function MapView({
   useEffect(() => {
     if (visibleLayers.includes('parcels')) {
       console.log('🏠 Loading parcels directly...')
-      fetch(`/api/layers/${cityConfig.id}/parcels`)
+      fetch(`/data/layers/${cityConfig.id}/parcels.geojson`)
         .then(res => res.json())
         .then(data => {
           console.log('✅ Parcels loaded directly:', data.features?.length)
@@ -80,7 +80,7 @@ export default function MapView({
   useEffect(() => {
     if (visibleLayers.includes('businesses')) {
       console.log('🏢 Loading businesses directly...')
-      fetch(`/api/layers/${cityConfig.id}/businesses`)
+      fetch(`/data/layers/${cityConfig.id}/businesses.geojson`)
         .then(res => res.json())
         .then(data => {
           console.log('✅ Businesses loaded directly:', data.features?.length)
@@ -96,7 +96,7 @@ export default function MapView({
   useEffect(() => {
     if (visibleLayers.includes('attractions')) {
       console.log('🗺️ Loading attractions directly...')
-      fetch(`/api/layers/${cityConfig.id}/attractions`)
+      fetch(`/data/layers/${cityConfig.id}/attractions.geojson`)
         .then(res => res.json())
         .then(data => {
           console.log('✅ Attractions loaded directly:', data.features?.length)
@@ -111,7 +111,7 @@ export default function MapView({
   // Load subdivision data for spatial lookups (always load for popup enrichment)
   useEffect(() => {
     console.log('📍 Loading subdivisions for spatial lookup...')
-    fetch(`/api/layers/${cityConfig.id}/subdivisions`)
+    fetch(`/data/layers/${cityConfig.id}/subdivisions.geojson`)
       .then(res => res.json())
       .then(data => {
         console.log('✅ Subdivisions loaded:', data.features?.length)
@@ -173,7 +173,7 @@ export default function MapView({
 
         try {
           const response = await fetch(
-            `/api/layers/${cityConfig.id}/${layerId}`
+            `/data/layers/${cityConfig.id}/${layerId}.geojson`
           )
           if (response.ok) {
             const data = await response.json()
@@ -406,11 +406,159 @@ export default function MapView({
           </Source>
         )}
 
-        {/* Render other visible layers (excluding parcels, businesses, attractions which are rendered separately) */}
+        {/* 500-YEAR FLOODPLAIN (Zone X) - Very light blue, render underneath */}
+        {layerData['floodplain_500yr'] && visibleLayers.includes('floodplain_500yr') && (
+          <Source id="floodplain_500yr-source" type="geojson" data={layerData['floodplain_500yr']}>
+            <Layer
+              id="floodplain_500yr-fill"
+              type="fill"
+              filter={['all',
+                ['any',
+                  ['==', ['geometry-type'], 'Polygon'],
+                  ['==', ['geometry-type'], 'MultiPolygon']
+                ],
+                ['==', ['get', 'FLD_ZONE'], 'X']
+              ]}
+              paint={{
+                'fill-color': '#E0F2FE',  // Very light blue (sky-100)
+                'fill-opacity': 0.3
+              }}
+            />
+            <Layer
+              id="floodplain_500yr-outline"
+              type="line"
+              filter={['all',
+                ['any',
+                  ['==', ['geometry-type'], 'Polygon'],
+                  ['==', ['geometry-type'], 'MultiPolygon']
+                ],
+                ['==', ['get', 'FLD_ZONE'], 'X']
+              ]}
+              paint={{
+                'line-color': '#7DD3FC',  // Light blue (sky-300)
+                'line-width': 0.75,
+                'line-opacity': 0.5
+              }}
+            />
+          </Source>
+        )}
+
+        {/* 100-YEAR FLOODPLAIN (Zones A, AE, AH, AO) - Blue, render on top */}
+        {layerData['floodplain_100yr'] && visibleLayers.includes('floodplain_100yr') && (
+          <Source id="floodplain_100yr-source" type="geojson" data={layerData['floodplain_100yr']}>
+            <Layer
+              id="floodplain_100yr-fill"
+              type="fill"
+              filter={['all',
+                ['any',
+                  ['==', ['geometry-type'], 'Polygon'],
+                  ['==', ['geometry-type'], 'MultiPolygon']
+                ],
+                ['any',
+                  ['==', ['get', 'FLD_ZONE'], 'A'],
+                  ['==', ['get', 'FLD_ZONE'], 'AE'],
+                  ['==', ['get', 'FLD_ZONE'], 'AH'],
+                  ['==', ['get', 'FLD_ZONE'], 'AO']
+                ]
+              ]}
+              paint={{
+                'fill-color': [
+                  'match',
+                  ['get', 'FLD_ZONE'],
+                  'A', '#1D4ED8',      // Dark blue - highest risk (no elevation data)
+                  'AE', '#3B82F6',     // Medium blue - high risk with BFE
+                  'AH', '#60A5FA',     // Light blue - shallow flooding
+                  'AO', '#93C5FD',     // Lighter blue - sheet flow
+                  '#3B82F6'            // Default blue
+                ],
+                'fill-opacity': 0.35
+              }}
+            />
+            <Layer
+              id="floodplain_100yr-outline"
+              type="line"
+              filter={['all',
+                ['any',
+                  ['==', ['geometry-type'], 'Polygon'],
+                  ['==', ['geometry-type'], 'MultiPolygon']
+                ],
+                ['any',
+                  ['==', ['get', 'FLD_ZONE'], 'A'],
+                  ['==', ['get', 'FLD_ZONE'], 'AE'],
+                  ['==', ['get', 'FLD_ZONE'], 'AH'],
+                  ['==', ['get', 'FLD_ZONE'], 'AO']
+                ]
+              ]}
+              paint={{
+                'line-color': [
+                  'match',
+                  ['get', 'FLD_ZONE'],
+                  'A', '#1E3A8A',      // Darkest blue
+                  'AE', '#1D4ED8',     // Dark blue
+                  'AH', '#2563EB',     // Medium blue
+                  'AO', '#3B82F6',     // Blue
+                  '#1D4ED8'            // Default
+                ],
+                'line-width': 1.5,
+                'line-opacity': 0.8
+              }}
+            />
+          </Source>
+        )}
+
+        {/* Legacy FLOOD ZONES layer - in case old config is used */}
+        {layerData['flood_zones'] && visibleLayers.includes('flood_zones') && (
+          <Source id="flood_zones-source" type="geojson" data={layerData['flood_zones']}>
+            <Layer
+              id="flood_zones-fill"
+              type="fill"
+              filter={['all',
+                ['any',
+                  ['==', ['geometry-type'], 'Polygon'],
+                  ['==', ['geometry-type'], 'MultiPolygon']
+                ],
+                ['any',
+                  ['==', ['get', 'FLD_ZONE'], 'A'],
+                  ['==', ['get', 'FLD_ZONE'], 'AE'],
+                  ['==', ['get', 'FLD_ZONE'], 'AH'],
+                  ['==', ['get', 'FLD_ZONE'], 'AO']
+                ]
+              ]}
+              paint={{
+                'fill-color': '#3B82F6',
+                'fill-opacity': 0.35
+              }}
+            />
+            <Layer
+              id="flood_zones-outline"
+              type="line"
+              filter={['all',
+                ['any',
+                  ['==', ['geometry-type'], 'Polygon'],
+                  ['==', ['geometry-type'], 'MultiPolygon']
+                ],
+                ['any',
+                  ['==', ['get', 'FLD_ZONE'], 'A'],
+                  ['==', ['get', 'FLD_ZONE'], 'AE'],
+                  ['==', ['get', 'FLD_ZONE'], 'AH'],
+                  ['==', ['get', 'FLD_ZONE'], 'AO']
+                ]
+              ]}
+              paint={{
+                'line-color': '#1D4ED8',
+                'line-width': 1.5,
+                'line-opacity': 0.8
+              }}
+            />
+          </Source>
+        )}
+
+        {/* Render other visible layers (excluding specially-rendered layers) */}
         {/* Using layerOrder for render order - items later in array render on top */}
         {/* Layers at the START of layerOrder render FIRST (bottom), layers at END render LAST (top) */}
         {[...layerOrder].reverse()
-          .filter(id => visibleLayers.includes(id) && id !== 'parcels' && id !== 'businesses' && id !== 'attractions')
+          .filter(id => visibleLayers.includes(id) &&
+            !['parcels', 'businesses', 'attractions', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr'].includes(id))
           .map((layerId) => {
           const data = layerData[layerId]
           if (!data || !data.features || data.features.length === 0) {
@@ -725,6 +873,291 @@ export default function MapView({
                 {/* Other layers */}
                 {otherFeatures.map((feature, index) => {
                   const p = feature.properties
+
+                  // Special rendering for FEMA flood determination points
+                  if (feature.layerId === 'fema_flood') {
+                    const outcome = p.OUTCOME || 'Unknown'
+                    const isRemoved = outcome.toLowerCase().includes('removed')
+                    const isDenied = outcome.toLowerCase().includes('denied')
+                    const dateEnded = p.DATEENDED ? new Date(p.DATEENDED).toLocaleDateString() : null
+
+                    return (
+                      <div key={feature.layerId} className={`${parcel || index > 0 ? 'mt-2 pt-2 border-t border-gray-100' : ''}`}>
+                        <div className="text-[9px] text-gray-400 uppercase mb-1">FEMA Flood Determination</div>
+
+                        {/* Outcome badge */}
+                        <div className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium mb-1 ${
+                          isRemoved ? 'bg-green-100 text-green-800' :
+                          isDenied ? 'bg-red-100 text-red-800' :
+                          'bg-blue-100 text-blue-800'
+                        }`}>
+                          {outcome}
+                        </div>
+
+                        {/* Property name */}
+                        {p.PROJECTNAME && (
+                          <div className="text-gray-900 text-[10px] mt-1 leading-tight">{p.PROJECTNAME}</div>
+                        )}
+
+                        {/* Details grid */}
+                        <div className="mt-1.5 space-y-0.5 text-[9px]">
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Type:</span>
+                            <span className="text-gray-700 font-medium">{p.PROJECTCATEGORY || 'N/A'}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Lot Type:</span>
+                            <span className="text-gray-700">{p.LOTTYPE || 'N/A'}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Status:</span>
+                            <span className="text-gray-700">{p.STATUS || 'N/A'}</span>
+                          </div>
+                          {dateEnded && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Date:</span>
+                              <span className="text-gray-700">{dateEnded}</span>
+                            </div>
+                          )}
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Case #:</span>
+                            <span className="text-gray-700 font-mono">{p.CASENUMBER || 'N/A'}</span>
+                          </div>
+                        </div>
+
+                        {/* Link to FEMA */}
+                        {p.PDFHYPERLINKID && (
+                          <a
+                            href={`https://msc.fema.gov/portal/advanceSearch#${p.PDFHYPERLINKID}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[9px] text-blue-600 hover:underline mt-1.5 inline-block"
+                          >
+                            View FEMA Letter →
+                          </a>
+                        )}
+                      </div>
+                    )
+                  }
+
+                  // Special rendering for FEMA flood zone polygons (all floodplain layers)
+                  if (feature.layerId === 'flood_zones' || feature.layerId === 'floodplain_100yr' || feature.layerId === 'floodplain_500yr') {
+                    const zone = p.FLD_ZONE || 'Unknown'
+                    const subtype = p.ZONE_SUBTY
+                    const isSFHA = p.SFHA_TF === 'T'
+                    const bfe = p.STATIC_BFE && p.STATIC_BFE !== -9999 ? p.STATIC_BFE : null
+
+                    // Zone descriptions
+                    const zoneDescriptions: { [key: string]: string } = {
+                      'A': '100-year flood zone (1% annual chance, no base elevation)',
+                      'AE': '100-year flood zone (1% annual chance, with base elevation)',
+                      'AH': 'Shallow flooding 1-3 ft (1% annual chance)',
+                      'AO': 'Sheet flow flooding 1-3 ft (1% annual chance)',
+                      'V': 'Coastal high hazard zone',
+                      'VE': 'Coastal zone with base elevation',
+                      'X': 'Minimal flood hazard (outside 100-year floodplain, may be in 500-year zone)',
+                      'D': 'Undetermined flood hazard',
+                    }
+
+                    // Zone colors for badge - blue theme
+                    const zoneColors: { [key: string]: string } = {
+                      'A': 'bg-blue-700 text-white',
+                      'AE': 'bg-blue-500 text-white',
+                      'AH': 'bg-blue-400 text-white',
+                      'AO': 'bg-blue-300 text-blue-900',
+                      'V': 'bg-purple-100 text-purple-800',
+                      'VE': 'bg-purple-100 text-purple-800',
+                      'X': 'bg-sky-100 text-sky-700',
+                      'D': 'bg-gray-100 text-gray-800',
+                    }
+
+                    // Get the appropriate header based on layer
+                    const layerHeader = feature.layerId === 'floodplain_100yr' ? '100-Year Floodplain' :
+                                       feature.layerId === 'floodplain_500yr' ? '500-Year Floodplain' :
+                                       'FEMA Flood Zone'
+
+                    return (
+                      <div key={feature.layerId} className={`${parcel || index > 0 ? 'mt-2 pt-2 border-t border-gray-100' : ''}`}>
+                        <div className="text-[9px] text-gray-400 uppercase mb-1">{layerHeader}</div>
+
+                        {/* Zone badge */}
+                        <div className="flex items-center gap-2">
+                          <div className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold ${zoneColors[zone] || 'bg-blue-100 text-blue-800'}`}>
+                            Zone {zone}
+                          </div>
+                          {isSFHA && (
+                            <div className="text-[9px] text-red-600 font-medium">⚠️ Special Flood Hazard Area</div>
+                          )}
+                        </div>
+
+                        {/* Description */}
+                        <div className="text-gray-700 text-[10px] mt-1">
+                          {zoneDescriptions[zone] || 'Flood hazard zone'}
+                        </div>
+
+                        {/* Details */}
+                        <div className="mt-1.5 space-y-0.5 text-[9px]">
+                          {subtype && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Subtype:</span>
+                              <span className="text-gray-700">{subtype}</span>
+                            </div>
+                          )}
+                          {bfe && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Base Flood Elevation:</span>
+                              <span className="text-gray-700 font-medium">{bfe} ft</span>
+                            </div>
+                          )}
+                          {p.FLD_AR_ID && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Area ID:</span>
+                              <span className="text-gray-700 font-mono">{p.FLD_AR_ID}</span>
+                            </div>
+                          )}
+                          {p.SOURCE_CIT && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">FIRM Panel:</span>
+                              <span className="text-gray-700 font-mono">{p.SOURCE_CIT}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Insurance note for high-risk zones */}
+                        {isSFHA && (
+                          <div className="mt-2 p-1.5 bg-amber-50 border border-amber-200 rounded text-[9px] text-amber-800">
+                            Flood insurance may be required for federally-backed mortgages in this zone.
+                          </div>
+                        )}
+                      </div>
+                    )
+                  }
+
+                  // Special rendering for Capital Projects
+                  if (feature.layerId === 'projects' && p.id) {
+                    const isFloodProject = p.category === 'Flood Control'
+                    const statusColors: { [key: string]: string } = {
+                      'In Progress': 'bg-blue-100 text-blue-800',
+                      'Planning': 'bg-amber-100 text-amber-800',
+                      'Planned': 'bg-amber-100 text-amber-800',
+                      'Completed': 'bg-green-100 text-green-800',
+                      'Design Phase - 75% Complete': 'bg-blue-100 text-blue-800',
+                    }
+
+                    return (
+                      <div key={feature.layerId} className={`${parcel || index > 0 ? 'mt-2 pt-2 border-t border-gray-100' : ''}`}>
+                        <div className="text-[9px] text-gray-400 uppercase mb-1">
+                          {isFloodProject ? 'Flood Mitigation Project' : 'Capital Project'}
+                        </div>
+
+                        {/* Project name */}
+                        <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
+
+                        {/* Status badge */}
+                        <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium mt-1 ${statusColors[p.status] || 'bg-gray-100 text-gray-800'}`}>
+                          {p.status}
+                        </div>
+
+                        {/* Description */}
+                        <div className="text-gray-600 text-[10px] mt-1.5 leading-tight">
+                          {p.description?.substring(0, 150)}{p.description?.length > 150 ? '...' : ''}
+                        </div>
+
+                        {/* Budget for flood projects */}
+                        {isFloodProject && p.budget > 0 && (
+                          <div className="mt-1.5 text-[9px]">
+                            <span className="text-gray-500">Budget:</span>
+                            <span className="text-gray-700 font-medium ml-1">${(p.budget / 1000000).toFixed(1)}M</span>
+                          </div>
+                        )}
+
+                        {/* Key benefits for flood projects */}
+                        {isFloodProject && p.benefits && p.benefits.length > 0 && (
+                          <div className="mt-1.5 p-1.5 bg-blue-50 border border-blue-200 rounded text-[9px] text-blue-800">
+                            <div className="font-medium mb-0.5">Key Benefits:</div>
+                            <ul className="list-disc list-inside space-y-0.5">
+                              {p.benefits.slice(0, 3).map((b: string, i: number) => (
+                                <li key={i}>{b}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Link to source */}
+                        {p.source && (
+                          <a
+                            href={p.source}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[9px] text-blue-600 hover:underline mt-1.5 inline-block"
+                          >
+                            Learn More →
+                          </a>
+                        )}
+                      </div>
+                    )
+                  }
+
+                  // Special rendering for Building Permits
+                  if (feature.layerId === 'building_permits' && p.permit_number) {
+                    const statusColors: { [key: string]: string } = {
+                      'Active': 'bg-green-100 text-green-800',
+                      'Closed - Completed': 'bg-blue-100 text-blue-800',
+                      'Closed': 'bg-gray-100 text-gray-800',
+                      'Closed - Approved': 'bg-blue-100 text-blue-800',
+                      'Closed - Withdrawn': 'bg-red-100 text-red-800',
+                    }
+
+                    const isActive = p.status === 'Active'
+                    const formattedDate = p.issued_date ? new Date(p.issued_date).toLocaleDateString() : null
+
+                    return (
+                      <div key={feature.layerId} className={`${parcel || index > 0 ? 'mt-2 pt-2 border-t border-gray-100' : ''}`}>
+                        <div className="text-[9px] text-gray-400 uppercase mb-1">Building Permit</div>
+
+                        {/* Permit number */}
+                        <div className="font-semibold text-gray-900 text-[11px] font-mono">{p.permit_number}</div>
+
+                        {/* Status badge */}
+                        <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium mt-1 ${statusColors[p.status] || 'bg-gray-100 text-gray-800'}`}>
+                          {isActive ? '🔨 ' : ''}{p.status}
+                        </div>
+
+                        {/* Owner/Project */}
+                        {(p.owner_name || p.project_name) && (
+                          <div className="text-gray-700 text-[10px] mt-1.5">
+                            {p.owner_name || p.project_name}
+                          </div>
+                        )}
+
+                        {/* Details */}
+                        <div className="mt-1.5 space-y-0.5 text-[9px]">
+                          {formattedDate && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Issued:</span>
+                              <span className="text-gray-700">{formattedDate}</span>
+                            </div>
+                          )}
+                          {p.address && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Location:</span>
+                              <span className="text-gray-700 text-right max-w-[150px] truncate">{p.address.replace(/THREE FORKS.*$/i, 'TF')}</span>
+                            </div>
+                          )}
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Type:</span>
+                            <span className="text-gray-700">{p.permit_type}</span>
+                          </div>
+                        </div>
+
+                        {/* Note about data currency */}
+                        <div className="mt-2 p-1.5 bg-amber-50 border border-amber-200 rounded text-[8px] text-amber-700">
+                          Data from Montana EBIZ portal. May not include recent permits.
+                        </div>
+                      </div>
+                    )
+                  }
+
                   const title = p.name || p.district_n || p.fld_zone || p.zone_subty || feature.layerName
                   return (
                     <div key={feature.layerId} className={`${parcel || index > 0 ? 'mt-2 pt-2 border-t border-gray-100' : ''}`}>

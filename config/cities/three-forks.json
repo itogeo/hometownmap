@@ -36,7 +36,9 @@
         "cities",
         "firedistricts",
         "schooldistricts",
-        "water_sewer_districts"
+        "water_sewer_districts",
+        "water_supply",
+        "wastewater"
       ],
       "features": [
         "service_areas",
@@ -48,10 +50,11 @@
       "enabled": true,
       "mapStyle": "satellite",
       "layers": [
+        "floodplain_500yr",
+        "floodplain_100yr",
+        "projects",
         "fema_flood",
         "groundwater_wells",
-        "wastewater",
-        "water_supply",
         "wui",
         "conservation",
         "waterways",
@@ -86,6 +89,7 @@
         "subdivisions",
         "minor_subdivisions",
         "buildings",
+        "building_permits",
         "projects",
         "cities"
       ],
@@ -272,10 +276,10 @@
     },
     "fema_flood": {
       "source": "gallatin_county",
-      "display_name": "FEMA Flood Zones",
+      "display_name": "Flood Determinations",
       "style": {
         "fill": "#3B82F6",
-        "fill-opacity": 0.4,
+        "fill-opacity": 1,
         "stroke": "#1D4ED8",
         "stroke-width": 2
       },
@@ -284,6 +288,53 @@
         "PROJECTCATEGORY",
         "OUTCOME",
         "STATUS"
+      ]
+    },
+    "flood_zones": {
+      "source": "fema_nfhl",
+      "display_name": "FEMA Flood Zones",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.35,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF"
+      ]
+    },
+    "floodplain_100yr": {
+      "source": "fema_nfhl",
+      "display_name": "100-Year Floodplain",
+      "description": "Areas with 1% annual chance of flooding (Zones A, AE, AH, AO)",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.35,
+        "stroke": "#1D4ED8",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "floodplain_500yr": {
+      "source": "fema_nfhl",
+      "display_name": "500-Year Floodplain",
+      "description": "Areas with 0.2% annual chance of flooding (Zone X shaded)",
+      "style": {
+        "fill": "#E0F2FE",
+        "fill-opacity": 0.25,
+        "stroke": "#7DD3FC",
+        "stroke-width": 0.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY"
       ]
     },
     "landslides": {
@@ -390,6 +441,25 @@
         "category",
         "status",
         "budget"
+      ]
+    },
+    "building_permits": {
+      "source": "local",
+      "display_name": "Building Permits",
+      "description": "State building permits from Montana EBIZ (2016-2023)",
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 1,
+        "stroke": "#6D28D9",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "permit_number",
+        "permit_type",
+        "status",
+        "issued_date",
+        "owner_name",
+        "address"
       ]
     },
     "groundwater_wells": {

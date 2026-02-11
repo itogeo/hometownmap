@@ -1,0 +1,292 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.4980, 45.9208]
+      },
+      "properties": {
+        "name": "Missouri Headwaters State Park",
+        "category": "State Park",
+        "icon": "park",
+        "description": "Where the Jefferson, Madison, and Gallatin rivers converge to form the mighty Missouri River. This is where Lewis and Clark first discovered the headwaters in 1805.",
+        "highlights": ["Lewis & Clark Historic Site", "Camping", "Hiking Trails", "Fishing", "Floating", "Wildlife Viewing"],
+        "hours": "Dawn to Dusk",
+        "fee": "$8 vehicle day-use",
+        "website": "https://stateparks.mt.gov/missouri-headwaters",
+        "image": "headwaters",
+        "story": "On July 25, 1805, Captain William Clark became the first Euro-American to reach this sacred confluence. The expedition named the three rivers after President Thomas Jefferson, Secretary of State James Madison, and Secretary of the Treasury Albert Gallatin."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.4720, 45.7943]
+      },
+      "properties": {
+        "name": "Madison Buffalo Jump State Park",
+        "category": "Historic Site",
+        "icon": "monument",
+        "description": "For over 2,000 years, Native American tribes drove buffalo herds over these cliffs. One of the most significant archaeological sites in Montana.",
+        "highlights": ["Native American History", "Interpretive Trails", "Scenic Views", "Wildlife"],
+        "hours": "Dawn to Dusk",
+        "fee": "$8 vehicle day-use",
+        "website": "https://stateparks.mt.gov/madison-buffalo-jump",
+        "image": "buffalo_jump",
+        "story": "Imagine hundreds of bison thundering across the prairie, driven by skilled hunters toward the cliff edge. This site tells the story of ingenious hunting techniques that sustained tribes for millennia."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.8508, 45.8229]
+      },
+      "properties": {
+        "name": "Lewis and Clark Caverns State Park",
+        "category": "State Park",
+        "icon": "cave",
+        "description": "Montana's first and best-known state park. Guided tours take you through spectacular limestone caverns filled with stalactites, stalagmites, and other formations.",
+        "highlights": ["Guided Cave Tours", "Camping", "Hiking", "Visitor Center", "Gift Shop"],
+        "hours": "Cave tours: May-September",
+        "fee": "Cave tour $15 adults, $10 children",
+        "website": "https://stateparks.mt.gov/lewis-and-clark-caverns",
+        "image": "caverns",
+        "story": "Discovered in 1892, these caves are among the largest known limestone caverns in the Northwest. The 2-mile guided tour descends 600 feet through cathedral-like chambers adorned with nature's sculptures."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5480, 45.8950]
+      },
+      "properties": {
+        "name": "Headwaters Trail System",
+        "category": "Trail",
+        "icon": "trail",
+        "description": "Award-winning paved trail along the historic Milwaukee Railroad bed. Named Montana Trail of the Year in 2007.",
+        "highlights": ["Paved Path", "Biking", "Walking", "Running", "Scenic Views", "Wildlife"],
+        "hours": "Dawn to Dusk",
+        "fee": "Free",
+        "distance": "4+ miles",
+        "story": "Follow the path of the historic Milwaukee Railroad through cottonwood groves and past serene ponds. The trail ends at the Jefferson River with stunning views of the Tobacco Root Mountains."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5515, 45.8930]
+      },
+      "properties": {
+        "name": "Sacajawea Hotel",
+        "category": "Historic Landmark",
+        "icon": "hotel",
+        "description": "Built in 1910, this beautifully restored hotel is a Montana landmark. Home to Pompey's Grill and the Sac Bar.",
+        "highlights": ["Historic Hotel", "Fine Dining", "Bar", "Events", "Lodging"],
+        "website": "https://sacajaweahotel.com",
+        "story": "Named for the Lemhi Shoshone woman who guided Lewis and Clark, this elegant hotel has welcomed travelers for over a century. The restored Victorian charm makes every visit feel like stepping back in time."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5515, 45.8910]
+      },
+      "properties": {
+        "name": "Headwaters Heritage Museum",
+        "category": "Museum",
+        "icon": "museum",
+        "description": "Discover the rich history of Three Forks and the surrounding area through exhibits on Lewis and Clark, Native American heritage, and pioneer life.",
+        "highlights": ["Local History", "Lewis & Clark", "Pioneer Artifacts", "Native American History"],
+        "hours": "Open seasonally",
+        "fee": "Free (donations welcome)",
+        "address": "202 S Main St",
+        "story": "From ancient Native American camps to the arrival of Lewis and Clark, from the railroad boom to modern ranching - this museum tells the complete story of life at the headwaters."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5450, 45.9050]
+      },
+      "properties": {
+        "name": "Headwaters Golf Course",
+        "category": "Recreation",
+        "icon": "golf",
+        "description": "Scenic 9-hole public course with stunning mountain views. Built in 1988, it offers a relaxed Montana golf experience.",
+        "highlights": ["9 Holes", "Mountain Views", "Equipment Rentals", "Lessons", "Pro Shop"],
+        "hours": "Seasonal",
+        "website": "Contact for tee times",
+        "story": "Play a round surrounded by deer, geese, and the majestic backdrop of the Tobacco Root and Bridger mountain ranges. A hidden gem for golfers seeking natural beauty."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5420, 45.9030]
+      },
+      "properties": {
+        "name": "Three Forks Ponds",
+        "category": "Recreation",
+        "icon": "water",
+        "description": "Popular local swimming hole and recreation area. Perfect for summer days with swimming, fishing, and picnicking.",
+        "highlights": ["Swimming", "Fishing", "Hiking", "Bicycling", "Boating", "Picnic Areas"],
+        "hours": "Dawn to Dusk",
+        "fee": "Free",
+        "story": "Cool off in the crystal-clear waters fed by natural springs. Locals have been gathering here for generations - it's the perfect summer escape."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5530, 45.8915]
+      },
+      "properties": {
+        "name": "Stevenson Park",
+        "category": "City Park",
+        "icon": "playground",
+        "description": "The heart of Three Forks recreation with covered pavilion, playground, tennis courts, sand volleyball, and seasonal kids pool.",
+        "highlights": ["Covered Pavilion", "Playground", "Tennis Courts", "Volleyball", "Seasonal Pool"],
+        "hours": "Dawn to Dusk",
+        "fee": "Free"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5510, 45.8960]
+      },
+      "properties": {
+        "name": "John Q. Adams Milwaukee Railroad Park",
+        "category": "Historic Site",
+        "icon": "train",
+        "description": "Historic park honoring the railroad heritage that built Three Forks. Features original railroad artifacts and connects to the Headwaters Trail.",
+        "highlights": ["Railroad History", "Trail Access", "Historic Markers"],
+        "hours": "Dawn to Dusk",
+        "fee": "Free",
+        "story": "The Milwaukee Railroad brought prosperity and growth to Three Forks. This park preserves that legacy and serves as the gateway to the beloved Headwaters Trail System."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5560, 45.8985]
+      },
+      "properties": {
+        "name": "Three Forks Rodeo Arena",
+        "category": "Events",
+        "icon": "rodeo",
+        "description": "Home of the Three Forks NRA Rodeo and various community events throughout the year.",
+        "highlights": ["NRA Rodeo", "Community Events", "Live Entertainment"],
+        "website": "Check local events calendar",
+        "story": "Experience authentic Montana cowboy culture at the annual NRA Rodeo. Bull riding, barrel racing, and bronc busting under the big sky - it doesn't get more Western than this."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5520, 45.8920]
+      },
+      "properties": {
+        "name": "Veterans Memorial Park",
+        "category": "City Park",
+        "icon": "memorial",
+        "description": "A peaceful park honoring those who served. Features memorials and quiet reflection spaces.",
+        "highlights": ["Veterans Memorial", "Peaceful Setting", "Reflection Area"],
+        "hours": "Dawn to Dusk",
+        "fee": "Free"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5525, 45.8905]
+      },
+      "properties": {
+        "name": "Sacajawea Park",
+        "category": "City Park",
+        "icon": "park",
+        "description": "Named for the famous Lemhi Shoshone guide, this park offers green space and connection to Three Forks' Lewis and Clark heritage.",
+        "highlights": ["Open Space", "Historic Connection", "Family Friendly"],
+        "hours": "Dawn to Dusk",
+        "fee": "Free"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.6023, 45.9027]
+      },
+      "properties": {
+        "name": "Three Forks KOA",
+        "category": "Lodging",
+        "icon": "camping",
+        "description": "Full-service campground with RV sites, tent camping, and cabins. Great base for exploring the area.",
+        "highlights": ["RV Sites", "Tent Camping", "Cabins", "Pool", "Store"],
+        "website": "https://koa.com/campgrounds/three-forks"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5050, 45.9150]
+      },
+      "properties": {
+        "name": "Jefferson River Access",
+        "category": "Recreation",
+        "icon": "fishing",
+        "description": "Popular fishing access point on the Jefferson River. Known for excellent trout fishing and scenic float trips.",
+        "highlights": ["Trout Fishing", "Float Trips", "Boat Launch", "Scenic Views"],
+        "fee": "Montana fishing license required",
+        "story": "The Jefferson River offers some of Montana's finest blue-ribbon trout fishing. Named by Lewis and Clark for President Jefferson, it flows through pristine mountain valleys."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.4850, 45.9280]
+      },
+      "properties": {
+        "name": "Madison River Access",
+        "category": "Recreation",
+        "icon": "fishing",
+        "description": "World-renowned trout fishing on the Madison River. A bucket-list destination for fly fishers.",
+        "highlights": ["Blue-Ribbon Trout Stream", "Fly Fishing", "Float Trips", "Wildlife"],
+        "fee": "Montana fishing license required",
+        "story": "The Madison is consistently rated one of the top 100 trout streams in America. Its riffles and runs hold wild rainbow and brown trout that challenge anglers from around the world."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.4920, 45.9220]
+      },
+      "properties": {
+        "name": "Gallatin River Access",
+        "category": "Recreation",
+        "icon": "fishing",
+        "description": "The third of the three forks, offering excellent fishing, kayaking, and scenic beauty.",
+        "highlights": ["Trout Fishing", "Kayaking", "Scenic Float", "Wildlife Viewing"],
+        "fee": "Montana fishing license required",
+        "story": "Flowing from Yellowstone National Park through the spectacular Gallatin Canyon, this river completes the trio that forms the Missouri. Its cold, clear waters are perfect for summer adventures."
+      }
+    }
+  ]
+}

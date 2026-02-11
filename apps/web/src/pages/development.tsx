@@ -122,7 +122,7 @@ export default function DevelopmentPage() {
   const [selectedZone, setSelectedZone] = useState<ZoneInfo | null>(null)
 
   useEffect(() => {
-    fetch('/api/config/three-forks')
+    fetch('/data/config/three-forks.json')
       .then((res) => res.json())
       .then(setCityConfig)
       .catch((err) => console.error('Failed to load config:', err))

@@ -33,7 +33,7 @@ export default function SimpleMap() {
   // Load data on mount
   useEffect(() => {
     // Load parcels
-    fetch('/api/layers/three-forks/parcels')
+    fetch('/data/layers/three-forks/parcels.geojson')
       .then(res => res.json())
       .then(data => {
         console.log('✅ Loaded parcels:', data.features?.length)
@@ -45,7 +45,7 @@ export default function SimpleMap() {
       })
 
     // Load zoning districts
-    fetch('/api/layers/three-forks/zoningdistricts')
+    fetch('/data/layers/three-forks/zoningdistricts.geojson')
       .then(res => res.json())
       .then(data => {
         console.log('✅ Loaded zoning:', data.features?.length)

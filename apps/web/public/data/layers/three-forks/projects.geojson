@@ -1,0 +1,196 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-111.5545, 45.8925],
+          [-111.5520, 45.8925],
+          [-111.5495, 45.8925],
+          [-111.5470, 45.8925]
+        ]
+      },
+      "properties": {
+        "id": "proj-001",
+        "name": "Water System Improvements Project",
+        "category": "Water/Sewer",
+        "status": "In Progress",
+        "description": "Approximately 7,090 linear feet of 6-inch diameter water main (new and replacement), 100 service connections with new curb stops, and associated fittings, valves, and appurtenances.",
+        "budget": 965700,
+        "spent": 482850,
+        "start_date": "2025-04-14",
+        "end_date": "2025-10-31",
+        "contractor": "AX&T Dirt Works",
+        "project_manager": "City Public Works",
+        "funding_sources": ["Montana Coal Endowment Program (up to $625,000)", "ARPA Funds", "DNRC-RRGL Grant", "City Water Enterprise Fund"],
+        "updates": [
+          {"date": "2025-04-14", "text": "Construction began. Road closures in effect with contractor signage."},
+          {"date": "2025-02-26", "text": "Bids opened. AX&T Dirt Works selected as low bidder at $965,700."}
+        ],
+        "impact": "Road closures during construction. Minimum 48-hour notice for any water service interruptions.",
+        "benefits": ["New 6-inch water mains", "100 new service connections", "Improved water pressure", "Enhanced fire protection"],
+        "source": "https://threeforksmontana.us/recent-news"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-111.6050, 45.8780],
+          [-111.5980, 45.8810],
+          [-111.5920, 45.8840],
+          [-111.5870, 45.8865],
+          [-111.5820, 45.8880],
+          [-111.5770, 45.8895],
+          [-111.5720, 45.8905],
+          [-111.5680, 45.8912],
+          [-111.5640, 45.8918],
+          [-111.5600, 45.8920]
+        ]
+      },
+      "properties": {
+        "id": "proj-002",
+        "name": "Jefferson River Flood Mitigation Project",
+        "category": "Flood Control",
+        "status": "Design Phase - 75% Complete",
+        "description": "Nature-based flood mitigation using a grass-lined conveyance channel approximately 8,000 linear feet (~1.5 miles) to intercept Jefferson River flood waters west of town. Channel dimensions: 100 feet wide, 5 feet deep, with 3:1 side slopes. Includes culvert crossing under MT Highway 2 and a recreation pond.",
+        "budget": 6000000,
+        "spent": 110104,
+        "start_date": "2022-01-01",
+        "end_date": "2027-06-30",
+        "contractor": "TBD - Bidding Sept/Oct 2025",
+        "project_manager": "Kelly Smith, Floodplain Administrator",
+        "phone": "406-285-3431",
+        "email": "ksmith@threeforksmontana.us",
+        "funding_sources": ["FEMA Flood Mitigation Assistance Grant - $4,152,375 (75%)", "Special Improvement District #34 (25%)", "Montana Community Resiliency Funds"],
+        "updates": [
+          {"date": "2025-08-20", "text": "Design 75% complete. Bid process expected Sept-Oct 2025. Construction to start late 2025 or Spring 2026."},
+          {"date": "2025-05-27", "text": "City Council approved Draw #1 from FMA Grant ($110,103.68)."},
+          {"date": "2025-05-01", "text": "Team presented at National Conference in New Orleans."},
+          {"date": "2025-02-01", "text": "Presented at Montana Floodplain Managers' Conference in Missoula."}
+        ],
+        "impact": "SID #34 assessment: $195/year for 20 years ($3,900 total) per affected property.",
+        "benefits": ["Removes 946 structures from floodplain", "Protects 73% of city population", "Removes western Three Forks from 100-year AND 500-year floodplains", "Mitigates $62-96 million in potential flood damages", "New FEMA maps expected mid-2027"],
+        "source": "https://threeforksmontana.us/jefferson-river-flood-mitigation-project",
+        "highlight": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5870, 45.8865]
+      },
+      "properties": {
+        "id": "proj-002a",
+        "name": "Flood Mitigation Recreation Pond",
+        "category": "Flood Control",
+        "status": "Planned",
+        "description": "Recreation pond near US Highway 2, part of the Jefferson River Flood Mitigation Project. Will enhance an existing pond for water storage, fire district use, and community recreation.",
+        "budget": 0,
+        "spent": 0,
+        "start_date": "2025-10-01",
+        "end_date": "2026-12-31",
+        "contractor": "TBD",
+        "project_manager": "Kelly Smith, Floodplain Administrator",
+        "funding_sources": ["Included in FEMA FMA Grant"],
+        "updates": [],
+        "impact": "Located between Front Road and Sabena Road, approximately one mile west of downtown.",
+        "benefits": ["Water storage capacity", "Fire district water source", "Community recreation amenity", "Flood water detention"],
+        "source": "https://threeforksmontana.us/jefferson-river-flood-mitigation-project"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5510, 45.8900]
+      },
+      "properties": {
+        "id": "proj-003",
+        "name": "Wastewater System Improvements",
+        "category": "Water/Sewer",
+        "status": "Planning",
+        "description": "Preliminary Engineering Report (PER) in progress for proposed improvements to the City's wastewater system. Project scope to be determined through PER findings.",
+        "budget": 0,
+        "spent": 0,
+        "start_date": "2025-09-09",
+        "end_date": "TBD",
+        "contractor": "Great West Engineering (PER)",
+        "project_manager": "City Water/Sewer Department",
+        "funding_sources": ["To be determined through PER process", "Potential State Revolving Fund"],
+        "updates": [
+          {"date": "2025-09-09", "text": "Public hearing held to obtain comments on proposed wastewater improvements."},
+          {"date": "2025-07-08", "text": "City Council hearing on rate increases to support infrastructure improvements."}
+        ],
+        "impact": "Water and sewer rate increases proposed ($5/month each) to meet grant eligibility requirements.",
+        "benefits": ["System reliability improvements", "Environmental compliance", "Future growth capacity"],
+        "source": "https://threeforksmontana.us/public-notices"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5514, 45.8925]
+      },
+      "properties": {
+        "id": "proj-004",
+        "name": "Lead Service Line Replacement Program",
+        "category": "Water/Sewer",
+        "status": "Planning",
+        "description": "Replacement of all lead, galvanized, and unknown service lines as required by the Lead and Copper Rule Improvements (LCRI) by 2037. Initial project to replace 150 service lines.",
+        "budget": 2250000,
+        "spent": 0,
+        "start_date": "2027-01-01",
+        "end_date": "2037-12-31",
+        "contractor": "TBD",
+        "project_manager": "City Water Department",
+        "funding_sources": ["Montana State Revolving Fund (SRF)", "Federal Lead Service Line Replacement funding"],
+        "updates": [
+          {"date": "2025-01-01", "text": "Planning phase. Seeking SRF funding prior to 2027 deadline."},
+          {"date": "2024-01-01", "text": "Service line inventory in progress per LCRI requirements."}
+        ],
+        "impact": "Estimated cost of $15,000 per service line based on recent bid tabs.",
+        "benefits": ["Eliminates lead exposure risk", "LCRI regulatory compliance", "Improved water quality", "50+ year service life"],
+        "source": "https://threeforksmontana.us/recent-news"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-111.5400, 45.8920],
+          [-111.5350, 45.8915],
+          [-111.5300, 45.8910],
+          [-111.5250, 45.8905]
+        ]
+      },
+      "properties": {
+        "id": "proj-005",
+        "name": "Headwaters Trail Rehabilitation - East of Madison River",
+        "category": "Parks",
+        "status": "In Progress",
+        "description": "Trail rehabilitation on the Headwaters Trail System east of the Madison River Bridge. Part of the 12-mile paved trail network running along the former Milwaukee Railroad bed.",
+        "budget": 87000,
+        "spent": 0,
+        "start_date": "2024-03-01",
+        "end_date": "2025-12-31",
+        "contractor": "TBD",
+        "project_manager": "Gene Townsend, Trail System Chairman",
+        "funding_sources": ["Montana Trail Stewardship Grant Program ($87,000)", "City Match"],
+        "updates": [
+          {"date": "2024-03-27", "text": "FWP recommended $87,000 Trail Stewardship Grant award. Public comment period opened."},
+          {"date": "2022-01-01", "text": "Previous $54,000 TSP grant completed for earlier trail rehabilitation."}
+        ],
+        "impact": "Trail sections may have temporary closures during rehabilitation work.",
+        "benefits": ["Improved trail surface", "Enhanced safety", "Maintains connectivity to Headwaters State Park and Droulliard Fishing Access", "Supports Great American Rail-Trail route"],
+        "source": "https://www.threeforksvoice.com/story/2024/03/27/community/fwp-seeks-public-comment-on-recommended-montana-trail-stewardship-grant-program-funding-award-to-city-of-three-forks/3947.html"
+      }
+    }
+  ]
+}

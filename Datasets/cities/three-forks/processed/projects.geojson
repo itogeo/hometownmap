@@ -39,33 +39,67 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [-111.5750, 45.8850],
-          [-111.5680, 45.8870],
-          [-111.5620, 45.8885],
-          [-111.5580, 45.8900]
+          [-111.6050, 45.8780],
+          [-111.5980, 45.8810],
+          [-111.5920, 45.8840],
+          [-111.5870, 45.8865],
+          [-111.5820, 45.8880],
+          [-111.5770, 45.8895],
+          [-111.5720, 45.8905],
+          [-111.5680, 45.8912],
+          [-111.5640, 45.8918],
+          [-111.5600, 45.8920]
         ]
       },
       "properties": {
         "id": "proj-002",
         "name": "Jefferson River Flood Mitigation Project",
-        "category": "Water/Sewer",
-        "status": "In Progress",
-        "description": "Grass-lined conveyance channel approximately 8,000 linear feet to intercept Jefferson River flood waters west of town. Channel dimensions: 100 feet wide, 5 feet deep, with 3:1 side slopes. Includes culvert crossing structure under MT Highway 2.",
+        "category": "Flood Control",
+        "status": "Design Phase - 75% Complete",
+        "description": "Nature-based flood mitigation using a grass-lined conveyance channel approximately 8,000 linear feet (~1.5 miles) to intercept Jefferson River flood waters west of town. Channel dimensions: 100 feet wide, 5 feet deep, with 3:1 side slopes. Includes culvert crossing under MT Highway 2 and a recreation pond.",
         "budget": 6000000,
         "spent": 110104,
         "start_date": "2022-01-01",
-        "end_date": "2026-12-31",
-        "contractor": "TBD - Bidding Spring 2026",
+        "end_date": "2027-06-30",
+        "contractor": "TBD - Bidding Sept/Oct 2025",
         "project_manager": "Kelly Smith, Floodplain Administrator",
-        "funding_sources": ["FEMA Flood Mitigation Assistance Grant (75%)", "Special Improvement District #34 (25%)"],
+        "phone": "406-285-3431",
+        "email": "ksmith@threeforksmontana.us",
+        "funding_sources": ["FEMA Flood Mitigation Assistance Grant - $4,152,375 (75%)", "Special Improvement District #34 (25%)", "Montana Community Resiliency Funds"],
         "updates": [
+          {"date": "2025-08-20", "text": "Design 75% complete. Bid process expected Sept-Oct 2025. Construction to start late 2025 or Spring 2026."},
           {"date": "2025-05-27", "text": "City Council approved Draw #1 from FMA Grant ($110,103.68)."},
           {"date": "2025-05-01", "text": "Team presented at National Conference in New Orleans."},
-          {"date": "2025-02-01", "text": "Presented at Montana Floodplain Managers' Conference in Missoula."},
-          {"date": "2025-01-01", "text": "Nearly 75% through design phase. Finalizing permitting."}
+          {"date": "2025-02-01", "text": "Presented at Montana Floodplain Managers' Conference in Missoula."}
         ],
-        "impact": "SID #34 assessment: Maximum $195/year for 20 years per property.",
-        "benefits": ["Removes 946 structures from floodplain", "Protects 73% of city population", "Removes western portion from 100-year and 500-year floodplains", "Mitigates $62-96 million in potential flood damages"],
+        "impact": "SID #34 assessment: $195/year for 20 years ($3,900 total) per affected property.",
+        "benefits": ["Removes 946 structures from floodplain", "Protects 73% of city population", "Removes western Three Forks from 100-year AND 500-year floodplains", "Mitigates $62-96 million in potential flood damages", "New FEMA maps expected mid-2027"],
+        "source": "https://threeforksmontana.us/jefferson-river-flood-mitigation-project",
+        "highlight": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5870, 45.8865]
+      },
+      "properties": {
+        "id": "proj-002a",
+        "name": "Flood Mitigation Recreation Pond",
+        "category": "Flood Control",
+        "status": "Planned",
+        "description": "Recreation pond near US Highway 2, part of the Jefferson River Flood Mitigation Project. Will enhance an existing pond for water storage, fire district use, and community recreation.",
+        "budget": 0,
+        "spent": 0,
+        "start_date": "2025-10-01",
+        "end_date": "2026-12-31",
+        "contractor": "TBD",
+        "project_manager": "Kelly Smith, Floodplain Administrator",
+        "funding_sources": ["Included in FEMA FMA Grant"],
+        "updates": [],
+        "impact": "Located between Front Road and Sabena Road, approximately one mile west of downtown.",
+        "benefits": ["Water storage capacity", "Fire district water source", "Community recreation amenity", "Flood water detention"],
         "source": "https://threeforksmontana.us/jefferson-river-flood-mitigation-project"
       }
     },

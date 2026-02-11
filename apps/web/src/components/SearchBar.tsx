@@ -22,30 +22,18 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
     setIsSearching(true)
 
     try {
-      // Search our local data
-      const localResponse = await fetch(
-        `/api/search/${cityId}?q=${encodeURIComponent(searchQuery)}`
-      )
-
-      let localResults: any[] = []
-      if (localResponse.ok) {
-        const data = await localResponse.json()
-        localResults = data.results || []
-      }
-
       // Search Mapbox for addresses, businesses, parks (geocoding)
       let mapboxResults: any[] = []
       if (mapboxToken) {
         try {
           // Bias search to Three Forks, MT area
           const proximity = '-111.5514,45.8925'
-          const bbox = '-111.7,-45.8,-111.4,46.0'
           const mapboxResponse = await fetch(
             `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?` +
             `access_token=${mapboxToken}&` +
             `proximity=${proximity}&` +
             `types=address,poi,place&` +
-            `limit=5&` +
+            `limit=10&` +
             `country=US`
           )
 
@@ -57,7 +45,7 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
               address: feature.place_name,
               category: feature.properties?.category,
               center: feature.center,
-              score: 75, // Give Mapbox results a reasonable score
+              score: 75,
             }))
           }
         } catch (err) {
@@ -65,10 +53,7 @@ export default function SearchBar({ cityId, onResultSelect }: SearchBarProps) {
         }
       }
 
-      // Combine and sort results - local first, then Mapbox
-      const combined = [...localResults, ...mapboxResults]
-      combined.sort((a, b) => (b.score || 0) - (a.score || 0))
-      setResults(combined.slice(0, 15))
+      setResults(mapboxResults.slice(0, 15))
     } catch (error) {
       console.error('Search failed:', error)
     } finally {

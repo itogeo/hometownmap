@@ -1,0 +1,546 @@
+{
+  "id": "three-forks",
+  "name": "Three Forks",
+  "county": "gallatin",
+  "state": "montana",
+  "map": {
+    "center": [
+      -111.5514,
+      45.8925
+    ],
+    "zoom": 14,
+    "bounds": null
+  },
+  "modes": {
+    "resident": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "parcels",
+        "subdivisions",
+        "minor_subdivisions",
+        "cities",
+        "buildings",
+        "roads"
+      ],
+      "features": [
+        "search_address",
+        "parcel_info",
+        "subdivision_info"
+      ]
+    },
+    "services": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "cities",
+        "firedistricts",
+        "schooldistricts",
+        "water_sewer_districts",
+        "water_supply",
+        "wastewater"
+      ],
+      "features": [
+        "service_areas",
+        "district_info",
+        "contact_info"
+      ]
+    },
+    "environmental": {
+      "enabled": true,
+      "mapStyle": "satellite",
+      "layers": [
+        "floodplain_500yr",
+        "floodplain_100yr",
+        "projects",
+        "fema_flood",
+        "groundwater_wells",
+        "wui",
+        "conservation",
+        "waterways",
+        "cities"
+      ],
+      "features": [
+        "flood_zones",
+        "hazard_info",
+        "environmental_regulations"
+      ]
+    },
+    "tourism": {
+      "enabled": true,
+      "mapStyle": "outdoors",
+      "layers": [
+        "attractions",
+        "cities",
+        "waterways"
+      ],
+      "features": [
+        "story_map",
+        "attraction_info",
+        "trip_planning"
+      ]
+    },
+    "development": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "parcels",
+        "zoningdistricts",
+        "subdivisions",
+        "minor_subdivisions",
+        "buildings",
+        "building_permits",
+        "projects",
+        "cities"
+      ],
+      "features": [
+        "permit_search",
+        "zoning_regulations",
+        "capital_projects"
+      ]
+    },
+    "business": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "businesses",
+        "zoningdistricts",
+        "cities",
+        "parcels"
+      ],
+      "features": [
+        "search_properties",
+        "filter_by_zoning",
+        "demographics"
+      ]
+    }
+  },
+  "layers": {
+    "parcels": {
+      "source": "montana_cadastral",
+      "display_name": "Property Parcels",
+      "minzoom": 13,
+      "style": {
+        "fill": "#FBBF24",
+        "fill-opacity": 0.15,
+        "stroke": "#B45309",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "ownername",
+        "addresslin",
+        "citystatez",
+        "gisacres",
+        "proptype",
+        "totalvalue"
+      ]
+    },
+    "subdivisions": {
+      "source": "gallatin_county",
+      "display_name": "Subdivisions",
+      "style": {
+        "fill": "#10B981",
+        "fill-opacity": 0.2,
+        "stroke": "#059669",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "SUB_NAME",
+        "FILINGDATE",
+        "NUMOFPHASE",
+        "NUMOFLOTS"
+      ]
+    },
+    "minor_subdivisions": {
+      "source": "gallatin_county",
+      "display_name": "Minor Subdivisions",
+      "style": {
+        "fill": "#6EE7B7",
+        "fill-opacity": 0.2,
+        "stroke": "#34D399",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "SUB_NAME",
+        "FILINGDATE"
+      ]
+    },
+    "cities": {
+      "source": "county",
+      "display_name": "City Limits",
+      "style": {
+        "fill": "transparent",
+        "fill-opacity": 0,
+        "stroke": "#374151",
+        "stroke-width": 2,
+        "stroke-dasharray": [4, 2]
+      },
+      "popup_fields": []
+    },
+    "buildings": {
+      "source": "microsoft",
+      "display_name": "Building Footprints",
+      "minzoom": 14,
+      "style": {
+        "fill": "#6B7280",
+        "fill-opacity": 0.6,
+        "stroke": "#374151",
+        "stroke-width": 0.5
+      },
+      "popup_fields": [
+        "area_sqm"
+      ]
+    },
+    "roads": {
+      "source": "county",
+      "display_name": "Roads",
+      "style": {
+        "stroke": "#9CA3AF",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "full_name",
+        "road_type"
+      ]
+    },
+    "waterways": {
+      "source": "county",
+      "display_name": "Rivers & Streams",
+      "style": {
+        "fill": "#0EA5E9",
+        "fill-opacity": 0.4,
+        "stroke": "#0284C7",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "ftype"
+      ]
+    },
+    "firedistricts": {
+      "source": "county",
+      "display_name": "Fire Districts",
+      "style": {
+        "fill": "#EF4444",
+        "fill-opacity": 0.15,
+        "stroke": "#DC2626",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "area_acres"
+      ]
+    },
+    "schooldistricts": {
+      "source": "county",
+      "display_name": "School Districts",
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 0.15,
+        "stroke": "#7C3AED",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "elementary",
+        "high_schoo"
+      ]
+    },
+    "water_sewer_districts": {
+      "source": "county",
+      "display_name": "Water/Sewer Districts",
+      "style": {
+        "fill": "#06B6D4",
+        "fill-opacity": 0.2,
+        "stroke": "#0891B2",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type"
+      ]
+    },
+    "zoningdistricts": {
+      "source": "county",
+      "display_name": "Zoning Districts",
+      "style": {
+        "fill": "#F97316",
+        "fill-opacity": 0.25,
+        "stroke": "#EA580C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "district_n",
+        "landuse",
+        "zoned"
+      ]
+    },
+    "fema_flood": {
+      "source": "gallatin_county",
+      "display_name": "Flood Determinations",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 1,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "PROJECTNAME",
+        "PROJECTCATEGORY",
+        "OUTCOME",
+        "STATUS"
+      ]
+    },
+    "flood_zones": {
+      "source": "fema_nfhl",
+      "display_name": "FEMA Flood Zones",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.35,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF"
+      ]
+    },
+    "floodplain_100yr": {
+      "source": "fema_nfhl",
+      "display_name": "100-Year Floodplain",
+      "description": "Areas with 1% annual chance of flooding (Zones A, AE, AH, AO)",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.35,
+        "stroke": "#1D4ED8",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "floodplain_500yr": {
+      "source": "fema_nfhl",
+      "display_name": "500-Year Floodplain",
+      "description": "Areas with 0.2% annual chance of flooding (Zone X shaded)",
+      "style": {
+        "fill": "#E0F2FE",
+        "fill-opacity": 0.25,
+        "stroke": "#7DD3FC",
+        "stroke-width": 0.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY"
+      ]
+    },
+    "landslides": {
+      "source": "gallatin_county",
+      "display_name": "Landslide Areas",
+      "style": {
+        "fill": "#92400E",
+        "fill-opacity": 0.35,
+        "stroke": "#78350F",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "UNIT_NAME",
+        "TYPE"
+      ]
+    },
+    "wui": {
+      "source": "gallatin_county",
+      "display_name": "Wildland-Urban Interface",
+      "style": {
+        "fill": "#F59E0B",
+        "fill-opacity": 0.3,
+        "stroke": "#D97706",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "WUI_Class"
+      ]
+    },
+    "conservation": {
+      "source": "gallatin_county",
+      "display_name": "Conservation Easements",
+      "style": {
+        "fill": "#22C55E",
+        "fill-opacity": 0.35,
+        "stroke": "#16A34A",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "PROJECT",
+        "ACRES",
+        "HOLDER"
+      ]
+    },
+    "soils": {
+      "source": "gallatin_county",
+      "display_name": "Soils (NRCS)",
+      "style": {
+        "fill": "#A16207",
+        "fill-opacity": 0.25,
+        "stroke": "#854D0E",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "muname",
+        "musym"
+      ]
+    },
+    "businesses": {
+      "source": "local",
+      "display_name": "Local Businesses",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 1,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "category",
+        "address",
+        "phone",
+        "website"
+      ]
+    },
+    "attractions": {
+      "source": "local",
+      "display_name": "Tourist Attractions",
+      "style": {
+        "fill": "#F59E0B",
+        "fill-opacity": 1,
+        "stroke": "#D97706",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "category",
+        "description",
+        "hours",
+        "fee"
+      ]
+    },
+    "projects": {
+      "source": "local",
+      "display_name": "Capital Projects",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.4,
+        "stroke": "#2563EB",
+        "stroke-width": 3
+      },
+      "popup_fields": [
+        "name",
+        "category",
+        "status",
+        "budget"
+      ]
+    },
+    "building_permits": {
+      "source": "local",
+      "display_name": "Building Permits",
+      "description": "State building permits from Montana EBIZ (2016-2023)",
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 1,
+        "stroke": "#6D28D9",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "permit_number",
+        "permit_type",
+        "status",
+        "issued_date",
+        "owner_name",
+        "address"
+      ]
+    },
+    "groundwater_wells": {
+      "source": "gallatin_county",
+      "display_name": "Groundwater Monitor Wells",
+      "style": {
+        "fill": "#0EA5E9",
+        "fill-opacity": 1,
+        "stroke": "#0284C7",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "WELL_ID",
+        "WELL_DEPTH"
+      ]
+    },
+    "wastewater": {
+      "source": "gallatin_county",
+      "display_name": "Wastewater Systems",
+      "style": {
+        "fill": "#84CC16",
+        "fill-opacity": 1,
+        "stroke": "#65A30D",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "SYSTEMTYPE",
+        "PURPOSE"
+      ]
+    },
+    "water_supply": {
+      "source": "gallatin_county",
+      "display_name": "Water Supply Systems",
+      "style": {
+        "fill": "#06B6D4",
+        "fill-opacity": 1,
+        "stroke": "#0891B2",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "WELL_TYPE",
+        "USE_"
+      ]
+    }
+  },
+  "branding": {
+    "logo": null,
+    "primary_color": "#3388ff",
+    "secondary_color": "#ffffff",
+    "title": "Three Forks Interactive Map"
+  },
+  "contact": {
+    "city_hall": "206 Main Street, Three Forks, MT 59752",
+    "phone": "(406) 285-3431",
+    "email": "cityclerk@threeforksmontana.us",
+    "website": "https://threeforksmontana.us"
+  },
+  "demographics": {
+    "population": 2143,
+    "median_income": 54000,
+    "median_age": 42,
+    "growth_rate": "+8% (2010-2020)"
+  },
+  "resources": [
+    {
+      "name": "Gallatin County GIS",
+      "url": "https://gallatincomt.virtualtownhall.net/gis",
+      "description": "County GIS portal and property records",
+      "icon": "🗺️"
+    },
+    {
+      "name": "Montana Cadastral",
+      "url": "https://svc.mt.gov/msl/cadastral/",
+      "description": "Statewide property ownership database",
+      "icon": "📋"
+    },
+    {
+      "name": "Three Forks City Hall",
+      "url": "https://threeforksmontana.us",
+      "description": "Official city website and services",
+      "icon": "🏛️"
+    }
+  ]
+}

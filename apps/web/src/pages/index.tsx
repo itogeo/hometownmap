@@ -59,7 +59,7 @@ export default function Home() {
 
   // Load city configuration
   useEffect(() => {
-    fetch('/api/config/three-forks')
+    fetch('/data/config/three-forks.json')
       .then((res) => res.json())
       .then((config) => {
         setCityConfig(config)
@@ -79,7 +79,7 @@ export default function Home() {
 
   // Load businesses data
   useEffect(() => {
-    fetch('/api/layers/three-forks/businesses')
+    fetch('/data/layers/three-forks/businesses.geojson')
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {
@@ -100,7 +100,7 @@ export default function Home() {
 
   // Load attractions data
   useEffect(() => {
-    fetch('/api/layers/three-forks/attractions')
+    fetch('/data/layers/three-forks/attractions.geojson')
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {
