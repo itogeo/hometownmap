@@ -439,41 +439,49 @@ export default function Home() {
           </BottomSheet>
         )}
 
-        {/* Footer links - hidden on mobile when panels are open, responsive layout */}
+        {/* Footer - Contact and Quick Links */}
         {!isMobile && (
-          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end">
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end pointer-events-none">
             {/* Left: Contact info */}
-            <div className="bg-white/95 rounded-lg shadow-sm px-3 py-2 text-[11px]">
-              <div className="font-medium text-tf-river-700">Three Forks City Hall</div>
-              <a href="tel:4062853431" className="text-tf-forest-600 hover:text-tf-forest-700">
-                (406) 285-3431
-              </a>
-              <span className="text-tf-stone-400 mx-1">|</span>
-              <span className="text-tf-stone-500">206 Main St</span>
+            <div className="pointer-events-auto bg-white/95 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2 text-[11px]">
+              <div className="font-medium text-tf-river-700">City Hall</div>
+              <div className="flex items-center gap-2 text-tf-stone-600">
+                <a href="tel:4062853431" className="text-tf-forest-600 hover:text-tf-forest-700 hover:underline">
+                  (406) 285-3431
+                </a>
+                <span className="text-tf-stone-300">•</span>
+                <span>206 Main St</span>
+              </div>
             </div>
 
             {/* Right: Quick links */}
-            <div className="flex gap-2 text-[11px]">
+            <div className="pointer-events-auto flex gap-2 text-[11px]">
               <Link
                 href="/resources"
-                className="px-2 py-1 bg-white/95 text-tf-river-600 hover:text-tf-river-800 rounded shadow-sm"
+                className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
+                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
               >
-                Who Do I Call?
+                <span>📞</span>
+                <span>Who Do I Call?</span>
               </Link>
               <Link
-                href="/test-map"
-                className="px-2 py-1 bg-white/95 text-tf-river-600 hover:text-tf-river-800 rounded shadow-sm"
+                href="/projects"
+                className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
+                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
               >
-                All Data
+                <span>🏗️</span>
+                <span>City Projects</span>
               </Link>
               {cityConfig.contact?.website && (
                 <a
                   href={cityConfig.contact.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2 py-1 bg-white/95 text-tf-river-600 hover:text-tf-river-800 rounded shadow-sm"
+                  className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
+                             hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
                 >
-                  City Website
+                  <span>🌐</span>
+                  <span>City Website</span>
                 </a>
               )}
             </div>
