@@ -4,31 +4,35 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Stevenson Park",
-        "type": "City Park",
-        "amenities": ["Playground", "Picnic Areas", "Open Space", "Walking Path"],
-        "address": "Main St & Cedar St, Three Forks, MT",
-        "hours": "Dawn to Dusk",
-        "icon": "park"
+        "name": "Missouri Headwaters State Park",
+        "type": "State Park",
+        "amenities": ["Hiking Trails", "Camping", "Fishing", "Historic Sites", "Boat Launch", "Interpretive Center", "Restrooms"],
+        "description": "Where the Jefferson, Madison, and Gallatin rivers meet to form the Missouri River. Lewis & Clark camped here in 1805.",
+        "address": "1585 Trident Road, Three Forks, MT 59752",
+        "fee": "Day use: $8/vehicle (MT residents: $4)",
+        "hours": "6am-10pm",
+        "phone": "(406) 285-3610",
+        "website": "https://fwp.mt.gov/stateparks/missouri-headwaters",
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5530, 45.8935]
+        "coordinates": [-111.4990974, 45.9259689]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "John Q. Adams Milwaukee Railroad Park",
+        "name": "Stevenson Park",
         "type": "City Park",
-        "amenities": ["Historic Railroad", "Picnic Area", "Walking Trail", "Restrooms"],
-        "description": "Historic railroad park featuring Milwaukee Road history",
+        "amenities": ["Playground", "Picnic Areas", "Basketball Court", "Volleyball Court", "Tennis Court", "Wading Pool", "Ice Rink (Winter)"],
+        "description": "Named after Nobel R. 'Steve' Stevenson, school superintendent 1940-1944. Features covered gazebo seating 50.",
         "hours": "Dawn to Dusk",
-        "icon": "park"
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5485, 45.8940]
+        "coordinates": [-111.5487225, 45.8895640]
       }
     },
     {
@@ -36,77 +40,15 @@
       "properties": {
         "name": "Three Forks Rodeo Grounds",
         "type": "Recreation",
-        "amenities": ["Rodeo Arena", "Grandstands", "Parking"],
+        "amenities": ["Rodeo Arena", "Grandstands", "Parking", "Fairgrounds"],
+        "description": "Home of the annual Three Forks Rodeo and NRA Rodeo.",
         "events": "Annual Three Forks Rodeo (July)",
-        "address": "Near Hwy 287, Three Forks, MT",
-        "icon": "arena"
+        "address": "S Kansas Street, Three Forks, MT 59752",
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5420, 45.8895]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Three Forks Swimming Pool",
-        "type": "Recreation",
-        "amenities": ["Swimming Pool", "Changing Rooms"],
-        "season": "Summer (June-August)",
-        "phone": "(406) 285-3233",
-        "icon": "pool"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5505, 45.8915]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Missouri Headwaters State Park",
-        "type": "State Park",
-        "amenities": ["Hiking Trails", "Camping", "Fishing", "Historic Sites", "Boat Launch", "Interpretive Center"],
-        "description": "Where the Jefferson, Madison, and Gallatin rivers meet to form the Missouri River. Lewis & Clark camped here in 1805.",
-        "fee": "Day use: $8/vehicle (MT residents: $4)",
-        "hours": "6am-10pm",
-        "website": "https://fwp.mt.gov/stateparks/missouri-headwaters",
-        "phone": "(406) 285-3610",
-        "icon": "state_park"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5048, 45.9275]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Droulliard Fishing Access",
-        "type": "Fishing Access",
-        "amenities": ["Boat Launch", "Fishing", "Parking"],
-        "description": "Access to Jefferson River for fishing and floating",
-        "fee": "Free",
-        "icon": "fishing"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5315, 45.9125]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Three Forks Ponds Fishing Access",
-        "type": "Fishing Access",
-        "amenities": ["Fishing", "Walking Trail", "Parking"],
-        "description": "Local ponds for fishing, popular for families",
-        "fee": "Free",
-        "icon": "fishing"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5380, 45.8985]
+        "coordinates": [-111.5591483, 45.8890667]
       }
     },
     {
@@ -115,15 +57,16 @@
         "name": "Wheat Montana Farm & Bakery",
         "type": "Attraction",
         "amenities": ["Bakery", "Farm Store", "Deli", "Grain Mill Tours"],
-        "description": "Famous Montana bakery and farm store - fresh bread, cinnamon rolls, and local products",
+        "description": "Famous Montana bakery and farm store - fresh bread, cinnamon rolls, and local products. A must-stop on Highway 287.",
+        "address": "10778 Highway 287, Three Forks, MT 59752",
         "hours": "Mon-Sat 6am-6pm, Sun 7am-5pm",
         "phone": "(406) 285-3614",
         "website": "https://wheatmontana.com",
-        "icon": "attraction"
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5832, 45.8612]
+        "coordinates": [-111.5986113, 45.9199713]
       }
     }
   ]

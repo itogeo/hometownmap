@@ -373,7 +373,7 @@ export default function MapView({
                     'text-allow-overlap': false,
                   }}
                   paint={{
-                    'text-color': '#047857',
+                    'text-color': '#6D28D9',
                     'text-halo-color': '#ffffff',
                     'text-halo-width': 1.5,
                     'text-opacity': 0.9,

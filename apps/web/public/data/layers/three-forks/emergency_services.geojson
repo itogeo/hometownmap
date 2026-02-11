@@ -4,98 +4,51 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Three Forks Fire Department",
-        "type": "Fire Station",
-        "address": "212 Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3212",
-        "services": ["Fire Response", "Emergency Medical", "Rescue"],
-        "icon": "fire"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5519, 45.8927]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Gallatin County Sheriff - Three Forks",
-        "type": "Law Enforcement",
-        "address": "Three Forks, MT",
-        "phone": "(406) 582-2100",
-        "emergency": "911",
-        "services": ["Law Enforcement", "Emergency Response"],
-        "icon": "police"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5505, 45.8920]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "name": "Three Forks City Hall",
         "type": "Government",
-        "address": "206 Main St, Three Forks, MT 59752",
+        "address": "206 Main Street, Three Forks, MT 59752",
         "phone": "(406) 285-3431",
         "hours": "Mon-Fri 8am-5pm",
-        "services": ["Utilities", "Permits", "City Services", "Public Records"],
+        "services": ["City Clerk", "Water/Sewer Billing", "Business Licenses", "Building Permits"],
         "website": "https://threeforksmontana.us",
-        "icon": "city_hall"
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5523, 45.8926]
+        "coordinates": [-111.5524859, 45.8929211]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "Three Forks Public Library",
+        "name": "Three Forks Volunteer Fire Department",
+        "type": "Fire Station",
+        "address": "13 E Date Street, Three Forks, MT 59752",
+        "phone": "(406) 285-4152",
+        "hours": "24/7 Emergency Response",
+        "services": ["Fire Response", "Emergency Medical", "Rescue"],
+        "source": "OpenStreetMap Nominatim geocoding"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5529303, 45.8921633]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Community Library",
         "type": "Library",
-        "address": "607 Main St, Three Forks, MT 59752",
+        "address": "607 S Main Street, Three Forks, MT 59752",
         "phone": "(406) 285-3747",
-        "hours": "Tue-Sat 10am-5pm",
-        "services": ["Books", "Internet", "Programs", "Meeting Rooms"],
-        "icon": "library"
+        "hours": "Tue-Sat, check website for current hours",
+        "services": ["Books", "Public Computers", "WiFi", "Programs"],
+        "website": "https://threeforkslibrary.weebly.com",
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5482, 45.8923]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Three Forks Post Office",
-        "type": "Post Office",
-        "address": "110 N Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3271",
-        "hours": "Mon-Fri 8:30am-4:30pm, Sat 9am-11am",
-        "services": ["Mail", "Packages", "PO Boxes"],
-        "icon": "post_office"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5522, 45.8938]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "Bozeman Health - Three Forks Clinic",
-        "type": "Medical",
-        "address": "123 W Cedar St, Three Forks, MT 59752",
-        "phone": "(406) 285-6666",
-        "hours": "Mon-Fri 8am-5pm",
-        "services": ["Primary Care", "Urgent Care", "Lab Services"],
-        "note": "For emergencies, Bozeman Deaconess Hospital is 30 min away",
-        "icon": "medical"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-111.5545, 45.8932]
+        "coordinates": [-111.5519742, 45.8888160]
       }
     },
     {
@@ -103,15 +56,16 @@
       "properties": {
         "name": "Three Forks Elementary School",
         "type": "School",
-        "address": "219 E Neal St, Three Forks, MT 59752",
+        "address": "212 E Neal Street, Three Forks, MT 59752",
         "phone": "(406) 285-3224",
-        "grades": "K-6",
-        "district": "Three Forks School District",
-        "icon": "school"
+        "hours": "School Hours",
+        "services": ["K-6 Education"],
+        "website": "https://www.tfschools.com",
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5494, 45.8913]
+        "coordinates": [-111.5492028, 45.8961590]
       }
     },
     {
@@ -119,15 +73,32 @@
       "properties": {
         "name": "Three Forks High School",
         "type": "School",
-        "address": "212 E Neal St, Three Forks, MT 59752",
+        "address": "E Neal Street, Three Forks, MT 59752",
         "phone": "(406) 285-3224",
-        "grades": "7-12",
-        "district": "Three Forks School District",
-        "icon": "school"
+        "hours": "School Hours",
+        "services": ["7-12 Education"],
+        "website": "https://www.tfschools.com",
+        "source": "OpenStreetMap Nominatim geocoding"
       },
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5498, 45.8908]
+        "coordinates": [-111.5484238, 45.8964069]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Post Office",
+        "type": "Post Office",
+        "address": "S California Street, Three Forks, MT 59752",
+        "phone": "(406) 285-3254",
+        "hours": "Mon-Fri 9am-4:30pm, Sat 9am-11am",
+        "services": ["Mail Services", "Package Shipping"],
+        "source": "OpenStreetMap Nominatim geocoding"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5551280, 45.8939742]
       }
     }
   ]

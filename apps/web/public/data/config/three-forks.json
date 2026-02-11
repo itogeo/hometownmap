@@ -140,9 +140,9 @@
       "source": "gallatin_county",
       "display_name": "Subdivisions",
       "style": {
-        "fill": "#10B981",
+        "fill": "#8B5CF6",
         "fill-opacity": 0.2,
-        "stroke": "#059669",
+        "stroke": "#7C3AED",
         "stroke-width": 2
       },
       "popup_fields": [
@@ -156,9 +156,9 @@
       "source": "gallatin_county",
       "display_name": "Minor Subdivisions",
       "style": {
-        "fill": "#6EE7B7",
+        "fill": "#A78BFA",
         "fill-opacity": 0.2,
-        "stroke": "#34D399",
+        "stroke": "#8B5CF6",
         "stroke-width": 1.5
       },
       "popup_fields": [
