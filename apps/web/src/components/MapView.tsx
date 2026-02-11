@@ -195,7 +195,9 @@ export default function MapView({
     'parcels-fill', 'parcels-outline',
     'businesses-point', 'businesses-shadow', 'businesses-inner', 'businesses-label',
     'attractions-point', 'attractions-glow', 'attractions-icon',
-    ...visibleLayers.filter(id => id !== 'parcels' && id !== 'businesses' && id !== 'attractions')
+    'emergency_services-point', 'emergency_services-glow', 'emergency_services-icon',
+    'parks_recreation-point', 'parks_recreation-glow', 'parks_recreation-icon',
+    ...visibleLayers.filter(id => !['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation'].includes(id))
       .flatMap((id) => [`${id}-fill`, `${id}-line`, `${id}-outline`, `${id}-point`])
   ]
 
@@ -381,6 +383,105 @@ export default function MapView({
             </Source>
           )
         })}
+
+        {/* EMERGENCY SERVICES MARKERS */}
+        {layerData['emergency_services'] && visibleLayers.includes('emergency_services') && (
+          <Source id="emergency_services-source" type="geojson" data={layerData['emergency_services']}>
+            <Layer
+              id="emergency_services-glow"
+              type="circle"
+              paint={{
+                'circle-radius': 16,
+                'circle-color': ['match', ['get', 'type'],
+                  'Fire Station', '#DC2626', 'Law Enforcement', '#1D4ED8', 'Medical', '#059669',
+                  'School', '#7C3AED', 'Government', '#0891B2', 'Library', '#D97706',
+                  'Post Office', '#6366F1', '#6B7280'],
+                'circle-opacity': 0.35, 'circle-blur': 0.5,
+              }}
+            />
+            <Layer
+              id="emergency_services-point"
+              type="circle"
+              paint={{
+                'circle-radius': 12,
+                'circle-color': ['match', ['get', 'type'],
+                  'Fire Station', '#DC2626', 'Law Enforcement', '#1D4ED8', 'Medical', '#059669',
+                  'School', '#7C3AED', 'Government', '#0891B2', 'Library', '#D97706',
+                  'Post Office', '#6366F1', '#6B7280'],
+                'circle-stroke-width': 3, 'circle-stroke-color': '#ffffff', 'circle-opacity': 1,
+              }}
+            />
+            <Layer
+              id="emergency_services-icon"
+              type="symbol"
+              layout={{
+                'text-field': ['match', ['get', 'type'],
+                  'Fire Station', '🚒', 'Law Enforcement', '🚔', 'Medical', '🏥',
+                  'School', '🏫', 'Government', '🏛️', 'Library', '📚',
+                  'Post Office', '📮', '📍'],
+                'text-size': 14, 'text-anchor': 'center', 'text-allow-overlap': true,
+              }}
+              paint={{ 'text-opacity': 1 }}
+            />
+            <Layer
+              id="emergency_services-label"
+              type="symbol"
+              layout={{
+                'text-field': ['get', 'name'], 'text-size': 11, 'text-anchor': 'top', 'text-offset': [0, 1.5],
+                'text-max-width': 10, 'text-allow-overlap': false,
+              }}
+              paint={{ 'text-color': '#1F2937', 'text-halo-color': '#ffffff', 'text-halo-width': 2 }}
+            />
+          </Source>
+        )}
+
+        {/* PARKS & RECREATION MARKERS */}
+        {layerData['parks_recreation'] && visibleLayers.includes('parks_recreation') && (
+          <Source id="parks_recreation-source" type="geojson" data={layerData['parks_recreation']}>
+            <Layer
+              id="parks_recreation-glow"
+              type="circle"
+              paint={{
+                'circle-radius': 16,
+                'circle-color': ['match', ['get', 'type'],
+                  'City Park', '#16A34A', 'State Park', '#059669', 'Recreation', '#0891B2',
+                  'Fishing Access', '#0284C7', 'Attraction', '#D97706', '#16A34A'],
+                'circle-opacity': 0.35, 'circle-blur': 0.5,
+              }}
+            />
+            <Layer
+              id="parks_recreation-point"
+              type="circle"
+              paint={{
+                'circle-radius': 12,
+                'circle-color': ['match', ['get', 'type'],
+                  'City Park', '#16A34A', 'State Park', '#059669', 'Recreation', '#0891B2',
+                  'Fishing Access', '#0284C7', 'Attraction', '#D97706', '#16A34A'],
+                'circle-stroke-width': 3, 'circle-stroke-color': '#ffffff', 'circle-opacity': 1,
+              }}
+            />
+            <Layer
+              id="parks_recreation-icon"
+              type="symbol"
+              layout={{
+                'text-field': ['match', ['get', 'type'],
+                  'City Park', '🌳', 'State Park', '🏞️', 'Recreation', '⚽',
+                  'Fishing Access', '🎣', 'Attraction', '⭐', '🌲'],
+                'text-size': 14, 'text-anchor': 'center', 'text-allow-overlap': true,
+              }}
+              paint={{ 'text-opacity': 1 }}
+            />
+            <Layer
+              id="parks_recreation-label"
+              type="symbol"
+              layout={{
+                'text-field': ['get', 'name'], 'text-size': 11, 'text-anchor': 'top', 'text-offset': [0, 1.5],
+                'text-max-width': 10, 'text-allow-overlap': false,
+              }}
+              paint={{ 'text-color': '#15803D', 'text-halo-color': '#ffffff', 'text-halo-width': 2 }}
+            />
+          </Source>
+        )}
 
         {/* BUSINESS MARKERS */}
         {businessData && visibleLayers.includes('businesses') && (

@@ -18,15 +18,16 @@
       "layers": [
         "parcels",
         "subdivisions",
-        "minor_subdivisions",
-        "cities",
-        "buildings",
-        "roads"
+        "emergency_services",
+        "parks_recreation",
+        "schooldistricts",
+        "cities"
       ],
       "features": [
         "search_address",
         "parcel_info",
-        "subdivision_info"
+        "services_info",
+        "parks_info"
       ]
     },
     "services": {
@@ -391,6 +392,44 @@
       "popup_fields": [
         "muname",
         "musym"
+      ]
+    },
+    "emergency_services": {
+      "source": "local",
+      "display_name": "Essential Services",
+      "description": "City services, schools, fire, medical, and public facilities",
+      "style": {
+        "fill": "#DC2626",
+        "fill-opacity": 1,
+        "stroke": "#B91C1C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "address",
+        "phone",
+        "hours",
+        "services"
+      ]
+    },
+    "parks_recreation": {
+      "source": "local",
+      "display_name": "Parks & Recreation",
+      "description": "City parks, state parks, fishing access, and recreation areas",
+      "style": {
+        "fill": "#16A34A",
+        "fill-opacity": 1,
+        "stroke": "#15803D",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "amenities",
+        "hours",
+        "fee",
+        "description"
       ]
     },
     "businesses": {

@@ -1,0 +1,130 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Stevenson Park",
+        "type": "City Park",
+        "amenities": ["Playground", "Picnic Areas", "Open Space", "Walking Path"],
+        "address": "Main St & Cedar St, Three Forks, MT",
+        "hours": "Dawn to Dusk",
+        "icon": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5530, 45.8935]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "John Q. Adams Milwaukee Railroad Park",
+        "type": "City Park",
+        "amenities": ["Historic Railroad", "Picnic Area", "Walking Trail", "Restrooms"],
+        "description": "Historic railroad park featuring Milwaukee Road history",
+        "hours": "Dawn to Dusk",
+        "icon": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5485, 45.8940]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Rodeo Grounds",
+        "type": "Recreation",
+        "amenities": ["Rodeo Arena", "Grandstands", "Parking"],
+        "events": "Annual Three Forks Rodeo (July)",
+        "address": "Near Hwy 287, Three Forks, MT",
+        "icon": "arena"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5420, 45.8895]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Swimming Pool",
+        "type": "Recreation",
+        "amenities": ["Swimming Pool", "Changing Rooms"],
+        "season": "Summer (June-August)",
+        "phone": "(406) 285-3233",
+        "icon": "pool"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5505, 45.8915]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Missouri Headwaters State Park",
+        "type": "State Park",
+        "amenities": ["Hiking Trails", "Camping", "Fishing", "Historic Sites", "Boat Launch", "Interpretive Center"],
+        "description": "Where the Jefferson, Madison, and Gallatin rivers meet to form the Missouri River. Lewis & Clark camped here in 1805.",
+        "fee": "Day use: $8/vehicle (MT residents: $4)",
+        "hours": "6am-10pm",
+        "website": "https://fwp.mt.gov/stateparks/missouri-headwaters",
+        "phone": "(406) 285-3610",
+        "icon": "state_park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5048, 45.9275]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Droulliard Fishing Access",
+        "type": "Fishing Access",
+        "amenities": ["Boat Launch", "Fishing", "Parking"],
+        "description": "Access to Jefferson River for fishing and floating",
+        "fee": "Free",
+        "icon": "fishing"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5315, 45.9125]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Three Forks Ponds Fishing Access",
+        "type": "Fishing Access",
+        "amenities": ["Fishing", "Walking Trail", "Parking"],
+        "description": "Local ponds for fishing, popular for families",
+        "fee": "Free",
+        "icon": "fishing"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5380, 45.8985]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wheat Montana Farm & Bakery",
+        "type": "Attraction",
+        "amenities": ["Bakery", "Farm Store", "Deli", "Grain Mill Tours"],
+        "description": "Famous Montana bakery and farm store - fresh bread, cinnamon rolls, and local products",
+        "hours": "Mon-Sat 6am-6pm, Sun 7am-5pm",
+        "phone": "(406) 285-3614",
+        "website": "https://wheatmontana.com",
+        "icon": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.5832, 45.8612]
+      }
+    }
+  ]
+}

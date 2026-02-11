@@ -275,6 +275,188 @@ function BuildingPermitRenderer({ p, showBorder }: { p: any; showBorder: boolean
   )
 }
 
+// Render Emergency Service
+function EmergencyServiceRenderer({ p, showBorder }: { p: any; showBorder: boolean }) {
+  const typeIcons: { [key: string]: string } = {
+    'Fire Station': '🚒',
+    'Law Enforcement': '🚔',
+    'Medical': '🏥',
+    'School': '🏫',
+    'Government': '🏛️',
+    'Library': '📚',
+    'Post Office': '📮',
+  }
+
+  const typeColors: { [key: string]: string } = {
+    'Fire Station': 'bg-red-100 text-red-800',
+    'Law Enforcement': 'bg-blue-100 text-blue-800',
+    'Medical': 'bg-emerald-100 text-emerald-800',
+    'School': 'bg-purple-100 text-purple-800',
+    'Government': 'bg-cyan-100 text-cyan-800',
+    'Library': 'bg-amber-100 text-amber-800',
+    'Post Office': 'bg-gray-100 text-gray-800',
+  }
+
+  const icon = typeIcons[p.type] || '📍'
+  const colorClass = typeColors[p.type] || 'bg-gray-100 text-gray-800'
+
+  return (
+    <div className={showBorder ? 'mt-2 pt-2 border-t border-gray-100' : ''}>
+      <div className="text-[9px] text-gray-400 uppercase mb-1">Essential Service</div>
+
+      <div className="flex items-center gap-2">
+        <span className="text-lg">{icon}</span>
+        <div>
+          <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
+          <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${colorClass}`}>
+            {p.type}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-2 space-y-1 text-[9px]">
+        {p.address && (
+          <div className="flex items-start gap-1.5">
+            <span className="text-gray-400">📍</span>
+            <span className="text-gray-700">{p.address}</span>
+          </div>
+        )}
+        {p.phone && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400">📞</span>
+            <a href={`tel:${p.phone}`} className="text-blue-600 hover:underline">{p.phone}</a>
+          </div>
+        )}
+        {p.hours && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400">🕐</span>
+            <span className="text-gray-700">{p.hours}</span>
+          </div>
+        )}
+      </div>
+
+      {p.services && Array.isArray(p.services) && p.services.length > 0 && (
+        <div className="mt-2 p-1.5 bg-gray-50 border border-gray-200 rounded text-[9px]">
+          <div className="font-medium text-gray-700 mb-0.5">Services:</div>
+          <div className="text-gray-600">{p.services.join(' • ')}</div>
+        </div>
+      )}
+
+      {p.website && (
+        <a
+          href={p.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[9px] text-blue-600 hover:underline mt-1.5 inline-block"
+        >
+          Visit Website &rarr;
+        </a>
+      )}
+    </div>
+  )
+}
+
+// Render Parks & Recreation
+function ParksRecreationRenderer({ p, showBorder }: { p: any; showBorder: boolean }) {
+  const typeIcons: { [key: string]: string } = {
+    'City Park': '🌳',
+    'State Park': '🏞️',
+    'Recreation': '⚽',
+    'Fishing Access': '🎣',
+    'Attraction': '⭐',
+  }
+
+  const typeColors: { [key: string]: string } = {
+    'City Park': 'bg-green-100 text-green-800',
+    'State Park': 'bg-emerald-100 text-emerald-800',
+    'Recreation': 'bg-blue-100 text-blue-800',
+    'Fishing Access': 'bg-cyan-100 text-cyan-800',
+    'Attraction': 'bg-amber-100 text-amber-800',
+  }
+
+  const icon = typeIcons[p.type] || '📍'
+  const colorClass = typeColors[p.type] || 'bg-gray-100 text-gray-800'
+
+  return (
+    <div className={showBorder ? 'mt-2 pt-2 border-t border-gray-100' : ''}>
+      <div className="text-[9px] text-gray-400 uppercase mb-1">Parks & Recreation</div>
+
+      <div className="flex items-center gap-2">
+        <span className="text-lg">{icon}</span>
+        <div>
+          <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
+          <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${colorClass}`}>
+            {p.type}
+          </div>
+        </div>
+      </div>
+
+      {p.description && (
+        <div className="text-gray-600 text-[10px] mt-1.5 leading-tight">
+          {p.description}
+        </div>
+      )}
+
+      <div className="mt-2 space-y-1 text-[9px]">
+        {p.address && (
+          <div className="flex items-start gap-1.5">
+            <span className="text-gray-400">📍</span>
+            <span className="text-gray-700">{p.address}</span>
+          </div>
+        )}
+        {p.hours && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400">🕐</span>
+            <span className="text-gray-700">{p.hours}</span>
+          </div>
+        )}
+        {p.fee && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400">💵</span>
+            <span className="text-gray-700">{p.fee}</span>
+          </div>
+        )}
+        {p.phone && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400">📞</span>
+            <a href={`tel:${p.phone}`} className="text-blue-600 hover:underline">{p.phone}</a>
+          </div>
+        )}
+        {p.season && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-400">📅</span>
+            <span className="text-gray-700">{p.season}</span>
+          </div>
+        )}
+        {p.events && (
+          <div className="flex items-start gap-1.5">
+            <span className="text-gray-400">🎉</span>
+            <span className="text-gray-700">{p.events}</span>
+          </div>
+        )}
+      </div>
+
+      {p.amenities && Array.isArray(p.amenities) && p.amenities.length > 0 && (
+        <div className="mt-2 p-1.5 bg-green-50 border border-green-200 rounded text-[9px]">
+          <div className="font-medium text-green-800 mb-0.5">Amenities:</div>
+          <div className="text-green-700">{p.amenities.join(' • ')}</div>
+        </div>
+      )}
+
+      {p.website && (
+        <a
+          href={p.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[9px] text-blue-600 hover:underline mt-1.5 inline-block"
+        >
+          More Info &rarr;
+        </a>
+      )}
+    </div>
+  )
+}
+
 // Default feature renderer
 function DefaultFeatureRenderer({ feature, showBorder }: { feature: FeatureInfo; showBorder: boolean }) {
   const p = feature.properties
@@ -311,6 +493,16 @@ function FeatureRenderer({ feature, index, hasParcel }: { feature: FeatureInfo; 
   // Building Permits
   if (feature.layerId === 'building_permits' && p.permit_number) {
     return <BuildingPermitRenderer key={feature.layerId} p={p} showBorder={showBorder} />
+  }
+
+  // Emergency Services
+  if (feature.layerId === 'emergency_services') {
+    return <EmergencyServiceRenderer key={feature.layerId} p={p} showBorder={showBorder} />
+  }
+
+  // Parks & Recreation
+  if (feature.layerId === 'parks_recreation') {
+    return <ParksRecreationRenderer key={feature.layerId} p={p} showBorder={showBorder} />
   }
 
   // Default renderer
