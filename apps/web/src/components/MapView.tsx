@@ -216,10 +216,11 @@ export default function MapView({
           latitude: cityConfig.map.center[1],
           zoom: cityConfig.map.zoom,
         }}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', cursor: 'pointer' }}
         mapStyle={getMapStyle()}
         onClick={handleClick}
         interactiveLayerIds={interactiveLayerIds}
+        cursor="pointer"
       >
         <NavigationControl position="bottom-right" />
 
@@ -231,14 +232,21 @@ export default function MapView({
               type="fill"
               filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
               minzoom={13}
-              paint={{ 'fill-color': '#FBBF24', 'fill-opacity': 0.08 }}
+              paint={{
+                'fill-color': '#FEF3C7',
+                'fill-opacity': 0.4
+              }}
             />
             <Layer
               id="parcels-outline"
               type="line"
               filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
               minzoom={13}
-              paint={{ 'line-color': '#B45309', 'line-width': 1, 'line-opacity': 0.5 }}
+              paint={{
+                'line-color': '#D97706',
+                'line-width': 1.5,
+                'line-opacity': 0.8
+              }}
             />
           </Source>
         )}

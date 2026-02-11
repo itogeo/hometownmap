@@ -86,7 +86,6 @@
       "mapStyle": "streets",
       "layers": [
         "parcels",
-        "zoningdistricts",
         "subdivisions",
         "minor_subdivisions",
         "buildings",
@@ -105,7 +104,6 @@
       "mapStyle": "streets",
       "layers": [
         "businesses",
-        "zoningdistricts",
         "cities",
         "parcels"
       ],
