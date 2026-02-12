@@ -1,0 +1,9 @@
+# Raw downloaded data (can be re-downloaded)
+raw/
+
+# Processed data (can be regenerated)
+processed/
+
+# Keep the directory structure
+!raw/.gitkeep
+!processed/.gitkeep

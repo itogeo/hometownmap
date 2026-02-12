@@ -1,0 +1,191 @@
+{
+  "city": "three-forks",
+  "county": "gallatin",
+  "state": "montana",
+  "bbox": [-111.7, 45.8, -111.4, 46.0],
+  "center": [-111.5514, 45.8925],
+
+  "sources": {
+    "parcels": {
+      "name": "Property Parcels",
+      "type": "arcgis_rest",
+      "url": "https://gis.mt.gov/arcgis/rest/services/MSL/Cadastral/MapServer/0",
+      "query": {
+        "where": "countyname='GALLATIN'",
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "weekly"
+    },
+
+    "subdivisions": {
+      "name": "Subdivisions",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/Subdivision/SubDivision/MapServer/0",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "monthly"
+    },
+
+    "minor_subdivisions": {
+      "name": "Minor Subdivisions",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/Subdivision/SubDivision/MapServer/1",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "monthly"
+    },
+
+    "hydrants": {
+      "name": "Fire Hydrants & Fill Sites",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/ESZ/ESZ/MapServer/3",
+      "query": {
+        "where": "FIRE_AREA='THREE FORKS'",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "quarterly"
+    },
+
+    "groundwater_wells": {
+      "name": "Groundwater Monitor Wells",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/ESZ/ESZ/MapServer/5",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "quarterly"
+    },
+
+    "wastewater": {
+      "name": "Wastewater Treatment Systems",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/ESZ/ESZ/MapServer/6",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "quarterly"
+    },
+
+    "water_supply": {
+      "name": "Water Supply Systems",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/ESZ/ESZ/MapServer/7",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "quarterly"
+    },
+
+    "firedistricts": {
+      "name": "Fire Districts",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/ESZ/ESZ/MapServer/0",
+      "query": {
+        "where": "1=1",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "yearly"
+    },
+
+    "schooldistricts": {
+      "name": "School Districts",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/ESZ/ESZ/MapServer/1",
+      "query": {
+        "where": "1=1",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "yearly"
+    },
+
+    "floodplain": {
+      "name": "FEMA Flood Zones",
+      "type": "arcgis_rest",
+      "url": "https://hazards.fema.gov/gis/nfhl/rest/services/public/NFHL/MapServer/28",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "FLD_ZONE,ZONE_SUBTY,SFHA_TF,STATIC_BFE",
+        "f": "geojson"
+      },
+      "update_frequency": "yearly"
+    },
+
+    "wui": {
+      "name": "Wildland-Urban Interface",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/Fire/WUI/MapServer/0",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "yearly"
+    },
+
+    "conservation": {
+      "name": "Conservation Easements",
+      "type": "arcgis_rest",
+      "url": "https://gis.gallatin.mt.gov/arcgis/rest/services/Land/Conservation/MapServer/0",
+      "query": {
+        "geometry": "{bbox}",
+        "geometryType": "esriGeometryEnvelope",
+        "outFields": "*",
+        "f": "geojson"
+      },
+      "update_frequency": "quarterly"
+    }
+  },
+
+  "local_layers": {
+    "emergency_services": {
+      "name": "Essential Services",
+      "source": "manual",
+      "description": "City services, schools, fire, medical - manually curated"
+    },
+    "parks_recreation": {
+      "name": "Parks & Recreation",
+      "source": "manual",
+      "description": "City parks, state parks, fishing access - manually curated"
+    },
+    "attractions": {
+      "name": "Tourist Attractions",
+      "source": "manual",
+      "description": "Points of interest for visitors - manually curated"
+    },
+    "businesses": {
+      "name": "Local Businesses",
+      "source": "manual",
+      "description": "Local business directory - manually curated"
+    },
+    "projects": {
+      "name": "Capital Projects",
+      "source": "manual",
+      "description": "City infrastructure projects - manually curated"
+    }
+  }
+}
