@@ -6,13 +6,11 @@ function BusinessCard({
   isSelected,
   onSelect,
   showCategory,
-  categoryIcon,
 }: {
   business: Business
   isSelected: boolean
   onSelect: (business: Business) => void
   showCategory: boolean
-  categoryIcon?: string
 }) {
   return (
     <div
@@ -30,7 +28,7 @@ function BusinessCard({
 
       {showCategory && (
         <div className="text-xs text-gray-400">
-          {categoryIcon} {business.category}
+          {business.category}
         </div>
       )}
 
@@ -119,26 +117,6 @@ export default function BusinessListPanel({
     return grouped
   }, [filteredBusinesses])
 
-  const categoryIcons: { [key: string]: string } = {
-    'Restaurant': '🍽️',
-    'Hotel & Restaurant': '🏨',
-    'Bar': '🍺',
-    'Retail': '🛍️',
-    'Bank': '🏦',
-    'Government': '🏛️',
-    'Emergency Services': '🚒',
-    'Library': '📚',
-    'Museum': '🏛️',
-    'State Park': '🌲',
-    'Golf': '⛳',
-    'Lodging': '🛏️',
-    'Manufacturing': '🏭',
-    'Mining': '⛏️',
-    'Gas Station': '⛽',
-    'Veterinary': '🐾',
-    'Real Estate': '🏠',
-    'Business Services': '💼',
-  }
 
   return (
     <div className="flex flex-col" style={{ maxHeight: 'calc(100vh - 220px)' }}>
@@ -191,7 +169,6 @@ export default function BusinessListPanel({
             <div key={category}>
               {/* Compact Category Header */}
               <div className="sticky top-0 bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-600 flex items-center gap-1">
-                <span>{categoryIcons[category] || '📍'}</span>
                 <span>{category}</span>
                 <span className="text-gray-400">({bizList.length})</span>
               </div>
@@ -219,7 +196,6 @@ export default function BusinessListPanel({
                 isSelected={selectedBusiness === business.name}
                 onSelect={onBusinessSelect}
                 showCategory={true}
-                categoryIcon={categoryIcons[business.category] || '📍'}
               />
             ))
         )}

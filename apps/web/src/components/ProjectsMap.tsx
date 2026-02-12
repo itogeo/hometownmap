@@ -26,12 +26,6 @@ const statusColors: { [key: string]: string } = {
   'On Hold': '#6B7280',
 }
 
-const categoryIcons: { [key: string]: string } = {
-  'Streets': '🛤️',
-  'Parks': '🌳',
-  'Water/Sewer': '💧',
-  'Buildings': '🏛️',
-}
 
 export default function ProjectsMap({
   projects,
@@ -218,7 +212,7 @@ export default function ProjectsMap({
             >
               {/* Outer ring */}
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold ${
                   isSelected ? 'ring-4 ring-blue-300' : ''
                 }`}
                 style={{
@@ -226,7 +220,7 @@ export default function ProjectsMap({
                   boxShadow: isSelected ? `0 0 20px ${color}` : `0 2px 8px rgba(0,0,0,0.3)`,
                 }}
               >
-                <span className="text-lg">{categoryIcons[project.category] || '📋'}</span>
+                {project.category.charAt(0)}
               </div>
             </div>
           </Marker>

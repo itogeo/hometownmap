@@ -6,35 +6,29 @@ interface ModeSelectorProps {
   availableModes: string[]
 }
 
-const modeInfo: { [key: string]: { label: string; icon: string; desc: string } } = {
+const modeInfo: { [key: string]: { label: string; desc: string } } = {
   resident: {
-    label: 'My Area',
-    icon: '🏠',
+    label: 'Resident',
     desc: 'Property, services & parks'
   },
   services: {
-    label: 'Utilities',
-    icon: '💧',
+    label: 'Services',
     desc: 'Water, sewer & districts'
   },
   environmental: {
     label: 'Hazards',
-    icon: '⚠️',
     desc: 'Flood zones & fire risk'
   },
   tourism: {
     label: 'Explore',
-    icon: '🗺️',
     desc: 'Places to visit'
   },
   development: {
-    label: 'Building',
-    icon: '🏗️',
-    desc: 'Permits & zoning'
+    label: 'Development',
+    desc: 'Permits & projects'
   },
   business: {
     label: 'Business',
-    icon: '🏪',
     desc: 'Local businesses'
   },
 }
@@ -58,13 +52,13 @@ export default function ModeSelector({
     <div className="border-t border-tf-stone-200 bg-tf-stone-50/50">
       <div className="flex items-center gap-1 px-3 py-1.5 overflow-x-auto">
         {sortedModes.map((mode) => {
-          const info = modeInfo[mode] || { label: mode, icon: '📍', desc: '' }
+          const info = modeInfo[mode] || { label: mode, desc: '' }
           return (
             <button
               key={mode}
               onClick={() => onModeChange(mode as MapMode)}
               className={`
-                flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded whitespace-nowrap
+                px-3 py-1.5 text-xs font-medium rounded whitespace-nowrap
                 transition-colors
                 ${currentMode === mode
                   ? 'bg-tf-river-600 text-white shadow-sm'
@@ -73,8 +67,7 @@ export default function ModeSelector({
               `}
               title={info.desc}
             >
-              <span className="text-sm">{info.icon}</span>
-              <span>{info.label}</span>
+              {info.label}
             </button>
           )
         })}

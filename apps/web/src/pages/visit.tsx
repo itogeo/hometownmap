@@ -24,15 +24,15 @@ const MapView = dynamic(() => import('@/components/MapView'), {
   ),
 })
 
-const CATEGORY_COLORS: Record<string, { bg: string; text: string; icon: string }> = {
-  'State Park': { bg: 'bg-green-100', text: 'text-green-800', icon: '🏞️' },
-  'Historic Site': { bg: 'bg-amber-100', text: 'text-amber-800', icon: '🏛️' },
-  'Museum': { bg: 'bg-purple-100', text: 'text-purple-800', icon: '🏛️' },
-  'Recreation': { bg: 'bg-blue-100', text: 'text-blue-800', icon: '🎣' },
-  'Natural Feature': { bg: 'bg-teal-100', text: 'text-teal-800', icon: '🌊' },
-  'Dining': { bg: 'bg-orange-100', text: 'text-orange-800', icon: '🍽️' },
-  'Shopping': { bg: 'bg-pink-100', text: 'text-pink-800', icon: '🛍️' },
-  'Lodging': { bg: 'bg-indigo-100', text: 'text-indigo-800', icon: '🏨' },
+const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
+  'State Park': { bg: 'bg-green-100', text: 'text-green-800' },
+  'Historic Site': { bg: 'bg-amber-100', text: 'text-amber-800' },
+  'Museum': { bg: 'bg-purple-100', text: 'text-purple-800' },
+  'Recreation': { bg: 'bg-blue-100', text: 'text-blue-800' },
+  'Natural Feature': { bg: 'bg-teal-100', text: 'text-teal-800' },
+  'Dining': { bg: 'bg-orange-100', text: 'text-orange-800' },
+  'Shopping': { bg: 'bg-pink-100', text: 'text-pink-800' },
+  'Lodging': { bg: 'bg-indigo-100', text: 'text-indigo-800' },
 }
 
 export default function VisitPage() {
@@ -84,7 +84,7 @@ export default function VisitPage() {
   }
 
   const getCategoryStyle = (category: string) => {
-    return CATEGORY_COLORS[category] || { bg: 'bg-gray-100', text: 'text-gray-800', icon: '📍' }
+    return CATEGORY_COLORS[category] || { bg: 'bg-gray-100', text: 'text-gray-800' }
   }
 
   if (!cityConfig) {
@@ -153,17 +153,14 @@ export default function VisitPage() {
           {/* Quick Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 text-center">
-              <div className="text-3xl mb-1">🏞️</div>
               <div className="text-2xl font-bold text-blue-600">{attractions.length}</div>
               <div className="text-sm text-gray-600">Places to Explore</div>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 text-center">
-              <div className="text-3xl mb-1">🌊</div>
               <div className="text-2xl font-bold text-blue-600">3</div>
               <div className="text-sm text-gray-600">Rivers Converge Here</div>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 text-center">
-              <div className="text-3xl mb-1">🚗</div>
               <div className="text-2xl font-bold text-blue-600">30 min</div>
               <div className="text-sm text-gray-600">From Bozeman</div>
             </div>
@@ -218,26 +215,23 @@ export default function VisitPage() {
                         selectedAttraction?.name === attraction.name ? 'ring-2 ring-blue-500 border-blue-500' : ''
                       }`}
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="text-2xl">{style.icon}</div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className={`text-xs px-2 py-0.5 rounded-full ${style.bg} ${style.text}`}>
-                              {attraction.category}
-                            </span>
-                          </div>
-                          <h3 className="font-medium text-gray-900 mt-1 truncate">{attraction.name}</h3>
-                          <p className="text-sm text-gray-600 mt-0.5 line-clamp-2">{attraction.description}</p>
-                          {attraction.highlights && attraction.highlights.length > 0 && (
-                            <div className="flex flex-wrap gap-1 mt-2">
-                              {attraction.highlights.slice(0, 3).map((h, i) => (
-                                <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
-                                  {h}
-                                </span>
-                              ))}
-                            </div>
-                          )}
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${style.bg} ${style.text}`}>
+                            {attraction.category}
+                          </span>
                         </div>
+                        <h3 className="font-medium text-gray-900">{attraction.name}</h3>
+                          <p className="text-sm text-gray-600 mt-0.5 line-clamp-2">{attraction.description}</p>
+                        {attraction.highlights && attraction.highlights.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {attraction.highlights.slice(0, 3).map((h, i) => (
+                              <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
+                                {h}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   )

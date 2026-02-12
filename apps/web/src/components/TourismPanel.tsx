@@ -18,16 +18,16 @@ interface TourismPanelProps {
   selectedAttraction?: string | null
 }
 
-const categoryConfig: { [key: string]: { icon: string; color: string; bgColor: string } } = {
-  'State Park': { icon: '🏞️', color: '#059669', bgColor: '#D1FAE5' },
-  'Historic Site': { icon: '🏛️', color: '#7C3AED', bgColor: '#EDE9FE' },
-  'Trail': { icon: '🥾', color: '#0891B2', bgColor: '#CFFAFE' },
-  'Historic Landmark': { icon: '🏨', color: '#B45309', bgColor: '#FEF3C7' },
-  'Museum': { icon: '🖼️', color: '#6366F1', bgColor: '#E0E7FF' },
-  'Recreation': { icon: '🎯', color: '#0D9488', bgColor: '#CCFBF1' },
-  'City Park': { icon: '🌳', color: '#16A34A', bgColor: '#DCFCE7' },
-  'Events': { icon: '🎪', color: '#DC2626', bgColor: '#FEE2E2' },
-  'Lodging': { icon: '🏕️', color: '#EA580C', bgColor: '#FFEDD5' },
+const categoryConfig: { [key: string]: { color: string; bgColor: string } } = {
+  'State Park': { color: '#059669', bgColor: '#D1FAE5' },
+  'Historic Site': { color: '#7C3AED', bgColor: '#EDE9FE' },
+  'Trail': { color: '#0891B2', bgColor: '#CFFAFE' },
+  'Historic Landmark': { color: '#B45309', bgColor: '#FEF3C7' },
+  'Museum': { color: '#6366F1', bgColor: '#E0E7FF' },
+  'Recreation': { color: '#0D9488', bgColor: '#CCFBF1' },
+  'City Park': { color: '#16A34A', bgColor: '#DCFCE7' },
+  'Events': { color: '#DC2626', bgColor: '#FEE2E2' },
+  'Lodging': { color: '#EA580C', bgColor: '#FFEDD5' },
 }
 
 function AttractionCard({
@@ -39,7 +39,7 @@ function AttractionCard({
   isSelected: boolean
   onSelect: () => void
 }) {
-  const config = categoryConfig[attraction.category] || { icon: '📍', color: '#6B7280', bgColor: '#F3F4F6' }
+  const config = categoryConfig[attraction.category] || { color: '#6B7280', bgColor: '#F3F4F6' }
 
   return (
     <div
@@ -52,11 +52,10 @@ function AttractionCard({
     >
       {/* Category badge */}
       <div
-        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium mb-2"
+        className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium mb-2"
         style={{ backgroundColor: config.bgColor, color: config.color }}
       >
-        <span>{config.icon}</span>
-        <span>{attraction.category}</span>
+        {attraction.category}
       </div>
 
       {/* Name */}
@@ -68,14 +67,10 @@ function AttractionCard({
       {/* Quick info */}
       <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-500">
         {attraction.fee && (
-          <span className="flex items-center gap-1">
-            <span>💰</span> {attraction.fee}
-          </span>
+          <span>{attraction.fee}</span>
         )}
         {attraction.hours && (
-          <span className="flex items-center gap-1">
-            <span>🕐</span> {attraction.hours}
-          </span>
+          <span>{attraction.hours}</span>
         )}
       </div>
 
@@ -105,7 +100,7 @@ function AttractionDetail({
   attraction: Attraction
   onClose: () => void
 }) {
-  const config = categoryConfig[attraction.category] || { icon: '📍', color: '#6B7280', bgColor: '#F3F4F6' }
+  const config = categoryConfig[attraction.category] || { color: '#6B7280', bgColor: '#F3F4F6' }
 
   return (
     <div className="bg-white rounded-lg shadow-xl overflow-hidden">
@@ -124,7 +119,6 @@ function AttractionDetail({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <div className="text-2xl mb-1">{config.icon}</div>
         <h2 className="text-xl font-bold">{attraction.name}</h2>
         <div className="text-sm opacity-90">{attraction.category}</div>
       </div>
@@ -147,13 +141,11 @@ function AttractionDetail({
         {/* Highlights */}
         {attraction.highlights && attraction.highlights.length > 0 && (
           <div>
-            <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-              <span>✨</span> Things To Do
-            </h4>
+            <h4 className="font-semibold text-gray-900 mb-2">Things To Do</h4>
             <div className="grid grid-cols-2 gap-2">
               {attraction.highlights.map((h, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                  <span className="text-green-500">✓</span>
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
                   {h}
                 </div>
               ))}
@@ -262,12 +254,9 @@ export default function TourismPanel({
     <div className="flex flex-col h-full bg-gradient-to-b from-amber-50 to-white">
       {/* Header */}
       <div className="p-3 border-b bg-white/80 backdrop-blur shrink-0">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-2xl">🗺️</span>
-          <div>
-            <h2 className="font-bold text-gray-900">Explore Three Forks</h2>
-            <p className="text-xs text-gray-500">Your guide to adventure</p>
-          </div>
+        <div className="mb-2">
+          <h2 className="font-bold text-gray-900">Explore Three Forks</h2>
+          <p className="text-xs text-gray-500">Your guide to adventure</p>
         </div>
 
         {/* Category filters */}
@@ -281,20 +270,18 @@ export default function TourismPanel({
             All ({attractions.length})
           </button>
           {categories.map(cat => {
-            const config = categoryConfig[cat] || { icon: '📍', color: '#6B7280' }
             const count = attractions.filter(a => a.category === cat).length
             return (
               <button
                 key={cat}
                 onClick={() => setFilter(filter === cat ? null : cat)}
-                className={`px-2 py-1 rounded-full text-xs font-medium transition-colors flex items-center gap-1 ${
+                className={`px-2 py-1 rounded-full text-xs font-medium transition-colors ${
                   filter === cat
                     ? 'bg-amber-500 text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                <span>{config.icon}</span>
-                <span>{count}</span>
+                {cat} ({count})
               </button>
             )
           })}
@@ -306,9 +293,7 @@ export default function TourismPanel({
         {/* Must-See callout */}
         {!filter && (
           <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-3 rounded-lg mb-3">
-            <div className="font-bold flex items-center gap-2">
-              <span>⭐</span> Don't Miss!
-            </div>
+            <div className="font-bold">Don't Miss</div>
             <p className="text-sm opacity-90 mt-1">
               Missouri Headwaters State Park - where Lewis & Clark discovered where three rivers become one
             </p>
@@ -319,7 +304,6 @@ export default function TourismPanel({
           <div key={category} className="space-y-2">
             {!filter && (
               <div className="flex items-center gap-2 px-1 pt-2">
-                <span>{categoryConfig[category]?.icon || '📍'}</span>
                 <span className="text-sm font-semibold text-gray-700">{category}</span>
                 <span className="text-xs text-gray-400">({items.length})</span>
               </div>

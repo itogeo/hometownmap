@@ -41,26 +41,18 @@ export default function WelcomeModal({ cityName }: WelcomeModalProps) {
             owner information, and tax assessments.
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-tf-stone-50 rounded-lg p-3">
-              <div className="text-lg mb-1">🏠</div>
-              <div className="text-xs font-medium text-gray-800">My Area</div>
+          <div className="grid grid-cols-3 gap-2">
+            <div className="bg-tf-stone-50 rounded-lg p-3 text-center">
+              <div className="text-xs font-medium text-gray-800">Resident</div>
               <div className="text-[10px] text-gray-500">Property & services</div>
             </div>
-            <div className="bg-tf-stone-50 rounded-lg p-3">
-              <div className="text-lg mb-1">⚠️</div>
-              <div className="text-xs font-medium text-gray-800">Hazards</div>
-              <div className="text-[10px] text-gray-500">Flood zones & fire</div>
+            <div className="bg-tf-stone-50 rounded-lg p-3 text-center">
+              <div className="text-xs font-medium text-gray-800">Services</div>
+              <div className="text-[10px] text-gray-500">Water, sewer & districts</div>
             </div>
-            <div className="bg-tf-stone-50 rounded-lg p-3">
-              <div className="text-lg mb-1">🏗️</div>
-              <div className="text-xs font-medium text-gray-800">Building</div>
-              <div className="text-[10px] text-gray-500">Permits & zoning</div>
-            </div>
-            <div className="bg-tf-stone-50 rounded-lg p-3">
-              <div className="text-lg mb-1">🗺️</div>
-              <div className="text-xs font-medium text-gray-800">Explore</div>
-              <div className="text-[10px] text-gray-500">Parks & attractions</div>
+            <div className="bg-tf-stone-50 rounded-lg p-3 text-center">
+              <div className="text-xs font-medium text-gray-800">Development</div>
+              <div className="text-[10px] text-gray-500">Permits & projects</div>
             </div>
           </div>
 

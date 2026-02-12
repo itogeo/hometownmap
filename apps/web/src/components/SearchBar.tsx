@@ -84,18 +84,18 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
     }
   }
 
-  const getResultIcon = (type: string) => {
+  const getResultLabel = (type: string) => {
     switch (type) {
       case 'parcel':
-        return '🏠'
+        return 'Property'
       case 'business':
-        return '🏢'
+        return 'Business'
       case 'address':
-        return '📍'
+        return 'Address'
       case 'place':
-        return '🏛️'
+        return 'Place'
       default:
-        return '📍'
+        return 'Location'
     }
   }
 
@@ -144,7 +144,7 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
               onClick={() => selectResult(result)}
             >
               <div className="flex items-start gap-2">
-                <span className="text-lg">{getResultIcon(result.type)}</span>
+                <span className="text-xs text-gray-500 pt-1">{getResultLabel(result.type)}</span>
                 <div className="flex-1 min-w-0">
                   {result.type === 'parcel' && (
                     <>

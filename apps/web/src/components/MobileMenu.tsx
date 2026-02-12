@@ -34,11 +34,11 @@ export default function MobileMenu({ isOpen, onClose, cityName = 'Three Forks' }
   if (!isOpen) return null
 
   const navLinks = [
-    { href: '/', label: 'Map', icon: '🗺️' },
-    { href: '/visit', label: 'Visit', icon: '🏞️' },
-    { href: '/development', label: 'Development', icon: '🏗️' },
-    { href: '/projects', label: 'Projects', icon: '📋' },
-    { href: '/resources', label: 'Resources', icon: '📞' },
+    { href: '/', label: 'Map' },
+    { href: '/visit', label: 'Visit' },
+    { href: '/development', label: 'Development' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/resources', label: 'Resources' },
   ]
 
   return (
@@ -78,12 +78,11 @@ export default function MobileMenu({ isOpen, onClose, cityName = 'Three Forks' }
                 <Link
                   href={link.href}
                   onClick={onClose}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg
+                  className="block px-4 py-3 rounded-lg font-medium
                              text-tf-river-700 hover:bg-tf-stone-100 active:bg-tf-stone-200
                              transition-colors touch-manipulation"
                 >
-                  <span className="text-xl">{link.icon}</span>
-                  <span className="font-medium">{link.label}</span>
+                  {link.label}
                 </Link>
               </li>
             ))}

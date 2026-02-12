@@ -235,32 +235,26 @@ export default function Home() {
         {/* Header */}
         <header className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-tf-stone-200">
           <div className="flex items-center justify-between px-4 py-2">
-            <h1 className="text-lg font-semibold text-tf-river-800">
-              {cityConfig.name}
+            <h1 className="text-lg font-bold text-tf-river-800">
+              Three Forks Montana Maps
             </h1>
 
             <div className="flex items-center gap-2">
               <SearchBar
                 cityId={cityConfig.id}
                 onResultSelect={handleSearchSelect}
-                className="w-full sm:w-80"
+                className="w-full sm:w-64"
               />
-              <nav className="hidden md:flex items-center gap-1">
+              <nav className="hidden md:flex items-center gap-1 text-xs">
                 <Link
                   href="/visit"
-                  className="px-2 py-1.5 text-sm text-tf-river-600 hover:text-tf-river-800 hover:bg-tf-stone-100 rounded"
+                  className="px-2 py-1 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded"
                 >
                   Visit
                 </Link>
                 <Link
-                  href="/development"
-                  className="px-2 py-1.5 text-sm text-tf-river-600 hover:text-tf-river-800 hover:bg-tf-stone-100 rounded"
-                >
-                  Development
-                </Link>
-                <Link
                   href="/resources"
-                  className="px-2 py-1.5 text-sm text-tf-river-600 hover:text-tf-river-800 hover:bg-tf-stone-100 rounded"
+                  className="px-2 py-1 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded"
                 >
                   Resources
                 </Link>
@@ -458,30 +452,27 @@ export default function Home() {
             <div className="pointer-events-auto flex gap-2 text-[11px]">
               <Link
                 href="/resources"
-                className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
+                className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
                            hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
               >
-                <span>📞</span>
-                <span>Who Do I Call?</span>
+                Who Do I Call?
               </Link>
               <Link
                 href="/projects"
-                className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
+                className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
                            hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
               >
-                <span>🏗️</span>
-                <span>City Projects</span>
+                City Projects
               </Link>
               {cityConfig.contact?.website && (
                 <a
                   href={cityConfig.contact.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
+                  className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
                              hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
                 >
-                  <span>🌐</span>
-                  <span>City Website</span>
+                  City Website
                 </a>
               )}
             </div>

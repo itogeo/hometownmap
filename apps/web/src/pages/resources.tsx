@@ -9,7 +9,6 @@ interface ContactItem {
   website?: string
   address?: string
   hours?: string
-  icon: string
 }
 
 const EMERGENCY_CONTACTS: ContactItem[] = [
@@ -17,19 +16,16 @@ const EMERGENCY_CONTACTS: ContactItem[] = [
     title: 'Emergency Services',
     description: 'Fire, Police, Ambulance',
     phone: '911',
-    icon: '🚨',
   },
   {
     title: 'Gallatin County Sheriff',
     description: 'Non-emergency police services',
     phone: '(406) 582-2100',
-    icon: '🚔',
   },
   {
     title: 'Three Forks Ambulance',
     description: 'Non-emergency medical transport',
     phone: '(406) 285-3261',
-    icon: '🚑',
   },
 ]
 
@@ -42,25 +38,21 @@ const CITY_SERVICES: ContactItem[] = [
     address: '206 Main Street, Three Forks, MT 59752',
     hours: 'Mon-Fri 8:00 AM - 5:00 PM',
     website: 'https://threeforksmontana.us',
-    icon: '🏛️',
   },
   {
     title: 'Water & Sewer',
     description: 'Water service, billing questions, report leaks',
     phone: '(406) 285-3431',
-    icon: '💧',
   },
   {
     title: 'Streets & Roads',
     description: 'Potholes, street lights, snow removal',
     phone: '(406) 285-3431',
-    icon: '🛣️',
   },
   {
     title: 'Building Permits',
     description: 'Construction permits, inspections, zoning questions',
     phone: '(406) 285-3431',
-    icon: '🏗️',
   },
 ]
 
@@ -70,21 +62,18 @@ const UTILITIES: ContactItem[] = [
     description: 'Electric and natural gas service',
     phone: '(888) 467-2669',
     website: 'https://www.northwesternenergy.com',
-    icon: '⚡',
   },
   {
     title: 'Republic Services',
     description: 'Garbage and recycling pickup',
     phone: '(406) 587-6075',
     website: 'https://www.republicservices.com',
-    icon: '🗑️',
   },
   {
     title: '3 Rivers Communications',
     description: 'Internet, phone, and TV service',
     phone: '(406) 467-2535',
     website: 'https://www.3rivers.net',
-    icon: '📡',
   },
 ]
 
@@ -95,7 +84,6 @@ const SCHOOLS: ContactItem[] = [
     phone: '(406) 285-3224',
     website: 'https://www.threeforks.k12.mt.us',
     address: '216 East Neal Street',
-    icon: '🏫',
   },
 ]
 
@@ -105,7 +93,6 @@ const COMMUNITY: ContactItem[] = [
     description: 'Public library services',
     phone: '(406) 285-3747',
     address: '607 South Main Street',
-    icon: '📚',
   },
   {
     title: 'Three Forks Post Office',
@@ -113,69 +100,70 @@ const COMMUNITY: ContactItem[] = [
     phone: '(406) 285-3224',
     address: '115 North Main Street',
     hours: 'Mon-Fri 8:30 AM - 4:30 PM, Sat 9:00 AM - 11:00 AM',
-    icon: '📬',
   },
   {
     title: 'Chamber of Commerce',
     description: 'Local business and tourism information',
     phone: '(406) 285-4753',
     website: 'https://www.threeforksmontana.com',
-    icon: '🤝',
   },
 ]
 
 function ContactCard({ item }: { item: ContactItem }) {
   return (
     <div className="bg-white rounded-lg p-4 border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all">
-      <div className="flex items-start gap-3">
-        <div className="text-2xl">{item.icon}</div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900">{item.title}</h3>
-          <p className="text-sm text-gray-600 mt-0.5">{item.description}</p>
+      <div>
+        <h3 className="font-semibold text-gray-900">{item.title}</h3>
+        <p className="text-sm text-gray-600 mt-0.5">{item.description}</p>
 
-          <div className="mt-3 space-y-1.5">
-            {item.phone && (
+        <div className="mt-3 space-y-1.5 text-sm">
+          {item.phone && (
+            <div className="flex justify-between">
+              <span className="text-gray-500">Phone:</span>
               <a
                 href={`tel:${item.phone.replace(/\D/g, '')}`}
-                className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800"
+                className="text-blue-600 hover:text-blue-800 font-medium"
               >
-                <span>📞</span>
-                <span className="font-medium">{item.phone}</span>
+                {item.phone}
               </a>
-            )}
-            {item.email && (
+            </div>
+          )}
+          {item.email && (
+            <div className="flex justify-between">
+              <span className="text-gray-500">Email:</span>
               <a
                 href={`mailto:${item.email}`}
-                className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800"
+                className="text-blue-600 hover:text-blue-800"
               >
-                <span>✉️</span>
-                <span>{item.email}</span>
+                {item.email}
               </a>
-            )}
-            {item.website && (
+            </div>
+          )}
+          {item.website && (
+            <div className="flex justify-between">
+              <span className="text-gray-500">Website:</span>
               <a
                 href={item.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800"
+                className="text-blue-600 hover:text-blue-800"
               >
-                <span>🌐</span>
-                <span>Website</span>
+                Visit
               </a>
-            )}
-            {item.address && (
-              <p className="flex items-center gap-2 text-sm text-gray-600">
-                <span>📍</span>
-                <span>{item.address}</span>
-              </p>
-            )}
-            {item.hours && (
-              <p className="flex items-center gap-2 text-sm text-gray-500">
-                <span>🕐</span>
-                <span>{item.hours}</span>
-              </p>
-            )}
-          </div>
+            </div>
+          )}
+          {item.address && (
+            <div className="flex justify-between">
+              <span className="text-gray-500">Address:</span>
+              <span className="text-gray-700 text-right">{item.address}</span>
+            </div>
+          )}
+          {item.hours && (
+            <div className="flex justify-between">
+              <span className="text-gray-500">Hours:</span>
+              <span className="text-gray-700 text-right">{item.hours}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -211,7 +199,7 @@ export default function ResourcesPage() {
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-4xl mx-auto px-4 py-4">
             <Link href="/" className="text-sm text-blue-600 hover:text-blue-800">
-              ← Back to Map
+              Back to Map
             </Link>
             <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Who Do I Call?
@@ -223,14 +211,11 @@ export default function ResourcesPage() {
         <main className="max-w-4xl mx-auto px-4 py-6 space-y-8">
           {/* Emergency - Highlighted */}
           <section className="bg-red-50 rounded-lg p-4 border border-red-200">
-            <h2 className="text-lg font-semibold text-red-800 mb-3 flex items-center gap-2">
-              <span>🚨</span> Emergency Contacts
-            </h2>
+            <h2 className="text-lg font-semibold text-red-800 mb-3">Emergency Contacts</h2>
             <div className="grid gap-3 sm:grid-cols-3">
               {EMERGENCY_CONTACTS.map((item) => (
                 <div key={item.title} className="bg-white rounded-lg p-3 border border-red-200">
                   <div className="text-center">
-                    <div className="text-2xl mb-1">{item.icon}</div>
                     <h3 className="font-semibold text-gray-900">{item.title}</h3>
                     <p className="text-xs text-gray-600">{item.description}</p>
                     {item.phone && (
@@ -262,7 +247,6 @@ export default function ResourcesPage() {
                 rel="noopener noreferrer"
                 className="bg-white rounded-lg p-3 border border-blue-200 hover:border-blue-400 text-center"
               >
-                <div className="text-xl mb-1">🗺️</div>
                 <div className="text-sm font-medium text-gray-900">Gallatin County GIS</div>
                 <div className="text-xs text-gray-500">Property records & maps</div>
               </a>
@@ -272,7 +256,6 @@ export default function ResourcesPage() {
                 rel="noopener noreferrer"
                 className="bg-white rounded-lg p-3 border border-blue-200 hover:border-blue-400 text-center"
               >
-                <div className="text-xl mb-1">📋</div>
                 <div className="text-sm font-medium text-gray-900">Montana Cadastral</div>
                 <div className="text-xs text-gray-500">Statewide property data</div>
               </a>
@@ -280,7 +263,6 @@ export default function ResourcesPage() {
                 href="/development"
                 className="bg-white rounded-lg p-3 border border-blue-200 hover:border-blue-400 text-center"
               >
-                <div className="text-xl mb-1">🏗️</div>
                 <div className="text-sm font-medium text-gray-900">Development Guide</div>
                 <div className="text-xs text-gray-500">Permits & zoning</div>
               </Link>

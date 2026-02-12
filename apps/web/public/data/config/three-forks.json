@@ -39,7 +39,8 @@
         "schooldistricts",
         "water_sewer_districts",
         "water_supply",
-        "wastewater"
+        "wastewater",
+        "hydrants"
       ],
       "features": [
         "service_areas",
@@ -509,8 +510,9 @@
         "stroke-width": 2
       },
       "popup_fields": [
-        "WELL_ID",
-        "WELL_DEPTH"
+        "GW_MONITOR",
+        "MONITOR_TY",
+        "NOTES"
       ]
     },
     "wastewater": {
@@ -537,8 +539,29 @@
         "stroke-width": 2
       },
       "popup_fields": [
-        "WELL_TYPE",
-        "USE_"
+        "SYSTEMTYPE",
+        "NOTES",
+        "PWSID"
+      ]
+    },
+    "hydrants": {
+      "source": "gallatin_county",
+      "display_name": "Fire Hydrants & Fill Sites",
+      "description": "Fire hydrants and water fill sites for emergency response",
+      "style": {
+        "fill": "#EF4444",
+        "fill-opacity": 1,
+        "stroke": "#B91C1C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "ADDRESS",
+        "TYPE",
+        "SOURCE",
+        "USABILITY",
+        "FIRE_AREA",
+        "TOWN",
+        "COMMENTS"
       ]
     }
   },
@@ -564,20 +587,17 @@
     {
       "name": "Gallatin County GIS",
       "url": "https://gallatincomt.virtualtownhall.net/gis",
-      "description": "County GIS portal and property records",
-      "icon": "🗺️"
+      "description": "County GIS portal and property records"
     },
     {
       "name": "Montana Cadastral",
       "url": "https://svc.mt.gov/msl/cadastral/",
-      "description": "Statewide property ownership database",
-      "icon": "📋"
+      "description": "Statewide property ownership database"
     },
     {
       "name": "Three Forks City Hall",
       "url": "https://threeforksmontana.us",
-      "description": "Official city website and services",
-      "icon": "🏛️"
+      "description": "Official city website and services"
     }
   ]
 }

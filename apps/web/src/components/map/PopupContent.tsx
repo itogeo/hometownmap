@@ -240,7 +240,7 @@ function BuildingPermitRenderer({ p, showBorder }: { p: any; showBorder: boolean
       <div className="font-semibold text-gray-900 text-[11px] font-mono">{p.permit_number}</div>
 
       <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium mt-1 ${statusColors[p.status] || 'bg-gray-100 text-gray-800'}`}>
-        {isActive ? '🔨 ' : ''}{p.status}
+        {p.status}
       </div>
 
       {(p.owner_name || p.project_name) && (
@@ -277,16 +277,6 @@ function BuildingPermitRenderer({ p, showBorder }: { p: any; showBorder: boolean
 
 // Render Emergency Service
 function EmergencyServiceRenderer({ p, showBorder }: { p: any; showBorder: boolean }) {
-  const typeIcons: { [key: string]: string } = {
-    'Fire Station': '🚒',
-    'Law Enforcement': '🚔',
-    'Medical': '🏥',
-    'School': '🏫',
-    'Government': '🏛️',
-    'Library': '📚',
-    'Post Office': '📮',
-  }
-
   const typeColors: { [key: string]: string } = {
     'Fire Station': 'bg-red-100 text-red-800',
     'Law Enforcement': 'bg-blue-100 text-blue-800',
@@ -297,39 +287,35 @@ function EmergencyServiceRenderer({ p, showBorder }: { p: any; showBorder: boole
     'Post Office': 'bg-gray-100 text-gray-800',
   }
 
-  const icon = typeIcons[p.type] || '📍'
   const colorClass = typeColors[p.type] || 'bg-gray-100 text-gray-800'
 
   return (
     <div className={showBorder ? 'mt-2 pt-2 border-t border-gray-100' : ''}>
       <div className="text-[9px] text-gray-400 uppercase mb-1">Essential Service</div>
 
-      <div className="flex items-center gap-2">
-        <span className="text-lg">{icon}</span>
-        <div>
-          <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
-          <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${colorClass}`}>
-            {p.type}
-          </div>
+      <div>
+        <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
+        <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium mt-0.5 ${colorClass}`}>
+          {p.type}
         </div>
       </div>
 
       <div className="mt-2 space-y-1 text-[9px]">
         {p.address && (
-          <div className="flex items-start gap-1.5">
-            <span className="text-gray-400">📍</span>
-            <span className="text-gray-700">{p.address}</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Address:</span>
+            <span className="text-gray-700 text-right">{p.address}</span>
           </div>
         )}
         {p.phone && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-400">📞</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Phone:</span>
             <a href={`tel:${p.phone}`} className="text-blue-600 hover:underline">{p.phone}</a>
           </div>
         )}
         {p.hours && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-400">🕐</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Hours:</span>
             <span className="text-gray-700">{p.hours}</span>
           </div>
         )}
@@ -349,7 +335,7 @@ function EmergencyServiceRenderer({ p, showBorder }: { p: any; showBorder: boole
           rel="noopener noreferrer"
           className="text-[9px] text-blue-600 hover:underline mt-1.5 inline-block"
         >
-          Visit Website &rarr;
+          Visit Website
         </a>
       )}
     </div>
@@ -358,14 +344,6 @@ function EmergencyServiceRenderer({ p, showBorder }: { p: any; showBorder: boole
 
 // Render Parks & Recreation
 function ParksRecreationRenderer({ p, showBorder }: { p: any; showBorder: boolean }) {
-  const typeIcons: { [key: string]: string } = {
-    'City Park': '🌳',
-    'State Park': '🏞️',
-    'Recreation': '⚽',
-    'Fishing Access': '🎣',
-    'Attraction': '⭐',
-  }
-
   const typeColors: { [key: string]: string } = {
     'City Park': 'bg-green-100 text-green-800',
     'State Park': 'bg-emerald-100 text-emerald-800',
@@ -374,20 +352,16 @@ function ParksRecreationRenderer({ p, showBorder }: { p: any; showBorder: boolea
     'Attraction': 'bg-amber-100 text-amber-800',
   }
 
-  const icon = typeIcons[p.type] || '📍'
   const colorClass = typeColors[p.type] || 'bg-gray-100 text-gray-800'
 
   return (
     <div className={showBorder ? 'mt-2 pt-2 border-t border-gray-100' : ''}>
       <div className="text-[9px] text-gray-400 uppercase mb-1">Parks & Recreation</div>
 
-      <div className="flex items-center gap-2">
-        <span className="text-lg">{icon}</span>
-        <div>
-          <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
-          <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${colorClass}`}>
-            {p.type}
-          </div>
+      <div>
+        <div className="font-semibold text-gray-900 text-[11px]">{p.name}</div>
+        <div className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium mt-0.5 ${colorClass}`}>
+          {p.type}
         </div>
       </div>
 
@@ -399,38 +373,38 @@ function ParksRecreationRenderer({ p, showBorder }: { p: any; showBorder: boolea
 
       <div className="mt-2 space-y-1 text-[9px]">
         {p.address && (
-          <div className="flex items-start gap-1.5">
-            <span className="text-gray-400">📍</span>
-            <span className="text-gray-700">{p.address}</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Address:</span>
+            <span className="text-gray-700 text-right">{p.address}</span>
           </div>
         )}
         {p.hours && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-400">🕐</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Hours:</span>
             <span className="text-gray-700">{p.hours}</span>
           </div>
         )}
         {p.fee && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-400">💵</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Fee:</span>
             <span className="text-gray-700">{p.fee}</span>
           </div>
         )}
         {p.phone && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-400">📞</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Phone:</span>
             <a href={`tel:${p.phone}`} className="text-blue-600 hover:underline">{p.phone}</a>
           </div>
         )}
         {p.season && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-gray-400">📅</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Season:</span>
             <span className="text-gray-700">{p.season}</span>
           </div>
         )}
         {p.events && (
-          <div className="flex items-start gap-1.5">
-            <span className="text-gray-400">🎉</span>
+          <div className="flex justify-between">
+            <span className="text-gray-500">Events:</span>
             <span className="text-gray-700">{p.events}</span>
           </div>
         )}
@@ -450,7 +424,7 @@ function ParksRecreationRenderer({ p, showBorder }: { p: any; showBorder: boolea
           rel="noopener noreferrer"
           className="text-[9px] text-blue-600 hover:underline mt-1.5 inline-block"
         >
-          More Info &rarr;
+          More Info
         </a>
       )}
     </div>

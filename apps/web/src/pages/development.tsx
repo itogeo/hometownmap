@@ -77,42 +77,36 @@ const PERMIT_STEPS = [
     step: 1,
     title: 'Pre-Application Meeting',
     description: 'Schedule a meeting with City staff to discuss your project',
-    icon: '💬',
     details: 'Free consultation to understand requirements before you apply',
   },
   {
     step: 2,
     title: 'Submit Application',
     description: 'Complete application forms with required documents',
-    icon: '📝',
     details: 'Site plan, building plans, and application fee required',
   },
   {
     step: 3,
     title: 'Plan Review',
     description: 'City reviews plans for code compliance',
-    icon: '🔍',
     details: 'Typically 2-4 weeks for residential, longer for commercial',
   },
   {
     step: 4,
     title: 'Permit Issued',
     description: 'Receive your building permit',
-    icon: '✅',
     details: 'Post permit on job site before starting work',
   },
   {
     step: 5,
     title: 'Inspections',
     description: 'Schedule inspections during construction',
-    icon: '🏗️',
     details: 'Foundation, framing, electrical, plumbing, final',
   },
   {
     step: 6,
     title: 'Certificate of Occupancy',
     description: 'Final approval to use the building',
-    icon: '🏠',
     details: 'Required before moving in or opening for business',
   },
 ]
@@ -186,15 +180,15 @@ export default function DevelopmentPage() {
               <div className="flex gap-3">
                 <a
                   href="tel:4062853431"
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
                 >
-                  📞 (406) 285-3431
+                  (406) 285-3431
                 </a>
                 <a
                   href="mailto:cityclerk@threeforksmontana.us"
-                  className="inline-flex items-center gap-2 bg-white text-blue-600 px-4 py-2 rounded-lg border border-blue-300 hover:bg-blue-50"
+                  className="bg-white text-blue-600 px-4 py-2 rounded-lg border border-blue-300 hover:bg-blue-50"
                 >
-                  ✉️ Email
+                  Email
                 </a>
               </div>
             </div>
@@ -211,16 +205,11 @@ export default function DevelopmentPage() {
                 <div className="space-y-4">
                   {PERMIT_STEPS.map((step) => (
                     <div key={step.step} className="flex gap-3">
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-xl">
-                        {step.icon}
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
+                        {step.step}
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
-                            Step {step.step}
-                          </span>
-                          <h3 className="font-medium text-gray-900">{step.title}</h3>
-                        </div>
+                        <h3 className="font-medium text-gray-900">{step.title}</h3>
                         <p className="text-sm text-gray-600 mt-0.5">{step.description}</p>
                         <p className="text-xs text-gray-500 mt-1">{step.details}</p>
                       </div>
@@ -351,7 +340,6 @@ export default function DevelopmentPage() {
                 rel="noopener noreferrer"
                 className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <div className="text-xl mb-2">📋</div>
                 <h3 className="font-medium text-gray-900">City Ordinances</h3>
                 <p className="text-sm text-gray-600">Full zoning code and regulations</p>
               </a>
@@ -361,7 +349,6 @@ export default function DevelopmentPage() {
                 rel="noopener noreferrer"
                 className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <div className="text-xl mb-2">🗺️</div>
                 <h3 className="font-medium text-gray-900">County GIS</h3>
                 <p className="text-sm text-gray-600">Property records and surveys</p>
               </a>
@@ -369,7 +356,6 @@ export default function DevelopmentPage() {
                 href="/resources"
                 className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <div className="text-xl mb-2">📞</div>
                 <h3 className="font-medium text-gray-900">City Contacts</h3>
                 <p className="text-sm text-gray-600">Who to call for help</p>
               </Link>

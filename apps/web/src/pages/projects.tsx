@@ -45,11 +45,11 @@ const statusColors: { [key: string]: { bg: string; text: string; border: string 
   'On Hold': { bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-300' },
 }
 
-const categoryIcons: { [key: string]: string } = {
-  'Streets': '🛤️',
-  'Parks': '🌳',
-  'Water/Sewer': '💧',
-  'Buildings': '🏛️',
+const categoryLabels: { [key: string]: string } = {
+  'Streets': 'Streets',
+  'Parks': 'Parks',
+  'Water/Sewer': 'Water/Sewer',
+  'Buildings': 'Buildings',
 }
 
 function formatCurrency(amount: number): string {
@@ -87,12 +87,9 @@ function ProjectCard({
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">{categoryIcons[project.category] || '📋'}</span>
-          <div>
-            <h3 className="font-bold text-gray-900 leading-tight">{project.name}</h3>
-            <span className="text-xs text-gray-500">{project.category}</span>
-          </div>
+        <div>
+          <h3 className="font-bold text-gray-900 leading-tight">{project.name}</h3>
+          <span className="text-xs text-gray-500">{project.category}</span>
         </div>
         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${status.bg} ${status.text}`}>
           {project.status}
@@ -142,25 +139,22 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 shrink-0">
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">{categoryIcons[project.category] || '📋'}</span>
-            <div>
-              <h2 className="text-xl font-bold">{project.name}</h2>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`px-2 py-0.5 rounded-full text-xs font-medium bg-white/20`}>
-                  {project.category}
-                </span>
-                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${status.bg} ${status.text}`}>
-                  {project.status}
-                </span>
-              </div>
+          <div>
+            <h2 className="text-xl font-bold">{project.name}</h2>
+            <div className="flex items-center gap-2 mt-1">
+              <span className={`px-2 py-0.5 rounded-full text-xs font-medium bg-white/20`}>
+                {project.category}
+              </span>
+              <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${status.bg} ${status.text}`}>
+                {project.status}
+              </span>
             </div>
           </div>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center"
           >
-            ✕
+            X
           </button>
         </div>
       </div>
@@ -174,9 +168,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
 
         {/* Budget Section */}
         <div className="bg-gray-50 rounded-lg p-4">
-          <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-            <span>💰</span> Budget & Spending
-          </h4>
+          <h4 className="font-semibold text-gray-900 mb-3">Budget & Spending</h4>
           {project.budget > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
@@ -208,9 +200,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
 
         {/* Funding Sources */}
         <div>
-          <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <span>🏦</span> Funding Sources
-          </h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Funding Sources</h4>
           <div className="flex flex-wrap gap-2">
             {project.funding_sources.map((source, i) => (
               <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
@@ -247,22 +237,18 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
         {/* Impact Notice */}
         {project.impact && (
           <div className="bg-amber-50 border-l-4 border-amber-400 p-3 rounded-r-lg">
-            <div className="font-semibold text-amber-800 text-sm flex items-center gap-2">
-              <span>⚠️</span> Current Impact
-            </div>
+            <div className="font-semibold text-amber-800 text-sm">Current Impact</div>
             <p className="text-sm text-amber-700 mt-1">{project.impact}</p>
           </div>
         )}
 
         {/* Benefits */}
         <div>
-          <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <span>✨</span> Project Benefits
-          </h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Project Benefits</h4>
           <div className="grid grid-cols-2 gap-2">
             {project.benefits.map((benefit, i) => (
               <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                <span className="text-green-500">✓</span>
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
                 {benefit}
               </div>
             ))}
@@ -457,11 +443,10 @@ export default function ProjectsPage() {
                       <button
                         key={cat}
                         onClick={() => setFilterCategory(filterCategory === cat ? null : cat)}
-                        className={`px-2 py-1 rounded text-xs font-medium transition-colors flex items-center gap-1 ${
+                        className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
                           filterCategory === cat ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                         }`}
                       >
-                        <span>{categoryIcons[cat]}</span>
                         {cat}
                       </button>
                     ))}
