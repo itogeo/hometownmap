@@ -429,12 +429,13 @@ export default function MapView({
               type="symbol"
               layout={{
                 'text-field': ['match', ['get', 'type'],
-                  'Fire Station', '🚒', 'Law Enforcement', '🚔', 'Medical', '🏥',
-                  'School', '🏫', 'Government', '🏛️', 'Library', '📚',
-                  'Post Office', '📮', '📍'],
-                'text-size': 14, 'text-anchor': 'center', 'text-allow-overlap': true,
+                  'Fire Station', 'F', 'Law Enforcement', 'P', 'Medical', 'M',
+                  'School', 'S', 'Government', 'G', 'Library', 'L',
+                  'Post Office', 'PO', '?'],
+                'text-size': 11, 'text-anchor': 'center', 'text-allow-overlap': true,
+                'text-font': ['DIN Pro Bold', 'Arial Unicode MS Bold'],
               }}
-              paint={{ 'text-opacity': 1 }}
+              paint={{ 'text-color': '#ffffff', 'text-opacity': 1 }}
             />
             <Layer
               id="emergency_services-label"
@@ -478,11 +479,12 @@ export default function MapView({
               type="symbol"
               layout={{
                 'text-field': ['match', ['get', 'type'],
-                  'City Park', '🌳', 'State Park', '🏞️', 'Recreation', '⚽',
-                  'Fishing Access', '🎣', 'Attraction', '⭐', '🌲'],
-                'text-size': 14, 'text-anchor': 'center', 'text-allow-overlap': true,
+                  'City Park', 'P', 'State Park', 'SP', 'Recreation', 'R',
+                  'Fishing Access', 'FA', 'Attraction', 'A', 'P'],
+                'text-size': 11, 'text-anchor': 'center', 'text-allow-overlap': true,
+                'text-font': ['DIN Pro Bold', 'Arial Unicode MS Bold'],
               }}
-              paint={{ 'text-opacity': 1 }}
+              paint={{ 'text-color': '#ffffff', 'text-opacity': 1 }}
             />
             <Layer
               id="parks_recreation-label"
@@ -543,11 +545,12 @@ export default function MapView({
               type="symbol"
               layout={{
                 'text-field': ['match', ['get', 'category'],
-                  'State Park', '🏞️', 'Historic Site', '🏛️', 'Trail', '🥾', 'Historic Landmark', '🏨',
-                  'Museum', '🖼️', 'Recreation', '🎯', 'City Park', '🌳', 'Events', '🎪', 'Lodging', '🏕️', '📍'],
-                'text-size': 14, 'text-anchor': 'center', 'text-allow-overlap': true,
+                  'State Park', 'SP', 'Historic Site', 'H', 'Trail', 'T', 'Historic Landmark', 'HL',
+                  'Museum', 'M', 'Recreation', 'R', 'City Park', 'P', 'Events', 'E', 'Lodging', 'L', '?'],
+                'text-size': 11, 'text-anchor': 'center', 'text-allow-overlap': true,
+                'text-font': ['DIN Pro Bold', 'Arial Unicode MS Bold'],
               }}
-              paint={{ 'text-opacity': 1 }}
+              paint={{ 'text-color': '#ffffff', 'text-opacity': 1 }}
             />
             <Layer
               id="attractions-label"
