@@ -182,7 +182,7 @@ export default function VisitPage() {
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="text-4xl">🏆</div>
+                    <div className="flex-shrink-0 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">1</div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">
@@ -195,8 +195,8 @@ export default function VisitPage() {
                         <p className="text-sm text-green-700 mt-2 italic">"{attraction.story}"</p>
                       )}
                       <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                        {attraction.hours && <span>🕐 {attraction.hours}</span>}
-                        {attraction.fee && <span>💵 {attraction.fee}</span>}
+                        {attraction.hours && <span>Hours: {attraction.hours}</span>}
+                        {attraction.fee && <span>Fee: {attraction.fee}</span>}
                       </div>
                     </div>
                   </div>
@@ -325,7 +325,7 @@ export default function VisitPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  🚗 Get Directions
+                  Get Directions
                 </a>
               </div>
             </div>
