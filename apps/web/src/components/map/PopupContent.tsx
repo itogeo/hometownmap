@@ -501,15 +501,16 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
 
   return (
     <>
-      {/* Custom close button - touch friendly */}
+      {/* Custom close button - touch friendly 44x44 minimum */}
       <button
         onClick={onClose}
-        className="absolute top-1 right-1 z-10 w-8 h-8 flex items-center justify-center
-                   bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600
+        className="absolute -top-1 -right-1 z-10 w-11 h-11 flex items-center justify-center
+                   bg-white hover:bg-gray-100 rounded-full text-gray-500 hover:text-gray-700
+                   shadow-md border border-gray-200
                    touch-manipulation transition-colors"
         aria-label="Close popup"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
