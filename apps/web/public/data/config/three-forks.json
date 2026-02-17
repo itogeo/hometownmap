@@ -21,7 +21,6 @@
         "subdivisions",
         "emergency_services",
         "parks_recreation",
-        "schooldistricts",
         "cities"
       ],
       "features": [
@@ -35,13 +34,18 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
-        "cities",
-        "firedistricts",
-        "schooldistricts",
-        "water_sewer_districts",
+        "hydrants",
         "water_supply",
         "wastewater",
-        "hydrants"
+        "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "districts",
+          "name": "Districts",
+          "layers": ["firedistricts", "schooldistricts", "water_sewer_districts"],
+          "defaultExpanded": false
+        }
       ],
       "features": [
         "service_areas",

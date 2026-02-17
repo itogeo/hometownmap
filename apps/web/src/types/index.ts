@@ -36,10 +36,18 @@ export interface CityConfig {
   }
 }
 
+export interface LayerGroup {
+  id: string
+  name: string
+  layers: string[]
+  defaultExpanded?: boolean
+}
+
 export interface ModeConfig {
   enabled: boolean
   mapStyle?: 'satellite' | 'streets' | 'light' | 'dark' | 'outdoors'
   layers: string[]
+  layerGroups?: LayerGroup[]
   features: string[]
 }
 

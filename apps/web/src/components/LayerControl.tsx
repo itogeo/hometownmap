@@ -1,4 +1,4 @@
-import { LayerConfig } from '@/types'
+import { LayerConfig, LayerGroup } from '@/types'
 import { useState } from 'react'
 
 interface LayerControlProps {
@@ -8,41 +8,7 @@ interface LayerControlProps {
   layerConfig: { [key: string]: LayerConfig }
   layerOrder: string[]
   onReorderLayer: (layerId: string, direction: 'up' | 'down') => void
-}
-
-// Data freshness information - days since last update
-const LAYER_DATA_FRESHNESS: Record<string, { lastUpdate: string; frequency: string }> = {
-  parcels: { lastUpdate: '2025-02-15', frequency: 'Weekly' },
-  public_lands: { lastUpdate: '2025-02-15', frequency: 'Weekly' },
-  hydrants: { lastUpdate: '2025-02-10', frequency: 'Quarterly' },
-  subdivisions: { lastUpdate: '2025-01-20', frequency: 'Monthly' },
-  floodplain: { lastUpdate: '2024-12-01', frequency: 'Yearly' },
-  wui: { lastUpdate: '2024-12-01', frequency: 'Yearly' },
-  conservation: { lastUpdate: '2025-01-15', frequency: 'Quarterly' },
-  firedistricts: { lastUpdate: '2024-12-01', frequency: 'Yearly' },
-  schooldistricts: { lastUpdate: '2024-12-01', frequency: 'Yearly' },
-}
-
-function getDaysSinceUpdate(dateStr: string): number {
-  const lastUpdate = new Date(dateStr)
-  const now = new Date()
-  const diffTime = Math.abs(now.getTime() - lastUpdate.getTime())
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-}
-
-function getFreshnessIndicator(layerId: string): { color: string; label: string } | null {
-  const info = LAYER_DATA_FRESHNESS[layerId]
-  if (!info) return null
-
-  const days = getDaysSinceUpdate(info.lastUpdate)
-
-  if (days <= 7) {
-    return { color: '#22C55E', label: 'Updated this week' }
-  } else if (days <= 30) {
-    return { color: '#EAB308', label: `Updated ${days} days ago` }
-  } else {
-    return { color: '#94A3B8', label: `Updated ${days} days ago` }
-  }
+  layerGroups?: LayerGroup[]
 }
 
 export default function LayerControl({
@@ -52,122 +18,175 @@ export default function LayerControl({
   layerConfig,
   layerOrder,
   onReorderLayer,
+  layerGroups = [],
 }: LayerControlProps) {
-  const [hoveredLayer, setHoveredLayer] = useState<string | null>(null)
-  const displayLayers = layerOrder.filter(id => layers.includes(id))
+  // Track which groups are expanded
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(() => {
+    const initial = new Set<string>()
+    layerGroups.forEach(g => {
+      if (g.defaultExpanded) initial.add(g.id)
+    })
+    return initial
+  })
+
+  // Get layers that are in groups
+  const groupedLayerIds = new Set(layerGroups.flatMap(g => g.layers))
+
+  // Get ungrouped layers (layers not in any group)
+  const ungroupedLayers = layerOrder.filter(id =>
+    layers.includes(id) && !groupedLayerIds.has(id)
+  )
+
+  const toggleGroup = (groupId: string) => {
+    setExpandedGroups(prev => {
+      const next = new Set(prev)
+      if (next.has(groupId)) {
+        next.delete(groupId)
+      } else {
+        next.add(groupId)
+      }
+      return next
+    })
+  }
+
+  const toggleAllInGroup = (group: LayerGroup) => {
+    const groupLayers = group.layers.filter(id => layers.includes(id))
+    const allVisible = groupLayers.every(id => visibleLayers.includes(id))
+
+    // Toggle all off if all visible, otherwise toggle all on
+    groupLayers.forEach(layerId => {
+      const isVisible = visibleLayers.includes(layerId)
+      if (allVisible && isVisible) {
+        onToggleLayer(layerId)
+      } else if (!allVisible && !isVisible) {
+        onToggleLayer(layerId)
+      }
+    })
+  }
+
+  const renderLayerRow = (layerId: string, index: number, totalCount: number) => {
+    const config = layerConfig[layerId]
+    if (!config) return null
+
+    const isVisible = visibleLayers.includes(layerId)
+    const color = config.style?.fill || config.style?.stroke || '#888'
+
+    return (
+      <div
+        key={layerId}
+        className="flex items-center gap-2 py-1 px-1 rounded hover:bg-gray-50"
+      >
+        {/* Color swatch */}
+        <div
+          className="w-3 h-3 rounded flex-shrink-0"
+          style={{
+            backgroundColor: isVisible ? color : 'transparent',
+            border: `2px solid ${color}`,
+            opacity: isVisible ? 1 : 0.4,
+          }}
+        />
+
+        {/* Layer name */}
+        <span
+          className={`flex-1 text-[11px] truncate ${isVisible ? 'text-gray-800' : 'text-gray-400'}`}
+        >
+          {config.display_name}
+        </span>
+
+        {/* Toggle switch */}
+        <button
+          onClick={() => onToggleLayer(layerId)}
+          className={`relative w-7 h-4 rounded-full transition-colors flex-shrink-0 ${
+            isVisible ? 'bg-blue-500' : 'bg-gray-300'
+          }`}
+          role="switch"
+          aria-checked={isVisible}
+        >
+          <span
+            className={`absolute top-0.5 w-3 h-3 bg-white rounded-full shadow transition-transform ${
+              isVisible ? 'translate-x-3.5' : 'translate-x-0.5'
+            }`}
+          />
+        </button>
+      </div>
+    )
+  }
 
   return (
-    <div className="space-y-1">
-      {displayLayers.map((layerId, index) => {
-        const config = layerConfig[layerId]
-        if (!config) return null
+    <div className="space-y-2">
+      {/* Render ungrouped layers first */}
+      {ungroupedLayers.length > 0 && (
+        <div className="space-y-0.5">
+          {ungroupedLayers.map((layerId, index) =>
+            renderLayerRow(layerId, index, ungroupedLayers.length)
+          )}
+        </div>
+      )}
 
-        const isVisible = visibleLayers.includes(layerId)
-        const color = config.style?.fill || config.style?.stroke || '#888'
-        const freshness = getFreshnessIndicator(layerId)
-        const isHovered = hoveredLayer === layerId
+      {/* Render layer groups */}
+      {layerGroups.map(group => {
+        const groupLayers = group.layers.filter(id => layers.includes(id))
+        if (groupLayers.length === 0) return null
+
+        const isExpanded = expandedGroups.has(group.id)
+        const visibleCount = groupLayers.filter(id => visibleLayers.includes(id)).length
+        const allVisible = visibleCount === groupLayers.length
 
         return (
-          <div
-            key={layerId}
-            className="relative flex items-center gap-2 py-1.5 px-1 rounded hover:bg-gray-50 transition-colors"
-            onMouseEnter={() => setHoveredLayer(layerId)}
-            onMouseLeave={() => setHoveredLayer(null)}
-          >
-            {/* Reorder buttons */}
-            <div className="flex flex-col gap-0.5">
+          <div key={group.id} className="border border-gray-200 rounded-lg overflow-hidden">
+            {/* Group header */}
+            <div className="flex items-center gap-2 px-2 py-1.5 bg-gray-50">
               <button
-                onClick={() => onReorderLayer(layerId, 'up')}
-                disabled={index === 0}
-                className={`w-5 h-4 flex items-center justify-center rounded text-[10px] transition-colors ${
-                  index === 0
-                    ? 'text-gray-200 cursor-not-allowed'
-                    : 'text-gray-400 hover:bg-gray-200 hover:text-gray-600'
-                }`}
-                aria-label={`Move ${config.display_name} up`}
-                title="Move layer up"
+                onClick={() => toggleGroup(group.id)}
+                className="flex items-center gap-1.5 flex-1 text-left"
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                <svg
+                  className={`w-3 h-3 text-gray-500 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
+                <span className="text-[11px] font-medium text-gray-700">
+                  {group.name}
+                </span>
+                <span className="text-[10px] text-gray-400">
+                  ({visibleCount}/{groupLayers.length})
+                </span>
               </button>
+
+              {/* Toggle all button */}
               <button
-                onClick={() => onReorderLayer(layerId, 'down')}
-                disabled={index === displayLayers.length - 1}
-                className={`w-5 h-4 flex items-center justify-center rounded text-[10px] transition-colors ${
-                  index === displayLayers.length - 1
-                    ? 'text-gray-200 cursor-not-allowed'
-                    : 'text-gray-400 hover:bg-gray-200 hover:text-gray-600'
+                onClick={() => toggleAllInGroup(group)}
+                className={`relative w-7 h-4 rounded-full transition-colors flex-shrink-0 ${
+                  allVisible ? 'bg-blue-500' : visibleCount > 0 ? 'bg-blue-300' : 'bg-gray-300'
                 }`}
-                aria-label={`Move ${config.display_name} down`}
-                title="Move layer down"
+                title={allVisible ? 'Hide all' : 'Show all'}
               >
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <span
+                  className={`absolute top-0.5 w-3 h-3 bg-white rounded-full shadow transition-transform ${
+                    allVisible ? 'translate-x-3.5' : 'translate-x-0.5'
+                  }`}
+                />
               </button>
             </div>
 
-            {/* Color swatch */}
-            <div
-              className="w-4 h-4 rounded border-2 flex-shrink-0"
-              style={{
-                backgroundColor: isVisible ? color : 'transparent',
-                borderColor: color,
-                opacity: isVisible ? 1 : 0.5,
-              }}
-              title={`Layer color: ${color}`}
-            />
-
-            {/* Layer name and freshness */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={`text-[11px] truncate ${isVisible ? 'text-gray-900 font-medium' : 'text-gray-400'}`}
-                  title={config.display_name}
-                >
-                  {config.display_name}
-                </span>
-                {freshness && (
-                  <div
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: freshness.color }}
-                    title={freshness.label}
-                  />
+            {/* Group layers */}
+            {isExpanded && (
+              <div className="px-2 py-1 space-y-0.5 border-t border-gray-100">
+                {groupLayers.map((layerId, index) =>
+                  renderLayerRow(layerId, index, groupLayers.length)
                 )}
               </div>
-              {/* Show freshness info on hover */}
-              {isHovered && freshness && (
-                <div className="text-[9px] text-gray-400 mt-0.5">
-                  {freshness.label}
-                </div>
-              )}
-            </div>
-
-            {/* Toggle switch */}
-            <button
-              onClick={() => onToggleLayer(layerId)}
-              className={`relative w-8 h-5 rounded-full transition-colors flex-shrink-0 ${
-                isVisible ? 'bg-blue-500' : 'bg-gray-300'
-              }`}
-              role="switch"
-              aria-checked={isVisible}
-              aria-label={`Toggle ${config.display_name} layer ${isVisible ? 'off' : 'on'}`}
-              title={isVisible ? 'Click to hide layer' : 'Click to show layer'}
-            >
-              <span
-                className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${
-                  isVisible ? 'translate-x-3.5' : 'translate-x-0.5'
-                }`}
-              />
-            </button>
+            )}
           </div>
         )
       })}
 
-      {displayLayers.length === 0 && (
+      {ungroupedLayers.length === 0 && layerGroups.length === 0 && (
         <p className="text-[11px] text-gray-400 py-3 text-center">
-          No layers available for this mode
+          No layers available
         </p>
       )}
     </div>

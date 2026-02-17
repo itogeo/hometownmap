@@ -382,6 +382,7 @@ export default function Home() {
                 layerConfig={cityConfig.layers}
                 layerOrder={layerOrder}
                 onReorderLayer={handleReorderLayer}
+                layerGroups={cityConfig.modes[currentMode]?.layerGroups}
               />
             </div>
           </aside>
@@ -428,6 +429,7 @@ export default function Home() {
                 layerConfig={cityConfig.layers}
                 layerOrder={layerOrder}
                 onReorderLayer={handleReorderLayer}
+                layerGroups={cityConfig.modes[currentMode]?.layerGroups}
               />
             </div>
           </BottomSheet>
