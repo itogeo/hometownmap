@@ -62,22 +62,35 @@ def get_owner_key(properties):
     return f"{owner}|{address}"
 
 
-def find_adjacent_groups(geometries):
+def find_adjacent_groups(geometries, buffer_distance=0.001):
     """
-    Given a list of geometries, find groups of adjacent (touching) geometries.
+    Given a list of geometries, find groups of adjacent (touching or nearby) geometries.
     Returns list of lists, where each inner list contains indices of adjacent geometries.
+
+    buffer_distance: ~0.001 degrees ≈ 100 meters, catches parcels separated by roads
     """
     n = len(geometries)
     if n <= 1:
         return [[i] for i in range(n)]
 
-    # Build adjacency
+    # Build adjacency - use buffer to catch nearby parcels (separated by roads, etc)
     adjacent = defaultdict(set)
+
+    # Pre-compute buffered geometries for efficiency
+    buffered = []
+    for g in geometries:
+        try:
+            buffered.append(g.buffer(buffer_distance))
+        except Exception:
+            buffered.append(None)
+
     for i in range(n):
         for j in range(i + 1, n):
             try:
-                # Check if geometries touch or intersect
-                if geometries[i].touches(geometries[j]) or geometries[i].intersects(geometries[j]):
+                if buffered[i] is None or buffered[j] is None:
+                    continue
+                # Check if buffered geometries intersect (catches nearby parcels)
+                if buffered[i].intersects(geometries[j]) or geometries[i].intersects(buffered[j]):
                     adjacent[i].add(j)
                     adjacent[j].add(i)
             except Exception:

@@ -16,6 +16,7 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
+        "public_lands",
         "parcels",
         "subdivisions",
         "emergency_services",
@@ -116,6 +117,24 @@
     }
   },
   "layers": {
+    "public_lands": {
+      "source": "local",
+      "display_name": "Public Lands",
+      "description": "Federal, State, County, and Municipal owned parcels",
+      "minzoom": 11,
+      "style": {
+        "fill": "#22C55E",
+        "fill-opacity": 0.25,
+        "stroke": "#16A34A",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "ownername",
+        "_public_category",
+        "gisacres",
+        "addresslin"
+      ]
+    },
     "parcels": {
       "source": "montana_cadastral",
       "display_name": "Property Parcels",
