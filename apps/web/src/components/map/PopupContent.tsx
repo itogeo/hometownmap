@@ -500,8 +500,9 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
                     subdivision?.properties.SUB_NAME ||
                     subdivision?.properties.sub_name
 
-  // Get address
+  // Get address and city
   const address = parcel?.properties.addresslin || parcel?.properties.ADDRESSLIN
+  const cityStateZip = parcel?.properties.citystatez || parcel?.properties.CITYSTATEZ
 
   // Get public land category
   const publicCategory = publicLand?.properties._public_category || publicLand?.properties._ownership_type
@@ -560,6 +561,9 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
               {parcel.properties.ownername || parcel.properties.OWNERNAME || 'Unknown Owner'}
             </div>
 
+            {cityStateZip && (
+              <div className="text-gray-600 text-[10px] mt-0.5 font-medium">{cityStateZip}</div>
+            )}
             {address && (
               <div className="text-gray-500 text-[10px] mt-0.5">{address}</div>
             )}

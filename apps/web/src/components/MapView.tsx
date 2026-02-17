@@ -570,6 +570,7 @@ export default function MapView({
             longitude={popupInfo.longitude}
             latitude={popupInfo.latitude}
             anchor={popupInfo.screenY < 300 ? 'top' : 'bottom'}
+            offset={popupInfo.screenY < 300 ? [0, 15] : [0, -15]}
             onClose={() => setPopupInfo(null)}
             closeButton={false}
             closeOnClick={false}
