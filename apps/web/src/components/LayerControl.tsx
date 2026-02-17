@@ -170,24 +170,6 @@ export default function LayerControl({
           No layers available for this mode
         </p>
       )}
-
-      {/* Legend help */}
-      <div className="mt-3 pt-2 border-t border-gray-100">
-        <div className="flex items-center gap-2 text-[9px] text-gray-400">
-          <div className="flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            <span>Recent</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
-            <span>This month</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-            <span>Older</span>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

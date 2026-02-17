@@ -541,14 +541,45 @@ export default function PopupContent({ features, onClose, coordinates }: PopupCo
         </svg>
       </button>
 
-      <div className="text-[11px] max-h-[60vh] overflow-y-auto overscroll-contain pr-6">
-        {/* Public land badge - show prominently at top */}
+      <div className="text-[12px] max-h-[60vh] overflow-y-auto overscroll-contain pr-6">
+        {/* Public land - show prominently */}
         {publicLand && publicCategory && (
-          <div className="bg-green-100 text-green-800 px-2 py-1.5 -mx-2.5 -mt-1 mb-2 text-[10px] font-semibold flex items-center gap-1.5">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-            </svg>
-            {publicCategoryLabels[publicCategory] || 'Public Land'}
+          <div className="bg-green-50 border border-green-200 rounded-lg -mx-1 -mt-1 mb-3 p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                </svg>
+              </div>
+              <div>
+                <div className="font-bold text-green-800 text-sm">
+                  {publicCategoryLabels[publicCategory] || 'Public Land'}
+                </div>
+                <div className="text-green-600 text-[11px]">
+                  {publicLand.properties.ownername || publicLand.properties.OWNERNAME || 'Government Owned'}
+                </div>
+              </div>
+            </div>
+            {(publicLand.properties.gisacres || publicLand.properties.GISACRES) && (
+              <div className="text-green-700 text-[11px] mt-1">
+                <span className="font-medium">{Number(publicLand.properties.gisacres || publicLand.properties.GISACRES).toFixed(1)} acres</span>
+              </div>
+            )}
+            {coordinates && (
+              <a
+                href={getDirectionsUrl(coordinates[1], coordinates[0])}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-2 px-3 py-2 bg-green-500 hover:bg-green-600
+                           text-white rounded-md text-[11px] font-medium transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Get Directions
+              </a>
+            )}
           </div>
         )}
 
@@ -559,36 +590,38 @@ export default function PopupContent({ features, onClose, coordinates }: PopupCo
           </div>
         )}
 
-        {/* Parcel info */}
-        {parcel && (
+        {/* Parcel info - only show if not already showing public land */}
+        {parcel && !publicLand && (
           <div>
-            <div className="font-semibold text-gray-900">
+            <div className="font-semibold text-gray-900 text-[13px]">
               {parcel.properties.ownername || parcel.properties.OWNERNAME || 'Unknown Owner'}
             </div>
 
-            {/* Address - show prominently */}
+            {/* Address */}
             {address && (
-              <div className="text-gray-700 text-[10px] mt-0.5 font-medium">{address}</div>
+              <div className="text-gray-600 text-[11px] mt-0.5">{address}</div>
             )}
 
             {/* Property stats */}
-            <div className="text-gray-600 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
-              {(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) && (
-                <span className="whitespace-nowrap">
-                  <span className="text-gray-400">Value:</span> ${(Number(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) / 1000).toFixed(0)}K
-                </span>
-              )}
+            <div className="flex gap-3 mt-2 text-[11px]">
               {(parcel.properties.gisacres || parcel.properties.GISACRES) && (
-                <span className="whitespace-nowrap">
-                  <span className="text-gray-400">Size:</span> {Number(parcel.properties.gisacres || parcel.properties.GISACRES).toFixed(2)} ac
-                </span>
+                <div>
+                  <div className="text-gray-400 text-[10px]">Size</div>
+                  <div className="text-gray-800 font-medium">{Number(parcel.properties.gisacres || parcel.properties.GISACRES).toFixed(2)} ac</div>
+                </div>
+              )}
+              {(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) && (
+                <div>
+                  <div className="text-gray-400 text-[10px]">Value</div>
+                  <div className="text-gray-800 font-medium">${(Number(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) / 1000).toFixed(0)}K</div>
+                </div>
               )}
             </div>
 
             {/* Merged parcels indicator */}
             {parcel.properties._merged_count && parcel.properties._merged_count > 1 && (
-              <div className="text-blue-600 text-[10px] mt-1 font-medium">
-                {parcel.properties._merged_count} parcels combined (same owner)
+              <div className="text-blue-600 text-[10px] mt-2 bg-blue-50 px-2 py-1 rounded inline-block">
+                {parcel.properties._merged_count} parcels combined
               </div>
             )}
 
@@ -598,11 +631,10 @@ export default function PopupContent({ features, onClose, coordinates }: PopupCo
                 href={getDirectionsUrl(coordinates[1], coordinates[0], address)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 mt-2 px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100
-                           text-blue-700 rounded-md text-[10px] font-medium transition-colors
-                           touch-manipulation"
+                className="inline-flex items-center gap-1.5 mt-3 px-3 py-2 bg-blue-500 hover:bg-blue-600
+                           text-white rounded-md text-[11px] font-medium transition-colors"
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
