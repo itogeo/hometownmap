@@ -579,7 +579,6 @@ export default function MapView({
             <PopupContent
               features={popupInfo.features}
               onClose={() => setPopupInfo(null)}
-              coordinates={[popupInfo.longitude, popupInfo.latitude]}
             />
           </Popup>
         )}
