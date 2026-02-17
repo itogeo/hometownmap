@@ -483,21 +483,47 @@ function FeatureRenderer({ feature, index, hasParcel }: { feature: FeatureInfo; 
   return <DefaultFeatureRenderer key={feature.layerId} feature={feature} showBorder={showBorder} />
 }
 
-export default function PopupContent({ features, onClose }: PopupContentProps) {
+// Generate Google Maps directions URL
+function getDirectionsUrl(lat: number, lng: number, address?: string): string {
+  if (address) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address + ', Three Forks, MT')}`
+  }
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`
+}
+
+interface PopupContentWithCoordsProps extends PopupContentProps {
+  coordinates?: [number, number]  // [lng, lat]
+}
+
+export default function PopupContent({ features, onClose, coordinates }: PopupContentWithCoordsProps) {
   // Filter out city and buildings from popup
   const validFeatures = features.filter(f => f.layerId !== 'cities' && f.layerId !== 'buildings')
   if (validFeatures.length === 0) return null
 
   const parcel = validFeatures.find(f => f.layerId === 'parcels')
+  const publicLand = validFeatures.find(f => f.layerId === 'public_lands')
   const subdivision = validFeatures.find(f => f.layerId === 'subdivisions' || f.layerId === 'minor_subdivisions')
   const otherFeatures = validFeatures.filter(f =>
-    f.layerId !== 'parcels' && f.layerId !== 'subdivisions' && f.layerId !== 'minor_subdivisions'
+    f.layerId !== 'parcels' && f.layerId !== 'public_lands' && f.layerId !== 'subdivisions' && f.layerId !== 'minor_subdivisions'
   )
 
   // Get subdivision name
   const subdivName = parcel?.properties._subdivision ||
                     subdivision?.properties.SUB_NAME ||
                     subdivision?.properties.sub_name
+
+  // Get address for directions
+  const address = parcel?.properties.addresslin || parcel?.properties.ADDRESSLIN
+
+  // Get public land category
+  const publicCategory = publicLand?.properties._public_category || publicLand?.properties._ownership_type
+  const publicCategoryLabels: { [key: string]: string } = {
+    'federal': 'Federal Land',
+    'state': 'State Land',
+    'county': 'County Property',
+    'municipal': 'Town Property',
+    'railroad': 'Railroad',
+  }
 
   return (
     <>
@@ -516,8 +542,18 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
       </button>
 
       <div className="text-[11px] max-h-[60vh] overflow-y-auto overscroll-contain pr-6">
+        {/* Public land badge - show prominently at top */}
+        {publicLand && publicCategory && (
+          <div className="bg-green-100 text-green-800 px-2 py-1.5 -mx-2.5 -mt-1 mb-2 text-[10px] font-semibold flex items-center gap-1.5">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+            </svg>
+            {publicCategoryLabels[publicCategory] || 'Public Land'}
+          </div>
+        )}
+
         {/* Subdivision header */}
-        {subdivName && (
+        {subdivName && !publicLand && (
           <div className="bg-amber-100 text-amber-800 px-2 py-1 -mx-2.5 -mt-1 mb-1.5 text-[10px] font-medium">
             {subdivName}
           </div>
@@ -526,23 +562,52 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
         {/* Parcel info */}
         {parcel && (
           <div>
-            <div className="font-semibold text-gray-900">{parcel.properties.ownername || parcel.properties.OWNERNAME || 'Unknown Owner'}</div>
-            <div className="text-gray-600 mt-0.5">
+            <div className="font-semibold text-gray-900">
+              {parcel.properties.ownername || parcel.properties.OWNERNAME || 'Unknown Owner'}
+            </div>
+
+            {/* Address - show prominently */}
+            {address && (
+              <div className="text-gray-700 text-[10px] mt-0.5 font-medium">{address}</div>
+            )}
+
+            {/* Property stats */}
+            <div className="text-gray-600 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
               {(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) && (
-                <span>Tax Assessed: ${(Number(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) / 1000).toFixed(0)}K</span>
+                <span className="whitespace-nowrap">
+                  <span className="text-gray-400">Value:</span> ${(Number(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) / 1000).toFixed(0)}K
+                </span>
               )}
-              {(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) && (parcel.properties.gisacres || parcel.properties.GISACRES) && <span className="mx-1">·</span>}
               {(parcel.properties.gisacres || parcel.properties.GISACRES) && (
-                <span>{Number(parcel.properties.gisacres || parcel.properties.GISACRES).toFixed(2)} ac</span>
+                <span className="whitespace-nowrap">
+                  <span className="text-gray-400">Size:</span> {Number(parcel.properties.gisacres || parcel.properties.GISACRES).toFixed(2)} ac
+                </span>
               )}
             </div>
-            {(parcel.properties.addresslin || parcel.properties.ADDRESSLIN) && (
-              <div className="text-gray-500 text-[10px] mt-1">{parcel.properties.addresslin || parcel.properties.ADDRESSLIN}</div>
-            )}
+
+            {/* Merged parcels indicator */}
             {parcel.properties._merged_count && parcel.properties._merged_count > 1 && (
               <div className="text-blue-600 text-[10px] mt-1 font-medium">
                 {parcel.properties._merged_count} parcels combined (same owner)
               </div>
+            )}
+
+            {/* Get Directions button */}
+            {coordinates && (
+              <a
+                href={getDirectionsUrl(coordinates[1], coordinates[0], address)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 mt-2 px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100
+                           text-blue-700 rounded-md text-[10px] font-medium transition-colors
+                           touch-manipulation"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Get Directions
+              </a>
             )}
           </div>
         )}
