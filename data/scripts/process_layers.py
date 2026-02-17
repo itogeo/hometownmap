@@ -57,7 +57,7 @@ def validate_geojson(data, layer_name):
 
 
 def process_parcels(data):
-    """Process parcel data - standardize field names."""
+    """Process parcel data - standardize field names and merge adjacent same-owner parcels."""
     features = data.get('features', [])
 
     for f in features:
@@ -69,6 +69,16 @@ def process_parcels(data):
             standardized[key.lower()] = value
 
         f['properties'] = standardized
+
+    # Try to merge adjacent same-owner parcels
+    try:
+        from merge_parcels import merge_parcels as do_merge
+        print("  Running parcel merge (adjacent same-owner)...")
+        data = do_merge(data)
+    except ImportError:
+        print("  Note: merge_parcels module not found, skipping merge step")
+    except Exception as e:
+        print(f"  Warning: Parcel merge failed: {e}")
 
     return data
 

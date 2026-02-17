@@ -526,14 +526,23 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
         {/* Parcel info */}
         {parcel && (
           <div>
-            <div className="font-semibold text-gray-900">{parcel.properties.ownername || 'Unknown Owner'}</div>
+            <div className="font-semibold text-gray-900">{parcel.properties.ownername || parcel.properties.OWNERNAME || 'Unknown Owner'}</div>
             <div className="text-gray-600 mt-0.5">
-              {parcel.properties.totalvalue && <span>Tax Assessed: ${(Number(parcel.properties.totalvalue) / 1000).toFixed(0)}K</span>}
-              {parcel.properties.totalvalue && parcel.properties.gisacres && <span className="mx-1">·</span>}
-              {parcel.properties.gisacres && <span>{Number(parcel.properties.gisacres).toFixed(2)} ac</span>}
+              {(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) && (
+                <span>Tax Assessed: ${(Number(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) / 1000).toFixed(0)}K</span>
+              )}
+              {(parcel.properties.totalvalue || parcel.properties.TOTALVALUE) && (parcel.properties.gisacres || parcel.properties.GISACRES) && <span className="mx-1">·</span>}
+              {(parcel.properties.gisacres || parcel.properties.GISACRES) && (
+                <span>{Number(parcel.properties.gisacres || parcel.properties.GISACRES).toFixed(2)} ac</span>
+              )}
             </div>
-            {parcel.properties.addresslin && (
-              <div className="text-gray-500 text-[10px] mt-1">{parcel.properties.addresslin}</div>
+            {(parcel.properties.addresslin || parcel.properties.ADDRESSLIN) && (
+              <div className="text-gray-500 text-[10px] mt-1">{parcel.properties.addresslin || parcel.properties.ADDRESSLIN}</div>
+            )}
+            {parcel.properties._merged_count && parcel.properties._merged_count > 1 && (
+              <div className="text-blue-600 text-[10px] mt-1 font-medium">
+                {parcel.properties._merged_count} parcels combined (same owner)
+              </div>
             )}
           </div>
         )}
