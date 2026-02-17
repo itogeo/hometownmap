@@ -110,8 +110,7 @@
       "mapStyle": "streets",
       "layers": [
         "businesses",
-        "cities",
-        "parcels"
+        "cities"
       ],
       "features": [
         "search_properties",
