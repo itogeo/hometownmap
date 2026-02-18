@@ -206,10 +206,9 @@ export default function MapView({
       .flatMap((id) => [`${id}-fill`, `${id}-line`, `${id}-outline`, `${id}-point`])
   ]
 
-  // Filter layers for rendering (excluding special layers)
-  const renderableLayers = [...layerOrder].reverse()
-    .filter(id => visibleLayers.includes(id) &&
-      !['parcels', 'businesses', 'attractions', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr'].includes(id))
+  // Filter layers for rendering (excluding layers with special rendering)
+  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr']
+  const renderableLayers = visibleLayers.filter(id => !specialLayers.includes(id))
 
   return (
     <div className="h-full w-full">

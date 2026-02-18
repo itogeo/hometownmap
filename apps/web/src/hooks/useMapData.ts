@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 interface UseMapDataOptions {
   cityId: string
@@ -11,6 +11,7 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
   const [businessData, setBusinessData] = useState<any>(null)
   const [attractionsData, setAttractionsData] = useState<any>(null)
   const [subdivisionData, setSubdivisionData] = useState<any>(null)
+  const loadedLayersRef = useRef<Set<string>>(new Set())
 
   // Load parcels directly
   useEffect(() => {
@@ -60,6 +61,12 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
     }
   }, [visibleLayers, cityId])
 
+  // Reset loaded layers cache when cityId changes
+  useEffect(() => {
+    loadedLayersRef.current = new Set()
+    setLayerData({})
+  }, [cityId])
+
   // Load subdivision data for spatial lookups
   useEffect(() => {
     console.log('Loading subdivisions for spatial lookup...')
@@ -72,7 +79,7 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
       .catch(err => console.error('Error loading subdivisions:', err))
   }, [cityId])
 
-  // Load other layer data
+  // Load other layer data (only load layers not already loaded)
   useEffect(() => {
     if (visibleLayers.length === 0) {
       console.log('No visible layers yet, skipping load')
@@ -80,14 +87,22 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
     }
 
     const loadLayers = async () => {
+      // Skip layers that are already loaded or loaded separately
+      const specialLayers = ['parcels', 'businesses', 'attractions']
+      const layersToLoad = visibleLayers.filter(
+        id => !specialLayers.includes(id) && !loadedLayersRef.current.has(id)
+      )
+
+      if (layersToLoad.length === 0) {
+        console.log('All visible layers already loaded')
+        return
+      }
+
+      console.log('Loading new layers:', layersToLoad)
+
       const newLayerData: { [key: string]: any } = {}
 
-      console.log('Loading layers:', visibleLayers)
-
-      for (const layerId of visibleLayers) {
-        // Skip layers loaded separately
-        if (layerId === 'parcels' || layerId === 'businesses' || layerId === 'attractions') continue
-
+      for (const layerId of layersToLoad) {
         try {
           const response = await fetch(`/data/layers/${cityId}/${layerId}.geojson`)
           if (response.ok) {
@@ -98,6 +113,7 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
               firstGeomType: data.features?.[0]?.geometry?.type
             })
             newLayerData[layerId] = data
+            loadedLayersRef.current.add(layerId)
           } else {
             console.error(`Failed to load ${layerId}: ${response.status}`)
           }
@@ -106,8 +122,11 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
         }
       }
 
-      console.log('Total layers loaded:', Object.keys(newLayerData).length)
-      setLayerData(newLayerData)
+      // Merge with existing layer data
+      if (Object.keys(newLayerData).length > 0) {
+        console.log('Merging', Object.keys(newLayerData).length, 'new layers')
+        setLayerData(prev => ({ ...prev, ...newLayerData }))
+      }
     }
 
     loadLayers()
