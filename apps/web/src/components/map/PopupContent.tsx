@@ -355,10 +355,11 @@ function ServicesTab({ features }: { features: FeatureInfo[] }) {
 function HazardsTab({ features }: { features: FeatureInfo[] }) {
   const flood100 = features.find(f => f.layerId === 'floodplain_100yr')
   const flood500 = features.find(f => f.layerId === 'floodplain_500yr')
-  const femaFlood = features.find(f => f.layerId === 'fema_flood')
+  const femaFlood = features.find(f => f.layerId === 'fema_flood_zones' || f.layerId === 'fema_flood')
   const wui = features.find(f => f.layerId === 'wui')
+  const streams = features.find(f => f.layerId === 'streams')
 
-  const hasHazards = flood100 || flood500 || femaFlood || wui
+  const hasHazards = flood100 || flood500 || femaFlood || wui || streams
 
   if (!hasHazards) {
     return (
@@ -444,9 +445,25 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
           <div className="text-orange-700 text-[10px] mt-1">
             Class: {wui.properties.WUI_Class || 'Intermix'}
           </div>
-          <div className="text-orange-600 text-[9px] mt-1">
-            Higher wildfire risk area. Consider defensible space and fire-resistant materials.
+        </div>
+      )}
+
+      {/* Nearby stream/river */}
+      {streams && (
+        <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-2">
+          <div className="flex items-center gap-2">
+            <svg className="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <span className="text-cyan-800 text-[10px] font-medium">
+              {streams.properties.GCD_NAME || streams.properties.COM_NAME || 'Stream/River'}
+            </span>
           </div>
+          {streams.properties.TYPE && (
+            <div className="text-cyan-600 text-[9px] mt-0.5">
+              {streams.properties.TYPE}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -531,7 +548,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
     ['firedistricts', 'schooldistricts', 'water_sewer_districts', 'water_supply', 'wastewater'].includes(f.layerId)
   )
   const hasHazards = validFeatures.some(f =>
-    ['floodplain_100yr', 'floodplain_500yr', 'fema_flood', 'wui'].includes(f.layerId)
+    ['floodplain_100yr', 'floodplain_500yr', 'fema_flood', 'fema_flood_zones', 'wui', 'streams'].includes(f.layerId)
   )
   const hasHistory = validFeatures.some(f => f.layerId === 'building_permits')
 
@@ -560,14 +577,14 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
         </svg>
       </button>
 
-      <div className="min-w-[280px]">
+      <div className="min-w-[240px] max-w-[280px]">
         {/* Tab navigation */}
         <div className="flex border-b border-gray-200 -mx-2 px-1 overflow-x-auto">
           {visibleTabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-3 py-1.5 text-[10px] font-medium whitespace-nowrap border-b-2 transition-colors ${
+              className={`px-2 py-1 text-[9px] font-medium whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === tab.id
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -579,7 +596,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
         </div>
 
         {/* Tab content */}
-        <div className="pt-3 max-h-[55vh] overflow-y-auto">
+        <div className="pt-2 max-h-[45vh] overflow-y-auto">
           {activeTab === 'property' && (
             <PropertyTab parcel={parcel} publicLand={publicLand} subdivision={subdivision} />
           )}

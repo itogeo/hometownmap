@@ -10,6 +10,33 @@ interface SearchBarProps {
 let cachedParcels: any[] | null = null
 let cachedBusinesses: any[] | null = null
 
+// Normalize addresses for better matching
+function normalizeAddress(addr: string): string {
+  return addr
+    .toLowerCase()
+    .replace(/,.*$/, '') // Remove everything after comma (city, state, zip)
+    .replace(/\bstreet\b/g, 'st')
+    .replace(/\bavenue\b/g, 'ave')
+    .replace(/\broad\b/g, 'rd')
+    .replace(/\bdrive\b/g, 'dr')
+    .replace(/\blane\b/g, 'ln')
+    .replace(/\bcourt\b/g, 'ct')
+    .replace(/\bplace\b/g, 'pl')
+    .replace(/\bcircle\b/g, 'cir')
+    .replace(/\bboulevard\b/g, 'blvd')
+    .replace(/\bway\b/g, 'way')
+    .replace(/\bnorth\b/g, 'n')
+    .replace(/\bsouth\b/g, 's')
+    .replace(/\beast\b/g, 'e')
+    .replace(/\bwest\b/g, 'w')
+    .replace(/\bnortheast\b/g, 'ne')
+    .replace(/\bnorthwest\b/g, 'nw')
+    .replace(/\bsoutheast\b/g, 'se')
+    .replace(/\bsouthwest\b/g, 'sw')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 async function loadLocalData(cityId: string) {
   if (!cachedParcels) {
     try {
@@ -44,12 +71,14 @@ function searchParcels(query: string): any[] {
   if (!cachedParcels) return []
 
   const q = query.toLowerCase()
+  const qNormalized = normalizeAddress(query)
   const results: any[] = []
 
   for (const feature of cachedParcels) {
     const props = feature.properties || {}
     const ownerName = (props.ownername || props.OWNERNAME || '').toLowerCase()
     const address = (props.addresslin || props.ADDRESSLIN || '').toLowerCase()
+    const addressNormalized = normalizeAddress(address)
     const parcelId = (props.parcelid || props.PARCELID || '').toLowerCase()
 
     let score = 0
@@ -65,7 +94,7 @@ function searchParcels(query: string): any[] {
     } else if (ownerName.includes(q)) {
       score = 80
       matchType = 'Owner'
-    } else if (address.includes(q)) {
+    } else if (addressNormalized.includes(qNormalized) || address.includes(q)) {
       score = 70
       matchType = 'Address'
     } else if (parcelId.includes(q)) {
