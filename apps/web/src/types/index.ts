@@ -49,6 +49,7 @@ export interface ModeConfig {
   enabled: boolean
   mapStyle?: 'satellite' | 'streets' | 'light' | 'dark' | 'outdoors'
   layers: string[]
+  availableLayers?: string[]
   layerGroups?: LayerGroup[]
   features: string[]
 }

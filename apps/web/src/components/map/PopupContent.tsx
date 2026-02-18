@@ -181,12 +181,22 @@ function ZoningTab({ zoning, parcel }: { zoning: any; parcel: any }) {
 
   if (!zoneCode) {
     return (
-      <div className="text-center py-6 text-gray-400 text-[11px]">
-        <svg className="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-        </svg>
-        Zoning information not available for this parcel.
-        <div className="mt-2 text-[10px]">Contact City Hall for zoning inquiries.</div>
+      <div className="text-center py-6">
+        <div className="w-12 h-12 mx-auto mb-2 bg-blue-50 rounded-full flex items-center justify-center">
+          <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+        </div>
+        <div className="text-gray-600 text-[11px] font-medium">Outside City Zoning</div>
+        <div className="text-gray-400 text-[10px] mt-1">
+          This area may be in county jurisdiction.
+        </div>
+        <a
+          href="tel:4062853431"
+          className="inline-block mt-3 px-3 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-medium rounded-full hover:bg-blue-100 transition-colors"
+        >
+          Call City Hall for zoning info
+        </a>
       </div>
     )
   }
@@ -255,12 +265,24 @@ function ServicesTab({ features }: { features: FeatureInfo[] }) {
 
   if (!hasServices) {
     return (
-      <div className="text-center py-6 text-gray-400 text-[11px]">
-        <svg className="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-        </svg>
-        Service district information not available.
-        <div className="mt-2 text-[10px]">Toggle service layers to see districts.</div>
+      <div className="text-center py-6">
+        <div className="w-12 h-12 mx-auto mb-2 bg-cyan-50 rounded-full flex items-center justify-center">
+          <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <div className="text-gray-600 text-[11px] font-medium">City Services Available</div>
+        <div className="text-gray-400 text-[10px] mt-1">
+          Enable service layers to see district boundaries.
+        </div>
+        <a
+          href="https://threeforksmontana.us"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-3 px-3 py-1.5 bg-cyan-50 text-cyan-600 text-[10px] font-medium rounded-full hover:bg-cyan-100 transition-colors"
+        >
+          View city services
+        </a>
       </div>
     )
   }
@@ -436,12 +458,22 @@ function HistoryTab({ features }: { features: FeatureInfo[] }) {
 
   if (permits.length === 0) {
     return (
-      <div className="text-center py-6 text-gray-400 text-[11px]">
-        <svg className="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        No permit history found.
-        <div className="mt-2 text-[10px]">Toggle Building Permits layer to see permit data.</div>
+      <div className="text-center py-6">
+        <div className="w-12 h-12 mx-auto mb-2 bg-purple-50 rounded-full flex items-center justify-center">
+          <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div className="text-gray-600 text-[11px] font-medium">No Recent Permits</div>
+        <div className="text-gray-400 text-[10px] mt-1">
+          State permit data covers 2016-2023.
+        </div>
+        <a
+          href="tel:4062853431"
+          className="inline-block mt-3 px-3 py-1.5 bg-purple-50 text-purple-600 text-[10px] font-medium rounded-full hover:bg-purple-100 transition-colors"
+        >
+          Inquire about permits
+        </a>
       </div>
     )
   }

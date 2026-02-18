@@ -19,6 +19,8 @@ export default function LayerControl({
   onToggleLayer,
   layerConfig,
   layerGroups = [],
+  layerOpacity = {},
+  onOpacityChange,
 }: LayerControlProps) {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(() => {
     const initial = new Set<string>()
@@ -27,6 +29,7 @@ export default function LayerControl({
     })
     return initial
   })
+  const [expandedLayer, setExpandedLayer] = useState<string | null>(null)
 
   // Get layers that are in groups
   const groupedLayerIds = new Set(layerGroups.flatMap(g => g.layers))
@@ -46,60 +49,87 @@ export default function LayerControl({
     })
   }
 
-  const renderLayerRow = (layerId: string, isNested: boolean = false) => {
+  const renderLayerRow = (layerId: string) => {
     const config = layerConfig[layerId]
     if (!config) return null
 
     const isVisible = visibleLayers.includes(layerId)
+    const isExpanded = expandedLayer === layerId
     const color = config.style?.fill || config.style?.stroke || '#6B7280'
+    const opacity = layerOpacity[layerId] ?? 100
 
     return (
-      <div
-        key={layerId}
-        className={`flex items-center gap-3 py-2 ${isNested ? 'pl-4' : ''}`}
-      >
-        {/* Color indicator */}
+      <div key={layerId} className="border-b border-gray-100 last:border-b-0">
+        {/* Main row - name is the star */}
         <div
-          className="w-3 h-3 rounded-sm flex-shrink-0 shadow-sm"
-          style={{
-            backgroundColor: isVisible ? color : '#E5E7EB',
-            opacity: isVisible ? 1 : 0.5,
-          }}
-        />
-
-        {/* Layer name - the star of the show */}
-        <span
-          className={`flex-1 text-[13px] leading-tight ${
-            isVisible ? 'text-gray-900 font-medium' : 'text-gray-400'
-          }`}
+          className="flex items-start gap-2 py-2 px-1 hover:bg-gray-50 cursor-pointer"
+          onClick={() => setExpandedLayer(isExpanded ? null : layerId)}
         >
-          {config.display_name}
-        </span>
+          {/* Color indicator */}
+          <div
+            className="w-3 h-3 rounded-sm flex-shrink-0 mt-0.5 border"
+            style={{
+              backgroundColor: isVisible ? color : 'transparent',
+              borderColor: color,
+              opacity: isVisible ? opacity / 100 : 0.4,
+            }}
+          />
 
-        {/* Simple checkbox toggle */}
-        <button
-          onClick={() => onToggleLayer(layerId)}
-          className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-            isVisible
-              ? 'bg-blue-600 border-blue-600'
-              : 'bg-white border-gray-300 hover:border-gray-400'
-          }`}
-          aria-label={isVisible ? `Hide ${config.display_name}` : `Show ${config.display_name}`}
-        >
-          {isVisible && (
-            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-            </svg>
-          )}
-        </button>
+          {/* Layer name - FULL WIDTH, no truncation */}
+          <div className="flex-1 min-w-0">
+            <div className={`text-[13px] leading-tight ${
+              isVisible ? 'text-gray-900 font-medium' : 'text-gray-400'
+            }`}>
+              {config.display_name}
+            </div>
+          </div>
+
+          {/* Toggle checkbox */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleLayer(layerId)
+            }}
+            className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+              isVisible
+                ? 'bg-blue-600 border-blue-600'
+                : 'bg-white border-gray-300 hover:border-gray-400'
+            }`}
+            aria-label={isVisible ? `Hide ${config.display_name}` : `Show ${config.display_name}`}
+          >
+            {isVisible && (
+              <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* Expanded: opacity slider */}
+        {isExpanded && isVisible && onOpacityChange && (
+          <div className="px-6 pb-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-gray-400 w-10">Opacity</span>
+              <input
+                type="range"
+                min="10"
+                max="100"
+                value={opacity}
+                onChange={(e) => onOpacityChange(layerId, parseInt(e.target.value))}
+                className="flex-1 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              />
+              <span className="text-[10px] text-gray-500 w-7 text-right">{opacity}%</span>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
 
   return (
-    <div className="space-y-1">
+    <div>
       {/* Ungrouped layers */}
-      {ungroupedLayers.map((layerId) => renderLayerRow(layerId))}
+      {ungroupedLayers.map(renderLayerRow)}
 
       {/* Layer groups */}
       {layerGroups.map(group => {
@@ -110,32 +140,32 @@ export default function LayerControl({
         const visibleCount = groupLayers.filter(id => visibleLayers.includes(id)).length
 
         return (
-          <div key={group.id} className="pt-2">
+          <div key={group.id} className="border-t border-gray-200 mt-2 pt-2">
             {/* Group header */}
             <button
               onClick={() => toggleGroup(group.id)}
-              className="flex items-center gap-2 w-full py-1.5 text-left group"
+              className="flex items-center gap-2 w-full py-1 text-left"
             >
               <svg
-                className={`w-3.5 h-3.5 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                className={`w-3 h-3 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              <span className="text-[12px] font-semibold text-gray-600 uppercase tracking-wide">
+              <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide flex-1">
                 {group.name}
               </span>
-              <span className="text-[11px] text-gray-400 ml-auto">
-                {visibleCount > 0 ? `${visibleCount} on` : 'off'}
+              <span className="text-[10px] text-gray-400">
+                {visibleCount}/{groupLayers.length}
               </span>
             </button>
 
             {/* Group layers */}
             {isExpanded && (
-              <div className="mt-1 border-l-2 border-gray-100 ml-1.5">
-                {groupLayers.map((layerId) => renderLayerRow(layerId, true))}
+              <div className="mt-1 ml-3 border-l border-gray-100 pl-2">
+                {groupLayers.map(renderLayerRow)}
               </div>
             )}
           </div>

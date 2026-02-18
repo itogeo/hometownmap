@@ -364,11 +364,29 @@ export default function MapView({
                 type="circle"
                 filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
                 paint={{
-                  'circle-radius': 6,
+                  'circle-radius': 8,
                   'circle-color': layerConfig.style?.fill || '#3388ff',
                   'circle-stroke-width': 2,
                   'circle-stroke-color': '#ffffff',
                   'circle-opacity': 1,
+                }}
+              />
+              <Layer
+                id={`${layerId}-point-label`}
+                type="symbol"
+                filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+                layout={{
+                  'text-field': ['coalesce', ['get', 'name'], ['get', 'NAME'], ''],
+                  'text-size': 10,
+                  'text-anchor': 'top',
+                  'text-offset': [0, 1],
+                  'text-max-width': 8,
+                  'text-allow-overlap': false,
+                }}
+                paint={{
+                  'text-color': layerConfig.style?.stroke || '#1F2937',
+                  'text-halo-color': '#ffffff',
+                  'text-halo-width': 1.5,
                 }}
               />
               {layerId === 'subdivisions' && (
@@ -573,7 +591,7 @@ export default function MapView({
             offset={popupInfo.screenY < 300 ? [0, 15] : [0, -15]}
             onClose={() => setPopupInfo(null)}
             closeButton={false}
-            closeOnClick={false}
+            closeOnClick={true}
             maxWidth={isMobile ? "calc(100vw - 32px)" : "320px"}
             className="mobile-popup"
           >

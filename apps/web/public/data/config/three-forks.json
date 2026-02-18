@@ -16,30 +16,26 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
+        "cities",
         "parcels",
-        "subdivisions",
-        "buildings",
-        "building_permits",
+        "emergency_services"
+      ],
+      "availableLayers": [
+        "cities",
+        "parcels",
         "emergency_services",
         "parks_recreation",
         "public_lands",
-        "hydrants",
-        "water_supply",
-        "wastewater",
-        "projects",
-        "cities"
+        "subdivisions",
+        "buildings",
+        "building_permits",
+        "projects"
       ],
       "layerGroups": [
         {
-          "id": "utilities",
-          "name": "Utilities & Infrastructure",
-          "layers": ["hydrants", "water_supply", "wastewater"],
-          "defaultExpanded": false
-        },
-        {
-          "id": "districts",
-          "name": "Districts",
-          "layers": ["firedistricts", "schooldistricts", "water_sewer_districts"],
+          "id": "details",
+          "name": "Additional Layers",
+          "layers": ["parks_recreation", "public_lands", "subdivisions", "buildings", "building_permits", "projects"],
           "defaultExpanded": false
         }
       ],
@@ -58,13 +54,24 @@
       "layers": [
         "zoning",
         "parcels",
+        "cities"
+      ],
+      "availableLayers": [
+        "zoning",
+        "parcels",
+        "cities",
         "future_land_use",
         "urban_growth_boundary",
         "annexation",
-        "subdivisions",
-        "cities"
+        "subdivisions"
       ],
       "layerGroups": [
+        {
+          "id": "planning_data",
+          "name": "Planning Layers",
+          "layers": ["future_land_use", "urban_growth_boundary", "annexation", "subdivisions"],
+          "defaultExpanded": false
+        },
         {
           "id": "overlays",
           "name": "Overlay Districts",
@@ -92,6 +99,11 @@
       "mapStyle": "satellite",
       "layers": [
         "floodplain_100yr",
+        "wui",
+        "cities"
+      ],
+      "availableLayers": [
+        "floodplain_100yr",
         "floodplain_500yr",
         "fema_flood",
         "wui",
@@ -99,6 +111,20 @@
         "conservation",
         "waterways",
         "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "flood_data",
+          "name": "Flood & Water Data",
+          "layers": ["floodplain_500yr", "fema_flood", "groundwater_wells", "waterways"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "environmental",
+          "name": "Environmental",
+          "layers": ["conservation"],
+          "defaultExpanded": false
+        }
       ],
       "features": [
         "flood_zones",
@@ -112,9 +138,22 @@
       "layers": [
         "attractions",
         "parks_recreation",
+        "cities"
+      ],
+      "availableLayers": [
+        "attractions",
+        "parks_recreation",
         "headwaters_trail",
         "waterways",
         "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "nature",
+          "name": "Nature & Trails",
+          "layers": ["headwaters_trail", "waterways"],
+          "defaultExpanded": false
+        }
       ],
       "features": [
         "story_map",
@@ -140,14 +179,14 @@
   "layers": {
     "public_lands": {
       "source": "local",
-      "display_name": "Public Lands",
+      "display_name": "Federal & State Lands",
       "description": "Federal, State, County, and Municipal owned parcels",
       "data_freshness": "Updated 2024",
       "minzoom": 11,
       "style": {
-        "fill": "#22C55E",
+        "fill": "#059669",
         "fill-opacity": 0.25,
-        "stroke": "#16A34A",
+        "stroke": "#047857",
         "stroke-width": 2
       },
       "popup_fields": [
@@ -672,10 +711,11 @@
       "display_name": "Conservation Easements",
       "data_freshness": "MT NRIS 2024",
       "style": {
-        "fill": "#22C55E",
+        "fill": "#10B981",
         "fill-opacity": 0.35,
-        "stroke": "#16A34A",
-        "stroke-width": 2
+        "stroke": "#059669",
+        "stroke-width": 2,
+        "stroke-dasharray": [4, 2]
       },
       "popup_fields": [
         "PROJECT",
@@ -720,13 +760,13 @@
     },
     "parks_recreation": {
       "source": "local",
-      "display_name": "Parks & Recreation",
+      "display_name": "Parks & Rec Areas",
       "description": "City parks, state parks, fishing access, and recreation areas",
       "data_freshness": "Updated 2024",
       "style": {
-        "fill": "#16A34A",
+        "fill": "#84CC16",
         "fill-opacity": 1,
-        "stroke": "#15803D",
+        "stroke": "#65A30D",
         "stroke-width": 2
       },
       "popup_fields": [

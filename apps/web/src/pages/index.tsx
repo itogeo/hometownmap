@@ -598,7 +598,7 @@ export default function Home() {
             </div>
             <div className="p-1.5 max-h-[calc(100vh-180px)] overflow-y-auto">
               <LayerControl
-                layers={cityConfig.modes[currentMode]?.layers || []}
+                layers={cityConfig.modes[currentMode]?.availableLayers || cityConfig.modes[currentMode]?.layers || []}
                 visibleLayers={visibleLayers}
                 onToggleLayer={toggleLayer}
                 layerConfig={cityConfig.layers}
@@ -647,7 +647,7 @@ export default function Home() {
                 </button>
               </div>
               <LayerControl
-                layers={cityConfig.modes[currentMode]?.layers || []}
+                layers={cityConfig.modes[currentMode]?.availableLayers || cityConfig.modes[currentMode]?.layers || []}
                 visibleLayers={visibleLayers}
                 onToggleLayer={toggleLayer}
                 layerConfig={cityConfig.layers}
@@ -663,7 +663,7 @@ export default function Home() {
 
         {/* Footer - Contact and Quick Links */}
         {!isMobile && (
-          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-between items-end pointer-events-none">
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 pointer-events-none">
             {/* Left: Contact info */}
             <div className="pointer-events-auto bg-white/95 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2 text-[11px]">
               <div className="font-medium text-tf-river-700">City Hall</div>
@@ -677,18 +677,18 @@ export default function Home() {
             </div>
 
             {/* Right: Quick links */}
-            <div className="pointer-events-auto flex gap-2 text-[11px]">
+            <div className="pointer-events-auto flex flex-wrap gap-2 text-[11px] justify-end">
               <Link
                 href="/resources"
                 className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
-                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
+                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
               >
                 Who Do I Call?
               </Link>
               <Link
                 href="/projects"
                 className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
-                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
+                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
               >
                 City Projects
               </Link>
@@ -698,7 +698,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
-                             hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors"
+                             hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
                 >
                   City Website
                 </a>
