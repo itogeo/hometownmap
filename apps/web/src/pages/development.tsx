@@ -311,7 +311,7 @@ export default function DevelopmentPage() {
               <div className="h-[400px] lg:h-[600px] rounded-lg overflow-hidden shadow-lg border border-gray-200">
                 <MapView
                   cityConfig={devConfig}
-                  currentMode="development"
+                  currentMode="property"
                   visibleLayers={['zoningdistricts', 'parcels', 'cities']}
                   layerOrder={['cities', 'zoningdistricts', 'parcels']}
                   mapStyleOverride="streets"

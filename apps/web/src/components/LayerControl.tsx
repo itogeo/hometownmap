@@ -2,25 +2,14 @@ import { LayerConfig, LayerGroup } from '@/types'
 import { useState, useCallback } from 'react'
 import Link from 'next/link'
 
-interface ExtendedLayerGroup extends LayerGroup {
-  locked?: boolean
-  lockMessage?: string
-}
-
-interface ExtendedLayerConfig extends LayerConfig {
-  data_freshness?: string
-  locked?: boolean
-  lockMessage?: string
-}
-
 interface LayerControlProps {
   layers: string[]
   visibleLayers: string[]
   onToggleLayer: (layerId: string) => void
-  layerConfig: { [key: string]: ExtendedLayerConfig }
+  layerConfig: { [key: string]: LayerConfig }
   layerOrder: string[]
   onReorderLayer: (layerId: string, direction: 'up' | 'down') => void
-  layerGroups?: ExtendedLayerGroup[]
+  layerGroups?: LayerGroup[]
   layerOpacity?: { [key: string]: number }
   onOpacityChange?: (layerId: string, opacity: number) => void
 }
@@ -87,7 +76,7 @@ export default function LayerControl({
     })
   }
 
-  const toggleAllInGroup = (group: ExtendedLayerGroup) => {
+  const toggleAllInGroup = (group: LayerGroup) => {
     if (group.locked) return // Don't toggle locked groups
 
     const groupLayers = group.layers.filter(id => layers.includes(id) && !layerConfig[id]?.locked)
@@ -119,7 +108,7 @@ export default function LayerControl({
     setShowPresets(false)
   }
 
-  const handleDragStart = useCallback((layerId: string, config: ExtendedLayerConfig) => {
+  const handleDragStart = useCallback((layerId: string, config: LayerConfig) => {
     if (config.locked) return
     setDraggedLayer(layerId)
   }, [])
@@ -142,7 +131,7 @@ export default function LayerControl({
   }, [])
 
   const renderLayerRow = (layerId: string) => {
-    const config = layerConfig[layerId] as ExtendedLayerConfig
+    const config = layerConfig[layerId] as LayerConfig
     if (!config) return null
 
     const isLocked = config.locked

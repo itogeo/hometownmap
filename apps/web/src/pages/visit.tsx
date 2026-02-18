@@ -243,7 +243,7 @@ export default function VisitPage() {
             <div className="lg:sticky lg:top-4 h-[500px] lg:h-[calc(100vh-200px)] rounded-lg overflow-hidden shadow-lg border border-gray-200">
               <MapView
                 cityConfig={tourismConfig}
-                currentMode="tourism"
+                currentMode="explore"
                 visibleLayers={['attractions', 'waterways', 'cities']}
                 layerOrder={['cities', 'waterways', 'attractions']}
                 mapStyleOverride="streets"

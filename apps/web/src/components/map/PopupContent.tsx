@@ -493,7 +493,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
   const zoning = validFeatures.find(f => f.layerId === 'zoning' || f.layerId === 'zoningdistricts')
 
   // Determine which tabs to show
-  const hasProperty = parcel || publicLand
+  const hasProperty = !!(parcel || publicLand)
   const hasZoning = !!zoning
   const hasServices = validFeatures.some(f =>
     ['firedistricts', 'schooldistricts', 'water_sewer_districts', 'water_supply', 'wastewater'].includes(f.layerId)

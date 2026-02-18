@@ -41,6 +41,8 @@ export interface LayerGroup {
   name: string
   layers: string[]
   defaultExpanded?: boolean
+  locked?: boolean
+  lockMessage?: string
 }
 
 export interface ModeConfig {
@@ -54,6 +56,10 @@ export interface ModeConfig {
 export interface LayerConfig {
   source: string
   display_name: string
+  description?: string
+  data_freshness?: string
+  locked?: boolean
+  lockMessage?: string
   minzoom?: number
   style?: LayerStyle
   style_by_field?: string
