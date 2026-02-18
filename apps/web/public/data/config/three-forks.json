@@ -52,39 +52,24 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
-        "zoning",
+        "zoningdistricts",
         "parcels",
         "cities"
       ],
       "availableLayers": [
-        "zoning",
+        "zoningdistricts",
         "parcels",
         "cities",
-        "future_land_use",
-        "urban_growth_boundary",
-        "annexation",
-        "subdivisions"
+        "subdivisions",
+        "minor_subdivisions",
+        "buildings"
       ],
       "layerGroups": [
         {
           "id": "planning_data",
-          "name": "Planning Layers",
-          "layers": ["future_land_use", "urban_growth_boundary", "annexation", "subdivisions"],
+          "name": "Development Data",
+          "layers": ["subdivisions", "minor_subdivisions", "buildings"],
           "defaultExpanded": false
-        },
-        {
-          "id": "overlays",
-          "name": "Overlay Districts",
-          "layers": ["historic_overlay", "airport_overlay", "floodplain_overlay"],
-          "defaultExpanded": false
-        },
-        {
-          "id": "city_data",
-          "name": "City Planning Data",
-          "layers": ["snow_plow_routes", "headwaters_trail", "street_lighting", "sewer_mains", "water_mains"],
-          "defaultExpanded": false,
-          "locked": true,
-          "lockMessage": "Available with City Partnership"
         }
       ],
       "features": [
@@ -98,31 +83,22 @@
       "enabled": true,
       "mapStyle": "satellite",
       "layers": [
-        "floodplain_100yr",
-        "wui",
+        "waterways",
+        "firedistricts",
         "cities"
       ],
       "availableLayers": [
-        "floodplain_100yr",
-        "floodplain_500yr",
-        "fema_flood",
-        "wui",
-        "groundwater_wells",
-        "conservation",
         "waterways",
+        "firedistricts",
+        "hydrants",
+        "groundwater_wells",
         "cities"
       ],
       "layerGroups": [
         {
-          "id": "flood_data",
-          "name": "Flood & Water Data",
-          "layers": ["floodplain_500yr", "fema_flood", "groundwater_wells", "waterways"],
-          "defaultExpanded": false
-        },
-        {
-          "id": "environmental",
-          "name": "Environmental",
-          "layers": ["conservation"],
+          "id": "water_data",
+          "name": "Water & Safety",
+          "layers": ["hydrants", "groundwater_wells"],
           "defaultExpanded": false
         }
       ],
@@ -143,15 +119,15 @@
       "availableLayers": [
         "attractions",
         "parks_recreation",
-        "headwaters_trail",
         "waterways",
+        "public_lands",
         "cities"
       ],
       "layerGroups": [
         {
           "id": "nature",
-          "name": "Nature & Trails",
-          "layers": ["headwaters_trail", "waterways"],
+          "name": "Nature & Water",
+          "layers": ["waterways", "public_lands"],
           "defaultExpanded": false
         }
       ],
@@ -925,7 +901,7 @@
     "primary_color": "#1E40AF",
     "secondary_color": "#ffffff",
     "accent_color": "#059669",
-    "title": "Three Forks CityView",
+    "title": "Three Forks HomeTownMap",
     "subtitle": "Interactive Planning & Community Map"
   },
   "contact": {
