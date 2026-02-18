@@ -10,6 +10,7 @@ import BusinessListPanel from '@/components/BusinessListPanel'
 import TourismPanel from '@/components/TourismPanel'
 import MobileMenu from '@/components/MobileMenu'
 import BottomSheet from '@/components/BottomSheet'
+import MeasurementTools, { MeasurementMode, Point } from '@/components/MeasurementTools'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { MapMode } from '@/types'
 
@@ -48,6 +49,7 @@ export default function Home() {
   const [currentMode, setCurrentMode] = useState<MapMode>('resident')
   const [visibleLayers, setVisibleLayers] = useState<string[]>([])
   const [layerOrder, setLayerOrder] = useState<string[]>([])
+  const [layerOpacity, setLayerOpacity] = useState<{ [key: string]: number }>({})
   const [mapStyle, setMapStyle] = useState<'satellite' | 'streets'>('streets')
   const [cityConfig, setCityConfig] = useState<any>(null)
   const [selectedLocation, setSelectedLocation] = useState<{
@@ -61,6 +63,9 @@ export default function Home() {
   const [selectedAttraction, setSelectedAttraction] = useState<string | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLayerSheetOpen, setIsLayerSheetOpen] = useState(false)
+  const [measurementMode, setMeasurementMode] = useState<MeasurementMode>('none')
+  const [measurementPoints, setMeasurementPoints] = useState<Point[]>([])
+  const [showMeasureTools, setShowMeasureTools] = useState(false)
   const isMobile = useIsMobile()
 
   // Load city configuration
@@ -170,6 +175,10 @@ export default function Home() {
     setMapStyle((prev) => (prev === 'satellite' ? 'streets' : 'satellite'))
   }
 
+  const handleOpacityChange = (layerId: string, opacity: number) => {
+    setLayerOpacity(prev => ({ ...prev, [layerId]: opacity }))
+  }
+
   const handleSearchSelect = (result: any) => {
     if (result.center) {
       setSelectedLocation({
@@ -232,12 +241,30 @@ export default function Home() {
       />
 
       <div className="relative h-screen w-screen overflow-hidden">
+        {/* Accent bar at top */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-emerald-600 z-20" />
+
         {/* Header */}
-        <header className="absolute top-0 left-0 right-0 z-10 bg-white border-b border-tf-stone-200">
+        <header className="absolute top-1 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm border-b border-tf-stone-200 shadow-sm">
           <div className="flex items-center justify-between px-4 py-2">
-            <h1 className="text-lg font-bold text-tf-river-800">
-              Three Forks Montana Maps
-            </h1>
+            <div className="flex items-center gap-2">
+              {/* Logo/Brand mark */}
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-sm">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-base font-bold text-gray-900 leading-tight">
+                  {cityConfig.branding?.title || 'CityView'}
+                </h1>
+                {cityConfig.branding?.subtitle && (
+                  <p className="text-[10px] text-gray-500 leading-tight hidden sm:block">
+                    {cityConfig.branding.subtitle}
+                  </p>
+                )}
+              </div>
+            </div>
 
             <div className="flex items-center gap-2">
               <SearchBar
@@ -245,16 +272,22 @@ export default function Home() {
                 onResultSelect={handleSearchSelect}
                 className="w-full sm:w-64"
               />
-              <nav className="hidden md:flex items-center gap-1 text-xs">
+              <nav className="hidden lg:flex items-center gap-1 text-xs">
+                <Link
+                  href="/dashboard"
+                  className="px-2.5 py-1.5 text-blue-700 font-medium hover:bg-blue-50 rounded transition-colors"
+                >
+                  Dashboard
+                </Link>
                 <Link
                   href="/visit"
-                  className="px-2 py-1 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded"
+                  className="px-2.5 py-1.5 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded transition-colors"
                 >
                   Visit
                 </Link>
                 <Link
                   href="/resources"
-                  className="px-2 py-1 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded"
+                  className="px-2.5 py-1.5 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded transition-colors"
                 >
                   Resources
                 </Link>
@@ -262,7 +295,7 @@ export default function Home() {
 
               {/* Mobile menu button */}
               <button
-                className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg
+                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg
                            bg-gray-100 hover:bg-gray-200 transition-colors touch-manipulation"
                 onClick={() => setIsMobileMenuOpen(true)}
                 aria-label="Open menu"
@@ -362,6 +395,36 @@ export default function Home() {
           </BottomSheet>
         )}
 
+        {/* Measurement Tools - Desktop */}
+        {!isMobile && (
+          <div className="absolute left-3 top-24 z-10">
+            {/* Toggle button */}
+            <button
+              onClick={() => setShowMeasureTools(!showMeasureTools)}
+              className={`w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center transition-colors ${
+                showMeasureTools ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
+              }`}
+              title="Measurement tools"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </button>
+
+            {/* Tools panel */}
+            {showMeasureTools && (
+              <div className="mt-2 w-36">
+                <MeasurementTools
+                  currentMode={measurementMode}
+                  points={measurementPoints}
+                  onModeChange={setMeasurementMode}
+                  onPointsChange={setMeasurementPoints}
+                />
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Layer Control - Desktop */}
         {!isMobile && (
           <aside className="absolute right-3 top-24 z-10 w-48 bg-white rounded shadow-lg">
@@ -383,6 +446,8 @@ export default function Home() {
                 layerOrder={layerOrder}
                 onReorderLayer={handleReorderLayer}
                 layerGroups={cityConfig.modes[currentMode]?.layerGroups}
+                layerOpacity={layerOpacity}
+                onOpacityChange={handleOpacityChange}
               />
             </div>
           </aside>
@@ -430,6 +495,8 @@ export default function Home() {
                 layerOrder={layerOrder}
                 onReorderLayer={handleReorderLayer}
                 layerGroups={cityConfig.modes[currentMode]?.layerGroups}
+                layerOpacity={layerOpacity}
+                onOpacityChange={handleOpacityChange}
               />
             </div>
           </BottomSheet>

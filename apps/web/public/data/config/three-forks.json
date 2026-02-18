@@ -117,6 +117,33 @@
         "filter_by_zoning",
         "demographics"
       ]
+    },
+    "planning": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "zoning",
+        "parcels",
+        "future_land_use",
+        "urban_growth_boundary",
+        "annexation",
+        "subdivisions",
+        "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "overlays",
+          "name": "Overlay Districts",
+          "layers": ["historic_overlay", "airport_overlay", "floodplain_overlay"],
+          "defaultExpanded": false
+        }
+      ],
+      "features": [
+        "zoning_lookup",
+        "parcel_analysis",
+        "growth_projections",
+        "land_use_planning"
+      ]
     }
   },
   "layers": {
@@ -294,6 +321,140 @@
         "district_n",
         "landuse",
         "zoned"
+      ]
+    },
+    "zoning": {
+      "source": "local",
+      "display_name": "Zoning",
+      "description": "City zoning designations with allowed uses and development standards",
+      "style_by_field": "zone_code",
+      "styles": {
+        "R-1": { "name": "Single Family Residential", "fill": "#86EFAC", "fill-opacity": 0.5, "stroke": "#16A34A", "stroke-width": 1.5 },
+        "R-2": { "name": "Two-Family Residential", "fill": "#4ADE80", "fill-opacity": 0.5, "stroke": "#16A34A", "stroke-width": 1.5 },
+        "R-3": { "name": "Multi-Family Residential", "fill": "#22C55E", "fill-opacity": 0.5, "stroke": "#15803D", "stroke-width": 1.5 },
+        "C-1": { "name": "Neighborhood Commercial", "fill": "#FDA4AF", "fill-opacity": 0.5, "stroke": "#E11D48", "stroke-width": 1.5 },
+        "C-2": { "name": "General Commercial", "fill": "#F43F5E", "fill-opacity": 0.5, "stroke": "#BE123C", "stroke-width": 1.5 },
+        "I-1": { "name": "Light Industrial", "fill": "#C4B5FD", "fill-opacity": 0.5, "stroke": "#7C3AED", "stroke-width": 1.5 },
+        "I-2": { "name": "Heavy Industrial", "fill": "#8B5CF6", "fill-opacity": 0.5, "stroke": "#6D28D9", "stroke-width": 1.5 },
+        "AG": { "name": "Agricultural", "fill": "#FEF08A", "fill-opacity": 0.4, "stroke": "#CA8A04", "stroke-width": 1 },
+        "MU": { "name": "Mixed Use", "fill": "#F97316", "fill-opacity": 0.5, "stroke": "#EA580C", "stroke-width": 1.5 },
+        "PUD": { "name": "Planned Unit Development", "fill": "#38BDF8", "fill-opacity": 0.5, "stroke": "#0284C7", "stroke-width": 1.5 },
+        "P": { "name": "Public/Institutional", "fill": "#06B6D4", "fill-opacity": 0.5, "stroke": "#0891B2", "stroke-width": 1.5 }
+      },
+      "popup_fields": [
+        "zone_code",
+        "zone_name",
+        "allowed_uses",
+        "min_lot_size",
+        "max_height",
+        "setbacks",
+        "lot_coverage"
+      ]
+    },
+    "future_land_use": {
+      "source": "local",
+      "display_name": "Future Land Use",
+      "description": "Long-range land use vision from the comprehensive plan",
+      "style_by_field": "designation",
+      "styles": {
+        "residential_low": { "name": "Low Density Residential", "fill": "#BBF7D0", "fill-opacity": 0.4, "stroke": "#22C55E", "stroke-width": 1 },
+        "residential_med": { "name": "Medium Density Residential", "fill": "#86EFAC", "fill-opacity": 0.4, "stroke": "#16A34A", "stroke-width": 1 },
+        "residential_high": { "name": "High Density Residential", "fill": "#4ADE80", "fill-opacity": 0.4, "stroke": "#15803D", "stroke-width": 1 },
+        "commercial": { "name": "Commercial", "fill": "#FCA5A5", "fill-opacity": 0.4, "stroke": "#DC2626", "stroke-width": 1 },
+        "industrial": { "name": "Industrial", "fill": "#C4B5FD", "fill-opacity": 0.4, "stroke": "#7C3AED", "stroke-width": 1 },
+        "mixed_use": { "name": "Mixed Use", "fill": "#FDBA74", "fill-opacity": 0.4, "stroke": "#EA580C", "stroke-width": 1 },
+        "agricultural": { "name": "Agricultural Preserve", "fill": "#FEF9C3", "fill-opacity": 0.3, "stroke": "#CA8A04", "stroke-width": 1 },
+        "open_space": { "name": "Open Space/Conservation", "fill": "#A7F3D0", "fill-opacity": 0.4, "stroke": "#059669", "stroke-width": 1 },
+        "public": { "name": "Public/Civic", "fill": "#BAE6FD", "fill-opacity": 0.4, "stroke": "#0284C7", "stroke-width": 1 }
+      },
+      "popup_fields": [
+        "designation",
+        "description",
+        "target_density",
+        "planning_notes"
+      ]
+    },
+    "urban_growth_boundary": {
+      "source": "local",
+      "display_name": "Urban Growth Boundary",
+      "description": "Planned extent of urban services and development",
+      "style": {
+        "fill": "transparent",
+        "fill-opacity": 0,
+        "stroke": "#DC2626",
+        "stroke-width": 3,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "adopted_date",
+        "notes"
+      ]
+    },
+    "annexation": {
+      "source": "local",
+      "display_name": "Annexation Areas",
+      "description": "Areas under consideration or petitioned for annexation",
+      "style_by_field": "status",
+      "styles": {
+        "pending": { "name": "Pending", "fill": "#FEF08A", "fill-opacity": 0.4, "stroke": "#CA8A04", "stroke-width": 2, "stroke-dasharray": [4, 2] },
+        "approved": { "name": "Approved", "fill": "#86EFAC", "fill-opacity": 0.4, "stroke": "#16A34A", "stroke-width": 2 },
+        "under_review": { "name": "Under Review", "fill": "#93C5FD", "fill-opacity": 0.4, "stroke": "#2563EB", "stroke-width": 2, "stroke-dasharray": [4, 2] }
+      },
+      "popup_fields": [
+        "name",
+        "status",
+        "petition_date",
+        "acreage",
+        "applicant"
+      ]
+    },
+    "historic_overlay": {
+      "source": "local",
+      "display_name": "Historic District",
+      "description": "Old Town Three Forks historic preservation overlay",
+      "style": {
+        "fill": "#FEF3C7",
+        "fill-opacity": 0.3,
+        "stroke": "#92400E",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "designation_date",
+        "design_standards"
+      ]
+    },
+    "airport_overlay": {
+      "source": "local",
+      "display_name": "Airport Influence Zone",
+      "description": "Three Forks Airport approach and noise zones",
+      "style": {
+        "fill": "#DDD6FE",
+        "fill-opacity": 0.3,
+        "stroke": "#7C3AED",
+        "stroke-width": 2,
+        "stroke-dasharray": [6, 3]
+      },
+      "popup_fields": [
+        "zone_type",
+        "restrictions",
+        "max_height"
+      ]
+    },
+    "floodplain_overlay": {
+      "source": "local",
+      "display_name": "Floodplain Development Overlay",
+      "description": "Special development requirements in flood-prone areas",
+      "style": {
+        "fill": "#BFDBFE",
+        "fill-opacity": 0.3,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "requirements",
+        "base_flood_elevation",
+        "freeboard_required"
       ]
     },
     "fema_flood": {
@@ -589,9 +750,11 @@
   },
   "branding": {
     "logo": null,
-    "primary_color": "#3388ff",
+    "primary_color": "#1E40AF",
     "secondary_color": "#ffffff",
-    "title": "Three Forks Interactive Map"
+    "accent_color": "#059669",
+    "title": "Three Forks CityView",
+    "subtitle": "Interactive Planning & Community Map"
   },
   "contact": {
     "city_hall": "206 Main Street, Three Forks, MT 59752",
