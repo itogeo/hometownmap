@@ -12,63 +12,59 @@ const MapView = dynamic(() => import('@/components/MapView'), {
   ),
 })
 
-interface ZoneInfo {
-  code: string
+interface FormInfo {
   name: string
-  description: string
-  uses: string[]
-  color: string
+  url: string
+  size?: string
 }
 
-const ZONING_INFO: ZoneInfo[] = [
+interface FormCategory {
+  title: string
+  forms: FormInfo[]
+}
+
+const FORM_CATEGORIES: FormCategory[] = [
   {
-    code: 'R-1',
-    name: 'Residential - Low Density',
-    description: 'Single-family residential, large lots',
-    uses: ['Single-family homes', 'Home occupations', 'Accessory buildings'],
-    color: '#4682B4',
+    title: 'Zoning & Land Use',
+    forms: [
+      { name: 'Zoning Permit Application', url: 'https://threeforksmontana.us/documents/650/Zoning_Permit_2024.pdf' },
+      { name: 'Zone Change / Amendment Application', url: 'https://threeforksmontana.us/documents/650/Zone_Change_Amendment_Application.pdf' },
+      { name: 'Conditional Use Permit', url: 'https://threeforksmontana.us/documents/650/Conditional_Use_Permit_2023.pdf' },
+      { name: 'Variance Application & Criteria', url: 'https://threeforksmontana.us/documents/650/Variance_Application_and_Criteria.pdf' },
+    ],
   },
   {
-    code: 'R-2',
-    name: 'Residential - Medium Density',
-    description: 'Single and two-family residential',
-    uses: ['Single-family homes', 'Duplexes', 'Home occupations', 'Parks'],
-    color: '#87CEEB',
+    title: 'Subdivision',
+    forms: [
+      { name: 'Preliminary Plat Application', url: 'https://threeforksmontana.us/documents/650/Preliminary_Plat_Application.pdf' },
+      { name: 'Final Plat Application', url: 'https://threeforksmontana.us/documents/650/Final_Plat_Application.pdf' },
+      { name: 'Exemption from Subdivision Review', url: 'https://threeforksmontana.us/documents/650/Exemption_from_Subdivision_Review_Application.pdf' },
+      { name: 'Improvements Agreement', url: 'https://threeforksmontana.us/documents/650/Subdivision_Improvements_Agreement_or_Guaranty.pdf' },
+      { name: 'Subdivision Regulations', url: 'https://threeforksmontana.us/documents/650/City_of_Three_Forks_Subdivision_Regs_OCR.pdf' },
+    ],
   },
   {
-    code: 'R-3',
-    name: 'Residential - High Density',
-    description: 'Multi-family residential',
-    uses: ['Apartments', 'Townhouses', 'Condos', 'Assisted living'],
-    color: '#6495ED',
+    title: 'Floodplain',
+    forms: [
+      { name: 'Flood Permit Application', url: 'https://threeforksmontana.us/documents/650/flood_permit_Three_Forks.pdf' },
+      { name: 'Floodplain Variance Application', url: 'https://threeforksmontana.us/documents/650/Floodplain_Variance_Application.pdf' },
+      { name: 'Non-Residential Floodproofing Certificate (FEMA)', url: 'https://threeforksmontana.us/documents/650/FEMA_Form_FF-206-FY-22-153_floodproofing_nonresidential.pdf' },
+    ],
   },
   {
-    code: 'CBD',
-    name: 'Central Business District',
-    description: 'Downtown commercial core',
-    uses: ['Retail', 'Restaurants', 'Offices', 'Mixed-use', 'Entertainment'],
-    color: '#E31C3D',
+    title: 'Water & Sewer',
+    forms: [
+      { name: 'New Water/Sewer Signup', url: 'https://threeforksmontana.us/documents/650/Sign_Up___Sewer_Determination.pdf' },
+      { name: 'New Connection Request', url: 'https://threeforksmontana.us/documents/650/New_Water_or_Sewer_Connection_Form_with_Contractor_info.pdf' },
+      { name: 'Public Design Standards', url: 'https://threeforksmontana.us/documents/650/ThreeForksDsnStds_20230411__version_2___1_.pdf' },
+    ],
   },
   {
-    code: 'C-1',
-    name: 'Commercial - General',
-    description: 'General commercial uses',
-    uses: ['Retail stores', 'Service businesses', 'Restaurants', 'Gas stations'],
-    color: '#FFD700',
-  },
-  {
-    code: 'I-1',
-    name: 'Industrial - Light',
-    description: 'Light industrial and manufacturing',
-    uses: ['Warehouses', 'Light manufacturing', 'Contractors', 'Storage'],
-    color: '#FF8C00',
-  },
-  {
-    code: 'A/R',
-    name: 'Agricultural/Residential',
-    description: 'Rural residential with agricultural uses',
-    uses: ['Farming', 'Ranching', 'Single-family homes', 'Barns', 'Stables'],
-    color: '#9ACD32',
+    title: 'Annexation',
+    forms: [
+      { name: 'Annexation Application', url: 'https://threeforksmontana.us/documents/650/Annexation_Application.pdf' },
+      { name: 'Petition to Vacate/Abandon', url: 'https://threeforksmontana.us/documents/650/Petition_to_Abandon_form_v1.pdf' },
+    ],
   },
 ]
 
@@ -113,7 +109,7 @@ const PERMIT_STEPS = [
 
 export default function DevelopmentPage() {
   const [cityConfig, setCityConfig] = useState<any>(null)
-  const [selectedZone, setSelectedZone] = useState<ZoneInfo | null>(null)
+  const [expandedCategory, setExpandedCategory] = useState<string | null>('Zoning & Land Use')
 
   useEffect(() => {
     fetch('/data/config/three-forks.json')
@@ -218,90 +214,117 @@ export default function DevelopmentPage() {
                 </div>
               </section>
 
-              {/* Zoning Districts */}
+              {/* Forms & Applications */}
               <section className="bg-white rounded-lg p-5 border border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                  Zoning Districts
+                  Forms & Applications
                 </h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  Click on a zone to see permitted uses. Use the map to find your property's zone.
+                  Official forms from the City of Three Forks. Click a category to see available forms.
                 </p>
-                <div className="grid gap-2">
-                  {ZONING_INFO.map((zone) => (
-                    <button
-                      key={zone.code}
-                      onClick={() => setSelectedZone(selectedZone?.code === zone.code ? null : zone)}
-                      className={`text-left p-3 rounded-lg border transition-all ${
-                        selectedZone?.code === zone.code
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="w-6 h-6 rounded"
-                          style={{ backgroundColor: zone.color }}
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-gray-900">{zone.code}</span>
-                            <span className="text-sm text-gray-600">{zone.name}</span>
-                          </div>
-                          <p className="text-xs text-gray-500">{zone.description}</p>
-                        </div>
-                        <span className="text-gray-400">
-                          {selectedZone?.code === zone.code ? '▼' : '▶'}
+                <div className="space-y-2">
+                  {FORM_CATEGORIES.map((category) => (
+                    <div key={category.title} className="border border-gray-200 rounded-lg overflow-hidden">
+                      <button
+                        onClick={() => setExpandedCategory(
+                          expandedCategory === category.title ? null : category.title
+                        )}
+                        className={`w-full text-left p-3 flex items-center justify-between transition-colors ${
+                          expandedCategory === category.title
+                            ? 'bg-blue-50 border-blue-200'
+                            : 'bg-gray-50 hover:bg-gray-100'
+                        }`}
+                      >
+                        <span className="font-medium text-gray-900">{category.title}</span>
+                        <span className="text-gray-400 text-sm">
+                          {expandedCategory === category.title ? '▼' : '▶'}
                         </span>
-                      </div>
-                      {selectedZone?.code === zone.code && (
-                        <div className="mt-3 pt-3 border-t border-gray-200">
-                          <p className="text-xs font-medium text-gray-700 mb-2">Permitted Uses:</p>
-                          <div className="flex flex-wrap gap-1">
-                            {zone.uses.map((use) => (
-                              <span
-                                key={use}
-                                className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"
-                              >
-                                {use}
+                      </button>
+                      {expandedCategory === category.title && (
+                        <div className="p-3 space-y-2 bg-white">
+                          {category.forms.map((form) => (
+                            <a
+                              key={form.name}
+                              href={form.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 p-2 rounded hover:bg-gray-50 text-sm group"
+                            >
+                              <svg className="w-4 h-4 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                              </svg>
+                              <span className="text-blue-600 group-hover:text-blue-800 group-hover:underline">
+                                {form.name}
                               </span>
-                            ))}
-                          </div>
+                              <span className="text-xs text-gray-400 ml-auto">PDF</span>
+                            </a>
+                          ))}
                         </div>
                       )}
-                    </button>
+                    </div>
                   ))}
                 </div>
+                <a
+                  href="https://threeforksmontana.us/forms-and-applications"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mt-4 text-center text-sm text-blue-600 hover:text-blue-800"
+                >
+                  View all forms on City website →
+                </a>
               </section>
 
-              {/* Common Requirements */}
+              {/* Key Documents */}
               <section className="bg-white rounded-lg p-5 border border-gray-200">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                  Common Requirements
+                  Key Documents
                 </h2>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Front Setback</span>
-                    <span className="font-medium">25 ft (typical)</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Side Setback</span>
-                    <span className="font-medium">10-15 ft</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Rear Setback</span>
-                    <span className="font-medium">20 ft</span>
-                  </div>
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-600">Max Building Height</span>
-                    <span className="font-medium">35 ft (residential)</span>
-                  </div>
-                  <div className="flex justify-between py-2">
-                    <span className="text-gray-600">Lot Coverage</span>
-                    <span className="font-medium">40-60% (varies by zone)</span>
-                  </div>
+                <div className="space-y-3">
+                  <a
+                    href="https://threeforksmontana.us/documents/650/City_of_Three_Forks_Subdivision_Regs_OCR.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all"
+                  >
+                    <svg className="w-8 h-8 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Subdivision Regulations</h3>
+                      <p className="text-xs text-gray-500">Requirements for subdividing land</p>
+                    </div>
+                  </a>
+                  <a
+                    href="https://threeforksmontana.us/documents/650/ThreeForksDsnStds_20230411__version_2___1_.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all"
+                  >
+                    <svg className="w-8 h-8 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Public Design Standards</h3>
+                      <p className="text-xs text-gray-500">Water, sewer, streets infrastructure</p>
+                    </div>
+                  </a>
+                  <a
+                    href="https://threeforksmontana.us/documents/650/FINAL_ADOPTED_220913_EnvisionThreeForks_AdoptedDocument_LowRes__1_.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all"
+                  >
+                    <svg className="w-8 h-8 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                    </svg>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Growth Policy (2022)</h3>
+                      <p className="text-xs text-gray-500">Envision Three Forks planning document</p>
+                    </div>
+                  </a>
                 </div>
                 <p className="text-xs text-gray-500 mt-4">
-                  * Requirements vary by zone. Contact City Hall for specific requirements for your property.
+                  Contact City Hall for zoning code and setback requirements specific to your property.
                 </p>
               </section>
             </div>
@@ -333,24 +356,62 @@ export default function DevelopmentPage() {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Additional Resources
             </h2>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a
+                href="https://threeforksmontana.us/documents/650/FINAL_ADOPTED_220913_EnvisionThreeForks_AdoptedDocument_LowRes__1_.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
+              >
+                <h3 className="font-medium text-gray-900">Growth Policy</h3>
+                <p className="text-sm text-gray-600">Envision Three Forks 2022</p>
+              </a>
+              <a
+                href="https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
+              >
+                <h3 className="font-medium text-gray-900">Gallatin County Clerk & Recorder</h3>
+                <p className="text-sm text-gray-600">Property records, deeds, plats</p>
+              </a>
+              <a
+                href="https://experience.arcgis.com/experience/150750a84b804bf6b76cfa32fd0f5db2/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
+              >
+                <h3 className="font-medium text-gray-900">Gallatin County FLUM</h3>
+                <p className="text-sm text-gray-600">Future Land Use Map</p>
+              </a>
+              <a
+                href="https://threeforksmontana.us/documents/650/Fee_Schedule_Exhibit_for_Res.__465-2026_1.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
+              >
+                <h3 className="font-medium text-gray-900">Fee Schedule</h3>
+                <p className="text-sm text-gray-600">Current permit and application fees</p>
+              </a>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-4 mt-4">
               <a
                 href="https://threeforksmontana.us"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <h3 className="font-medium text-gray-900">City Ordinances</h3>
-                <p className="text-sm text-gray-600">Full zoning code and regulations</p>
+                <h3 className="font-medium text-gray-900">City of Three Forks</h3>
+                <p className="text-sm text-gray-600">Official city website</p>
               </a>
               <a
-                href="https://gallatincomt.virtualtownhall.net/gis"
+                href="https://gis.gallatin.mt.gov/arcgis/rest/services/MapServices/Planning/MapServer"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all"
               >
-                <h3 className="font-medium text-gray-900">County GIS</h3>
-                <p className="text-sm text-gray-600">Property records and surveys</p>
+                <h3 className="font-medium text-gray-900">County GIS Data</h3>
+                <p className="text-sm text-gray-600">Planning & mapping services</p>
               </a>
               <Link
                 href="/resources"

@@ -240,7 +240,16 @@ export default function ResourcesPage() {
           {/* Quick Links */}
           <section className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h2 className="text-lg font-semibold text-blue-800 mb-3">Quick Links</h2>
-            <div className="grid gap-2 sm:grid-cols-3">
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              <a
+                href="https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-lg p-3 border border-blue-200 hover:border-blue-400 text-center"
+              >
+                <div className="text-sm font-medium text-gray-900">Clerk & Recorder</div>
+                <div className="text-xs text-gray-500">Deeds, plats, records</div>
+              </a>
               <a
                 href="https://gallatincomt.virtualtownhall.net/gis"
                 target="_blank"
