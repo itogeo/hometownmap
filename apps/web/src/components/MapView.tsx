@@ -17,6 +17,7 @@ interface MapViewProps {
     latitude: number
     zoom?: number
   } | null
+  selectedParcelId?: string | null
   onBusinessSelect?: (business: any) => void
   onAttractionSelect?: (attraction: any) => void
 }
@@ -28,6 +29,7 @@ export default function MapView({
   layerOrder = [],
   mapStyleOverride,
   selectedLocation,
+  selectedParcelId: externalSelectedParcelId,
   onBusinessSelect,
   onAttractionSelect,
 }: MapViewProps) {
@@ -39,6 +41,10 @@ export default function MapView({
     features: Array<{ layerId: string; layerName: string; properties: any }>
     screenY: number
   } | null>(null)
+  const [internalSelectedParcelId, setInternalSelectedParcelId] = useState<string | null>(null)
+
+  // Use external selection if provided, otherwise use internal
+  const selectedParcelId = externalSelectedParcelId || internalSelectedParcelId
 
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
@@ -77,9 +83,10 @@ export default function MapView({
     (event: MapLayerMouseEvent) => {
       const allFeatures = event.features || []
 
-      // If no features clicked, close the popup
+      // If no features clicked, close the popup and clear selection
       if (allFeatures.length === 0) {
         setPopupInfo(null)
+        setInternalSelectedParcelId(null)
         return
       }
 
@@ -118,11 +125,16 @@ export default function MapView({
 
         let enrichedProperties = { ...feature.properties }
 
-        // Enrich with subdivision info for parcels
+        // Enrich with subdivision info for parcels and track selection
         if (layerId === 'parcels') {
           const subdivision = findSubdivision(event.lngLat.lng, event.lngLat.lat)
           if (subdivision) {
             enrichedProperties._subdivision = subdivision
+          }
+          // Track selected parcel for highlighting
+          const parcelId = feature.properties?.parcelid || feature.properties?.PARCELID
+          if (parcelId) {
+            setInternalSelectedParcelId(parcelId)
           }
         }
 
@@ -238,7 +250,7 @@ export default function MapView({
               minzoom={13}
               paint={{
                 'fill-color': '#FEF3C7',
-                'fill-opacity': 0.4
+                'fill-opacity': 0.15
               }}
             />
             <Layer
@@ -248,8 +260,29 @@ export default function MapView({
               minzoom={13}
               paint={{
                 'line-color': '#D97706',
-                'line-width': 1.5,
-                'line-opacity': 0.8
+                'line-width': 1,
+                'line-opacity': 0.6
+              }}
+            />
+            {/* Selected parcel highlight */}
+            <Layer
+              id="parcels-selected"
+              type="line"
+              filter={selectedParcelId
+                ? ['all',
+                    ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
+                    ['any',
+                      ['==', ['get', 'parcelid'], selectedParcelId],
+                      ['==', ['get', 'PARCELID'], selectedParcelId]
+                    ]
+                  ]
+                : ['==', 'parcelid', '__none__']
+              }
+              minzoom={13}
+              paint={{
+                'line-color': '#ffffff',
+                'line-width': 4,
+                'line-opacity': 1
               }}
             />
           </Source>

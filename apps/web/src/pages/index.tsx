@@ -79,6 +79,7 @@ export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLayerSheetOpen, setIsLayerSheetOpen] = useState(false)
   const [urlStateLoaded, setUrlStateLoaded] = useState(false)
+  const [searchSelectedParcelId, setSearchSelectedParcelId] = useState<string | null>(null)
   const isMobile = useIsMobile()
 
   // Read URL state on initial load
@@ -265,8 +266,14 @@ export default function Home() {
       setSelectedLocation({
         longitude: result.center[0],
         latitude: result.center[1],
-        zoom: 17,
+        zoom: 18,
       })
+      // If it's a parcel result, also set the parcel ID for highlighting
+      if (result.type === 'parcel' && result.parcelId) {
+        setSearchSelectedParcelId(result.parcelId)
+      } else {
+        setSearchSelectedParcelId(null)
+      }
     }
   }
 
@@ -448,6 +455,7 @@ export default function Home() {
             layerOrder={layerOrder}
             mapStyleOverride={mapStyle}
             selectedLocation={selectedLocation}
+            selectedParcelId={searchSelectedParcelId}
             onAttractionSelect={handleAttractionSelect}
           />
         </div>

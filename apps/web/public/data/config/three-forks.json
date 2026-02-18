@@ -53,13 +53,11 @@
       "mapStyle": "streets",
       "layers": [
         "growth_zone",
-        "zoningdistricts",
         "parcels",
         "cities"
       ],
       "availableLayers": [
         "growth_zone",
-        "zoningdistricts",
         "parcels",
         "cities",
         "subdivisions",

@@ -552,12 +552,16 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
   )
   const hasHistory = validFeatures.some(f => f.layerId === 'building_permits')
 
+  // TODO: Re-enable these tabs when data is ready:
+  // - zoning: needs zoningdistricts layer with proper data
+  // - services: needs firedistricts, schooldistricts, water layers
+  // - hazards: needs proper flood zone integration
   const tabs: { id: TabId; label: string; show: boolean }[] = [
     { id: 'property', label: 'Property', show: hasProperty },
-    { id: 'zoning', label: 'Zoning', show: true },
-    { id: 'services', label: 'Services', show: true },
-    { id: 'hazards', label: 'Hazards', show: true },
-    { id: 'history', label: 'History', show: true },
+    { id: 'zoning', label: 'Zoning', show: false }, // TEMPORARILY HIDDEN - enable when zoning data ready
+    { id: 'services', label: 'Services', show: false }, // TEMPORARILY HIDDEN - enable when service districts ready
+    { id: 'hazards', label: 'Hazards', show: false }, // TEMPORARILY HIDDEN - enable when flood layers integrated
+    { id: 'history', label: 'History', show: hasHistory },
   ]
 
   const visibleTabs = tabs.filter(t => t.show)

@@ -133,6 +133,7 @@ function searchParcels(query: string): any[] {
         address: props.addresslin || props.ADDRESSLIN || 'No address',
         acreage: props.gisacres || props.GISACRES,
         total_value: props.totalvalue || props.TOTALVALUE,
+        parcelId: props.parcelid || props.PARCELID,
         center,
         score,
       })
