@@ -13,10 +13,11 @@ let cachedBusinesses: any[] | null = null
 async function loadLocalData(cityId: string) {
   if (!cachedParcels) {
     try {
-      const response = await fetch(`/data/${cityId}/parcels.geojson`)
+      const response = await fetch(`/data/layers/${cityId}/parcels.geojson`)
       if (response.ok) {
         const data = await response.json()
         cachedParcels = data.features || []
+        console.log(`Loaded ${cachedParcels.length} parcels for search`)
       }
     } catch (err) {
       console.log('Failed to load parcel data for search')
@@ -25,10 +26,11 @@ async function loadLocalData(cityId: string) {
 
   if (!cachedBusinesses) {
     try {
-      const response = await fetch(`/data/${cityId}/businesses.geojson`)
+      const response = await fetch(`/data/layers/${cityId}/businesses.geojson`)
       if (response.ok) {
         const data = await response.json()
         cachedBusinesses = data.features || []
+        console.log(`Loaded ${cachedBusinesses.length} businesses for search`)
       }
     } catch (err) {
       console.log('Failed to load business data for search')

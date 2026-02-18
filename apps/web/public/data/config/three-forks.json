@@ -52,11 +52,13 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
+        "growth_zone",
         "zoningdistricts",
         "parcels",
         "cities"
       ],
       "availableLayers": [
+        "growth_zone",
         "zoningdistricts",
         "parcels",
         "cities",
@@ -83,12 +85,14 @@
       "enabled": true,
       "mapStyle": "satellite",
       "layers": [
-        "waterways",
+        "fema_flood_zones",
+        "streams",
         "firedistricts",
         "cities"
       ],
       "availableLayers": [
-        "waterways",
+        "fema_flood_zones",
+        "streams",
         "firedistricts",
         "hydrants",
         "groundwater_wells",
@@ -114,20 +118,21 @@
       "layers": [
         "attractions",
         "parks_recreation",
+        "streams",
         "cities"
       ],
       "availableLayers": [
         "attractions",
         "parks_recreation",
-        "waterways",
+        "streams",
         "public_lands",
         "cities"
       ],
       "layerGroups": [
         {
           "id": "nature",
-          "name": "Nature & Water",
-          "layers": ["waterways", "public_lands"],
+          "name": "Nature & Land",
+          "layers": ["public_lands"],
           "defaultExpanded": false
         }
       ],
@@ -153,6 +158,44 @@
     }
   },
   "layers": {
+    "growth_zone": {
+      "source": "local",
+      "display_name": "Growth Policy Area",
+      "description": "Three Forks planning jurisdiction - area targeted for city growth and annexation",
+      "data_freshness": "Envision Gallatin FLUM 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 0.15,
+        "stroke": "#7C3AED",
+        "stroke-width": 3,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "name",
+        "description",
+        "source"
+      ]
+    },
+    "fema_flood_zones": {
+      "source": "local",
+      "display_name": "FEMA Flood Zones",
+      "description": "High-risk flood zones (A and AE) - 1% annual flood chance",
+      "data_freshness": "FEMA NFHL 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#DC2626",
+        "fill-opacity": 0.35,
+        "stroke": "#B91C1C",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
     "public_lands": {
       "source": "local",
       "display_name": "Federal & State Lands",
@@ -269,18 +312,37 @@
       ]
     },
     "waterways": {
-      "source": "county",
+      "source": "local",
       "display_name": "Rivers & Streams",
-      "data_freshness": "NHD 2024",
+      "description": "Gallatin County waterways - streams, rivers, ditches",
+      "data_freshness": "Gallatin County GIS 2024",
       "style": {
-        "fill": "#0EA5E9",
-        "fill-opacity": 0.4,
-        "stroke": "#0284C7",
-        "stroke-width": 2
+        "stroke": "#2980b9",
+        "stroke-width": 2,
+        "stroke-opacity": 0.85
       },
       "popup_fields": [
-        "name",
-        "ftype"
+        "gcd_name",
+        "com_name",
+        "dlg_status",
+        "type"
+      ]
+    },
+    "streams": {
+      "source": "local",
+      "display_name": "Streams & Rivers",
+      "description": "Regional waterway network with scaled line widths",
+      "data_freshness": "Gallatin County GIS 2024",
+      "style": {
+        "stroke": "#2980b9",
+        "stroke-width": 2,
+        "stroke-opacity": 0.85
+      },
+      "popup_fields": [
+        "GCD_NAME",
+        "COM_NAME",
+        "DLG_STATUS",
+        "TYPE"
       ]
     },
     "firedistricts": {
