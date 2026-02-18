@@ -12,34 +12,30 @@
     "bounds": null
   },
   "modes": {
-    "resident": {
+    "property": {
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
-        "public_lands",
         "parcels",
         "subdivisions",
+        "buildings",
+        "building_permits",
         "emergency_services",
         "parks_recreation",
-        "cities"
-      ],
-      "features": [
-        "search_address",
-        "parcel_info",
-        "services_info",
-        "parks_info"
-      ]
-    },
-    "services": {
-      "enabled": true,
-      "mapStyle": "streets",
-      "layers": [
+        "public_lands",
         "hydrants",
         "water_supply",
         "wastewater",
+        "projects",
         "cities"
       ],
       "layerGroups": [
+        {
+          "id": "utilities",
+          "name": "Utilities & Infrastructure",
+          "layers": ["hydrants", "water_supply", "wastewater"],
+          "defaultExpanded": false
+        },
         {
           "id": "districts",
           "name": "Districts",
@@ -48,74 +44,12 @@
         }
       ],
       "features": [
-        "service_areas",
-        "district_info",
-        "contact_info"
-      ]
-    },
-    "environmental": {
-      "enabled": true,
-      "mapStyle": "satellite",
-      "layers": [
-        "floodplain_500yr",
-        "floodplain_100yr",
-        "projects",
-        "fema_flood",
-        "groundwater_wells",
-        "wui",
-        "conservation",
-        "waterways",
-        "cities"
-      ],
-      "features": [
-        "flood_zones",
-        "hazard_info",
-        "environmental_regulations"
-      ]
-    },
-    "tourism": {
-      "enabled": true,
-      "mapStyle": "outdoors",
-      "layers": [
-        "attractions",
-        "cities",
-        "waterways"
-      ],
-      "features": [
-        "story_map",
-        "attraction_info",
-        "trip_planning"
-      ]
-    },
-    "development": {
-      "enabled": true,
-      "mapStyle": "streets",
-      "layers": [
-        "parcels",
-        "subdivisions",
-        "minor_subdivisions",
-        "buildings",
-        "building_permits",
-        "projects",
-        "cities"
-      ],
-      "features": [
+        "search_address",
+        "parcel_info",
+        "services_info",
+        "parks_info",
         "permit_search",
-        "zoning_regulations",
         "capital_projects"
-      ]
-    },
-    "business": {
-      "enabled": true,
-      "mapStyle": "streets",
-      "layers": [
-        "businesses",
-        "cities"
-      ],
-      "features": [
-        "search_properties",
-        "filter_by_zoning",
-        "demographics"
       ]
     },
     "planning": {
@@ -136,6 +70,14 @@
           "name": "Overlay Districts",
           "layers": ["historic_overlay", "airport_overlay", "floodplain_overlay"],
           "defaultExpanded": false
+        },
+        {
+          "id": "city_data",
+          "name": "City Planning Data",
+          "layers": ["snow_plow_routes", "headwaters_trail", "street_lighting", "sewer_mains", "water_mains"],
+          "defaultExpanded": false,
+          "locked": true,
+          "lockMessage": "Available with City Partnership"
         }
       ],
       "features": [
@@ -144,6 +86,55 @@
         "growth_projections",
         "land_use_planning"
       ]
+    },
+    "hazards": {
+      "enabled": true,
+      "mapStyle": "satellite",
+      "layers": [
+        "floodplain_100yr",
+        "floodplain_500yr",
+        "fema_flood",
+        "wui",
+        "groundwater_wells",
+        "conservation",
+        "waterways",
+        "cities"
+      ],
+      "features": [
+        "flood_zones",
+        "hazard_info",
+        "environmental_regulations"
+      ]
+    },
+    "explore": {
+      "enabled": true,
+      "mapStyle": "outdoors",
+      "layers": [
+        "attractions",
+        "parks_recreation",
+        "headwaters_trail",
+        "waterways",
+        "cities"
+      ],
+      "features": [
+        "story_map",
+        "attraction_info",
+        "trip_planning"
+      ]
+    },
+    "business": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "businesses",
+        "parcels",
+        "cities"
+      ],
+      "features": [
+        "search_properties",
+        "filter_by_zoning",
+        "demographics"
+      ]
     }
   },
   "layers": {
@@ -151,6 +142,7 @@
       "source": "local",
       "display_name": "Public Lands",
       "description": "Federal, State, County, and Municipal owned parcels",
+      "data_freshness": "Updated 2024",
       "minzoom": 11,
       "style": {
         "fill": "#22C55E",
@@ -168,6 +160,8 @@
     "parcels": {
       "source": "montana_cadastral",
       "display_name": "Property Parcels",
+      "description": "Property ownership and boundaries from Montana Cadastral",
+      "data_freshness": "Updated weekly",
       "minzoom": 13,
       "style": {
         "fill": "#FBBF24",
@@ -187,6 +181,8 @@
     "subdivisions": {
       "source": "gallatin_county",
       "display_name": "Subdivisions",
+      "description": "Recorded subdivision plats",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#8B5CF6",
         "fill-opacity": 0.2,
@@ -203,6 +199,7 @@
     "minor_subdivisions": {
       "source": "gallatin_county",
       "display_name": "Minor Subdivisions",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#A78BFA",
         "fill-opacity": 0.2,
@@ -217,6 +214,7 @@
     "cities": {
       "source": "county",
       "display_name": "City Limits",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "transparent",
         "fill-opacity": 0,
@@ -229,6 +227,8 @@
     "buildings": {
       "source": "microsoft",
       "display_name": "Building Footprints",
+      "description": "AI-derived building footprints",
+      "data_freshness": "Microsoft 2023",
       "minzoom": 14,
       "style": {
         "fill": "#6B7280",
@@ -243,6 +243,7 @@
     "roads": {
       "source": "county",
       "display_name": "Roads",
+      "data_freshness": "Updated 2024",
       "style": {
         "stroke": "#9CA3AF",
         "stroke-width": 2
@@ -255,6 +256,7 @@
     "waterways": {
       "source": "county",
       "display_name": "Rivers & Streams",
+      "data_freshness": "NHD 2024",
       "style": {
         "fill": "#0EA5E9",
         "fill-opacity": 0.4,
@@ -269,6 +271,7 @@
     "firedistricts": {
       "source": "county",
       "display_name": "Fire Districts",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#EF4444",
         "fill-opacity": 0.15,
@@ -283,6 +286,7 @@
     "schooldistricts": {
       "source": "county",
       "display_name": "School Districts",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#8B5CF6",
         "fill-opacity": 0.15,
@@ -297,6 +301,7 @@
     "water_sewer_districts": {
       "source": "county",
       "display_name": "Water/Sewer Districts",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#06B6D4",
         "fill-opacity": 0.2,
@@ -311,6 +316,7 @@
     "zoningdistricts": {
       "source": "county",
       "display_name": "Zoning Districts",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#F97316",
         "fill-opacity": 0.25,
@@ -327,6 +333,7 @@
       "source": "local",
       "display_name": "Zoning",
       "description": "City zoning designations with allowed uses and development standards",
+      "data_freshness": "2024 Zoning Map",
       "style_by_field": "zone_code",
       "styles": {
         "R-1": { "name": "Single Family Residential", "fill": "#86EFAC", "fill-opacity": 0.5, "stroke": "#16A34A", "stroke-width": 1.5 },
@@ -355,6 +362,7 @@
       "source": "local",
       "display_name": "Future Land Use",
       "description": "Long-range land use vision from the comprehensive plan",
+      "data_freshness": "2020 Growth Policy",
       "style_by_field": "designation",
       "styles": {
         "residential_low": { "name": "Low Density Residential", "fill": "#BBF7D0", "fill-opacity": 0.4, "stroke": "#22C55E", "stroke-width": 1 },
@@ -378,6 +386,7 @@
       "source": "local",
       "display_name": "Urban Growth Boundary",
       "description": "Planned extent of urban services and development",
+      "data_freshness": "2020 Growth Policy",
       "style": {
         "fill": "transparent",
         "fill-opacity": 0,
@@ -394,6 +403,7 @@
       "source": "local",
       "display_name": "Annexation Areas",
       "description": "Areas under consideration or petitioned for annexation",
+      "data_freshness": "Updated 2024",
       "style_by_field": "status",
       "styles": {
         "pending": { "name": "Pending", "fill": "#FEF08A", "fill-opacity": 0.4, "stroke": "#CA8A04", "stroke-width": 2, "stroke-dasharray": [4, 2] },
@@ -412,6 +422,7 @@
       "source": "local",
       "display_name": "Historic District",
       "description": "Old Town Three Forks historic preservation overlay",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#FEF3C7",
         "fill-opacity": 0.3,
@@ -428,6 +439,7 @@
       "source": "local",
       "display_name": "Airport Influence Zone",
       "description": "Three Forks Airport approach and noise zones",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#DDD6FE",
         "fill-opacity": 0.3,
@@ -445,6 +457,7 @@
       "source": "local",
       "display_name": "Floodplain Development Overlay",
       "description": "Special development requirements in flood-prone areas",
+      "data_freshness": "FEMA 2024",
       "style": {
         "fill": "#BFDBFE",
         "fill-opacity": 0.3,
@@ -457,9 +470,110 @@
         "freeboard_required"
       ]
     },
+    "snow_plow_routes": {
+      "source": "local",
+      "display_name": "Snow Plow Routes",
+      "description": "Priority snow removal routes (digitized from city PDF)",
+      "data_freshness": "City PDF 2024",
+      "locked": true,
+      "lockMessage": "Available with City Partnership",
+      "style_by_field": "priority",
+      "styles": {
+        "primary": { "name": "Priority 1 - Main Routes", "fill": "transparent", "fill-opacity": 0, "stroke": "#DC2626", "stroke-width": 4 },
+        "secondary": { "name": "Priority 2 - Collector Streets", "fill": "transparent", "fill-opacity": 0, "stroke": "#F97316", "stroke-width": 3 },
+        "tertiary": { "name": "Priority 3 - Residential", "fill": "transparent", "fill-opacity": 0, "stroke": "#FCD34D", "stroke-width": 2 }
+      },
+      "popup_fields": [
+        "street_name",
+        "priority",
+        "equipment",
+        "typical_time"
+      ]
+    },
+    "headwaters_trail": {
+      "source": "local",
+      "display_name": "Headwaters Trail System",
+      "description": "Multi-use trail connecting Three Forks to headwaters (digitized from city PDF)",
+      "data_freshness": "City PDF 2024",
+      "style_by_field": "status",
+      "styles": {
+        "existing": { "name": "Existing Trail", "fill": "transparent", "fill-opacity": 0, "stroke": "#16A34A", "stroke-width": 3 },
+        "planned": { "name": "Planned Extension", "fill": "transparent", "fill-opacity": 0, "stroke": "#22C55E", "stroke-width": 2, "stroke-dasharray": [6, 4] },
+        "proposed": { "name": "Proposed Route", "fill": "transparent", "fill-opacity": 0, "stroke": "#86EFAC", "stroke-width": 2, "stroke-dasharray": [4, 4] }
+      },
+      "popup_fields": [
+        "trail_name",
+        "segment",
+        "status",
+        "surface",
+        "length_miles"
+      ]
+    },
+    "street_lighting": {
+      "source": "local",
+      "display_name": "Street Lighting",
+      "description": "City street light locations",
+      "data_freshness": "City PDF 2024",
+      "locked": true,
+      "lockMessage": "Available with City Partnership",
+      "style": {
+        "fill": "#FEF08A",
+        "fill-opacity": 1,
+        "stroke": "#CA8A04",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "pole_id",
+        "type",
+        "wattage",
+        "installed"
+      ]
+    },
+    "sewer_mains": {
+      "source": "local",
+      "display_name": "Sewer Mains",
+      "description": "City sewer main lines",
+      "data_freshness": "City PDF 2024",
+      "locked": true,
+      "lockMessage": "Available with City Partnership",
+      "style_by_field": "pipe_size",
+      "styles": {
+        "large": { "name": "12\"+ Mains", "fill": "transparent", "fill-opacity": 0, "stroke": "#7C3AED", "stroke-width": 4 },
+        "medium": { "name": "8-12\" Lines", "fill": "transparent", "fill-opacity": 0, "stroke": "#A78BFA", "stroke-width": 3 },
+        "small": { "name": "< 8\" Lines", "fill": "transparent", "fill-opacity": 0, "stroke": "#C4B5FD", "stroke-width": 2 }
+      },
+      "popup_fields": [
+        "pipe_id",
+        "pipe_size",
+        "material",
+        "installed_year"
+      ]
+    },
+    "water_mains": {
+      "source": "local",
+      "display_name": "Water Mains",
+      "description": "City water main lines",
+      "data_freshness": "City PDF 2024",
+      "locked": true,
+      "lockMessage": "Available with City Partnership",
+      "style_by_field": "pipe_size",
+      "styles": {
+        "large": { "name": "12\"+ Mains", "fill": "transparent", "fill-opacity": 0, "stroke": "#0284C7", "stroke-width": 4 },
+        "medium": { "name": "8-12\" Lines", "fill": "transparent", "fill-opacity": 0, "stroke": "#38BDF8", "stroke-width": 3 },
+        "small": { "name": "< 8\" Lines", "fill": "transparent", "fill-opacity": 0, "stroke": "#7DD3FC", "stroke-width": 2 }
+      },
+      "popup_fields": [
+        "pipe_id",
+        "pipe_size",
+        "material",
+        "installed_year",
+        "pressure_zone"
+      ]
+    },
     "fema_flood": {
       "source": "gallatin_county",
       "display_name": "Flood Determinations",
+      "data_freshness": "FEMA 2024",
       "style": {
         "fill": "#3B82F6",
         "fill-opacity": 1,
@@ -476,6 +590,7 @@
     "flood_zones": {
       "source": "fema_nfhl",
       "display_name": "FEMA Flood Zones",
+      "data_freshness": "FEMA NFHL 2024",
       "style": {
         "fill": "#3B82F6",
         "fill-opacity": 0.35,
@@ -492,6 +607,7 @@
       "source": "fema_nfhl",
       "display_name": "100-Year Floodplain",
       "description": "Areas with 1% annual chance of flooding (Zones A, AE, AH, AO)",
+      "data_freshness": "FEMA NFHL 2024",
       "style": {
         "fill": "#3B82F6",
         "fill-opacity": 0.35,
@@ -509,6 +625,7 @@
       "source": "fema_nfhl",
       "display_name": "500-Year Floodplain",
       "description": "Areas with 0.2% annual chance of flooding (Zone X shaded)",
+      "data_freshness": "FEMA NFHL 2024",
       "style": {
         "fill": "#E0F2FE",
         "fill-opacity": 0.25,
@@ -523,6 +640,7 @@
     "landslides": {
       "source": "gallatin_county",
       "display_name": "Landslide Areas",
+      "data_freshness": "USGS 2020",
       "style": {
         "fill": "#92400E",
         "fill-opacity": 0.35,
@@ -537,6 +655,8 @@
     "wui": {
       "source": "gallatin_county",
       "display_name": "Wildland-Urban Interface",
+      "description": "Areas where development meets wildland fuels",
+      "data_freshness": "MTDNRC 2023",
       "style": {
         "fill": "#F59E0B",
         "fill-opacity": 0.3,
@@ -550,6 +670,7 @@
     "conservation": {
       "source": "gallatin_county",
       "display_name": "Conservation Easements",
+      "data_freshness": "MT NRIS 2024",
       "style": {
         "fill": "#22C55E",
         "fill-opacity": 0.35,
@@ -565,6 +686,7 @@
     "soils": {
       "source": "gallatin_county",
       "display_name": "Soils (NRCS)",
+      "data_freshness": "NRCS SSURGO 2023",
       "style": {
         "fill": "#A16207",
         "fill-opacity": 0.25,
@@ -580,6 +702,7 @@
       "source": "local",
       "display_name": "Essential Services",
       "description": "City services, schools, fire, medical, and public facilities",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#DC2626",
         "fill-opacity": 1,
@@ -599,6 +722,7 @@
       "source": "local",
       "display_name": "Parks & Recreation",
       "description": "City parks, state parks, fishing access, and recreation areas",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#16A34A",
         "fill-opacity": 1,
@@ -617,6 +741,7 @@
     "businesses": {
       "source": "local",
       "display_name": "Local Businesses",
+      "data_freshness": "Community sourced",
       "style": {
         "fill": "#3B82F6",
         "fill-opacity": 1,
@@ -634,6 +759,7 @@
     "attractions": {
       "source": "local",
       "display_name": "Tourist Attractions",
+      "data_freshness": "Updated 2024",
       "style": {
         "fill": "#F59E0B",
         "fill-opacity": 1,
@@ -651,6 +777,7 @@
     "projects": {
       "source": "local",
       "display_name": "Capital Projects",
+      "data_freshness": "City Budget 2024",
       "style": {
         "fill": "#3B82F6",
         "fill-opacity": 0.4,
@@ -668,6 +795,7 @@
       "source": "local",
       "display_name": "Building Permits",
       "description": "State building permits from Montana EBIZ (2016-2023)",
+      "data_freshness": "MT EBIZ 2023",
       "style": {
         "fill": "#8B5CF6",
         "fill-opacity": 1,
@@ -686,6 +814,7 @@
     "groundwater_wells": {
       "source": "gallatin_county",
       "display_name": "Groundwater Monitor Wells",
+      "data_freshness": "GWIC 2024",
       "style": {
         "fill": "#0EA5E9",
         "fill-opacity": 1,
@@ -701,6 +830,7 @@
     "wastewater": {
       "source": "gallatin_county",
       "display_name": "Wastewater Systems",
+      "data_freshness": "DEQ 2024",
       "style": {
         "fill": "#84CC16",
         "fill-opacity": 1,
@@ -715,6 +845,7 @@
     "water_supply": {
       "source": "gallatin_county",
       "display_name": "Water Supply Systems",
+      "data_freshness": "DEQ 2024",
       "style": {
         "fill": "#06B6D4",
         "fill-opacity": 1,
@@ -731,6 +862,7 @@
       "source": "gallatin_county",
       "display_name": "Fire Hydrants & Fill Sites",
       "description": "Fire hydrants and water fill sites for emergency response",
+      "data_freshness": "County 2024",
       "style": {
         "fill": "#EF4444",
         "fill-opacity": 1,

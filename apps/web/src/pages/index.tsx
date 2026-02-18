@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import ModeSelector from '@/components/ModeSelector'
 import LayerControl from '@/components/LayerControl'
 import SearchBar from '@/components/SearchBar'
@@ -13,6 +14,17 @@ import BottomSheet from '@/components/BottomSheet'
 import MeasurementTools, { MeasurementMode, Point } from '@/components/MeasurementTools'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { MapMode } from '@/types'
+
+// Parse URL state
+function parseUrlState(query: { [key: string]: string | string[] | undefined }) {
+  return {
+    mode: (query.mode as MapMode) || null,
+    lat: query.lat ? parseFloat(query.lat as string) : null,
+    lng: query.lng ? parseFloat(query.lng as string) : null,
+    zoom: query.z ? parseFloat(query.z as string) : null,
+    layers: query.layers ? (query.layers as string).split(',') : null,
+  }
+}
 
 interface Business {
   name: string
@@ -46,7 +58,10 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 })
 
 export default function Home() {
-  const [currentMode, setCurrentMode] = useState<MapMode>('resident')
+  const router = useRouter()
+  const [currentMode, setCurrentMode] = useState<MapMode>('property')
+  const [userLocation, setUserLocation] = useState<{ longitude: number; latitude: number } | null>(null)
+  const [isLocating, setIsLocating] = useState(false)
   const [visibleLayers, setVisibleLayers] = useState<string[]>([])
   const [layerOrder, setLayerOrder] = useState<string[]>([])
   const [layerOpacity, setLayerOpacity] = useState<{ [key: string]: number }>({})
@@ -57,6 +72,7 @@ export default function Home() {
     latitude: number
     zoom?: number
   } | null>(null)
+  const [mapCenter, setMapCenter] = useState<{ lng: number; lat: number; zoom: number } | null>(null)
   const [businesses, setBusinesses] = useState<Business[]>([])
   const [selectedBusiness, setSelectedBusiness] = useState<string | null>(null)
   const [attractions, setAttractions] = useState<Attraction[]>([])
@@ -66,7 +82,70 @@ export default function Home() {
   const [measurementMode, setMeasurementMode] = useState<MeasurementMode>('none')
   const [measurementPoints, setMeasurementPoints] = useState<Point[]>([])
   const [showMeasureTools, setShowMeasureTools] = useState(false)
+  const [urlStateLoaded, setUrlStateLoaded] = useState(false)
   const isMobile = useIsMobile()
+
+  // Read URL state on initial load
+  useEffect(() => {
+    if (!router.isReady || urlStateLoaded) return
+
+    const urlState = parseUrlState(router.query)
+
+    // Apply mode from URL
+    if (urlState.mode && ['property', 'planning', 'hazards', 'explore', 'business'].includes(urlState.mode)) {
+      setCurrentMode(urlState.mode)
+    }
+
+    // Apply location from URL
+    if (urlState.lat && urlState.lng) {
+      setSelectedLocation({
+        latitude: urlState.lat,
+        longitude: urlState.lng,
+        zoom: urlState.zoom || 16,
+      })
+    }
+
+    setUrlStateLoaded(true)
+  }, [router.isReady, router.query, urlStateLoaded])
+
+  // Update URL when state changes (debounced)
+  const updateUrl = useCallback((params: { mode?: string; lat?: number; lng?: number; zoom?: number }) => {
+    if (!router.isReady) return
+
+    const query: { [key: string]: string } = {}
+
+    if (params.mode && params.mode !== 'property') {
+      query.mode = params.mode
+    }
+
+    if (params.lat && params.lng) {
+      query.lat = params.lat.toFixed(5)
+      query.lng = params.lng.toFixed(5)
+    }
+
+    if (params.zoom && params.zoom !== 14) {
+      query.z = params.zoom.toFixed(1)
+    }
+
+    // Only update if query changed
+    const currentQuery = router.query
+    const hasChanged = Object.keys(query).some(k => query[k] !== currentQuery[k]) ||
+                       Object.keys(currentQuery).some(k => !['mode', 'lat', 'lng', 'z'].includes(k) || query[k] !== currentQuery[k])
+
+    if (hasChanged) {
+      router.replace({ pathname: router.pathname, query }, undefined, { shallow: true })
+    }
+  }, [router])
+
+  // Handle map move to update URL
+  const handleMapMove = useCallback((center: { lng: number; lat: number }, zoom: number) => {
+    setMapCenter({ lng: center.lng, lat: center.lat, zoom })
+    // Debounce URL updates
+    const timeout = setTimeout(() => {
+      updateUrl({ mode: currentMode, lat: center.lat, lng: center.lng, zoom })
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [currentMode, updateUrl])
 
   // Load city configuration
   useEffect(() => {
@@ -145,6 +224,12 @@ export default function Home() {
         setMapStyle(modeStyle)
       }
     }
+    // Update URL with new mode
+    if (mapCenter) {
+      updateUrl({ mode, lat: mapCenter.lat, lng: mapCenter.lng, zoom: mapCenter.zoom })
+    } else {
+      updateUrl({ mode })
+    }
   }
 
   const toggleLayer = (layerId: string) => {
@@ -205,6 +290,33 @@ export default function Home() {
       latitude: attraction.coordinates[1],
       zoom: 15,
     })
+  }
+
+  const handleLocateMe = () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser')
+      return
+    }
+
+    setIsLocating(true)
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { longitude, latitude } = position.coords
+        setUserLocation({ longitude, latitude })
+        setSelectedLocation({
+          longitude,
+          latitude,
+          zoom: 16,
+        })
+        setIsLocating(false)
+      },
+      (error) => {
+        console.error('Geolocation error:', error)
+        alert('Unable to get your location. Please check your browser permissions.')
+        setIsLocating(false)
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    )
   }
 
   if (!cityConfig) {
@@ -363,7 +475,7 @@ export default function Home() {
         )}
 
         {/* Tourism Panel - Desktop */}
-        {currentMode === 'tourism' && attractions.length > 0 && !isMobile && (
+        {currentMode === 'explore' && attractions.length > 0 && !isMobile && (
           <aside className="absolute left-3 top-24 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{attractions.length} Places</span>
@@ -379,7 +491,7 @@ export default function Home() {
         )}
 
         {/* Tourism Panel - Mobile Bottom Sheet */}
-        {currentMode === 'tourism' && attractions.length > 0 && isMobile && (
+        {currentMode === 'explore' && attractions.length > 0 && isMobile && (
           <BottomSheet
             isOpen={true}
             onClose={() => {}}
@@ -395,10 +507,32 @@ export default function Home() {
           </BottomSheet>
         )}
 
-        {/* Measurement Tools - Desktop */}
+        {/* Measurement Tools & Locate Me - Desktop */}
         {!isMobile && (
-          <div className="absolute left-3 top-24 z-10">
-            {/* Toggle button */}
+          <div className="absolute left-3 top-24 z-10 flex flex-col gap-2">
+            {/* Locate Me button */}
+            <button
+              onClick={handleLocateMe}
+              disabled={isLocating}
+              className={`w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center transition-colors ${
+                isLocating ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'
+              }`}
+              title="What's happening near me?"
+            >
+              {isLocating ? (
+                <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              )}
+            </button>
+
+            {/* Measurement Toggle button */}
             <button
               onClick={() => setShowMeasureTools(!showMeasureTools)}
               className={`w-10 h-10 bg-white rounded-lg shadow-lg flex items-center justify-center transition-colors ${
@@ -413,7 +547,7 @@ export default function Home() {
 
             {/* Tools panel */}
             {showMeasureTools && (
-              <div className="mt-2 w-36">
+              <div className="w-36">
                 <MeasurementTools
                   currentMode={measurementMode}
                   points={measurementPoints}
@@ -423,6 +557,31 @@ export default function Home() {
               </div>
             )}
           </div>
+        )}
+
+        {/* Locate Me - Mobile */}
+        {isMobile && (
+          <button
+            onClick={handleLocateMe}
+            disabled={isLocating}
+            className={`absolute left-3 top-24 z-10 w-10 h-10 bg-white rounded-lg shadow-lg
+                       flex items-center justify-center touch-manipulation transition-colors ${
+                         isLocating ? 'bg-blue-50 text-blue-600' : 'text-gray-600'
+                       }`}
+            aria-label="What's happening near me?"
+          >
+            {isLocating ? (
+              <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            )}
+          </button>
         )}
 
         {/* Layer Control - Desktop */}

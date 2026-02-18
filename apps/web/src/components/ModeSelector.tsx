@@ -6,57 +6,72 @@ interface ModeSelectorProps {
   availableModes: string[]
 }
 
-const modeInfo: { [key: string]: { label: string; desc: string; cluster: 'public' | 'city' } } = {
-  resident: {
-    label: 'Resident',
-    desc: 'Property, parks & services',
-    cluster: 'public'
-  },
-  explore: {
-    label: 'Explore',
-    desc: 'Places to visit',
-    cluster: 'public'
-  },
-  business: {
-    label: 'Business',
-    desc: 'Local businesses',
-    cluster: 'public'
-  },
-  services: {
-    label: 'Services',
-    desc: 'Water, sewer & infrastructure',
-    cluster: 'city'
+const modeInfo: { [key: string]: { label: string; desc: string; icon: string; tier: 'primary' | 'secondary' } } = {
+  property: {
+    label: 'Property',
+    desc: 'Parcels, services & development',
+    icon: '🏠',
+    tier: 'primary'
   },
   planning: {
     label: 'Planning',
     desc: 'Zoning & future land use',
-    cluster: 'city'
+    icon: '📋',
+    tier: 'primary'
   },
   hazards: {
     label: 'Hazards',
     desc: 'Flood zones & fire risk',
-    cluster: 'city'
+    icon: '⚠️',
+    tier: 'primary'
   },
-  development: {
-    label: 'Development',
-    desc: 'Permits & projects',
-    cluster: 'city'
+  explore: {
+    label: 'Explore',
+    desc: 'Parks & attractions',
+    icon: '🧭',
+    tier: 'secondary'
+  },
+  business: {
+    label: 'Business',
+    desc: 'Local businesses',
+    icon: '🏪',
+    tier: 'secondary'
   },
   // Legacy mappings for backwards compatibility
+  resident: {
+    label: 'Property',
+    desc: 'Parcels, services & development',
+    icon: '🏠',
+    tier: 'primary'
+  },
+  services: {
+    label: 'Property',
+    desc: 'Parcels, services & development',
+    icon: '🏠',
+    tier: 'primary'
+  },
+  development: {
+    label: 'Property',
+    desc: 'Parcels, services & development',
+    icon: '🏠',
+    tier: 'primary'
+  },
   environmental: {
     label: 'Hazards',
     desc: 'Flood zones & fire risk',
-    cluster: 'city'
+    icon: '⚠️',
+    tier: 'primary'
   },
   tourism: {
     label: 'Explore',
-    desc: 'Places to visit',
-    cluster: 'public'
+    desc: 'Parks & attractions',
+    icon: '🧭',
+    tier: 'secondary'
   },
 }
 
-// Order modes: Public cluster first, then City cluster
-const modeOrder = ['resident', 'explore', 'business', 'services', 'planning', 'hazards', 'development']
+// Order modes: Primary tier first, then Secondary tier
+const modeOrder = ['property', 'planning', 'hazards', 'explore', 'business']
 
 export default function ModeSelector({
   currentMode,
@@ -67,41 +82,38 @@ export default function ModeSelector({
   const normalizeMode = (mode: string): string => {
     if (mode === 'environmental') return 'hazards'
     if (mode === 'tourism') return 'explore'
+    if (mode === 'resident' || mode === 'services' || mode === 'development') return 'property'
     return mode
   }
 
-  // Sort available modes by priority order
-  const sortedModes = [...availableModes]
-    .map(normalizeMode)
-    .filter((mode, index, arr) => arr.indexOf(mode) === index) // dedupe
+  // Sort available modes by priority order and dedupe
+  const sortedModes = [...new Set(availableModes.map(normalizeMode))]
     .sort((a, b) => {
       const aIndex = modeOrder.indexOf(a)
       const bIndex = modeOrder.indexOf(b)
       return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex)
     })
 
-  // Find the divider position (after public cluster)
-  const publicModes = sortedModes.filter(m => modeInfo[m]?.cluster === 'public')
-  const cityModes = sortedModes.filter(m => modeInfo[m]?.cluster === 'city')
+  // Split into tiers
+  const primaryModes = sortedModes.filter(m => modeInfo[m]?.tier === 'primary')
+  const secondaryModes = sortedModes.filter(m => modeInfo[m]?.tier === 'secondary')
+
+  const normalizedCurrent = normalizeMode(currentMode)
 
   return (
     <div className="border-t border-tf-stone-200 bg-gradient-to-r from-tf-stone-50 to-white">
-      <div className="flex items-center px-3 py-1.5 overflow-x-auto">
-        {/* Public Cluster */}
+      <div className="flex items-center justify-between px-3 py-1.5 overflow-x-auto">
+        {/* Primary Tier - Full buttons */}
         <div className="flex items-center gap-1">
-          {publicModes.map((mode) => {
-            const info = modeInfo[mode] || { label: mode, desc: '', cluster: 'public' }
-            // Map back to original mode name for the callback
-            const originalMode = mode === 'hazards' && availableModes.includes('environmental') ? 'environmental' :
-                               mode === 'explore' && availableModes.includes('tourism') ? 'tourism' : mode
-            const normalizedCurrent = normalizeMode(currentMode)
+          {primaryModes.map((mode) => {
+            const info = modeInfo[mode] || { label: mode, desc: '', icon: '📍', tier: 'primary' }
             return (
               <button
                 key={mode}
-                onClick={() => onModeChange(originalMode as MapMode)}
+                onClick={() => onModeChange(mode as MapMode)}
                 className={`
                   px-3 py-1.5 text-xs font-medium rounded whitespace-nowrap
-                  transition-all duration-200
+                  transition-all duration-200 flex items-center gap-1.5
                   ${normalizedCurrent === mode
                     ? 'bg-tf-river-600 text-white shadow-sm'
                     : 'text-tf-stone-600 hover:text-tf-river-700 hover:bg-tf-stone-100'
@@ -109,43 +121,39 @@ export default function ModeSelector({
                 `}
                 title={info.desc}
               >
+                <span className="text-sm">{info.icon}</span>
                 {info.label}
               </button>
             )
           })}
         </div>
 
-        {/* Divider between clusters */}
-        {publicModes.length > 0 && cityModes.length > 0 && (
-          <div className="mx-2 h-5 w-px bg-tf-stone-300" />
+        {/* Secondary Tier - Smaller text links */}
+        {secondaryModes.length > 0 && (
+          <div className="flex items-center gap-2 ml-2">
+            <span className="text-tf-stone-400 text-[10px]">|</span>
+            {secondaryModes.map((mode) => {
+              const info = modeInfo[mode] || { label: mode, desc: '', icon: '📍', tier: 'secondary' }
+              return (
+                <button
+                  key={mode}
+                  onClick={() => onModeChange(mode as MapMode)}
+                  className={`
+                    px-2 py-1 text-[11px] rounded whitespace-nowrap
+                    transition-all duration-200
+                    ${normalizedCurrent === mode
+                      ? 'text-tf-river-700 font-medium bg-tf-river-50'
+                      : 'text-tf-stone-500 hover:text-tf-river-600'
+                    }
+                  `}
+                  title={info.desc}
+                >
+                  {info.label}
+                </button>
+              )
+            })}
+          </div>
         )}
-
-        {/* City Cluster */}
-        <div className="flex items-center gap-1">
-          {cityModes.map((mode) => {
-            const info = modeInfo[mode] || { label: mode, desc: '', cluster: 'city' }
-            const originalMode = mode === 'hazards' && availableModes.includes('environmental') ? 'environmental' :
-                               mode === 'explore' && availableModes.includes('tourism') ? 'tourism' : mode
-            const normalizedCurrent = normalizeMode(currentMode)
-            return (
-              <button
-                key={mode}
-                onClick={() => onModeChange(originalMode as MapMode)}
-                className={`
-                  px-3 py-1.5 text-xs font-medium rounded whitespace-nowrap
-                  transition-all duration-200
-                  ${normalizedCurrent === mode
-                    ? 'bg-tf-forest-600 text-white shadow-sm'
-                    : 'text-tf-stone-500 hover:text-tf-forest-700 hover:bg-tf-stone-100'
-                  }
-                `}
-                title={info.desc}
-              >
-                {info.label}
-              </button>
-            )
-          })}
-        </div>
       </div>
     </div>
   )
