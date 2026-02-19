@@ -523,7 +523,6 @@ export default function ProjectsPage() {
                 />
               ) : (
                 <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
-                  <div className="text-4xl mb-2">👆</div>
                   <p>Select a project to view details</p>
                 </div>
               )}

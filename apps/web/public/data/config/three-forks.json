@@ -24,7 +24,6 @@
         "cities",
         "parcels",
         "emergency_services",
-        "parks_recreation",
         "public_lands",
         "subdivisions",
         "buildings",
@@ -35,7 +34,7 @@
         {
           "id": "details",
           "name": "Additional Layers",
-          "layers": ["parks_recreation", "public_lands", "subdivisions", "buildings", "building_permits", "projects"],
+          "layers": ["public_lands", "subdivisions", "buildings", "building_permits", "projects"],
           "defaultExpanded": false
         }
       ],
@@ -86,7 +85,6 @@
         "floodplain_100yr",
         "floodway",
         "streams",
-        "firedistricts",
         "cities"
       ],
       "availableLayers": [
@@ -108,7 +106,7 @@
         {
           "id": "water_data",
           "name": "Water & Safety",
-          "layers": ["hydrants", "groundwater_wells"],
+          "layers": ["firedistricts", "hydrants", "groundwater_wells"],
           "defaultExpanded": false
         }
       ],
@@ -123,24 +121,15 @@
       "mapStyle": "outdoors",
       "layers": [
         "attractions",
-        "parks_recreation",
+        "public_lands",
         "streams",
         "cities"
       ],
       "availableLayers": [
         "attractions",
-        "parks_recreation",
-        "streams",
         "public_lands",
+        "streams",
         "cities"
-      ],
-      "layerGroups": [
-        {
-          "id": "nature",
-          "name": "Nature & Land",
-          "layers": ["public_lands"],
-          "defaultExpanded": false
-        }
       ],
       "features": [
         "story_map",
@@ -242,7 +231,7 @@
     },
     "public_lands": {
       "source": "local",
-      "display_name": "Federal & State Lands",
+      "display_name": "Public Land",
       "description": "Federal, State, County, and Municipal owned parcels",
       "data_freshness": "Updated 2024",
       "minzoom": 11,
@@ -1025,7 +1014,7 @@
   "resources": [
     {
       "name": "Gallatin County GIS",
-      "url": "https://gallatincomt.virtualtownhall.net/gis",
+      "url": "https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map/",
       "description": "County GIS portal and property records"
     },
     {

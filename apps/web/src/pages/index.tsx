@@ -363,16 +363,12 @@ export default function Home() {
                 className="w-full sm:w-64"
               />
               <nav className="hidden lg:flex items-center gap-1 text-xs">
-                <button
-                  onClick={() => handleModeChange('explore')}
-                  className={`px-2.5 py-1.5 rounded transition-colors ${
-                    currentMode === 'explore'
-                      ? 'bg-blue-100 text-blue-700 font-medium'
-                      : 'text-tf-stone-500 hover:text-blue-700 hover:bg-blue-50'
-                  }`}
+                <Link
+                  href="/visit"
+                  className="px-2.5 py-1.5 text-tf-stone-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
                 >
-                  Explore
-                </button>
+                  Visit
+                </Link>
                 <button
                   onClick={() => handleModeChange('business')}
                   className={`px-2.5 py-1.5 rounded transition-colors ${
@@ -431,7 +427,7 @@ export default function Home() {
 
         {/* Business List Panel - Desktop */}
         {currentMode === 'business' && businesses.length > 0 && !isMobile && (
-          <aside className="absolute left-3 top-24 z-10 w-56 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
+          <aside className="absolute left-3 top-32 z-10 w-56 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 140px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{businesses.length} Businesses</span>
             </div>
@@ -464,7 +460,7 @@ export default function Home() {
 
         {/* Tourism Panel - Desktop */}
         {currentMode === 'explore' && attractions.length > 0 && !isMobile && (
-          <aside className="absolute left-3 top-24 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 120px)' }}>
+          <aside className="absolute left-3 top-32 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 140px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{attractions.length} Places</span>
             </div>
@@ -499,7 +495,7 @@ export default function Home() {
 
         {/* Layer Control - Desktop */}
         {!isMobile && (
-          <aside className="absolute right-3 top-24 z-10 w-48 bg-white rounded shadow-lg">
+          <aside className="absolute right-3 top-32 z-10 w-48 bg-white rounded shadow-lg">
             <div className="p-2 border-b border-gray-100 flex items-center justify-between">
               <span className="text-xs font-medium text-gray-700">Layers</span>
               <button
@@ -529,7 +525,7 @@ export default function Home() {
         {isMobile && (
           <button
             onClick={() => setIsLayerSheetOpen(true)}
-            className="absolute right-3 top-24 z-10 w-10 h-10 bg-white rounded-lg shadow-lg
+            className="absolute right-3 top-32 z-10 w-10 h-10 bg-white rounded-lg shadow-lg
                        flex items-center justify-center touch-manipulation"
             aria-label="Open layers"
           >

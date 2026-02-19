@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import Map, { Source, Layer, Popup, NavigationControl } from 'react-map-gl'
+import Map, { Source, Layer, Popup } from 'react-map-gl'
 import type { MapRef, MapLayerMouseEvent } from 'react-map-gl'
 import { CityConfig, MapMode, Feature } from '@/types'
 import { useIsMobile } from '@/hooks/useIsMobile'
@@ -225,6 +225,8 @@ export default function MapView({
     'attractions-point', 'attractions-glow', 'attractions-icon',
     'emergency_services-point', 'emergency_services-glow', 'emergency_services-icon',
     'parks_recreation-point', 'parks_recreation-glow', 'parks_recreation-icon',
+    'hydrants-point', 'hydrants-glow', 'hydrants-inner',
+    'groundwater_wells-point', 'groundwater_wells-glow', 'groundwater_wells-inner',
     // FEMA flood zone layers (combined + separate)
     'fema_flood_zones-floodplain-fill', 'fema_flood_zones-floodplain-outline',
     'fema_flood_zones-floodway-fill', 'fema_flood_zones-floodway-outline', 'fema_flood_zones-floodway-hatch',
@@ -255,7 +257,6 @@ export default function MapView({
         interactiveLayerIds={interactiveLayerIds}
         cursor="pointer"
       >
-        <NavigationControl position="bottom-right" />
 
         {/* PARCEL RENDERING */}
         {parcelData && visibleLayers.includes('parcels') && (
@@ -560,9 +561,9 @@ export default function MapView({
                 type="circle"
                 filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
                 paint={{
-                  'circle-radius': 8,
+                  'circle-radius': layerId === 'building_permits' ? 4 : 8,
                   'circle-color': layerConfig.style?.fill || '#3388ff',
-                  'circle-stroke-width': 2,
+                  'circle-stroke-width': layerId === 'building_permits' ? 1 : 2,
                   'circle-stroke-color': '#ffffff',
                   'circle-opacity': 1,
                 }}

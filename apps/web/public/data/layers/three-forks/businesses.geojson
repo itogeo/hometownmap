@@ -3,13 +3,7 @@
   "features": [
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.551998,
-          45.895302
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.551998, 45.895302] },
       "properties": {
         "name": "Sacajawea Hotel",
         "category": "Hotel & Restaurant",
@@ -20,13 +14,7 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.551998,
-          45.895302
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.551998, 45.895302] },
       "properties": {
         "name": "Pompey's Grill",
         "category": "Restaurant",
@@ -37,13 +25,7 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.551998,
-          45.895302
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.551998, 45.895302] },
       "properties": {
         "name": "Sac Bar",
         "category": "Bar",
@@ -54,13 +36,7 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.551977,
-          45.893894
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.551977, 45.893894] },
       "properties": {
         "name": "Three Forks Cafe",
         "category": "Restaurant",
@@ -71,47 +47,29 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.5528,
-          45.894654
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5527, 45.8942] },
       "properties": {
         "name": "Iron Horse Cafe & Pie Shop",
         "category": "Restaurant",
         "address": "24 N Main St, Three Forks, MT 59752",
         "phone": "(406) 285-3698",
-        "website": null
+        "website": "https://www.ironhorsecafetf.com"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.5528,
-          45.894654
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5530, 45.8952] },
       "properties": {
         "name": "Peking China Restaurant",
         "category": "Restaurant",
         "address": "10 N Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3288",
+        "phone": "(406) 285-3225",
         "website": null
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.598674,
-          45.920239
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.598674, 45.920239] },
       "properties": {
         "name": "Wheat Montana Bakery & Deli",
         "category": "Restaurant",
@@ -122,47 +80,62 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.551897,
-          45.894064
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.4252, 45.8850] },
       "properties": {
-        "name": "Land of Magic Dinner Club",
+        "name": "Land of Magic Steakhouse",
         "category": "Restaurant",
-        "address": "7 E Birch St, Three Forks, MT 59752",
-        "phone": "(406) 285-4944",
-        "website": null
+        "address": "11060 Front St, Logan, MT 59741",
+        "phone": "(406) 284-3794",
+        "website": "https://landofmagicsteakhouse.com"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552761,
-          45.893745
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5524, 45.8938] },
       "properties": {
         "name": "Stageline Pizza",
         "category": "Restaurant",
-        "address": "108 S Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-4455",
+        "address": "23 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-4866",
+        "website": "https://www.orderstagelinepizza.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5523, 45.8935] },
+      "properties": {
+        "name": "The Shoppe Pastry & Coffeehouse",
+        "category": "Restaurant",
+        "address": "119 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-4426",
+        "website": "https://www.theshoppethreeforks.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5957, 45.9217] },
+      "properties": {
+        "name": "Steer Inn Restaurant",
+        "category": "Restaurant",
+        "address": "10771 US Highway 287, Three Forks, MT 59752",
+        "phone": "(406) 285-3206",
+        "website": "https://steerinnrestaurant.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5522, 45.8923] },
+      "properties": {
+        "name": "Frontier Club",
+        "category": "Bar",
+        "address": "213 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-9876",
         "website": null
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.55194,
-          45.89267
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.55194, 45.89267] },
       "properties": {
         "name": "Main Street Office",
         "category": "Business Services",
@@ -173,387 +146,29 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552069,
-          45.893499
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5528, 45.8948] },
       "properties": {
-        "name": "Three Forks Hardware",
+        "name": "Three Forks Ace Hardware",
         "category": "Retail",
-        "address": "115 Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3367",
-        "website": null
+        "address": "10 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 628-5666",
+        "website": "https://www.acehardware.com/store-details/16381"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552556,
-          45.893064
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5506, 45.8932] },
       "properties": {
-        "name": "Three Forks Thrift Store",
+        "name": "Greater Goods Thrift Store",
         "category": "Retail",
-        "address": "110 W Cedar St, Three Forks, MT 59752",
+        "address": "116 E Cedar St, Three Forks, MT 59752",
         "phone": null,
-        "website": null
+        "website": "https://threeforksumc.com/pages/greater-goods-thrift-store"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.64454,
-          45.82735
-        ]
-      },
-      "properties": {
-        "name": "Opportunity Bank",
-        "category": "Bank",
-        "address": "106 Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3246",
-        "website": "https://www.prior.bank"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Three Forks Veterinary Clinic",
-        "category": "Veterinary",
-        "address": "321 Milwaukee Ave, Three Forks, MT 59752",
-        "phone": "(406) 285-4911",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.55104,
-          45.89689
-        ]
-      },
-      "properties": {
-        "name": "Venture West Realty",
-        "category": "Real Estate",
-        "address": "112 Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-0505",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Three Forks Community Library",
-        "category": "Library",
-        "address": "207 Milwaukee Ave, Three Forks, MT 59752",
-        "phone": "(406) 285-3747",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.55271,
-          45.892965
-        ]
-      },
-      "properties": {
-        "name": "Headwaters Heritage Museum",
-        "category": "Museum",
-        "address": "202 S Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-4778",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552768,
-          45.892812
-        ]
-      },
-      "properties": {
-        "name": "Three Forks City Hall",
-        "category": "Government",
-        "address": "206 S Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3431",
-        "website": "https://threeforksmontana.us"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.550148,
-          45.893057
-        ]
-      },
-      "properties": {
-        "name": "Three Forks Post Office",
-        "category": "Government",
-        "address": "120 E Cedar St, Three Forks, MT 59752",
-        "phone": "(406) 285-3253",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.55206,
-          45.89247
-        ]
-      },
-      "properties": {
-        "name": "Three Forks Fire Department",
-        "category": "Emergency Services",
-        "address": "215 S Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3733",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.472044,
-          45.794426
-        ]
-      },
-      "properties": {
-        "name": "Madison Buffalo Jump State Park",
-        "category": "State Park",
-        "address": "6990 Buffalo Jump Rd, Three Forks, MT 59752",
-        "phone": "(406) 285-3610",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.498912,
-          45.925141
-        ]
-      },
-      "properties": {
-        "name": "Missouri Headwaters State Park",
-        "category": "State Park",
-        "address": "1585 Trident Rd, Three Forks, MT 59752",
-        "phone": "(406) 285-3610",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Three Forks Golf Course",
-        "category": "Golf",
-        "address": "907 Golf Course Rd, Three Forks, MT 59752",
-        "phone": "(406) 285-3703",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.5549,
-          45.89126
-        ]
-      },
-      "properties": {
-        "name": "Broken Spur Motel",
-        "category": "Lodging",
-        "address": "124 W Elm St, Three Forks, MT 59752",
-        "phone": "(406) 285-3237",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.599818,
-          45.921265
-        ]
-      },
-      "properties": {
-        "name": "Fort Three Forks Motel",
-        "category": "Lodging",
-        "address": "10776 US Highway 287, Three Forks, MT 59752",
-        "phone": "(406) 285-3233",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.55749,
-          45.90434
-        ]
-      },
-      "properties": {
-        "name": "Montana Black Gold Dog Food",
-        "category": "Manufacturing",
-        "address": "800 Jefferson St N, Three Forks, MT 59752",
-        "phone": "(406) 285-3300",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Imerys Talc",
-        "category": "Mining",
-        "address": "Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.59732,
-          45.919115
-        ]
-      },
-      "properties": {
-        "name": "Town Pump",
-        "category": "Gas Station",
-        "address": "10777 US Highway 287, Three Forks, MT 59752",
-        "phone": null,
-        "website": "https://townpump.com"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.551979,
-          45.893245
-        ]
-      },
-      "properties": {
-        "name": "Cenex",
-        "category": "Gas Station",
-        "address": "123 S Main St, Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.595735,
-          45.921659
-        ]
-      },
-      "properties": {
-        "name": "Steer In Restaurant",
-        "category": "Restaurant",
-        "address": "10771 US Highway 287, Three Forks, MT 59752",
-        "phone": "(406) 285-3206",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.55206,
-          45.89335
-        ]
-      },
-      "properties": {
-        "name": "The Shoppe Pastry & Coffee",
-        "category": "Restaurant",
-        "address": "119 S Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-4426",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.5519,
-          45.89256
-        ]
-      },
-      "properties": {
-        "name": "Frontier Club",
-        "category": "Bar",
-        "address": "213 S Main St, Three Forks, MT 59752",
-        "phone": "(406) 285-3111",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.557569,
-          45.890098
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.557569, 45.890098] },
       "properties": {
         "name": "Three Forks Market & RV Park",
         "category": "Grocery",
@@ -564,240 +179,288 @@
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.550355,
-          45.89675
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5541, 45.8952] },
       "properties": {
-        "name": "Three Forks Lumber & Ready Mix",
-        "category": "Building Supply",
-        "address": "109 N 1st Ave E, Three Forks, MT 59752",
-        "phone": "(406) 285-3355",
+        "name": "Opportunity Bank",
+        "category": "Bank",
+        "address": "120 S Montana St, Three Forks, MT 59752",
+        "phone": "(406) 285-9999",
+        "website": "https://opportunitybank.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5527, 45.8914] },
+      "properties": {
+        "name": "First Security Bank",
+        "category": "Bank",
+        "address": "320 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-3291",
+        "website": "https://www.ourbank.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5519, 45.8960] },
+      "properties": {
+        "name": "Venture West Realty",
+        "category": "Real Estate",
+        "address": "112 N Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-0505",
+        "website": "https://venturewestrealty.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5520, 45.8888] },
+      "properties": {
+        "name": "Three Forks Community Library",
+        "category": "Library",
+        "address": "607 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-3747",
+        "website": "https://threeforksmontana.us/community-library"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.55271, 45.892965] },
+      "properties": {
+        "name": "Headwaters Heritage Museum",
+        "category": "Museum",
+        "address": "202 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-4778",
         "website": null
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.4684,
-          45.89023
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.552768, 45.892812] },
+      "properties": {
+        "name": "Three Forks City Hall",
+        "category": "Government",
+        "address": "206 S Main St, Three Forks, MT 59752",
+        "phone": "(406) 285-3431",
+        "website": "https://threeforksmontana.us"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.550148, 45.893057] },
+      "properties": {
+        "name": "Three Forks Post Office",
+        "category": "Government",
+        "address": "120 E Cedar St, Three Forks, MT 59752",
+        "phone": "(406) 285-3253",
+        "website": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5513, 45.8922] },
+      "properties": {
+        "name": "Three Forks Fire Department",
+        "category": "Emergency Services",
+        "address": "15 E Date St, Three Forks, MT 59752",
+        "phone": "(406) 285-3733",
+        "website": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5513, 45.8922] },
+      "properties": {
+        "name": "Three Forks Area Ambulance",
+        "category": "Emergency Services",
+        "address": "15 E Date St, Three Forks, MT 59752",
+        "phone": "(406) 285-3819",
+        "website": "https://www.3faa.org"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.472044, 45.794426] },
+      "properties": {
+        "name": "Madison Buffalo Jump State Park",
+        "category": "State Park",
+        "address": "6990 Buffalo Jump Rd, Three Forks, MT 59752",
+        "phone": "(406) 285-3610",
+        "website": "https://fwp.mt.gov/stateparks/madison-buffalo-jump"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.498912, 45.925141] },
+      "properties": {
+        "name": "Missouri Headwaters State Park",
+        "category": "State Park",
+        "address": "1585 Trident Rd, Three Forks, MT 59752",
+        "phone": "(406) 285-3610",
+        "website": "https://fwp.mt.gov/stateparks/missouri-headwaters"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5384, 45.8946] },
+      "properties": {
+        "name": "Headwaters Golf Course",
+        "category": "Golf",
+        "address": "225 7th Ave E, Three Forks, MT 59752",
+        "phone": "(406) 285-3703",
+        "website": "https://www.headwatersgolfcourse.org"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5551, 45.8916] },
+      "properties": {
+        "name": "Broken Spur Motel",
+        "category": "Lodging",
+        "address": "124 W Elm St, Three Forks, MT 59752",
+        "phone": "(406) 285-3237",
+        "website": "https://brokenspurmotelmt.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.599818, 45.921265] },
+      "properties": {
+        "name": "Fort Three Forks Motel",
+        "category": "Lodging",
+        "address": "10776 US Highway 287, Three Forks, MT 59752",
+        "phone": "(406) 285-3233",
+        "website": "http://www.fort3forks.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5604, 45.9037] },
+      "properties": {
+        "name": "Montana Black Gold Dog Food",
+        "category": "Manufacturing",
+        "address": "800 Jefferson St N, Three Forks, MT 59752",
+        "phone": "(406) 285-3300",
+        "website": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5554, 45.8787] },
+      "properties": {
+        "name": "Magris Talc",
+        "category": "Manufacturing",
+        "address": "2150 Bench Rd, Three Forks, MT 59752",
+        "phone": "(406) 285-5300",
+        "website": "https://www.magrispm.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5651, 45.8766] },
+      "properties": {
+        "name": "Kanta Products",
+        "category": "Manufacturing",
+        "address": "130 Old Yellowstone Trl, Three Forks, MT 59752",
+        "phone": "(406) 285-3261",
+        "website": "https://www.kantaproducts.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5526, 45.8932] },
+      "properties": {
+        "name": "M & W Machine Inc",
+        "category": "Manufacturing",
+        "address": "20 W Cedar St, Three Forks, MT 59752",
+        "phone": "(406) 285-0179",
+        "website": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.59732, 45.919115] },
+      "properties": {
+        "name": "Town Pump",
+        "category": "Gas Station",
+        "address": "10777 US Highway 287, Three Forks, MT 59752",
+        "phone": null,
+        "website": "https://townpump.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5524, 45.8934] },
+      "properties": {
+        "name": "Cenex",
+        "category": "Gas Station",
+        "address": "123 S Main St, Three Forks, MT 59752",
+        "phone": null,
+        "website": null
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.5508, 45.8962] },
+      "properties": {
+        "name": "Three Forks Lumber & Ready Mix",
+        "category": "Building Supply",
+        "address": "109 N 1st Ave E, Three Forks, MT 59752",
+        "phone": "(406) 285-3281",
+        "website": "https://www.tflumberandreadymix.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-111.4696, 45.8906] },
       "properties": {
         "name": "Circle S Seeds of Montana",
         "category": "Agriculture",
         "address": "14990 Madison Frontage Rd, Three Forks, MT 59752",
         "phone": "(406) 285-3269",
-        "website": null
+        "website": "https://circlesseeds.com"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.494997,
-          45.933943
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.4763, 45.9482] },
       "properties": {
-        "name": "CRH Cement",
+        "name": "GCC Trident Cement Plant",
         "category": "Manufacturing",
-        "address": "Trident, MT 59752",
-        "phone": "(406) 285-3211",
-        "website": null
+        "address": "4070 Trident Rd, Three Forks, MT 59752",
+        "phone": "(406) 285-3241",
+        "website": "https://www.gcc.com"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5477, 45.8964] },
       "properties": {
-        "name": "Kanta Block Products",
-        "category": "Manufacturing",
-        "address": "Three Forks, MT 59752",
-        "phone": "(406) 285-3212",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "M & W Machine Inc",
-        "category": "Manufacturing",
-        "address": "Three Forks, MT 59752",
-        "phone": "(406) 285-6600",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Woolzies",
-        "category": "Retail",
-        "address": "Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Moe Mountains",
-        "category": "Retail",
-        "address": "Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Tune In Holistic",
-        "category": "Health & Wellness",
-        "address": "Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Life Yoga",
-        "category": "Health & Wellness",
-        "address": "Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "TF Mixed Martial Arts",
-        "category": "Recreation",
-        "address": "Three Forks, MT 59752",
-        "phone": null,
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.547286,
-          45.896068
-        ]
-      },
-      "properties": {
-        "name": "Three Forks School",
+        "name": "Three Forks Schools",
         "category": "Education",
-        "address": "214 E Neal St, Three Forks, MT 59752",
-        "phone": "(406) 285-3224",
-        "website": null
+        "address": "212 E Neal St, Three Forks, MT 59752",
+        "phone": "(406) 285-6830",
+        "website": "https://www.tfschools.com"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.5552, 45.8905] },
       "properties": {
-        "name": "First Security Bank",
-        "category": "Bank",
-        "address": "Three Forks, MT 59752",
-        "phone": "(406) 285-3236",
-        "website": null
+        "name": "Three Forks Mixed Martial Arts",
+        "category": "Recreation",
+        "address": "421 2nd Ave W, Three Forks, MT 59752",
+        "phone": null,
+        "website": "https://threeforksmixedmartialarts.com"
       }
     },
     {
       "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
+      "geometry": { "type": "Point", "coordinates": [-111.6556, 45.8570] },
       "properties": {
-        "name": "American Family Insurance",
-        "category": "Insurance",
-        "address": "Three Forks, MT 59752",
-        "phone": "(406) 285-4416",
-        "website": null
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -111.552362,
-          45.892461
-        ]
-      },
-      "properties": {
-        "name": "Three Forks Ambulance",
-        "category": "Emergency Services",
-        "address": "Three Forks, MT 59752",
-        "phone": "911",
-        "website": null
+        "name": "Headwaters Veterinary Hospital",
+        "category": "Veterinary",
+        "address": "11370 US Hwy 287, Three Forks, MT 59752",
+        "phone": "(406) 285-0810",
+        "website": "https://headwatersvet.com"
       }
     }
   ]

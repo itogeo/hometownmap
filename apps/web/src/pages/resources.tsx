@@ -232,6 +232,22 @@ export default function ResourcesPage() {
             </div>
           </section>
 
+          {/* Development Guide - Prominent Link */}
+          <Link
+            href="/development"
+            className="block bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-4 hover:from-blue-700 hover:to-blue-800 transition-all shadow-sm"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-semibold text-white">Development Guide</h2>
+                <p className="text-blue-100 text-sm mt-0.5">Permits, zoning, building requirements & how to develop in Three Forks</p>
+              </div>
+              <svg className="w-6 h-6 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </Link>
+
           <ContactSection title="City Services" items={CITY_SERVICES} />
           <ContactSection title="Utilities" items={UTILITIES} />
           <ContactSection title="Schools" items={SCHOOLS} />
@@ -251,7 +267,7 @@ export default function ResourcesPage() {
                 <div className="text-xs text-gray-500">Deeds, plats, records</div>
               </a>
               <a
-                href="https://gallatincomt.virtualtownhall.net/gis"
+                href="https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white rounded-lg p-3 border border-blue-200 hover:border-blue-400 text-center"

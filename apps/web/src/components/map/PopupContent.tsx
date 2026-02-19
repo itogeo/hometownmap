@@ -607,8 +607,6 @@ function HistoryTab({ features }: { features: FeatureInfo[] }) {
 }
 
 export default function PopupContent({ features, onClose }: PopupContentProps) {
-  const [activeTab, setActiveTab] = useState<TabId>('property')
-
   // Filter out non-relevant layers
   const validFeatures = features.filter(f => f.layerId !== 'cities' && f.layerId !== 'buildings')
   if (validFeatures.length === 0) return null
@@ -629,15 +627,18 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
   )
   const hasHistory = validFeatures.some(f => f.layerId === 'building_permits')
 
+  // Default to History tab when building permits are present, otherwise Property
+  const [activeTab, setActiveTab] = useState<TabId>(hasHistory ? 'history' : 'property')
+
   // TODO: Re-enable these tabs when data is ready:
   // - zoning: needs zoningdistricts layer with proper data
   // - services: needs firedistricts, schooldistricts, water layers
   const tabs: { id: TabId; label: string; show: boolean }[] = [
+    { id: 'history', label: 'History', show: hasHistory },
     { id: 'property', label: 'Property', show: hasProperty },
     { id: 'zoning', label: 'Zoning', show: false }, // TEMPORARILY HIDDEN - enable when zoning data ready
     { id: 'services', label: 'Services', show: false }, // TEMPORARILY HIDDEN - enable when service districts ready
     { id: 'hazards', label: 'Hazards', show: hasHazards }, // Re-enabled with FEMA flood data
-    { id: 'history', label: 'History', show: hasHistory },
   ]
 
   const visibleTabs = tabs.filter(t => t.show)
