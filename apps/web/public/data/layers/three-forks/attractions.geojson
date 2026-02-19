@@ -114,7 +114,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5450, 45.9050]
+        "coordinates": [-111.5412, 45.8924]
       },
       "properties": {
         "name": "Headwaters Golf Course",
@@ -131,7 +131,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5420, 45.9030]
+        "coordinates": [-111.5358, 45.8949]
       },
       "properties": {
         "name": "Three Forks Ponds",
@@ -148,7 +148,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5530, 45.8915]
+        "coordinates": [-111.5486, 45.8894]
       },
       "properties": {
         "name": "Stevenson Park",
@@ -164,7 +164,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5510, 45.8960]
+        "coordinates": [-111.5522, 45.8932]
       },
       "properties": {
         "name": "John Q. Adams Milwaukee Railroad Park",
@@ -181,7 +181,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5560, 45.8985]
+        "coordinates": [-111.5592, 45.8893]
       },
       "properties": {
         "name": "Three Forks Rodeo Arena",
@@ -213,7 +213,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-111.5525, 45.8905]
+        "coordinates": [-111.5526, 45.8952]
       },
       "properties": {
         "name": "Sacajawea Park",

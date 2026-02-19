@@ -39,6 +39,7 @@ export default function MapView({
     longitude: number
     latitude: number
     features: Array<{ layerId: string; layerName: string; properties: any }>
+    screenX: number
     screenY: number
   } | null>(null)
   const [internalSelectedParcelId, setInternalSelectedParcelId] = useState<string | null>(null)
@@ -161,6 +162,7 @@ export default function MapView({
         longitude: event.lngLat.lng,
         latitude: event.lngLat.lat,
         features: featureInfos,
+        screenX: event.point.x,
         screenY: event.point.y,
       })
     },
@@ -234,7 +236,7 @@ export default function MapView({
   ]
 
   // Filter layers for rendering (excluding layers with special rendering)
-  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr', 'fema_flood_zones', 'floodway']
+  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr', 'fema_flood_zones', 'floodway', 'hydrants', 'groundwater_wells']
   const renderableLayers = visibleLayers.filter(id => !specialLayers.includes(id))
 
   return (
@@ -710,6 +712,84 @@ export default function MapView({
           </Source>
         )}
 
+        {/* HYDRANT MARKERS */}
+        {layerData['hydrants'] && visibleLayers.includes('hydrants') && (
+          <Source id="hydrants-source" type="geojson" data={layerData['hydrants']}>
+            <Layer
+              id="hydrants-glow"
+              type="circle"
+              filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+              paint={{
+                'circle-radius': 8,
+                'circle-color': '#EF4444',
+                'circle-opacity': 0.25,
+                'circle-blur': 0.4,
+              }}
+            />
+            <Layer
+              id="hydrants-point"
+              type="circle"
+              filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+              paint={{
+                'circle-radius': 5,
+                'circle-color': '#EF4444',
+                'circle-stroke-width': 1.5,
+                'circle-stroke-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+            <Layer
+              id="hydrants-inner"
+              type="circle"
+              filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+              paint={{
+                'circle-radius': 1.5,
+                'circle-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+          </Source>
+        )}
+
+        {/* GROUNDWATER WELL MARKERS */}
+        {layerData['groundwater_wells'] && visibleLayers.includes('groundwater_wells') && (
+          <Source id="groundwater_wells-source" type="geojson" data={layerData['groundwater_wells']}>
+            <Layer
+              id="groundwater_wells-glow"
+              type="circle"
+              filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+              paint={{
+                'circle-radius': 8,
+                'circle-color': '#0EA5E9',
+                'circle-opacity': 0.25,
+                'circle-blur': 0.4,
+              }}
+            />
+            <Layer
+              id="groundwater_wells-point"
+              type="circle"
+              filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+              paint={{
+                'circle-radius': 5,
+                'circle-color': '#0EA5E9',
+                'circle-stroke-width': 1.5,
+                'circle-stroke-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+            <Layer
+              id="groundwater_wells-inner"
+              type="circle"
+              filter={['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']]}
+              paint={{
+                'circle-radius': 1.5,
+                'circle-color': '#ffffff',
+                'circle-opacity': 1,
+              }}
+            />
+          </Source>
+        )}
+
         {/* BUSINESS MARKERS */}
         {businessData && visibleLayers.includes('businesses') && (
           <Source id="businesses-source" type="geojson" data={businessData}>
@@ -777,16 +857,34 @@ export default function MapView({
         )}
 
         {/* Popup */}
-        {popupInfo && popupInfo.features.length > 0 && (
+        {popupInfo && popupInfo.features.length > 0 && (() => {
+          // Smart anchor: pick the best side based on click position relative to viewport
+          const mapEl = mapRef.current?.getMap()?.getContainer()
+          const vw = mapEl?.clientWidth || window.innerWidth
+          const vh = mapEl?.clientHeight || window.innerHeight
+          const nearTop = popupInfo.screenY < vh * 0.35
+          const nearBottom = popupInfo.screenY > vh * 0.65
+          const nearLeft = popupInfo.screenX < vw * 0.25
+          const nearRight = popupInfo.screenX > vw * 0.75
+          let anchor: 'top' | 'bottom' | 'left' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' = 'bottom'
+          if (nearTop && nearLeft) anchor = 'top-left'
+          else if (nearTop && nearRight) anchor = 'top-right'
+          else if (nearBottom && nearLeft) anchor = 'bottom-left'
+          else if (nearBottom && nearRight) anchor = 'bottom-right'
+          else if (nearTop) anchor = 'top'
+          else if (nearLeft) anchor = 'left'
+          else if (nearRight) anchor = 'right'
+          else anchor = 'bottom'
+          return (
           <Popup
             longitude={popupInfo.longitude}
             latitude={popupInfo.latitude}
-            anchor={popupInfo.screenY < 300 ? 'top' : 'bottom'}
-            offset={popupInfo.screenY < 300 ? [0, 15] : [0, -15]}
+            anchor={anchor}
+            offset={15}
             onClose={() => setPopupInfo(null)}
             closeButton={false}
-            closeOnClick={false}
-            maxWidth={isMobile ? "calc(100vw - 32px)" : "320px"}
+            closeOnClick={true}
+            maxWidth={isMobile ? "calc(100vw - 32px)" : "280px"}
             className="mobile-popup"
           >
             <PopupContent
@@ -794,7 +892,8 @@ export default function MapView({
               onClose={() => setPopupInfo(null)}
             />
           </Popup>
-        )}
+          )
+        })()}
       </Map>
     </div>
   )
