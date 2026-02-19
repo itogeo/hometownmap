@@ -83,13 +83,15 @@
       "enabled": true,
       "mapStyle": "satellite",
       "layers": [
-        "fema_flood_zones",
+        "floodplain_100yr",
+        "floodway",
         "streams",
         "firedistricts",
         "cities"
       ],
       "availableLayers": [
-        "fema_flood_zones",
+        "floodplain_100yr",
+        "floodway",
         "streams",
         "firedistricts",
         "hydrants",
@@ -97,6 +99,12 @@
         "cities"
       ],
       "layerGroups": [
+        {
+          "id": "flooding",
+          "name": "Flooding",
+          "layers": ["floodplain_100yr", "floodway"],
+          "defaultExpanded": true
+        },
         {
           "id": "water_data",
           "name": "Water & Safety",
@@ -177,8 +185,8 @@
     },
     "fema_flood_zones": {
       "source": "local",
-      "display_name": "Flood Zones",
-      "description": "FEMA 100-Year Floodplain (blue) and Floodway (red) - Effective 9/26/2024. Floodway = river channel that must remain unobstructed. Floodplain = 1% annual chance flood area.",
+      "display_name": "Flood Zones (All)",
+      "description": "Combined FEMA flood data - use floodplain_100yr and floodway for separate layers",
       "data_freshness": "FEMA NFHL - Effective 9/26/2024",
       "minzoom": 10,
       "style": {
@@ -186,6 +194,44 @@
         "fill-opacity": 0.3,
         "stroke": "#2563EB",
         "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "floodplain_100yr": {
+      "source": "local",
+      "display_name": "100-Year Floodplain",
+      "description": "FEMA Special Flood Hazard Area - 1% annual chance of flooding. Flood insurance required for federally-backed mortgages.",
+      "data_freshness": "FEMA NFHL - Effective 9/26/2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#60A5FA",
+        "fill-opacity": 0.3,
+        "stroke": "#2563EB",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "floodway": {
+      "source": "local",
+      "display_name": "Floodway",
+      "description": "FEMA Regulatory Floodway - river channel that must remain free of obstruction. No new construction permitted.",
+      "data_freshness": "FEMA NFHL - Effective 9/26/2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#DC2626",
+        "fill-opacity": 0.35,
+        "stroke": "#7F1D1D",
+        "stroke-width": 2
       },
       "popup_fields": [
         "FLD_ZONE",

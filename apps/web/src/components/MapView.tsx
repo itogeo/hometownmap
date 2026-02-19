@@ -223,15 +223,18 @@ export default function MapView({
     'attractions-point', 'attractions-glow', 'attractions-icon',
     'emergency_services-point', 'emergency_services-glow', 'emergency_services-icon',
     'parks_recreation-point', 'parks_recreation-glow', 'parks_recreation-icon',
-    // FEMA flood zone layers (floodplain + floodway)
+    // FEMA flood zone layers (combined + separate)
     'fema_flood_zones-floodplain-fill', 'fema_flood_zones-floodplain-outline',
     'fema_flood_zones-floodway-fill', 'fema_flood_zones-floodway-outline', 'fema_flood_zones-floodway-hatch',
+    // Separate flood layers
+    'floodplain_100yr-fill', 'floodplain_100yr-outline',
+    'floodway-fill', 'floodway-outline', 'floodway-hatch',
     ...visibleLayers.filter(id => !['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'fema_flood_zones'].includes(id))
       .flatMap((id) => [`${id}-fill`, `${id}-line`, `${id}-outline`, `${id}-point`])
   ]
 
   // Filter layers for rendering (excluding layers with special rendering)
-  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr', 'fema_flood_zones']
+  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr', 'fema_flood_zones', 'floodway']
   const renderableLayers = visibleLayers.filter(id => !specialLayers.includes(id))
 
   return (
@@ -444,6 +447,72 @@ export default function MapView({
                 ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
                 ['==', ['get', 'ZONE_SUBTY'], 'FLOODWAY']
               ]}
+              paint={{
+                'line-color': '#7F1D1D',
+                'line-width': 2,
+                'line-opacity': 0.9
+              }}
+            />
+          </Source>
+        )}
+
+        {/* SEPARATE FLOODPLAIN 100-YEAR LAYER (light blue) */}
+        {layerData['floodplain_100yr'] && visibleLayers.includes('floodplain_100yr') && (
+          <Source id="floodplain_100yr-source" type="geojson" data={layerData['floodplain_100yr']}>
+            <Layer
+              id="floodplain_100yr-fill"
+              type="fill"
+              minzoom={10}
+              filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
+              paint={{
+                'fill-color': '#60A5FA',
+                'fill-opacity': 0.3
+              }}
+            />
+            <Layer
+              id="floodplain_100yr-outline"
+              type="line"
+              minzoom={10}
+              filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
+              paint={{
+                'line-color': '#2563EB',
+                'line-width': 1.5,
+                'line-opacity': 0.7
+              }}
+            />
+          </Source>
+        )}
+
+        {/* SEPARATE FLOODWAY LAYER (red with dashed border) */}
+        {layerData['floodway'] && visibleLayers.includes('floodway') && (
+          <Source id="floodway-source" type="geojson" data={layerData['floodway']}>
+            <Layer
+              id="floodway-fill"
+              type="fill"
+              minzoom={10}
+              filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
+              paint={{
+                'fill-color': '#DC2626',
+                'fill-opacity': 0.35
+              }}
+            />
+            <Layer
+              id="floodway-hatch"
+              type="line"
+              minzoom={10}
+              filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
+              paint={{
+                'line-color': '#991B1B',
+                'line-width': 2.5,
+                'line-opacity': 0.9,
+                'line-dasharray': [2, 3]
+              }}
+            />
+            <Layer
+              id="floodway-outline"
+              type="line"
+              minzoom={10}
+              filter={['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']]}
               paint={{
                 'line-color': '#7F1D1D',
                 'line-width': 2,

@@ -73,9 +73,9 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {/* Owner section */}
-      <div className={`rounded-lg px-3 py-2 ${isPublic ? 'bg-green-50' : 'bg-gray-50'}`}>
+      <div className={`rounded-lg px-2 py-1.5 ${isPublic ? 'bg-green-50' : 'bg-gray-50'}`}>
         {isPublic && (
           <div className="text-[9px] text-green-600 font-medium uppercase mb-0.5">
             {publicCategoryLabels[publicCategory] || 'Public Land'}
@@ -386,10 +386,11 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
   const flood100 = features.find(f => f.layerId === 'floodplain_100yr')
   const flood500 = features.find(f => f.layerId === 'floodplain_500yr')
   const femaFlood = features.find(f => f.layerId === 'fema_flood_zones' || f.layerId === 'fema_flood')
+  const floodway = features.find(f => f.layerId === 'floodway')
   const wui = features.find(f => f.layerId === 'wui')
   const streams = features.find(f => f.layerId === 'streams')
 
-  const hasHazards = flood100 || flood500 || femaFlood || wui || streams
+  const hasHazards = flood100 || flood500 || femaFlood || floodway || wui || streams
 
   if (!hasHazards) {
     return (
@@ -487,6 +488,25 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
           <div className="text-gray-400 text-[8px] mt-1.5">
             FEMA NFHL - Effective 9/26/2024
           </div>
+        </div>
+      )}
+
+      {/* Separate Floodway layer */}
+      {floodway && !femaFlood && (
+        <div className="rounded-lg p-2 border bg-red-50 border-red-300">
+          <div className="flex items-center gap-2">
+            <div className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[11px]">
+              FLOODWAY
+            </div>
+            <span className="text-red-800 text-[10px] font-medium">Zone {floodway.properties.FLD_ZONE}</span>
+          </div>
+          <div className="text-red-700 text-[10px] mt-1">
+            River channel that must remain free of obstruction. No new construction permitted.
+          </div>
+          <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[9px] text-amber-800">
+            Special Flood Hazard Area - Flood insurance required for federally-backed mortgages.
+          </div>
+          <div className="text-gray-400 text-[8px] mt-1.5">FEMA NFHL - Effective 9/26/2024</div>
         </div>
       )}
 
@@ -605,7 +625,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
     ['firedistricts', 'schooldistricts', 'water_sewer_districts', 'water_supply', 'wastewater'].includes(f.layerId)
   )
   const hasHazards = validFeatures.some(f =>
-    ['floodplain_100yr', 'floodplain_500yr', 'fema_flood', 'fema_flood_zones', 'wui', 'streams'].includes(f.layerId)
+    ['floodplain_100yr', 'floodplain_500yr', 'fema_flood', 'fema_flood_zones', 'floodway', 'wui', 'streams'].includes(f.layerId)
   )
   const hasHistory = validFeatures.some(f => f.layerId === 'building_permits')
 
@@ -637,7 +657,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
         </svg>
       </button>
 
-      <div className="min-w-[240px] max-w-[280px]">
+      <div className="min-w-[200px] max-w-[240px]">
         {/* Tab navigation */}
         <div className="flex border-b border-gray-200 -mx-2 px-1 overflow-x-auto">
           {visibleTabs.map(tab => (
@@ -656,7 +676,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
         </div>
 
         {/* Tab content */}
-        <div className="pt-2 max-h-[45vh] overflow-y-auto">
+        <div className="pt-2 max-h-[35vh] overflow-y-auto">
           {activeTab === 'property' && (
             <PropertyTab parcel={parcel} publicLand={publicLand} subdivision={subdivision} />
           )}

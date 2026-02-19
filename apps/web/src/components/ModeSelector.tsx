@@ -20,7 +20,8 @@ const modeInfo: { [key: string]: { label: string; desc: string } } = {
   tourism: { label: 'Explore', desc: 'Parks & attractions' },
 }
 
-const modeOrder = ['property', 'planning', 'hazards', 'explore', 'business']
+// 'explore' temporarily archived - can be re-enabled later
+const modeOrder = ['property', 'planning', 'hazards', 'business']
 
 export default function ModeSelector({
   currentMode,
