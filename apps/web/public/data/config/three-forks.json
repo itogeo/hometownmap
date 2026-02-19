@@ -177,14 +177,14 @@
     },
     "fema_flood_zones": {
       "source": "local",
-      "display_name": "FEMA Flood Zones",
-      "description": "High-risk flood zones (A and AE) - 1% annual flood chance",
-      "data_freshness": "FEMA NFHL 2024",
+      "display_name": "Flood Zones",
+      "description": "FEMA 100-Year Floodplain (blue) and Floodway (red) - Effective 9/26/2024. Floodway = river channel that must remain unobstructed. Floodplain = 1% annual chance flood area.",
+      "data_freshness": "FEMA NFHL - Effective 9/26/2024",
       "minzoom": 10,
       "style": {
-        "fill": "#DC2626",
-        "fill-opacity": 0.35,
-        "stroke": "#B91C1C",
+        "fill": "#60A5FA",
+        "fill-opacity": 0.3,
+        "stroke": "#2563EB",
         "stroke-width": 1.5
       },
       "popup_fields": [

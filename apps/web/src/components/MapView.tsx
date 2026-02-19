@@ -55,6 +55,7 @@ export default function MapView({
     businessData,
     attractionsData,
     findSubdivision,
+    findFloodZone,
   } = useMapData({ cityId: cityConfig.id, visibleLayers })
 
   if (!mapboxToken) {
@@ -125,11 +126,19 @@ export default function MapView({
 
         let enrichedProperties = { ...feature.properties }
 
-        // Enrich with subdivision info for parcels and track selection
+        // Enrich with subdivision and flood zone info for parcels and track selection
         if (layerId === 'parcels') {
           const subdivision = findSubdivision(event.lngLat.lng, event.lngLat.lat)
           if (subdivision) {
             enrichedProperties._subdivision = subdivision
+          }
+          // Check flood zone overlap
+          const floodZone = findFloodZone(event.lngLat.lng, event.lngLat.lat)
+          if (floodZone) {
+            enrichedProperties._floodZone = floodZone.zone
+            enrichedProperties._floodSubtype = floodZone.subtype
+            enrichedProperties._isFloodway = floodZone.isFloodway
+            enrichedProperties._isSFHA = floodZone.isSFHA
           }
           // Track selected parcel for highlighting
           const parcelId = feature.properties?.parcelid || feature.properties?.PARCELID
@@ -155,7 +164,7 @@ export default function MapView({
         screenY: event.point.y,
       })
     },
-    [onAttractionSelect, findSubdivision, cityConfig.layers]
+    [onAttractionSelect, findSubdivision, findFloodZone, cityConfig.layers]
   )
 
   const getLayerStyle = (layerId: string) => {
@@ -214,12 +223,15 @@ export default function MapView({
     'attractions-point', 'attractions-glow', 'attractions-icon',
     'emergency_services-point', 'emergency_services-glow', 'emergency_services-icon',
     'parks_recreation-point', 'parks_recreation-glow', 'parks_recreation-icon',
-    ...visibleLayers.filter(id => !['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation'].includes(id))
+    // FEMA flood zone layers (floodplain + floodway)
+    'fema_flood_zones-floodplain-fill', 'fema_flood_zones-floodplain-outline',
+    'fema_flood_zones-floodway-fill', 'fema_flood_zones-floodway-outline', 'fema_flood_zones-floodway-hatch',
+    ...visibleLayers.filter(id => !['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'fema_flood_zones'].includes(id))
       .flatMap((id) => [`${id}-fill`, `${id}-line`, `${id}-outline`, `${id}-point`])
   ]
 
   // Filter layers for rendering (excluding layers with special rendering)
-  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr']
+  const specialLayers = ['parcels', 'businesses', 'attractions', 'emergency_services', 'parks_recreation', 'flood_zones', 'floodplain_100yr', 'floodplain_500yr', 'fema_flood_zones']
   const renderableLayers = visibleLayers.filter(id => !specialLayers.includes(id))
 
   return (
@@ -356,6 +368,87 @@ export default function MapView({
                 ['any', ['==', ['get', 'FLD_ZONE'], 'A'], ['==', ['get', 'FLD_ZONE'], 'AE'], ['==', ['get', 'FLD_ZONE'], 'AH'], ['==', ['get', 'FLD_ZONE'], 'AO']]
               ]}
               paint={{ 'line-color': '#1D4ED8', 'line-width': 1.5, 'line-opacity': 0.8 }}
+            />
+          </Source>
+        )}
+
+        {/* FEMA FLOOD ZONES - Two distinct layers: 100-Year Floodplain + Floodway */}
+        {layerData['fema_flood_zones'] && visibleLayers.includes('fema_flood_zones') && (
+          <Source id="fema_flood_zones-source" type="geojson" data={layerData['fema_flood_zones']}>
+            {/* 100-YEAR FLOODPLAIN (light blue) - All A/AE zones that are NOT floodway */}
+            <Layer
+              id="fema_flood_zones-floodplain-fill"
+              type="fill"
+              minzoom={10}
+              filter={['all',
+                ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
+                ['any', ['==', ['get', 'FLD_ZONE'], 'A'], ['==', ['get', 'FLD_ZONE'], 'AE'], ['==', ['get', 'FLD_ZONE'], 'AH'], ['==', ['get', 'FLD_ZONE'], 'AO']],
+                ['!=', ['get', 'ZONE_SUBTY'], 'FLOODWAY']
+              ]}
+              paint={{
+                'fill-color': '#60A5FA',
+                'fill-opacity': 0.3
+              }}
+            />
+            <Layer
+              id="fema_flood_zones-floodplain-outline"
+              type="line"
+              minzoom={10}
+              filter={['all',
+                ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
+                ['any', ['==', ['get', 'FLD_ZONE'], 'A'], ['==', ['get', 'FLD_ZONE'], 'AE'], ['==', ['get', 'FLD_ZONE'], 'AH'], ['==', ['get', 'FLD_ZONE'], 'AO']],
+                ['!=', ['get', 'ZONE_SUBTY'], 'FLOODWAY']
+              ]}
+              paint={{
+                'line-color': '#2563EB',
+                'line-width': 1.5,
+                'line-opacity': 0.7
+              }}
+            />
+
+            {/* FLOODWAY (red) - A/AE zones with ZONE_SUBTY = FLOODWAY */}
+            <Layer
+              id="fema_flood_zones-floodway-fill"
+              type="fill"
+              minzoom={10}
+              filter={['all',
+                ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
+                ['==', ['get', 'ZONE_SUBTY'], 'FLOODWAY']
+              ]}
+              paint={{
+                'fill-color': '#DC2626',
+                'fill-opacity': 0.35
+              }}
+            />
+            {/* Floodway hatching effect - diagonal lines */}
+            <Layer
+              id="fema_flood_zones-floodway-hatch"
+              type="line"
+              minzoom={10}
+              filter={['all',
+                ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
+                ['==', ['get', 'ZONE_SUBTY'], 'FLOODWAY']
+              ]}
+              paint={{
+                'line-color': '#991B1B',
+                'line-width': 2.5,
+                'line-opacity': 0.9,
+                'line-dasharray': [2, 3]
+              }}
+            />
+            <Layer
+              id="fema_flood_zones-floodway-outline"
+              type="line"
+              minzoom={10}
+              filter={['all',
+                ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
+                ['==', ['get', 'ZONE_SUBTY'], 'FLOODWAY']
+              ]}
+              paint={{
+                'line-color': '#7F1D1D',
+                'line-width': 2,
+                'line-opacity': 0.9
+              }}
             />
           </Source>
         )}

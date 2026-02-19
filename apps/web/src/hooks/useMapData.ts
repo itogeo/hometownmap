@@ -11,6 +11,7 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
   const [businessData, setBusinessData] = useState<any>(null)
   const [attractionsData, setAttractionsData] = useState<any>(null)
   const [subdivisionData, setSubdivisionData] = useState<any>(null)
+  const [floodZoneData, setFloodZoneData] = useState<any>(null)
   const loadedLayersRef = useRef<Set<string>>(new Set())
 
   // Load parcels directly
@@ -77,6 +78,18 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
         setSubdivisionData(data)
       })
       .catch(err => console.error('Error loading subdivisions:', err))
+  }, [cityId])
+
+  // Always load flood zone data for parcel overlap detection
+  useEffect(() => {
+    console.log('Loading flood zones for spatial lookup...')
+    fetch(`/data/layers/${cityId}/fema_flood_zones.geojson`)
+      .then(res => res.json())
+      .then(data => {
+        console.log('Flood zones loaded:', data.features?.length)
+        setFloodZoneData(data)
+      })
+      .catch(err => console.error('Error loading flood zones:', err))
   }, [cityId])
 
   // Load other layer data (only load layers not already loaded)
@@ -167,6 +180,39 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
     return null
   }, [subdivisionData, pointInPolygon])
 
+  // Find which flood zone(s) a point is in
+  const findFloodZone = useCallback((lng: number, lat: number): { zone: string; subtype: string | null; isFloodway: boolean; isSFHA: boolean } | null => {
+    if (!floodZoneData?.features) return null
+
+    for (const feature of floodZoneData.features) {
+      const geom = feature.geometry
+      let isInside = false
+
+      if (geom.type === 'Polygon') {
+        isInside = pointInPolygon([lng, lat], geom.coordinates[0])
+      } else if (geom.type === 'MultiPolygon') {
+        for (const poly of geom.coordinates) {
+          if (pointInPolygon([lng, lat], poly[0])) {
+            isInside = true
+            break
+          }
+        }
+      }
+
+      if (isInside) {
+        const props = feature.properties || {}
+        const subtype = (props.ZONE_SUBTY || '').trim() || null
+        return {
+          zone: props.FLD_ZONE || 'Unknown',
+          subtype,
+          isFloodway: subtype === 'FLOODWAY',
+          isSFHA: props.SFHA_TF === 'T',
+        }
+      }
+    }
+    return null
+  }, [floodZoneData, pointInPolygon])
+
   return {
     layerData,
     parcelData,
@@ -174,5 +220,6 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
     attractionsData,
     subdivisionData,
     findSubdivision,
+    findFloodZone,
   }
 }

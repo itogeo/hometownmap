@@ -105,6 +105,36 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
         </div>
       )}
 
+      {/* Flood Zone Overlay */}
+      {props._floodZone && (
+        <div className={`rounded-lg px-3 py-2 border ${
+          props._isFloodway
+            ? 'bg-red-50 border-red-300'
+            : 'bg-blue-50 border-blue-200'
+        }`}>
+          <div className="flex items-center gap-2">
+            <svg className={`w-4 h-4 ${props._isFloodway ? 'text-red-500' : 'text-blue-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <div className={`text-[11px] font-semibold ${
+                props._isFloodway ? 'text-red-800' : 'text-blue-800'
+              }`}>
+                {props._isFloodway ? 'FLOODWAY' : '100-Year Floodplain'}
+                <span className="font-normal text-[10px] ml-1">(Zone {props._floodZone})</span>
+              </div>
+              <div className={`text-[9px] ${
+                props._isFloodway ? 'text-red-600' : 'text-blue-600'
+              }`}>
+                {props._isFloodway
+                  ? 'No new construction permitted in floodway'
+                  : 'Flood insurance required for federal mortgages'}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Key metrics */}
       <div className="grid grid-cols-2 gap-2">
         {acreage && (
@@ -416,20 +446,47 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
         </div>
       )}
 
-      {/* FEMA determination */}
+      {/* FEMA Flood Zone - Floodway or Floodplain */}
       {femaFlood && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-2">
-          <div className="text-[9px] text-gray-500 uppercase mb-1">FEMA Determination</div>
-          <div className={`inline-block px-2 py-0.5 rounded text-[10px] font-medium ${
-            femaFlood.properties.OUTCOME?.toLowerCase().includes('removed')
-              ? 'bg-green-100 text-green-800'
-              : 'bg-blue-100 text-blue-800'
-          }`}>
-            {femaFlood.properties.OUTCOME}
+        <div className={`rounded-lg p-2 border ${
+          femaFlood.properties.ZONE_SUBTY === 'FLOODWAY'
+            ? 'bg-red-50 border-red-300'
+            : 'bg-blue-50 border-blue-200'
+        }`}>
+          <div className="flex items-center gap-2">
+            {femaFlood.properties.ZONE_SUBTY === 'FLOODWAY' ? (
+              <>
+                <div className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[11px]">
+                  FLOODWAY
+                </div>
+                <span className="text-red-800 text-[10px] font-medium">Zone {femaFlood.properties.FLD_ZONE}</span>
+              </>
+            ) : (
+              <>
+                <div className={`px-2 py-0.5 rounded font-bold text-[11px] ${
+                  zoneColors[femaFlood.properties.FLD_ZONE] || 'bg-blue-500 text-white'
+                }`}>
+                  Zone {femaFlood.properties.FLD_ZONE}
+                </div>
+                <span className="text-blue-800 text-[10px] font-medium">100-Year Floodplain</span>
+              </>
+            )}
           </div>
-          {femaFlood.properties.PROJECTNAME && (
-            <div className="text-gray-700 text-[10px] mt-1">{femaFlood.properties.PROJECTNAME}</div>
+          <div className={`text-[10px] mt-1 ${
+            femaFlood.properties.ZONE_SUBTY === 'FLOODWAY' ? 'text-red-700' : 'text-blue-700'
+          }`}>
+            {femaFlood.properties.ZONE_SUBTY === 'FLOODWAY'
+              ? 'River channel that must remain free of obstruction. No new construction permitted. Strictest flood regulations apply.'
+              : '1% annual chance of flooding. Special development requirements apply.'}
+          </div>
+          {femaFlood.properties.SFHA_TF === 'T' && (
+            <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[9px] text-amber-800">
+              Special Flood Hazard Area - Flood insurance required for federally-backed mortgages.
+            </div>
           )}
+          <div className="text-gray-400 text-[8px] mt-1.5">
+            FEMA NFHL - Effective 9/26/2024
+          </div>
         </div>
       )}
 
@@ -555,12 +612,11 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
   // TODO: Re-enable these tabs when data is ready:
   // - zoning: needs zoningdistricts layer with proper data
   // - services: needs firedistricts, schooldistricts, water layers
-  // - hazards: needs proper flood zone integration
   const tabs: { id: TabId; label: string; show: boolean }[] = [
     { id: 'property', label: 'Property', show: hasProperty },
     { id: 'zoning', label: 'Zoning', show: false }, // TEMPORARILY HIDDEN - enable when zoning data ready
     { id: 'services', label: 'Services', show: false }, // TEMPORARILY HIDDEN - enable when service districts ready
-    { id: 'hazards', label: 'Hazards', show: false }, // TEMPORARILY HIDDEN - enable when flood layers integrated
+    { id: 'hazards', label: 'Hazards', show: hasHazards }, // Re-enabled with FEMA flood data
     { id: 'history', label: 'History', show: hasHistory },
   ]
 
@@ -618,24 +674,6 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
           )}
         </div>
 
-        {/* Report issue link */}
-        <div className="mt-3 pt-2 border-t border-gray-100 flex items-center justify-center gap-2">
-          <button
-            onClick={() => {
-              const parcelId = parcel?.properties?.parcelid || parcel?.properties?.PARCELID || 'unknown'
-              const address = parcel?.properties?.addresslin || parcel?.properties?.ADDRESSLIN || 'unknown address'
-              const subject = encodeURIComponent(`Data Error Report - ${address}`)
-              const body = encodeURIComponent(`I found incorrect data on the map:\n\nParcel ID: ${parcelId}\nAddress: ${address}\n\nIssue description:\n\n[Please describe the error]\n\n---\nReported via CityView`)
-              window.open(`mailto:cityclerk@threeforksmontana.us?subject=${subject}&body=${body}`, '_blank')
-            }}
-            className="flex items-center gap-1 px-2 py-1 text-[10px] text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
-          >
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            Report data error
-          </button>
-        </div>
       </div>
     </>
   )
