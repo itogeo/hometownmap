@@ -145,7 +145,7 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
         )}
         {totalValue && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Total Value</div>
+            <div className="text-[9px] text-gray-400 uppercase">Taxable Value</div>
             <div className="text-gray-900 font-semibold">${Number(totalValue).toLocaleString()}</div>
           </div>
         )}
