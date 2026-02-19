@@ -883,7 +883,7 @@ export default function MapView({
             offset={15}
             onClose={() => setPopupInfo(null)}
             closeButton={false}
-            closeOnClick={true}
+            closeOnClick={false}
             maxWidth={isMobile ? "calc(100vw - 32px)" : "280px"}
             className="mobile-popup"
           >
