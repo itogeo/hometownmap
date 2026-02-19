@@ -427,11 +427,11 @@ export default function Home() {
 
         {/* Business List Panel - Desktop */}
         {currentMode === 'business' && businesses.length > 0 && !isMobile && (
-          <aside className="absolute left-3 top-32 z-10 w-56 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 140px)' }}>
+          <aside className="absolute left-3 top-32 z-10 w-56 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 220px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{businesses.length} Businesses</span>
             </div>
-            <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 280px)' }}>
               <BusinessListPanel
                 businesses={businesses}
                 onBusinessSelect={handleBusinessSelect}
@@ -460,11 +460,11 @@ export default function Home() {
 
         {/* Tourism Panel - Desktop */}
         {currentMode === 'explore' && attractions.length > 0 && !isMobile && (
-          <aside className="absolute left-3 top-32 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 140px)' }}>
+          <aside className="absolute left-3 top-32 z-10 w-64 bg-white rounded shadow-lg" style={{ maxHeight: 'calc(100vh - 220px)' }}>
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-700">{attractions.length} Places</span>
             </div>
-            <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 280px)' }}>
               <TourismPanel
                 attractions={attractions}
                 onAttractionSelect={handleAttractionSelect}

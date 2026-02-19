@@ -26,15 +26,13 @@
         "emergency_services",
         "public_lands",
         "subdivisions",
-        "buildings",
-        "building_permits",
-        "projects"
+        "buildings"
       ],
       "layerGroups": [
         {
           "id": "details",
           "name": "Additional Layers",
-          "layers": ["public_lands", "subdivisions", "buildings", "building_permits", "projects"],
+          "layers": ["public_lands", "subdivisions", "buildings"],
           "defaultExpanded": false
         }
       ],
@@ -42,9 +40,7 @@
         "search_address",
         "parcel_info",
         "services_info",
-        "parks_info",
-        "permit_search",
-        "capital_projects"
+        "parks_info"
       ]
     },
     "planning": {
@@ -52,11 +48,14 @@
       "mapStyle": "streets",
       "layers": [
         "growth_zone",
-        "parcels",
+        "building_permits",
+        "projects",
         "cities"
       ],
       "availableLayers": [
         "growth_zone",
+        "building_permits",
+        "projects",
         "parcels",
         "cities",
         "subdivisions",
@@ -65,9 +64,9 @@
       ],
       "layerGroups": [
         {
-          "id": "planning_data",
-          "name": "Development Data",
-          "layers": ["subdivisions", "minor_subdivisions", "buildings"],
+          "id": "property_data",
+          "name": "Property & Development",
+          "layers": ["parcels", "subdivisions", "minor_subdivisions", "buildings"],
           "defaultExpanded": false
         }
       ],
@@ -75,7 +74,9 @@
         "zoning_lookup",
         "parcel_analysis",
         "growth_projections",
-        "land_use_planning"
+        "land_use_planning",
+        "permit_search",
+        "capital_projects"
       ]
     },
     "hazards": {

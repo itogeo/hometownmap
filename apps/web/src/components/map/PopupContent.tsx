@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 interface FeatureInfo {
   layerId: string
@@ -615,6 +616,7 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
   const publicLand = validFeatures.find(f => f.layerId === 'public_lands')
   const subdivision = validFeatures.find(f => f.layerId === 'subdivisions' || f.layerId === 'minor_subdivisions')
   const zoning = validFeatures.find(f => f.layerId === 'zoning' || f.layerId === 'zoningdistricts')
+  const project = validFeatures.find(f => f.layerId === 'projects')
 
   // Determine which tabs to show
   const hasProperty = !!(parcel || publicLand)
@@ -694,6 +696,38 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
             <HistoryTab features={validFeatures} />
           )}
         </div>
+
+        {/* Project info card */}
+        {project && (
+          <div className="mt-2 pt-2 border-t border-gray-200">
+            <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
+              <div className="text-[9px] text-blue-600 uppercase font-medium">Capital Project</div>
+              <div className="text-gray-900 text-[12px] font-semibold mt-0.5">
+                {project.properties.name || 'City Project'}
+              </div>
+              {project.properties.status && (
+                <span className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[9px] font-medium ${
+                  project.properties.status === 'Completed' ? 'bg-green-100 text-green-800' :
+                  project.properties.status === 'In Progress' ? 'bg-amber-100 text-amber-800' :
+                  'bg-gray-100 text-gray-700'
+                }`}>
+                  {project.properties.status}
+                </span>
+              )}
+              {project.properties.budget && (
+                <div className="text-gray-600 text-[10px] mt-1">
+                  Budget: ${Number(project.properties.budget).toLocaleString()}
+                </div>
+              )}
+              <Link
+                href="/projects"
+                className="inline-block mt-2 px-3 py-1.5 bg-blue-600 text-white text-[10px] font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                View All City Projects
+              </Link>
+            </div>
+          </div>
+        )}
 
       </div>
     </>
