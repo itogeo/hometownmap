@@ -141,10 +141,10 @@ export default function DevelopmentPage() {
   return (
     <>
       <Head>
-        <title>Development Guide | Three Forks, MT</title>
+        <title>Development Guide | {cityConfig.name}, MT</title>
         <meta
           name="description"
-          content="Guide to building and development in Three Forks, Montana. Zoning information, permit process, and contact information."
+          content={`Guide to building and development in ${cityConfig.name}, Montana. Zoning information, permit process, and contact information.`}
         />
         <link
           href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
@@ -162,7 +162,7 @@ export default function DevelopmentPage() {
             <h1 className="text-2xl font-bold text-gray-900 mt-2">
               Development Guide
             </h1>
-            <p className="text-gray-600">Building and zoning information for Three Forks</p>
+            <p className="text-gray-600">Building and zoning information for {cityConfig.name}</p>
           </div>
         </header>
 
@@ -175,18 +175,22 @@ export default function DevelopmentPage() {
                 <p className="text-sm text-blue-700">Contact City Hall for a free pre-application consultation</p>
               </div>
               <div className="flex gap-3">
-                <a
-                  href="tel:4062853431"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                >
-                  (406) 285-3431
-                </a>
-                <a
-                  href="mailto:cityclerk@threeforksmontana.us"
-                  className="bg-white text-blue-600 px-4 py-2 rounded-lg border border-blue-300 hover:bg-blue-50"
-                >
-                  Email
-                </a>
+                {cityConfig.contact?.phone && (
+                  <a
+                    href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  >
+                    {cityConfig.contact.phone}
+                  </a>
+                )}
+                {cityConfig.contact?.email && (
+                  <a
+                    href={`mailto:${cityConfig.contact.email}`}
+                    className="bg-white text-blue-600 px-4 py-2 rounded-lg border border-blue-300 hover:bg-blue-50"
+                  >
+                    Email
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -428,8 +432,10 @@ export default function DevelopmentPage() {
         {/* Footer */}
         <footer className="bg-white border-t border-gray-200 mt-8">
           <div className="max-w-6xl mx-auto px-4 py-4 text-center text-sm text-gray-500">
-            <p>City of Three Forks | 206 Main Street | Three Forks, MT 59752</p>
-            <p className="mt-1">(406) 285-3431 | Mon-Fri 8:00 AM - 5:00 PM</p>
+            <p>{cityConfig.contact?.city_hall || `${cityConfig.name}, Montana`}</p>
+            {cityConfig.contact?.phone && (
+              <p className="mt-1">{cityConfig.contact.phone} | Mon-Fri 8:00 AM - 5:00 PM</p>
+            )}
           </div>
         </footer>
       </div>

@@ -24,15 +24,38 @@
         "cities",
         "parcels",
         "emergency_services",
+        "structures",
+        "buildings",
+        "addresses",
         "public_lands",
         "subdivisions",
-        "buildings"
+        "minor_subdivisions",
+        "schooldistricts",
+        "school_buildings",
+        "voting_precincts",
+        "house_districts",
+        "senate_districts",
+        "zipcodes",
+        "planning_jurisdictions",
+        "annexation_history"
       ],
       "layerGroups": [
         {
-          "id": "details",
-          "name": "Additional Layers",
-          "layers": ["public_lands", "subdivisions", "buildings"],
+          "id": "property",
+          "name": "Property Data",
+          "layers": ["parcels", "structures", "buildings", "addresses", "public_lands"],
+          "defaultExpanded": true
+        },
+        {
+          "id": "boundaries",
+          "name": "Boundaries & Districts",
+          "layers": ["subdivisions", "minor_subdivisions", "planning_jurisdictions", "annexation_history", "schooldistricts", "voting_precincts", "house_districts", "senate_districts", "zipcodes"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "services",
+          "name": "Services",
+          "layers": ["emergency_services", "school_buildings"],
           "defaultExpanded": false
         }
       ],
@@ -47,22 +70,61 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
+        "zoning",
         "subdivisions",
         "parcels",
         "cities"
       ],
       "availableLayers": [
+        "zoning",
+        "county_zoning",
         "subdivisions",
         "minor_subdivisions",
         "parcels",
         "cities",
-        "buildings"
+        "structures",
+        "buildings",
+        "addresses",
+        "conservation_easements",
+        "planning_jurisdictions",
+        "neighborhood_plans",
+        "annexation_history",
+        "roads",
+        "trails",
+        "public_water_supply",
+        "public_wastewater",
+        "wastewater",
+        "water_supply",
+        "water_sewer_districts",
+        "public_lands",
+        "public_lands_county",
+        "soils",
+        "rail_lines",
+        "zipcodes"
       ],
       "layerGroups": [
         {
-          "id": "property_data",
+          "id": "zoning_land_use",
+          "name": "Zoning & Land Use",
+          "layers": ["zoning", "county_zoning", "neighborhood_plans", "planning_jurisdictions", "annexation_history"],
+          "defaultExpanded": true
+        },
+        {
+          "id": "development",
           "name": "Property & Development",
-          "layers": ["parcels", "minor_subdivisions", "buildings"],
+          "layers": ["parcels", "structures", "buildings", "addresses", "subdivisions", "minor_subdivisions"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "land_use",
+          "name": "Conservation & Public Lands",
+          "layers": ["conservation_easements", "public_lands", "public_lands_county", "soils"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "infrastructure",
+          "name": "Infrastructure & Utilities",
+          "layers": ["roads", "rail_lines", "trails", "public_water_supply", "public_wastewater", "wastewater", "water_supply", "water_sewer_districts", "zipcodes"],
           "defaultExpanded": false
         }
       ],
@@ -85,23 +147,49 @@
         "floodplain_100yr",
         "floodway",
         "fema_flood_zones",
+        "fema_county_flood",
+        "flood_hazard_zones",
         "streams",
+        "landslides",
+        "wildfire_hazard",
+        "wui_intermix",
+        "wui_interface",
+        "soils",
         "firedistricts",
         "hydrants",
         "groundwater_wells",
+        "esz_zones",
+        "fire_beats",
+        "medical_beats",
+        "police_beats",
+        "agency_response",
+        "glwqd_wells",
+        "surface_water_monitoring",
         "cities"
       ],
       "layerGroups": [
         {
           "id": "flooding",
-          "name": "Flooding",
-          "layers": ["floodplain_100yr", "floodway"],
+          "name": "Flood Hazards",
+          "layers": ["floodplain_100yr", "floodway", "fema_flood_zones", "fema_county_flood", "flood_hazard_zones", "streams"],
           "defaultExpanded": true
         },
         {
-          "id": "water_data",
-          "name": "Water & Safety",
-          "layers": ["firedistricts", "hydrants", "groundwater_wells"],
+          "id": "fire_wildfire",
+          "name": "Fire & Wildfire",
+          "layers": ["wildfire_hazard", "wui_intermix", "wui_interface", "firedistricts", "hydrants"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "geologic",
+          "name": "Geologic & Environmental",
+          "layers": ["landslides", "soils", "groundwater_wells", "glwqd_wells", "surface_water_monitoring"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "emergency",
+          "name": "Emergency Response",
+          "layers": ["esz_zones", "fire_beats", "medical_beats", "police_beats", "agency_response"],
           "defaultExpanded": false
         }
       ],
@@ -122,9 +210,50 @@
       ],
       "availableLayers": [
         "attractions",
+        "parks_recreation",
         "public_lands",
+        "public_lands_county",
+        "conservation_easements",
+        "trails",
         "streams",
+        "waterways",
+        "lakes",
+        "rivers",
+        "rail_lines",
+        "school_buildings",
+        "voting_precincts",
+        "high_school_districts",
+        "elementary_districts",
+        "house_districts",
+        "senate_districts",
+        "zipcodes",
         "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "recreation",
+          "name": "Recreation & Attractions",
+          "layers": ["attractions", "parks_recreation", "trails"],
+          "defaultExpanded": true
+        },
+        {
+          "id": "nature",
+          "name": "Water & Natural Areas",
+          "layers": ["public_lands", "public_lands_county", "conservation_easements", "streams", "waterways", "lakes", "rivers"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "community",
+          "name": "Community & Districts",
+          "layers": ["school_buildings", "voting_precincts", "high_school_districts", "elementary_districts", "house_districts", "senate_districts", "zipcodes"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "transportation",
+          "name": "Transportation",
+          "layers": ["rail_lines"],
+          "defaultExpanded": false
+        }
       ],
       "features": [
         "story_map",
@@ -139,6 +268,29 @@
         "businesses",
         "parcels",
         "cities"
+      ],
+      "availableLayers": [
+        "businesses",
+        "parcels",
+        "structures",
+        "buildings",
+        "roads",
+        "emergency_services",
+        "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "commercial",
+          "name": "Business & Property",
+          "layers": ["businesses", "parcels", "structures", "buildings"],
+          "defaultExpanded": true
+        },
+        {
+          "id": "context",
+          "name": "Context",
+          "layers": ["roads", "emergency_services"],
+          "defaultExpanded": false
+        }
       ],
       "features": [
         "search_properties",
@@ -458,6 +610,729 @@
         "FIRE_AREA",
         "TOWN",
         "COMMENTS"
+      ]
+    },
+    "structures": {
+      "source": "gallatin_county",
+      "display_name": "Addressed Structures",
+      "description": "County-verified building addresses with year built and structure type",
+      "data_freshness": "Gallatin County 2024",
+      "minzoom": 14,
+      "style": {
+        "fill": "#6366F1",
+        "fill-opacity": 1,
+        "stroke": "#4338CA",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "ADDRESS_CONCAT",
+        "TYPE",
+        "YEAR_BUILT",
+        "JURISDICTION",
+        "CITY",
+        "ZIPCODE"
+      ]
+    },
+    "soils": {
+      "source": "gallatin_county",
+      "display_name": "Soils (NRCS)",
+      "description": "NRCS soil survey data - soil types affect building foundations, septic suitability, and agriculture",
+      "data_freshness": "NRCS SSURGO 2023",
+      "minzoom": 12,
+      "style": {
+        "fill": "#A16207",
+        "fill-opacity": 0.25,
+        "stroke": "#854D0E",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "MUSYM"
+      ]
+    },
+    "trails": {
+      "source": "gallatin_county",
+      "display_name": "Trails",
+      "description": "Trail network including walking, biking, and multi-use paths",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "stroke": "#16A34A",
+        "stroke-width": 3,
+        "stroke-dasharray": [6, 3]
+      },
+      "popup_fields": [
+        "TRAIL_NAME",
+        "SYSTEM",
+        "SURFACE",
+        "CLASS",
+        "STATUS",
+        "LENGTH_MI",
+        "ADA"
+      ]
+    },
+    "conservation_easements": {
+      "source": "gallatin_county",
+      "display_name": "Conservation Easements",
+      "description": "Protected lands with permanent conservation restrictions",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#10B981",
+        "fill-opacity": 0.35,
+        "stroke": "#059669",
+        "stroke-width": 2,
+        "stroke-dasharray": [4, 2]
+      },
+      "popup_fields": [
+        "Name",
+        "CurrentOwn",
+        "EaseHolder",
+        "Acres",
+        "Year"
+      ]
+    },
+    "planning_jurisdictions": {
+      "source": "gallatin_county",
+      "display_name": "Planning Jurisdiction",
+      "description": "Manhattan town planning jurisdiction boundary",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "transparent",
+        "fill-opacity": 0,
+        "stroke": "#7C3AED",
+        "stroke-width": 3,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "NAME"
+      ]
+    },
+    "esz_zones": {
+      "source": "gallatin_county",
+      "display_name": "Emergency Service Zones",
+      "description": "911 dispatch zones showing which agencies respond to each area",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#F97316",
+        "fill-opacity": 0.15,
+        "stroke": "#EA580C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "LAW",
+        "MEDICAL",
+        "FIRE",
+        "ESZ",
+        "COMMENTS"
+      ]
+    },
+    "fire_beats": {
+      "source": "gallatin_county",
+      "display_name": "Fire Response Areas",
+      "description": "Fire department primary response zones",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#EF4444",
+        "fill-opacity": 0.12,
+        "stroke": "#DC2626",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FIRE",
+        "ESZ",
+        "COMMENTS"
+      ]
+    },
+    "medical_beats": {
+      "source": "gallatin_county",
+      "display_name": "Medical Response Areas",
+      "description": "EMS/ambulance primary response zones",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#EC4899",
+        "fill-opacity": 0.12,
+        "stroke": "#DB2777",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "MEDICAL",
+        "ESZ",
+        "COMMENTS"
+      ]
+    },
+    "police_beats": {
+      "source": "gallatin_county",
+      "display_name": "Police Response Areas",
+      "description": "Law enforcement primary response zones",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.12,
+        "stroke": "#2563EB",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "LAW",
+        "ESZ",
+        "COMMENTS"
+      ]
+    },
+    "fema_county_flood": {
+      "source": "gallatin_county",
+      "display_name": "FEMA Flood Zones (Detailed)",
+      "description": "Detailed county FEMA DFIRM flood hazard areas with base flood elevations",
+      "data_freshness": "FEMA DFIRM 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.25,
+        "stroke": "#1D4ED8",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE",
+        "STUDY_TYP"
+      ]
+    },
+    "landslides": {
+      "source": "gallatin_county",
+      "display_name": "Landslide Areas",
+      "description": "USGS-mapped landslide hazard areas",
+      "data_freshness": "USGS 2020",
+      "style": {
+        "fill": "#92400E",
+        "fill-opacity": 0.35,
+        "stroke": "#78350F",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "TYPE_DESCR",
+        "ACRES",
+        "SOURCE"
+      ]
+    },
+    "voting_precincts": {
+      "source": "gallatin_county",
+      "display_name": "Voting Precincts",
+      "description": "Electoral precinct boundaries and house districts",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 0.1,
+        "stroke": "#6D28D9",
+        "stroke-width": 2,
+        "stroke-dasharray": [6, 3]
+      },
+      "popup_fields": [
+        "PRECINCT",
+        "HOUSE_DISTRICT",
+        "VOTERS_2013"
+      ]
+    },
+    "school_buildings": {
+      "source": "gallatin_county",
+      "display_name": "School Buildings",
+      "description": "School facility locations",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#F59E0B",
+        "fill-opacity": 1,
+        "stroke": "#D97706",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "ADDRESS_CONCAT",
+        "TYPE",
+        "YEAR_BUILT"
+      ]
+    },
+    "high_school_districts": {
+      "source": "gallatin_county",
+      "display_name": "High School Districts",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#7C3AED",
+        "fill-opacity": 0.1,
+        "stroke": "#6D28D9",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "High_School",
+        "Elementary",
+        "Acres"
+      ]
+    },
+    "elementary_districts": {
+      "source": "gallatin_county",
+      "display_name": "Elementary Districts",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#A78BFA",
+        "fill-opacity": 0.1,
+        "stroke": "#8B5CF6",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "Elementary",
+        "High_School",
+        "Acres"
+      ]
+    },
+    "public_water_supply": {
+      "source": "gallatin_county",
+      "display_name": "Public Water Supply",
+      "description": "Public water supply system components - wells, treatment, distribution",
+      "data_freshness": "Gallatin County EHS 2024",
+      "style": {
+        "fill": "#06B6D4",
+        "fill-opacity": 1,
+        "stroke": "#0891B2",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "SYSTEMTYPE",
+        "COMPTYPE",
+        "PWSID",
+        "NOTES"
+      ]
+    },
+    "public_wastewater": {
+      "source": "gallatin_county",
+      "display_name": "Wastewater Systems",
+      "description": "Wastewater treatment and septic systems",
+      "data_freshness": "Gallatin County EHS 2024",
+      "style": {
+        "fill": "#84CC16",
+        "fill-opacity": 1,
+        "stroke": "#65A30D",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "SYSTEMTYPE",
+        "PURPOSE",
+        "TREATMENTC",
+        "DISCHARGEC"
+      ]
+    },
+    "glwqd_wells": {
+      "source": "gallatin_county",
+      "display_name": "GLWQD Groundwater Wells",
+      "description": "Gallatin Local Water Quality District monitoring wells",
+      "data_freshness": "GLWQD 2024",
+      "style": {
+        "fill": "#0284C7",
+        "fill-opacity": 1,
+        "stroke": "#0369A1",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "WELL_NAME",
+        "WELL_DEPTH",
+        "AQUIFER",
+        "COMMENTS"
+      ]
+    },
+    "surface_water_monitoring": {
+      "source": "gallatin_county",
+      "display_name": "Surface Water Monitoring",
+      "description": "Water quality monitoring sites on streams and rivers",
+      "data_freshness": "GLWQD 2024",
+      "style": {
+        "fill": "#2563EB",
+        "fill-opacity": 1,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "SITE_NAME",
+        "SITE_ID"
+      ]
+    },
+    "public_lands_county": {
+      "source": "gallatin_county",
+      "display_name": "Public Lands (County GIS)",
+      "description": "County-designated public lands including federal, state, and local government parcels",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#047857",
+        "fill-opacity": 0.3,
+        "stroke": "#065F46",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "OWNER",
+        "ACRES",
+        "MANAGER"
+      ]
+    },
+    "wildfire_hazard": {
+      "source": "gallatin_county",
+      "display_name": "Wildfire Hazard",
+      "description": "Relative wildfire hazard zones based on vegetation, slope, and access",
+      "data_freshness": "Gallatin County 2023",
+      "minzoom": 11,
+      "style": {
+        "fill": "#F97316",
+        "fill-opacity": 0.25,
+        "stroke": "#EA580C",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "HAZARD",
+        "FUEL_MODEL",
+        "SLOPE_CLASS"
+      ]
+    },
+    "rail_lines": {
+      "source": "gallatin_county",
+      "display_name": "Railroad Lines",
+      "description": "Active and historical railroad corridors",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "stroke": "#374151",
+        "stroke-width": 3,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "RAILROAD",
+        "RROWNER",
+        "STATUS"
+      ]
+    },
+    "house_districts": {
+      "source": "gallatin_county",
+      "display_name": "House Districts",
+      "description": "Montana state legislative house districts",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#6366F1",
+        "fill-opacity": 0.08,
+        "stroke": "#4F46E5",
+        "stroke-width": 2,
+        "stroke-dasharray": [6, 3]
+      },
+      "popup_fields": [
+        "DISTRICT",
+        "REPRESENTATIVE"
+      ]
+    },
+    "zipcodes": {
+      "source": "gallatin_county",
+      "display_name": "ZIP Codes",
+      "description": "USPS ZIP code boundaries",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "transparent",
+        "fill-opacity": 0,
+        "stroke": "#9333EA",
+        "stroke-width": 2,
+        "stroke-dasharray": [10, 5]
+      },
+      "popup_fields": [
+        "ZIPCODE",
+        "PO_NAME"
+      ]
+    },
+    "lakes": {
+      "source": "gallatin_county",
+      "display_name": "Lakes & Ponds",
+      "description": "Lakes, reservoirs, and ponds",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.4,
+        "stroke": "#1D4ED8",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "NAME",
+        "TYPE",
+        "ACRES"
+      ]
+    },
+    "rivers": {
+      "source": "gallatin_county",
+      "display_name": "Rivers",
+      "description": "Major river channels and corridors",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#2563EB",
+        "fill-opacity": 0.35,
+        "stroke": "#1E40AF",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "NAME",
+        "GNIS_NAME"
+      ]
+    },
+    "flood_hazard_zones": {
+      "source": "gallatin_county",
+      "display_name": "FEMA Flood Zones (County)",
+      "description": "Detailed county FEMA DFIRM flood hazard areas from county ArcGIS service",
+      "data_freshness": "FEMA DFIRM 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.25,
+        "stroke": "#1D4ED8",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE",
+        "STUDY_TYP"
+      ]
+    },
+    "agency_response": {
+      "source": "gallatin_county",
+      "display_name": "Agency Response Areas",
+      "description": "Multi-agency emergency response zone boundaries",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#D946EF",
+        "fill-opacity": 0.1,
+        "stroke": "#C026D3",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "LAW",
+        "MEDICAL",
+        "FIRE",
+        "ESZ",
+        "COMMENTS"
+      ]
+    },
+    "wastewater": {
+      "source": "gallatin_county",
+      "display_name": "Wastewater Treatment",
+      "description": "Individual wastewater treatment and septic systems from EHS monitoring",
+      "data_freshness": "Gallatin County EHS 2024",
+      "minzoom": 13,
+      "style": {
+        "fill": "#84CC16",
+        "fill-opacity": 0.8,
+        "stroke": "#65A30D",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "SYSTEMTYPE",
+        "PURPOSE",
+        "TREATMENTC"
+      ]
+    },
+    "water_supply": {
+      "source": "gallatin_county",
+      "display_name": "Water Supply Systems",
+      "description": "Individual water supply systems and wells from EHS monitoring",
+      "data_freshness": "Gallatin County EHS 2024",
+      "minzoom": 13,
+      "style": {
+        "fill": "#06B6D4",
+        "fill-opacity": 0.8,
+        "stroke": "#0891B2",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "SYSTEMTYPE",
+        "COMPTYPE",
+        "PWSID"
+      ]
+    },
+    "parks_recreation": {
+      "source": "local",
+      "display_name": "Parks & Recreation",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#22C55E",
+        "fill-opacity": 1,
+        "stroke": "#16A34A",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "address",
+        "amenities"
+      ]
+    },
+    "waterways": {
+      "source": "local",
+      "display_name": "Waterways",
+      "description": "Streams, creeks, and ditches",
+      "data_freshness": "Gallatin County GIS 2024",
+      "style": {
+        "stroke": "#2980b9",
+        "stroke-width": 1.5,
+        "stroke-opacity": 0.7
+      },
+      "popup_fields": [
+        "GCD_NAME",
+        "COM_NAME",
+        "TYPE"
+      ]
+    },
+    "zoning": {
+      "source": "gallatin_county",
+      "display_name": "Zoning Designations",
+      "description": "County zoning district designations showing land use classifications",
+      "data_freshness": "Gallatin County 2024",
+      "minzoom": 11,
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 0.3,
+        "stroke": "#6D28D9",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "DISTRICT_N",
+        "INNERZONE",
+        "ZONED",
+        "LANDUSE"
+      ]
+    },
+    "county_zoning": {
+      "source": "gallatin_county",
+      "display_name": "County Zoning (PCC)",
+      "description": "Planning and Community Development zoning designations",
+      "data_freshness": "Gallatin County PCC 2024",
+      "minzoom": 11,
+      "style": {
+        "fill": "#7C3AED",
+        "fill-opacity": 0.25,
+        "stroke": "#5B21B6",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "DISTRICT_N",
+        "INNERZONE",
+        "ZONED",
+        "LANDUSE"
+      ]
+    },
+    "addresses": {
+      "source": "gallatin_county",
+      "display_name": "Address Points",
+      "description": "County-verified site and structure addresses",
+      "data_freshness": "Gallatin County Addressing 2024",
+      "minzoom": 14,
+      "style": {
+        "fill": "#6366F1",
+        "fill-opacity": 0.8,
+        "stroke": "#4338CA",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "ADDRESS",
+        "ROADNAME",
+        "ROADTYPE",
+        "CITY",
+        "ZIP",
+        "TYPE"
+      ]
+    },
+    "wui_intermix": {
+      "source": "gallatin_county",
+      "display_name": "WUI Intermix",
+      "description": "Wildland-Urban Interface intermix zones where structures are scattered in wildland fuels",
+      "data_freshness": "Gallatin County 2021",
+      "minzoom": 10,
+      "style": {
+        "fill": "#F97316",
+        "fill-opacity": 0.2,
+        "stroke": "#EA580C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "CLASS",
+        "gridcode"
+      ]
+    },
+    "wui_interface": {
+      "source": "gallatin_county",
+      "display_name": "WUI Interface",
+      "description": "Wildland-Urban Interface zones where development meets wildland vegetation",
+      "data_freshness": "Gallatin County 2021",
+      "minzoom": 10,
+      "style": {
+        "fill": "#DC2626",
+        "fill-opacity": 0.2,
+        "stroke": "#B91C1C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "CLASS",
+        "ACRES"
+      ]
+    },
+    "senate_districts": {
+      "source": "gallatin_county",
+      "display_name": "Senate Districts",
+      "description": "Montana state senate district boundaries",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#4F46E5",
+        "fill-opacity": 0.06,
+        "stroke": "#3730A3",
+        "stroke-width": 2,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "DISTRICT",
+        "NAME",
+        "ADJ_POPULA"
+      ]
+    },
+    "annexation_history": {
+      "source": "gallatin_county",
+      "display_name": "Annexation History",
+      "description": "Historical municipal annexation boundaries",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#0EA5E9",
+        "fill-opacity": 0.1,
+        "stroke": "#0284C7",
+        "stroke-width": 2,
+        "stroke-dasharray": [6, 3]
+      },
+      "popup_fields": [
+        "NAME"
+      ]
+    },
+    "neighborhood_plans": {
+      "source": "gallatin_county",
+      "display_name": "Neighborhood Plans",
+      "description": "Adopted neighborhood and community planning areas",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#0D9488",
+        "fill-opacity": 0.12,
+        "stroke": "#0F766E",
+        "stroke-width": 2,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "NAME"
+      ]
+    },
+    "water_sewer_districts": {
+      "source": "gallatin_county",
+      "display_name": "Water & Sewer Districts",
+      "description": "County water and sewer district boundaries",
+      "data_freshness": "Gallatin County 2024",
+      "style": {
+        "fill": "#06B6D4",
+        "fill-opacity": 0.15,
+        "stroke": "#0891B2",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "NAME",
+        "DIST_NO",
+        "TYPE"
       ]
     }
   },

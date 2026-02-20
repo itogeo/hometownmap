@@ -110,10 +110,10 @@ export default function VisitPage() {
   return (
     <>
       <Head>
-        <title>Visit Three Forks | Discover Montana's Hidden Gem</title>
+        <title>Visit {cityConfig.name} | Discover {cityConfig.name}</title>
         <meta
           name="description"
-          content="Plan your visit to Three Forks, Montana - where three rivers meet to form the mighty Missouri. Explore state parks, historic sites, and small-town charm."
+          content={`Plan your visit to ${cityConfig.name}, Montana. Explore parks, historic sites, and local attractions.`}
         />
         <link
           href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
@@ -131,9 +131,9 @@ export default function VisitPage() {
                   ← Back to Map
                 </Link>
                 <h1 className="text-2xl font-bold text-gray-900 mt-1">
-                  Visit Three Forks
+                  Visit {cityConfig.name}
                 </h1>
-                <p className="text-gray-600">Where Three Rivers Become One</p>
+                <p className="text-gray-600">{cityConfig.branding?.subtitle || `Explore ${cityConfig.name}`}</p>
               </div>
               <div className="text-right">
                 <p className="text-sm text-gray-500">Planning your trip?</p>
@@ -334,13 +334,15 @@ export default function VisitPage() {
 
           {/* Footer */}
           <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
-            <p>Three Forks, Montana - Gateway to the Missouri River Headwaters</p>
-            <p className="mt-1">
-              Questions? Call City Hall at{' '}
-              <a href="tel:4062853431" className="text-blue-600 hover:text-blue-800">
-                (406) 285-3431
-              </a>
-            </p>
+            <p>{cityConfig.name}, Montana</p>
+            {cityConfig.contact?.phone && (
+              <p className="mt-1">
+                Questions? Call City Hall at{' '}
+                <a href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`} className="text-blue-600 hover:text-blue-800">
+                  {cityConfig.contact.phone}
+                </a>
+              </p>
+            )}
           </footer>
         </div>
       </div>
