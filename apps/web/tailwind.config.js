@@ -8,10 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Three Forks Montana palette - inspired by rivers, mountains, and plains
-        'tf': {
-          // River blues (from the three forks of Missouri)
-          'river': {
+        // Civic palette
+        'civic': {
+          // Blues - primary actions, links
+          'blue': {
             50: '#f0f7fa',
             100: '#d9eef5',
             200: '#b3dcea',
@@ -23,8 +23,8 @@ module.exports = {
             800: '#133a4a',
             900: '#0f2d3a',
           },
-          // Mountain/forest greens
-          'forest': {
+          // Greens - success, parks, positive
+          'green': {
             50: '#f2f7f4',
             100: '#dfeee5',
             200: '#bedcca',
@@ -36,8 +36,8 @@ module.exports = {
             800: '#22402f',
             900: '#1c3527',
           },
-          // Earth/wheat tones
-          'earth': {
+          // Golds - warnings, highlights
+          'gold': {
             50: '#faf8f3',
             100: '#f3efe3',
             200: '#e6dcc5',
@@ -49,8 +49,8 @@ module.exports = {
             800: '#5c482a',
             900: '#4d3c25',
           },
-          // Warm stone/rock
-          'stone': {
+          // Grays - neutral text, borders
+          'gray': {
             50: '#faf9f7',
             100: '#f2f0eb',
             200: '#e3ded4',

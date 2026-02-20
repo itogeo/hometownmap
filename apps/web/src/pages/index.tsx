@@ -180,7 +180,6 @@ export default function Home() {
             coordinates: f.geometry.coordinates as [number, number],
           }))
           setBusinesses(bizList)
-          console.log(`✅ Loaded ${bizList.length} businesses`)
         }
       })
       .catch((err) => console.error('Failed to load businesses:', err))
@@ -204,7 +203,6 @@ export default function Home() {
             coordinates: f.geometry.coordinates as [number, number],
           }))
           setAttractions(attractionList)
-          console.log(`✅ Loaded ${attractionList.length} attractions`)
         }
       })
       .catch((err) => console.error('Failed to load attractions:', err))
@@ -300,8 +298,9 @@ export default function Home() {
 
   if (!cityConfig) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="text-xl text-gray-600">Loading configuration...</div>
+      <div className="flex flex-col items-center justify-center h-screen bg-white">
+        <div className="animate-spin w-8 h-8 border-2 border-gray-300 border-t-blue-600 rounded-full" />
+        <div className="mt-3 text-sm text-gray-500">Loading map...</div>
       </div>
     )
   }
@@ -334,10 +333,13 @@ export default function Home() {
 
       <div className="relative h-screen w-screen overflow-hidden">
         {/* Accent bar at top */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-700 via-blue-600 to-emerald-600 z-20" />
+        <div
+          className="absolute top-0 left-0 right-0 h-1 z-20"
+          style={{ backgroundColor: cityConfig.branding?.primary_color || '#1E40AF' }}
+        />
 
         {/* Header */}
-        <header className="absolute top-1 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm border-b border-tf-stone-200 shadow-sm">
+        <header className="absolute top-1 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm border-b border-civic-gray-200 shadow-sm">
           <div className="flex items-center justify-between px-4 py-2">
             <div className="flex items-center gap-2">
               {/* City Seal */}
@@ -370,7 +372,7 @@ export default function Home() {
               <nav className="hidden lg:flex items-center gap-1 text-xs">
                 <Link
                   href="/visit"
-                  className="px-2.5 py-1.5 text-tf-stone-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
+                  className="px-2.5 py-1.5 text-civic-gray-500 hover:text-blue-700 hover:bg-blue-50 rounded transition-colors"
                 >
                   Visit
                 </Link>
@@ -379,7 +381,7 @@ export default function Home() {
                   className={`px-2.5 py-1.5 rounded transition-colors ${
                     currentMode === 'business'
                       ? 'bg-blue-100 text-blue-700 font-medium'
-                      : 'text-tf-stone-500 hover:text-blue-700 hover:bg-blue-50'
+                      : 'text-civic-gray-500 hover:text-blue-700 hover:bg-blue-50'
                   }`}
                 >
                   Business
@@ -387,7 +389,7 @@ export default function Home() {
                 <span className="text-gray-300 mx-1">|</span>
                 <Link
                   href="/resources"
-                  className="px-2.5 py-1.5 text-tf-stone-500 hover:text-tf-river-700 hover:bg-tf-stone-100 rounded transition-colors"
+                  className="px-2.5 py-1.5 text-civic-gray-500 hover:text-civic-blue-700 hover:bg-civic-gray-100 rounded transition-colors"
                 >
                   Resources
                 </Link>
@@ -413,6 +415,7 @@ export default function Home() {
             availableModes={Object.keys(cityConfig.modes).filter(
               (mode) => cityConfig.modes[mode].enabled && !['business'].includes(mode)
             )}
+            accentColor={cityConfig.branding?.primary_color}
           />
         </header>
 
@@ -580,15 +583,15 @@ export default function Home() {
           <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 pointer-events-none">
             {/* Left: Contact info */}
             <div className="pointer-events-auto bg-white/95 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2 text-[11px]">
-              <div className="font-medium text-tf-river-700">City Hall</div>
-              <div className="flex items-center gap-2 text-tf-stone-600">
+              <div className="font-medium text-civic-blue-700">City Hall</div>
+              <div className="flex items-center gap-2 text-civic-gray-600">
                 {cityConfig.contact?.phone && (
-                  <a href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`} className="text-tf-forest-600 hover:text-tf-forest-700 hover:underline">
+                  <a href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`} className="text-civic-green-600 hover:text-civic-green-700 hover:underline">
                     {cityConfig.contact.phone}
                   </a>
                 )}
                 {cityConfig.contact?.phone && cityConfig.contact?.city_hall && (
-                  <span className="text-tf-stone-300">&bull;</span>
+                  <span className="text-civic-gray-300">&bull;</span>
                 )}
                 {cityConfig.contact?.city_hall && (
                   <span>{cityConfig.contact.city_hall.split(',')[0]}</span>
@@ -600,8 +603,8 @@ export default function Home() {
             <div className="pointer-events-auto flex flex-wrap gap-2 text-[11px] justify-end">
               <Link
                 href="/projects"
-                className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
-                           hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
+                className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-civic-blue-600
+                           hover:text-civic-blue-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
               >
                 City Projects
               </Link>
@@ -610,8 +613,8 @@ export default function Home() {
                   href={cityConfig.contact.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-tf-river-600
-                             hover:text-tf-river-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
+                  className="px-2.5 py-1.5 bg-white/95 backdrop-blur-sm text-civic-blue-600
+                             hover:text-civic-blue-800 hover:bg-white rounded-lg shadow-sm transition-colors whitespace-nowrap"
                 >
                   City Website
                 </a>

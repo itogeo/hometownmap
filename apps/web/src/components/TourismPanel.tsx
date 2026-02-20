@@ -290,16 +290,6 @@ export default function TourismPanel({
 
       {/* Attractions list */}
       <div className="flex-1 overflow-y-auto p-2 space-y-2 min-h-0">
-        {/* Must-See callout */}
-        {!filter && (
-          <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-3 rounded-lg mb-3">
-            <div className="font-bold">Don't Miss</div>
-            <p className="text-sm opacity-90 mt-1">
-              Missouri Headwaters State Park - where Lewis & Clark discovered where three rivers become one
-            </p>
-          </div>
-        )}
-
         {Object.entries(grouped).map(([category, items]) => (
           <div key={category} className="space-y-2">
             {!filter && (
@@ -326,13 +316,9 @@ export default function TourismPanel({
         )}
       </div>
 
-      {/* Footer with tourism links */}
+      {/* Footer */}
       <div className="border-t p-2 bg-white text-xs shrink-0">
         <div className="flex gap-2 justify-center text-gray-500">
-          <a href="https://discoverthreeforks.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600">
-            DiscoverThreeForks.com
-          </a>
-          <span>|</span>
           <a href="https://visitmt.com" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600">
             Visit Montana
           </a>

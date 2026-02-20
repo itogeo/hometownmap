@@ -84,7 +84,7 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
       {/* Owner section */}
       <div className={`rounded-lg px-2 py-1.5 ${isPublic ? 'bg-green-50' : 'bg-gray-50'}`}>
         {isPublic && (
-          <div className="text-[9px] text-green-600 font-medium uppercase mb-0.5">
+          <div className="text-[11px] text-green-600 font-medium uppercase mb-0.5">
             {publicCategoryLabels[publicCategory] || 'Public Land'}
           </div>
         )}
@@ -92,14 +92,14 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
           {ownerName}
         </div>
         {cityStateZip && (
-          <div className="text-gray-600 text-[10px] mt-0.5">{cityStateZip}</div>
+          <div className="text-gray-600 text-xs mt-0.5">{cityStateZip}</div>
         )}
       </div>
 
       {/* Address */}
       {address && (
         <div>
-          <div className="text-[9px] text-gray-400 uppercase mb-0.5">Property Address</div>
+          <div className="text-[11px] text-gray-400 uppercase mb-0.5">Property Address</div>
           <div className="text-gray-800 text-[11px]">{address}</div>
         </div>
       )}
@@ -107,7 +107,7 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
       {/* Subdivision */}
       {subdivName && (
         <div>
-          <div className="text-[9px] text-gray-400 uppercase mb-0.5">Subdivision</div>
+          <div className="text-[11px] text-gray-400 uppercase mb-0.5">Subdivision</div>
           <div className="text-amber-700 text-[11px] font-medium">{subdivName}</div>
         </div>
       )}
@@ -128,9 +128,9 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
                 props._isFloodway ? 'text-red-800' : 'text-blue-800'
               }`}>
                 {props._isFloodway ? 'FLOODWAY' : '100-Year Floodplain'}
-                <span className="font-normal text-[10px] ml-1">(Zone {props._floodZone})</span>
+                <span className="font-normal text-xs ml-1">(Zone {props._floodZone})</span>
               </div>
-              <div className={`text-[9px] ${
+              <div className={`text-[11px] ${
                 props._isFloodway ? 'text-red-600' : 'text-blue-600'
               }`}>
                 {props._isFloodway
@@ -146,32 +146,32 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
       <div className="grid grid-cols-2 gap-2">
         {acreage && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Acreage</div>
+            <div className="text-[11px] text-gray-400 uppercase">Acreage</div>
             <div className="text-gray-900 font-semibold">{Number(acreage).toFixed(2)} ac</div>
           </div>
         )}
         {totalValue && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Taxable Value</div>
+            <div className="text-[11px] text-gray-400 uppercase">Taxable Value</div>
             <div className="text-gray-900 font-semibold">${Number(totalValue).toLocaleString()}</div>
           </div>
         )}
         {landValue && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Land Value</div>
+            <div className="text-[11px] text-gray-400 uppercase">Land Value</div>
             <div className="text-gray-700">${Number(landValue).toLocaleString()}</div>
           </div>
         )}
         {improvValue && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Improvements</div>
+            <div className="text-[11px] text-gray-400 uppercase">Improvements</div>
             <div className="text-gray-700">${Number(improvValue).toLocaleString()}</div>
           </div>
         )}
       </div>
 
       {/* Additional info */}
-      <div className="space-y-1 text-[10px]">
+      <div className="space-y-1 text-xs">
         {parcelId && (
           <div className="flex justify-between">
             <span className="text-gray-500">Parcel ID</span>
@@ -189,14 +189,14 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
       {/* Legal description */}
       {legalDesc && (
         <div>
-          <div className="text-[9px] text-gray-400 uppercase mb-0.5">Legal Description</div>
-          <div className="text-gray-600 text-[9px] leading-tight">{legalDesc}</div>
+          <div className="text-[11px] text-gray-400 uppercase mb-0.5">Legal Description</div>
+          <div className="text-gray-600 text-[11px] leading-tight">{legalDesc}</div>
         </div>
       )}
 
       {/* Merged parcels indicator */}
       {parcel?.properties._merged_count > 1 && (
-        <div className="text-blue-600 text-[9px] bg-blue-50 rounded px-2 py-1">
+        <div className="text-blue-600 text-[11px] bg-blue-50 rounded px-2 py-1">
           This display combines {parcel.properties._merged_count} adjacent parcels owned by the same entity.
         </div>
       )}
@@ -225,13 +225,13 @@ function ZoningTab({ zoning, parcel, contact }: { zoning: any; parcel: any; cont
           </svg>
         </div>
         <div className="text-gray-600 text-[11px] font-medium">Outside City Zoning</div>
-        <div className="text-gray-400 text-[10px] mt-1">
+        <div className="text-gray-400 text-xs mt-1">
           This area may be in county jurisdiction.
         </div>
         {contact?.phone && (
           <a
             href={`tel:${contact.phone.replace(/\D/g, '')}`}
-            className="inline-block mt-3 px-3 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-medium rounded-full hover:bg-blue-100 transition-colors"
+            className="inline-block mt-3 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-medium rounded-full hover:bg-blue-100 transition-colors"
           >
             Call City Hall for zoning info
           </a>
@@ -253,8 +253,8 @@ function ZoningTab({ zoning, parcel, contact }: { zoning: any; parcel: any; cont
       {/* Allowed uses */}
       {allowedUses && (
         <div>
-          <div className="text-[9px] text-gray-400 uppercase mb-1">Allowed Uses</div>
-          <div className="text-gray-700 text-[10px] leading-relaxed">{allowedUses}</div>
+          <div className="text-[11px] text-gray-400 uppercase mb-1">Allowed Uses</div>
+          <div className="text-gray-700 text-xs leading-relaxed">{allowedUses}</div>
         </div>
       )}
 
@@ -262,32 +262,32 @@ function ZoningTab({ zoning, parcel, contact }: { zoning: any; parcel: any; cont
       <div className="grid grid-cols-2 gap-2">
         {minLotSize && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Min Lot Size</div>
+            <div className="text-[11px] text-gray-400 uppercase">Min Lot Size</div>
             <div className="text-gray-900 font-medium text-[11px]">{minLotSize}</div>
           </div>
         )}
         {maxHeight && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Max Height</div>
+            <div className="text-[11px] text-gray-400 uppercase">Max Height</div>
             <div className="text-gray-900 font-medium text-[11px]">{maxHeight}</div>
           </div>
         )}
         {lotCoverage && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Lot Coverage</div>
+            <div className="text-[11px] text-gray-400 uppercase">Lot Coverage</div>
             <div className="text-gray-900 font-medium text-[11px]">{lotCoverage}</div>
           </div>
         )}
         {setbacks && (
           <div className="bg-gray-50 rounded px-2 py-1.5">
-            <div className="text-[9px] text-gray-400 uppercase">Setbacks</div>
+            <div className="text-[11px] text-gray-400 uppercase">Setbacks</div>
             <div className="text-gray-900 font-medium text-[11px]">{setbacks}</div>
           </div>
         )}
       </div>
 
       {contact?.phone && (
-        <div className="text-[9px] text-gray-400 mt-2">
+        <div className="text-[11px] text-gray-400 mt-2">
           Contact City Hall at {contact.phone} for detailed zoning regulations.
         </div>
       )}
@@ -313,7 +313,7 @@ function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?:
           </svg>
         </div>
         <div className="text-gray-600 text-[11px] font-medium">City Services Available</div>
-        <div className="text-gray-400 text-[10px] mt-1">
+        <div className="text-gray-400 text-xs mt-1">
           Enable service layers to see district boundaries.
         </div>
         {contact?.website && (
@@ -321,7 +321,7 @@ function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?:
             href={contact.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-3 px-3 py-1.5 bg-cyan-50 text-cyan-600 text-[10px] font-medium rounded-full hover:bg-cyan-100 transition-colors"
+            className="inline-block mt-3 px-3 py-1.5 bg-cyan-50 text-cyan-600 text-xs font-medium rounded-full hover:bg-cyan-100 transition-colors"
           >
             View city services
           </a>
@@ -340,7 +340,7 @@ function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?:
             </svg>
           </div>
           <div>
-            <div className="text-[9px] text-red-600 uppercase font-medium">Fire District</div>
+            <div className="text-[11px] text-red-600 uppercase font-medium">Fire District</div>
             <div className="text-gray-900 text-[11px]">{fireDistrict.properties.name || 'Rural Fire District'}</div>
           </div>
         </div>
@@ -354,7 +354,7 @@ function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?:
             </svg>
           </div>
           <div>
-            <div className="text-[9px] text-purple-600 uppercase font-medium">School District</div>
+            <div className="text-[11px] text-purple-600 uppercase font-medium">School District</div>
             <div className="text-gray-900 text-[11px]">
               {schoolDistrict.properties.elementary || 'School District'}
             </div>
@@ -370,7 +370,7 @@ function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?:
             </svg>
           </div>
           <div>
-            <div className="text-[9px] text-cyan-600 uppercase font-medium">Water/Sewer</div>
+            <div className="text-[11px] text-cyan-600 uppercase font-medium">Water/Sewer</div>
             <div className="text-gray-900 text-[11px]">
               {waterSewer?.properties.name || waterSupply?.properties.SYSTEMTYPE || 'City Services'}
             </div>
@@ -386,7 +386,7 @@ function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?:
             </svg>
           </div>
           <div>
-            <div className="text-[9px] text-lime-600 uppercase font-medium">Wastewater</div>
+            <div className="text-[11px] text-lime-600 uppercase font-medium">Wastewater</div>
             <div className="text-gray-900 text-[11px]">{wastewater.properties.SYSTEMTYPE || 'Wastewater System'}</div>
           </div>
         </div>
@@ -414,7 +414,7 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
           </svg>
         </div>
         <div className="text-green-700 text-[11px] font-medium">No Known Hazards</div>
-        <div className="text-gray-400 text-[10px] mt-1">
+        <div className="text-gray-400 text-xs mt-1">
           This parcel is not in a mapped hazard zone.
         </div>
       </div>
@@ -432,13 +432,13 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
             }`}>
               Zone {flood100.properties.FLD_ZONE}
             </div>
-            <span className="text-blue-800 text-[10px] font-medium">100-Year Floodplain</span>
+            <span className="text-blue-800 text-xs font-medium">100-Year Floodplain</span>
           </div>
-          <div className="text-blue-700 text-[10px] mt-1">
+          <div className="text-blue-700 text-xs mt-1">
             {zoneDescriptions[flood100.properties.FLD_ZONE] || '1% annual chance of flooding'}
           </div>
           {flood100.properties.SFHA_TF === 'T' && (
-            <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[9px] text-amber-800">
+            <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[11px] text-amber-800">
               Special Flood Hazard Area - Flood insurance required for federally-backed mortgages.
             </div>
           )}
@@ -452,9 +452,9 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
             <div className="px-2 py-0.5 rounded bg-sky-200 text-sky-800 font-bold text-[11px]">
               Zone X
             </div>
-            <span className="text-sky-700 text-[10px] font-medium">500-Year Floodplain</span>
+            <span className="text-sky-700 text-xs font-medium">500-Year Floodplain</span>
           </div>
-          <div className="text-sky-600 text-[10px] mt-1">
+          <div className="text-sky-600 text-xs mt-1">
             0.2% annual chance of flooding. Flood insurance optional but recommended.
           </div>
         </div>
@@ -473,7 +473,7 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
                 <div className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[11px]">
                   FLOODWAY
                 </div>
-                <span className="text-red-800 text-[10px] font-medium">Zone {femaFlood.properties.FLD_ZONE}</span>
+                <span className="text-red-800 text-xs font-medium">Zone {femaFlood.properties.FLD_ZONE}</span>
               </>
             ) : (
               <>
@@ -482,11 +482,11 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
                 }`}>
                   Zone {femaFlood.properties.FLD_ZONE}
                 </div>
-                <span className="text-blue-800 text-[10px] font-medium">100-Year Floodplain</span>
+                <span className="text-blue-800 text-xs font-medium">100-Year Floodplain</span>
               </>
             )}
           </div>
-          <div className={`text-[10px] mt-1 ${
+          <div className={`text-xs mt-1 ${
             femaFlood.properties.ZONE_SUBTY === 'FLOODWAY' ? 'text-red-700' : 'text-blue-700'
           }`}>
             {femaFlood.properties.ZONE_SUBTY === 'FLOODWAY'
@@ -494,11 +494,11 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
               : '1% annual chance of flooding. Special development requirements apply.'}
           </div>
           {femaFlood.properties.SFHA_TF === 'T' && (
-            <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[9px] text-amber-800">
+            <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[11px] text-amber-800">
               Special Flood Hazard Area - Flood insurance required for federally-backed mortgages.
             </div>
           )}
-          <div className="text-gray-400 text-[8px] mt-1.5">
+          <div className="text-gray-400 text-[11px] mt-1.5">
             FEMA NFHL - Effective 9/26/2024
           </div>
         </div>
@@ -511,15 +511,15 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
             <div className="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[11px]">
               FLOODWAY
             </div>
-            <span className="text-red-800 text-[10px] font-medium">Zone {floodway.properties.FLD_ZONE}</span>
+            <span className="text-red-800 text-xs font-medium">Zone {floodway.properties.FLD_ZONE}</span>
           </div>
-          <div className="text-red-700 text-[10px] mt-1">
+          <div className="text-red-700 text-xs mt-1">
             River channel that must remain free of obstruction. No new construction permitted.
           </div>
-          <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[9px] text-amber-800">
+          <div className="mt-2 p-1.5 bg-amber-100 border border-amber-300 rounded text-[11px] text-amber-800">
             Special Flood Hazard Area - Flood insurance required for federally-backed mortgages.
           </div>
-          <div className="text-gray-400 text-[8px] mt-1.5">FEMA NFHL - Effective 9/26/2024</div>
+          <div className="text-gray-400 text-[11px] mt-1.5">FEMA NFHL - Effective 9/26/2024</div>
         </div>
       )}
 
@@ -530,9 +530,9 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
             <svg className="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd" />
             </svg>
-            <span className="text-orange-800 text-[10px] font-medium">Wildland-Urban Interface</span>
+            <span className="text-orange-800 text-xs font-medium">Wildland-Urban Interface</span>
           </div>
-          <div className="text-orange-700 text-[10px] mt-1">
+          <div className="text-orange-700 text-xs mt-1">
             Class: {wui.properties.WUI_Class || 'Intermix'}
           </div>
         </div>
@@ -545,12 +545,12 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
             <svg className="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
             </svg>
-            <span className="text-cyan-800 text-[10px] font-medium">
+            <span className="text-cyan-800 text-xs font-medium">
               {streams.properties.GCD_NAME || streams.properties.COM_NAME || 'Stream/River'}
             </span>
           </div>
           {streams.properties.TYPE && (
-            <div className="text-cyan-600 text-[9px] mt-0.5">
+            <div className="text-cyan-600 text-[11px] mt-0.5">
               {streams.properties.TYPE}
             </div>
           )}
@@ -572,13 +572,13 @@ function HistoryTab({ features, contact }: { features: FeatureInfo[]; contact?: 
           </svg>
         </div>
         <div className="text-gray-600 text-[11px] font-medium">No Recent Permits</div>
-        <div className="text-gray-400 text-[10px] mt-1">
+        <div className="text-gray-400 text-xs mt-1">
           State permit data covers 2016-2023.
         </div>
         {contact?.phone && (
           <a
             href={`tel:${contact.phone.replace(/\D/g, '')}`}
-            className="inline-block mt-3 px-3 py-1.5 bg-purple-50 text-purple-600 text-[10px] font-medium rounded-full hover:bg-purple-100 transition-colors"
+            className="inline-block mt-3 px-3 py-1.5 bg-purple-50 text-purple-600 text-xs font-medium rounded-full hover:bg-purple-100 transition-colors"
           >
             Inquire about permits
           </a>
@@ -589,7 +589,7 @@ function HistoryTab({ features, contact }: { features: FeatureInfo[]; contact?: 
 
   return (
     <div className="space-y-2">
-      <div className="text-[10px] text-gray-500 mb-2">
+      <div className="text-xs text-gray-500 mb-2">
         {permits.length} permit{permits.length !== 1 ? 's' : ''} on record
       </div>
 
@@ -601,20 +601,20 @@ function HistoryTab({ features, contact }: { features: FeatureInfo[]; contact?: 
         return (
           <div key={i} className="bg-gray-50 rounded-lg p-2 border border-gray-100">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-gray-700">{p.permit_number}</span>
-              <span className={`px-1.5 py-0.5 rounded text-[9px] font-medium ${
+              <span className="font-mono text-xs text-gray-700">{p.permit_number}</span>
+              <span className={`px-1.5 py-0.5 rounded text-[11px] font-medium ${
                 isActive ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'
               }`}>
                 {p.status}
               </span>
             </div>
-            <div className="text-[10px] text-gray-600 mt-1">{p.permit_type}</div>
-            {date && <div className="text-[9px] text-gray-400 mt-0.5">Issued: {date}</div>}
+            <div className="text-xs text-gray-600 mt-1">{p.permit_type}</div>
+            {date && <div className="text-[11px] text-gray-400 mt-0.5">Issued: {date}</div>}
           </div>
         )
       })}
 
-      <div className="text-[9px] text-gray-400 mt-2">
+      <div className="text-[11px] text-gray-400 mt-2">
         Data from Montana EBIZ portal (2016-2023).
       </div>
     </div>
@@ -652,8 +652,8 @@ export default function PopupContent({ features, onClose, contact }: PopupConten
   const tabs: { id: TabId; label: string; show: boolean }[] = [
     { id: 'history', label: 'History', show: hasHistory },
     { id: 'property', label: 'Property', show: hasProperty },
-    { id: 'zoning', label: 'Zoning', show: false }, // TEMPORARILY HIDDEN - enable when zoning data ready
-    { id: 'services', label: 'Services', show: false }, // TEMPORARILY HIDDEN - enable when service districts ready
+    { id: 'zoning', label: 'Zoning', show: hasZoning },
+    { id: 'services', label: 'Services', show: false }, // enable when service district data tied to parcels
     { id: 'hazards', label: 'Hazards', show: hasHazards }, // Re-enabled with FEMA flood data
   ]
 
@@ -681,7 +681,7 @@ export default function PopupContent({ features, onClose, contact }: PopupConten
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-2 py-1 text-[9px] font-medium whitespace-nowrap border-b-2 transition-colors ${
+              className={`px-2 py-1 text-[11px] font-medium whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === tab.id
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -715,12 +715,12 @@ export default function PopupContent({ features, onClose, contact }: PopupConten
         {project && (
           <div className="mt-2 pt-2 border-t border-gray-200">
             <div className="bg-blue-50 rounded-lg p-2 border border-blue-200">
-              <div className="text-[9px] text-blue-600 uppercase font-medium">Capital Project</div>
+              <div className="text-[11px] text-blue-600 uppercase font-medium">Capital Project</div>
               <div className="text-gray-900 text-[12px] font-semibold mt-0.5">
                 {project.properties.name || 'City Project'}
               </div>
               {project.properties.status && (
-                <span className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[9px] font-medium ${
+                <span className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[11px] font-medium ${
                   project.properties.status === 'Completed' ? 'bg-green-100 text-green-800' :
                   project.properties.status === 'In Progress' ? 'bg-amber-100 text-amber-800' :
                   'bg-gray-100 text-gray-700'
@@ -729,13 +729,13 @@ export default function PopupContent({ features, onClose, contact }: PopupConten
                 </span>
               )}
               {project.properties.budget && (
-                <div className="text-gray-600 text-[10px] mt-1">
+                <div className="text-gray-600 text-xs mt-1">
                   Budget: ${Number(project.properties.budget).toLocaleString()}
                 </div>
               )}
               <Link
                 href="/projects"
-                className="inline-block mt-2 px-3 py-1.5 bg-blue-600 text-white text-[10px] font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-block mt-2 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors"
               >
                 View All City Projects
               </Link>

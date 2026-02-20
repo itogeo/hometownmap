@@ -46,10 +46,9 @@ async function loadLocalData(cityId: string) {
         const data = await response.json()
         const parcels = data.features || []
         cachedParcels = parcels
-        console.log(`Loaded ${parcels.length} parcels for search`)
       }
     } catch (err) {
-      console.log('Failed to load parcel data for search')
+      // silently ignore parcel load failure
     }
   }
 
@@ -60,10 +59,9 @@ async function loadLocalData(cityId: string) {
         const data = await response.json()
         const businesses = data.features || []
         cachedBusinesses = businesses
-        console.log(`Loaded ${businesses.length} businesses for search`)
       }
     } catch (err) {
-      console.log('Failed to load business data for search')
+      // silently ignore business load failure
     }
   }
 }
@@ -254,7 +252,7 @@ export default function SearchBar({ cityId, mapCenter, onResultSelect, className
             })
           }
         } catch (err) {
-          console.log('Mapbox geocoding failed:', err)
+          // silently ignore geocoding failure
         }
       }
 
@@ -355,15 +353,15 @@ export default function SearchBar({ cityId, mapCenter, onResultSelect, className
             debouncedSearch(e.target.value)
           }}
           placeholder="Search address, owner, business..."
-          className="w-full pl-10 pr-10 py-2.5 border border-tf-stone-300 rounded-lg
-                     focus:outline-none focus:ring-2 focus:ring-tf-river-500 focus:border-transparent
+          className="w-full pl-10 pr-10 py-2.5 border border-civic-gray-300 rounded-lg
+                     focus:outline-none focus:ring-2 focus:ring-civic-blue-500 focus:border-transparent
                      text-sm placeholder:text-gray-400"
           aria-label="Search for addresses, property owners, or businesses"
         />
 
         {isSearching && (
           <div className="absolute right-3 top-3">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-tf-river-600"></div>
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-civic-blue-600"></div>
           </div>
         )}
 
@@ -384,15 +382,15 @@ export default function SearchBar({ cityId, mapCenter, onResultSelect, className
       </div>
 
       {results.length > 0 && (
-        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-tf-stone-200 max-h-96 overflow-y-auto z-[9999]">
-          <div className="px-3 py-2 text-xs text-tf-stone-500 bg-tf-stone-50 border-b flex items-center justify-between">
+        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-civic-gray-200 max-h-96 overflow-y-auto z-[9999]">
+          <div className="px-3 py-2 text-xs text-civic-gray-500 bg-civic-gray-50 border-b flex items-center justify-between">
             <span>{results.length} result{results.length !== 1 ? 's' : ''}</span>
-            <span className="text-tf-stone-400">Press Enter or click to select</span>
+            <span className="text-civic-gray-400">Press Enter or click to select</span>
           </div>
           {results.map((result, index) => (
             <button
               key={index}
-              className="w-full px-4 py-3 text-left hover:bg-tf-river-50 border-b border-tf-stone-100 last:border-b-0 transition-colors"
+              className="w-full px-4 py-3 text-left hover:bg-civic-blue-50 border-b border-civic-gray-100 last:border-b-0 transition-colors"
               onClick={() => selectResult(result)}
             >
               <div className="flex items-start gap-3">
@@ -460,7 +458,7 @@ export default function SearchBar({ cityId, mapCenter, onResultSelect, className
 
       {/* No results message */}
       {query.length >= 2 && results.length === 0 && !isSearching && (
-        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-tf-stone-200 p-4 z-[9999]">
+        <div className="absolute top-full mt-1 w-full bg-white rounded-lg shadow-xl border border-civic-gray-200 p-4 z-[9999]">
           <div className="text-center text-gray-500 text-sm">
             <svg className="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

@@ -1029,5 +1029,90 @@
       "url": "https://threeforksmontana.us",
       "description": "Official city website and services"
     }
-  ]
+  ],
+  "contacts": {
+    "emergency": [
+      { "title": "Emergency Services", "description": "Fire, Police, Ambulance", "phone": "911" },
+      { "title": "Gallatin County Sheriff", "description": "Non-emergency police services", "phone": "(406) 582-2100" },
+      { "title": "Three Forks Ambulance", "description": "Non-emergency medical transport", "phone": "(406) 285-3261" }
+    ],
+    "city_services": [
+      { "title": "City Hall", "description": "General inquiries, permits, licenses, utility billing", "phone": "(406) 285-3431", "email": "cityclerk@threeforksmontana.us", "address": "206 Main Street, Three Forks, MT 59752", "hours": "Mon-Fri 8:00 AM - 5:00 PM", "website": "https://threeforksmontana.us" },
+      { "title": "Water & Sewer", "description": "Water service, billing questions, report leaks", "phone": "(406) 285-3431" },
+      { "title": "Streets & Roads", "description": "Potholes, street lights, snow removal", "phone": "(406) 285-3431" },
+      { "title": "Building Permits", "description": "Construction permits, inspections, zoning questions", "phone": "(406) 285-3431" }
+    ],
+    "utilities": [
+      { "title": "NorthWestern Energy", "description": "Electric and natural gas service", "phone": "(888) 467-2669", "website": "https://www.northwesternenergy.com" },
+      { "title": "Republic Services", "description": "Garbage and recycling pickup", "phone": "(406) 587-6075", "website": "https://www.republicservices.com" },
+      { "title": "3 Rivers Communications", "description": "Internet, phone, and TV service", "phone": "(406) 467-2535", "website": "https://www.3rivers.net" }
+    ],
+    "schools": [
+      { "title": "Three Forks Schools", "description": "K-12 public school district", "phone": "(406) 285-3224", "website": "https://www.threeforks.k12.mt.us", "address": "216 East Neal Street" }
+    ],
+    "community": [
+      { "title": "Three Forks Community Library", "description": "Public library services", "phone": "(406) 285-3747", "address": "607 South Main Street" },
+      { "title": "Three Forks Post Office", "description": "Mail and package services", "phone": "(406) 285-3224", "address": "115 North Main Street", "hours": "Mon-Fri 8:30 AM - 4:30 PM, Sat 9:00 AM - 11:00 AM" },
+      { "title": "Chamber of Commerce", "description": "Local business and tourism information", "phone": "(406) 285-4753", "website": "https://www.threeforksmontana.com" }
+    ]
+  },
+  "development": {
+    "forms": [
+      {
+        "title": "Zoning & Land Use",
+        "forms": [
+          { "name": "Zoning Permit Application", "url": "https://threeforksmontana.us/documents/650/Zoning_Permit_2024.pdf" },
+          { "name": "Zone Change / Amendment", "url": "https://threeforksmontana.us/documents/650/Zone_Change_Amendment_Application.pdf" },
+          { "name": "Conditional Use Permit", "url": "https://threeforksmontana.us/documents/650/Conditional_Use_Permit_2023.pdf" },
+          { "name": "Variance Application", "url": "https://threeforksmontana.us/documents/650/Variance_Application_and_Criteria.pdf" }
+        ]
+      },
+      {
+        "title": "Subdivision",
+        "forms": [
+          { "name": "Preliminary Plat Application", "url": "https://threeforksmontana.us/documents/650/Preliminary_Plat_Application.pdf" },
+          { "name": "Final Plat Application", "url": "https://threeforksmontana.us/documents/650/Final_Plat_Application.pdf" },
+          { "name": "Exemption from Subdivision Review", "url": "https://threeforksmontana.us/documents/650/Exemption_from_Subdivision_Review_Application.pdf" },
+          { "name": "Improvements Agreement", "url": "https://threeforksmontana.us/documents/650/Subdivision_Improvements_Agreement_or_Guaranty.pdf" },
+          { "name": "Subdivision Regulations", "url": "https://threeforksmontana.us/documents/650/City_of_Three_Forks_Subdivision_Regs_OCR.pdf" }
+        ]
+      },
+      {
+        "title": "Floodplain",
+        "forms": [
+          { "name": "Flood Permit Application", "url": "https://threeforksmontana.us/documents/650/flood_permit_Three_Forks.pdf" },
+          { "name": "Floodplain Variance Application", "url": "https://threeforksmontana.us/documents/650/Floodplain_Variance_Application.pdf" },
+          { "name": "Non-Residential Floodproofing (FEMA)", "url": "https://threeforksmontana.us/documents/650/FEMA_Form_FF-206-FY-22-153_floodproofing_nonresidential.pdf" }
+        ]
+      },
+      {
+        "title": "Water & Sewer",
+        "forms": [
+          { "name": "New Water/Sewer Signup", "url": "https://threeforksmontana.us/documents/650/Sign_Up___Sewer_Determination.pdf" },
+          { "name": "New Connection Request", "url": "https://threeforksmontana.us/documents/650/New_Water_or_Sewer_Connection_Form_with_Contractor_info.pdf" },
+          { "name": "Public Design Standards", "url": "https://threeforksmontana.us/documents/650/ThreeForksDsnStds_20230411__version_2___1_.pdf" }
+        ]
+      },
+      {
+        "title": "Annexation",
+        "forms": [
+          { "name": "Annexation Application", "url": "https://threeforksmontana.us/documents/650/Annexation_Application.pdf" },
+          { "name": "Petition to Vacate/Abandon", "url": "https://threeforksmontana.us/documents/650/Petition_to_Abandon_form_v1.pdf" }
+        ]
+      }
+    ],
+    "key_documents": [
+      { "name": "Subdivision Regulations", "url": "https://threeforksmontana.us/documents/650/City_of_Three_Forks_Subdivision_Regs_OCR.pdf", "description": "Requirements for subdividing land" },
+      { "name": "Public Design Standards", "url": "https://threeforksmontana.us/documents/650/ThreeForksDsnStds_20230411__version_2___1_.pdf", "description": "Water, sewer, streets infrastructure" },
+      { "name": "Growth Policy (2022)", "url": "https://threeforksmontana.us/documents/650/FINAL_ADOPTED_220913_EnvisionThreeForks_AdoptedDocument_LowRes__1_.pdf", "description": "Envision Three Forks planning document" }
+    ],
+    "additional_resources": [
+      { "name": "Growth Policy", "url": "https://threeforksmontana.us/documents/650/FINAL_ADOPTED_220913_EnvisionThreeForks_AdoptedDocument_LowRes__1_.pdf", "description": "Envision Three Forks 2022" },
+      { "name": "Gallatin County Clerk & Recorder", "url": "https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map", "description": "Property records, deeds, plats" },
+      { "name": "Gallatin County FLUM", "url": "https://experience.arcgis.com/experience/150750a84b804bf6b76cfa32fd0f5db2/", "description": "Future Land Use Map" },
+      { "name": "Fee Schedule", "url": "https://threeforksmontana.us/documents/650/Fee_Schedule_Exhibit_for_Res.__465-2026_1.pdf", "description": "Current permit and application fees" }
+    ],
+    "zoning_layer": "zoningdistricts",
+    "forms_url": "https://threeforksmontana.us/forms-and-applications"
+  }
 }

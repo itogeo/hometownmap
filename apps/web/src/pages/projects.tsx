@@ -323,7 +323,6 @@ export default function ProjectsPage() {
             geometryType: f.geometry.type,
           }))
           setProjects(projectList)
-          console.log(`✅ Loaded ${projectList.length} projects`)
         }
       })
       .catch((err) => console.error('Failed to load projects:', err))

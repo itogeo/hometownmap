@@ -17,11 +17,9 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
   // Load parcels directly
   useEffect(() => {
     if (visibleLayers.includes('parcels')) {
-      console.log('Loading parcels directly...')
       fetch(`/data/layers/${cityId}/parcels.geojson`)
         .then(res => res.json())
         .then(data => {
-          console.log('Parcels loaded directly:', data.features?.length)
           setParcelData(data)
         })
         .catch(err => console.error('Error loading parcels:', err))
@@ -33,11 +31,9 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
   // Load businesses directly
   useEffect(() => {
     if (visibleLayers.includes('businesses')) {
-      console.log('Loading businesses directly...')
       fetch(`/data/layers/${cityId}/businesses.geojson`)
         .then(res => res.json())
         .then(data => {
-          console.log('Businesses loaded directly:', data.features?.length)
           setBusinessData(data)
         })
         .catch(err => console.error('Error loading businesses:', err))
@@ -49,11 +45,9 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
   // Load attractions directly
   useEffect(() => {
     if (visibleLayers.includes('attractions')) {
-      console.log('Loading attractions directly...')
       fetch(`/data/layers/${cityId}/attractions.geojson`)
         .then(res => res.json())
         .then(data => {
-          console.log('Attractions loaded directly:', data.features?.length)
           setAttractionsData(data)
         })
         .catch(err => console.error('Error loading attractions:', err))
@@ -70,11 +64,9 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
 
   // Load subdivision data for spatial lookups
   useEffect(() => {
-    console.log('Loading subdivisions for spatial lookup...')
     fetch(`/data/layers/${cityId}/subdivisions.geojson`)
       .then(res => res.json())
       .then(data => {
-        console.log('Subdivisions loaded:', data.features?.length)
         setSubdivisionData(data)
       })
       .catch(err => console.error('Error loading subdivisions:', err))
@@ -82,11 +74,9 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
 
   // Always load flood zone data for parcel overlap detection
   useEffect(() => {
-    console.log('Loading flood zones for spatial lookup...')
     fetch(`/data/layers/${cityId}/fema_flood_zones.geojson`)
       .then(res => res.json())
       .then(data => {
-        console.log('Flood zones loaded:', data.features?.length)
         setFloodZoneData(data)
       })
       .catch(err => console.error('Error loading flood zones:', err))
@@ -95,7 +85,6 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
   // Load other layer data (only load layers not already loaded)
   useEffect(() => {
     if (visibleLayers.length === 0) {
-      console.log('No visible layers yet, skipping load')
       return
     }
 
@@ -107,11 +96,8 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
       )
 
       if (layersToLoad.length === 0) {
-        console.log('All visible layers already loaded')
         return
       }
-
-      console.log('Loading new layers:', layersToLoad)
 
       const newLayerData: { [key: string]: any } = {}
 
@@ -120,11 +106,6 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
           const response = await fetch(`/data/layers/${cityId}/${layerId}.geojson`)
           if (response.ok) {
             const data = await response.json()
-            console.log(`Loaded ${layerId}:`, {
-              features: data.features?.length || 0,
-              type: data.type,
-              firstGeomType: data.features?.[0]?.geometry?.type
-            })
             newLayerData[layerId] = data
             loadedLayersRef.current.add(layerId)
           } else {
@@ -137,7 +118,6 @@ export function useMapData({ cityId, visibleLayers }: UseMapDataOptions) {
 
       // Merge with existing layer data
       if (Object.keys(newLayerData).length > 0) {
-        console.log('Merging', Object.keys(newLayerData).length, 'new layers')
         setLayerData(prev => ({ ...prev, ...newLayerData }))
       }
     }

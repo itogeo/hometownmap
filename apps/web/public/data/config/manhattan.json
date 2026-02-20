@@ -1541,5 +1541,61 @@
       "url": "http://sdwisdww.mt.gov:8080/DWW/JSP/SearchDispatch?number=&name=&county=GALLATIN",
       "description": "Public water supply system database"
     }
-  ]
+  ],
+  "contacts": {
+    "emergency": [
+      { "title": "Emergency Services", "description": "Fire, Police, Ambulance", "phone": "911" },
+      { "title": "Gallatin County Sheriff", "description": "Non-emergency police services", "phone": "(406) 582-2100" },
+      { "title": "Manhattan Volunteer Fire", "description": "Non-emergency fire department", "phone": "(406) 284-3312" }
+    ],
+    "city_services": [
+      { "title": "Town Hall", "description": "General inquiries, permits, licenses", "phone": "(406) 284-3235", "email": "townofmanhattan@gmail.com", "address": "207 S 6th Street, Manhattan, MT 59741", "hours": "Mon-Fri 8:00 AM - 5:00 PM", "website": "http://www.townofmanhattan.com" },
+      { "title": "Water & Sewer", "description": "Water service, billing, report leaks", "phone": "(406) 284-3235" },
+      { "title": "Streets & Roads", "description": "Potholes, street lights, snow removal", "phone": "(406) 284-3235" },
+      { "title": "Building Permits", "description": "Construction permits, inspections, zoning", "phone": "(406) 595-9300" }
+    ],
+    "utilities": [
+      { "title": "NorthWestern Energy", "description": "Electric and natural gas service", "phone": "(888) 467-2669", "website": "https://www.northwesternenergy.com" },
+      { "title": "Republic Services", "description": "Garbage and recycling pickup", "phone": "(406) 587-6075", "website": "https://www.republicservices.com" }
+    ],
+    "schools": [
+      { "title": "Manhattan School District", "description": "K-12 public school district", "phone": "(406) 284-3431", "website": "https://www.manhattan.k12.mt.us" }
+    ],
+    "community": [
+      { "title": "Manhattan Community Library", "description": "Public library services", "phone": "(406) 284-3373", "address": "120 S 6th Street" },
+      { "title": "Manhattan Senior Center", "description": "Senior services and activities", "phone": "(406) 284-3420" }
+    ]
+  },
+  "development": {
+    "forms": [
+      {
+        "title": "Zoning & Land Use",
+        "forms": [
+          { "name": "Zoning Permit Application", "url": "https://townofmanhattan.com/s/ZoningPermit_Draft-56l9.pdf" },
+          { "name": "Conditional Use Permit", "url": "https://townofmanhattan.com/s/Application-CUP-7cwx.pdf" },
+          { "name": "Variance Application", "url": "https://townofmanhattan.com/s/Application-Variance-sfem.pdf" },
+          { "name": "Sign Permit Application", "url": "https://townofmanhattan.com/s/SignPermit_Draft-xtkj.pdf" },
+          { "name": "Fence Permit Application", "url": "https://townofmanhattan.com/s/FencePermit_Draft-t3d8.pdf" }
+        ]
+      },
+      {
+        "title": "Building",
+        "forms": [
+          { "name": "Building Permit Application", "url": "https://townofmanhattan.com/s/BuildingPermit_Draft-rbyf.pdf" }
+        ]
+      }
+    ],
+    "key_documents": [
+      { "name": "Growth Policy", "url": "https://townofmanhattan.com/s/Final_Document_Reduced-pnt9.pdf", "description": "Manhattan City-County Growth Policy" },
+      { "name": "Design Standards", "url": "https://townofmanhattan.com/s/Manhattan_Design_Standards.pdf", "description": "Manhattan design standards and guidelines" },
+      { "name": "Town Code (Zoning)", "url": "https://codelibrary.amlegal.com/codes/manhattanmt/latest/overview", "description": "Municipal code including zoning regulations" }
+    ],
+    "additional_resources": [
+      { "name": "Building & Zoning Page", "url": "http://www.townofmanhattan.com/building-zoning", "description": "Official building and zoning information" },
+      { "name": "Gallatin County Clerk & Recorder", "url": "https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map", "description": "Property records, deeds, plats" },
+      { "name": "Envision Gallatin", "url": "https://envisiongallatin.com/", "description": "Regional planning initiative" }
+    ],
+    "zoning_layer": "manhattan_zoning",
+    "forms_url": "http://www.townofmanhattan.com/building-zoning"
+  }
 }
