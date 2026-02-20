@@ -18,12 +18,18 @@
       "layers": [
         "cities",
         "parcels",
+        "manhattan_zoning",
         "emergency_services"
       ],
       "availableLayers": [
         "cities",
         "parcels",
+        "county_parcels",
+        "manhattan_zoning",
+        "zoning",
+        "jurisdiction_boundary",
         "emergency_services",
+        "town_facilities",
         "structures",
         "buildings",
         "addresses",
@@ -43,7 +49,13 @@
         {
           "id": "property",
           "name": "Property Data",
-          "layers": ["parcels", "structures", "buildings", "addresses", "public_lands"],
+          "layers": ["parcels", "county_parcels", "structures", "buildings", "addresses", "public_lands"],
+          "defaultExpanded": true
+        },
+        {
+          "id": "zoning",
+          "name": "Zoning",
+          "layers": ["manhattan_zoning", "zoning", "jurisdiction_boundary"],
           "defaultExpanded": true
         },
         {
@@ -54,8 +66,8 @@
         },
         {
           "id": "services",
-          "name": "Services",
-          "layers": ["emergency_services", "school_buildings"],
+          "name": "Services & Facilities",
+          "layers": ["emergency_services", "town_facilities", "school_buildings"],
           "defaultExpanded": false
         }
       ],
@@ -70,17 +82,20 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
-        "zoning",
-        "subdivisions",
+        "manhattan_zoning",
+        "jurisdiction_boundary",
         "parcels",
         "cities"
       ],
       "availableLayers": [
+        "manhattan_zoning",
         "zoning",
         "county_zoning",
+        "jurisdiction_boundary",
         "subdivisions",
         "minor_subdivisions",
         "parcels",
+        "county_parcels",
         "cities",
         "structures",
         "buildings",
@@ -91,6 +106,8 @@
         "annexation_history",
         "roads",
         "trails",
+        "town_trails",
+        "town_parks",
         "public_water_supply",
         "public_wastewater",
         "wastewater",
@@ -106,13 +123,13 @@
         {
           "id": "zoning_land_use",
           "name": "Zoning & Land Use",
-          "layers": ["zoning", "county_zoning", "neighborhood_plans", "planning_jurisdictions", "annexation_history"],
+          "layers": ["manhattan_zoning", "zoning", "county_zoning", "jurisdiction_boundary", "neighborhood_plans", "planning_jurisdictions", "annexation_history"],
           "defaultExpanded": true
         },
         {
           "id": "development",
           "name": "Property & Development",
-          "layers": ["parcels", "structures", "buildings", "addresses", "subdivisions", "minor_subdivisions"],
+          "layers": ["parcels", "county_parcels", "structures", "buildings", "addresses", "subdivisions", "minor_subdivisions"],
           "defaultExpanded": false
         },
         {
@@ -124,7 +141,7 @@
         {
           "id": "infrastructure",
           "name": "Infrastructure & Utilities",
-          "layers": ["roads", "rail_lines", "trails", "public_water_supply", "public_wastewater", "wastewater", "water_supply", "water_sewer_districts", "zipcodes"],
+          "layers": ["roads", "rail_lines", "trails", "town_trails", "town_parks", "public_water_supply", "public_wastewater", "wastewater", "water_supply", "water_sewer_districts", "zipcodes"],
           "defaultExpanded": false
         }
       ],
@@ -204,12 +221,16 @@
       "mapStyle": "outdoors",
       "layers": [
         "attractions",
-        "public_lands",
+        "town_parks",
+        "town_trails",
         "streams",
         "cities"
       ],
       "availableLayers": [
         "attractions",
+        "town_parks",
+        "town_trails",
+        "town_facilities",
         "parks_recreation",
         "public_lands",
         "public_lands_county",
@@ -232,8 +253,8 @@
       "layerGroups": [
         {
           "id": "recreation",
-          "name": "Recreation & Attractions",
-          "layers": ["attractions", "parks_recreation", "trails"],
+          "name": "Parks, Trails & Attractions",
+          "layers": ["attractions", "town_parks", "town_trails", "town_facilities", "parks_recreation", "trails"],
           "defaultExpanded": true
         },
         {
@@ -377,10 +398,10 @@
       ]
     },
     "parcels": {
-      "source": "montana_cadastral",
+      "source": "gallatin_county",
       "display_name": "Property Parcels",
-      "description": "Property ownership and boundaries from Montana Cadastral",
-      "data_freshness": "Updated weekly",
+      "description": "8,372 property parcels from Gallatin County GIS with subdivision, lot, and tax data",
+      "data_freshness": "Gallatin County GIS 2024",
       "minzoom": 13,
       "style": {
         "fill": "#FBBF24",
@@ -389,12 +410,13 @@
         "stroke-width": 1.5
       },
       "popup_fields": [
-        "ownername",
-        "addresslin",
-        "citystatez",
-        "gisacres",
-        "proptype",
-        "totalvalue"
+        "PARCEL_ID",
+        "CLASS",
+        "SUB_NAME",
+        "BLOCK",
+        "LOT",
+        "GEOCODE",
+        "TAXCODE"
       ]
     },
     "subdivisions": {
@@ -1175,17 +1197,40 @@
         "TYPE"
       ]
     },
-    "zoning": {
-      "source": "gallatin_county",
-      "display_name": "Zoning Designations",
-      "description": "County zoning district designations showing land use classifications",
-      "data_freshness": "Gallatin County 2024",
+    "manhattan_zoning": {
+      "source": "national_zoning_atlas",
+      "display_name": "Town Zoning Districts",
+      "description": "Official Town of Manhattan municipal zoning districts - 7 zones including residential, commercial, industrial, and parks",
+      "data_freshness": "National Zoning Atlas 2023 (Town Ordinance)",
       "minzoom": 11,
       "style": {
         "fill": "#8B5CF6",
-        "fill-opacity": 0.3,
+        "fill-opacity": 0.35,
         "stroke": "#6D28D9",
-        "stroke-width": 2
+        "stroke-width": 2.5
+      },
+      "popup_fields": [
+        "zone_name",
+        "zone_type",
+        "acres",
+        "single_family",
+        "two_family",
+        "three_family",
+        "four_plus_family",
+        "adu_allowed"
+      ]
+    },
+    "zoning": {
+      "source": "gallatin_county",
+      "display_name": "County Zoning Designations",
+      "description": "Gallatin County zoning districts in unincorporated areas surrounding Manhattan",
+      "data_freshness": "Gallatin County 2024",
+      "minzoom": 11,
+      "style": {
+        "fill": "#A78BFA",
+        "fill-opacity": 0.25,
+        "stroke": "#7C3AED",
+        "stroke-width": 1.5
       },
       "popup_fields": [
         "DISTRICT_N",
@@ -1334,6 +1379,94 @@
         "DIST_NO",
         "TYPE"
       ]
+    },
+    "town_parks": {
+      "source": "openstreetmap",
+      "display_name": "Parks & Playgrounds",
+      "description": "Town parks, playgrounds, and open spaces including Taylor Park, King's Bark Park, Altenbrand Park, and Railroad Park",
+      "data_freshness": "OpenStreetMap 2024",
+      "minzoom": 12,
+      "style": {
+        "fill": "#22C55E",
+        "fill-opacity": 0.4,
+        "stroke": "#16A34A",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type"
+      ]
+    },
+    "town_trails": {
+      "source": "openstreetmap",
+      "display_name": "Town Trails & Paths",
+      "description": "Walking paths, sidewalks, and the Manhattan Trail System including the 1.8-mile paved trail to the Gallatin River",
+      "data_freshness": "OpenStreetMap 2024",
+      "style": {
+        "stroke": "#16A34A",
+        "stroke-width": 3,
+        "stroke-dasharray": [4, 2]
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "surface"
+      ]
+    },
+    "town_facilities": {
+      "source": "local",
+      "display_name": "Town Facilities",
+      "description": "Manhattan Town Hall, Fire Department, Library, Senior Center, Museum, and other public facilities",
+      "data_freshness": "Town of Manhattan 2024",
+      "style": {
+        "fill": "#2563EB",
+        "fill-opacity": 1,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "description"
+      ]
+    },
+    "jurisdiction_boundary": {
+      "source": "national_zoning_atlas",
+      "display_name": "Town Jurisdiction Boundary",
+      "description": "Official Manhattan municipal jurisdiction boundary",
+      "data_freshness": "National Zoning Atlas 2023",
+      "style": {
+        "fill": "transparent",
+        "fill-opacity": 0,
+        "stroke": "#DC2626",
+        "stroke-width": 3,
+        "stroke-dasharray": [8, 4]
+      },
+      "popup_fields": [
+        "jurisdiction"
+      ]
+    },
+    "county_parcels": {
+      "source": "gallatin_county",
+      "display_name": "County Parcels (Alt View)",
+      "description": "Alternate parcel view with year of origin and survey data",
+      "data_freshness": "Gallatin County GIS 2024",
+      "minzoom": 13,
+      "style": {
+        "fill": "#F59E0B",
+        "fill-opacity": 0.12,
+        "stroke": "#D97706",
+        "stroke-width": 1
+      },
+      "popup_fields": [
+        "PARCEL_ID",
+        "CLASS",
+        "SUB_NAME",
+        "LOT",
+        "YR_ORIGIN",
+        "DATE_SURV",
+        "GEOCODE"
+      ]
     }
   },
   "branding": {
@@ -1359,9 +1492,34 @@
   },
   "resources": [
     {
+      "name": "Town of Manhattan",
+      "url": "http://www.townofmanhattan.com",
+      "description": "Official town website - permits, zoning, public works"
+    },
+    {
+      "name": "Building & Zoning",
+      "url": "http://www.townofmanhattan.com/building-zoning",
+      "description": "Zoning permits, building permits, and zoning map"
+    },
+    {
+      "name": "Town Code (Zoning Ordinance)",
+      "url": "https://codelibrary.amlegal.com/codes/manhattanmt/latest/overview",
+      "description": "Manhattan municipal code including Title 10 zoning regulations"
+    },
+    {
+      "name": "Growth Policy",
+      "url": "https://townofmanhattan.com/s/Final_Document_Reduced-pnt9.pdf",
+      "description": "Manhattan City-County Growth Policy document"
+    },
+    {
       "name": "Gallatin County GIS",
-      "url": "https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map/",
-      "description": "County GIS portal and property records"
+      "url": "https://gis.gallatin.mt.gov/webmaps/?map=planning",
+      "description": "County interactive planning map"
+    },
+    {
+      "name": "Gallatin County GIS Data",
+      "url": "https://www.gallatinmt.gov/geographic-information-services-gis/pages/data-download",
+      "description": "County GIS data downloads (shapefiles)"
     },
     {
       "name": "Montana Cadastral",
@@ -1369,9 +1527,19 @@
       "description": "Statewide property ownership database"
     },
     {
-      "name": "Town of Manhattan",
-      "url": "http://www.townofmanhattan.com",
-      "description": "Official town website and services"
+      "name": "Envision Gallatin",
+      "url": "https://envisiongallatin.com/",
+      "description": "Gallatin County regional planning initiative"
+    },
+    {
+      "name": "Manhattan Trail System",
+      "url": "https://www.manhattantrailsystem.com/",
+      "description": "Trail maps and information"
+    },
+    {
+      "name": "Montana DEQ Water Systems",
+      "url": "http://sdwisdww.mt.gov:8080/DWW/JSP/SearchDispatch?number=&name=&county=GALLATIN",
+      "description": "Public water supply system database"
     }
   ]
 }
