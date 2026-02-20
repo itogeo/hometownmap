@@ -1,0 +1,502 @@
+{
+  "id": "manhattan",
+  "name": "Manhattan",
+  "county": "gallatin",
+  "state": "montana",
+  "map": {
+    "center": [
+      -111.3348,
+      45.8624
+    ],
+    "zoom": 14,
+    "bounds": null
+  },
+  "modes": {
+    "property": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "cities",
+        "parcels",
+        "emergency_services"
+      ],
+      "availableLayers": [
+        "cities",
+        "parcels",
+        "emergency_services",
+        "public_lands",
+        "subdivisions",
+        "buildings"
+      ],
+      "layerGroups": [
+        {
+          "id": "details",
+          "name": "Additional Layers",
+          "layers": ["public_lands", "subdivisions", "buildings"],
+          "defaultExpanded": false
+        }
+      ],
+      "features": [
+        "search_address",
+        "parcel_info",
+        "services_info",
+        "parks_info"
+      ]
+    },
+    "planning": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "subdivisions",
+        "parcels",
+        "cities"
+      ],
+      "availableLayers": [
+        "subdivisions",
+        "minor_subdivisions",
+        "parcels",
+        "cities",
+        "buildings"
+      ],
+      "layerGroups": [
+        {
+          "id": "property_data",
+          "name": "Property & Development",
+          "layers": ["parcels", "minor_subdivisions", "buildings"],
+          "defaultExpanded": false
+        }
+      ],
+      "features": [
+        "zoning_lookup",
+        "parcel_analysis",
+        "land_use_planning"
+      ]
+    },
+    "hazards": {
+      "enabled": true,
+      "mapStyle": "satellite",
+      "layers": [
+        "floodplain_100yr",
+        "floodway",
+        "streams",
+        "cities"
+      ],
+      "availableLayers": [
+        "floodplain_100yr",
+        "floodway",
+        "fema_flood_zones",
+        "streams",
+        "firedistricts",
+        "hydrants",
+        "groundwater_wells",
+        "cities"
+      ],
+      "layerGroups": [
+        {
+          "id": "flooding",
+          "name": "Flooding",
+          "layers": ["floodplain_100yr", "floodway"],
+          "defaultExpanded": true
+        },
+        {
+          "id": "water_data",
+          "name": "Water & Safety",
+          "layers": ["firedistricts", "hydrants", "groundwater_wells"],
+          "defaultExpanded": false
+        }
+      ],
+      "features": [
+        "flood_zones",
+        "hazard_info",
+        "environmental_regulations"
+      ]
+    },
+    "explore": {
+      "enabled": true,
+      "mapStyle": "outdoors",
+      "layers": [
+        "attractions",
+        "public_lands",
+        "streams",
+        "cities"
+      ],
+      "availableLayers": [
+        "attractions",
+        "public_lands",
+        "streams",
+        "cities"
+      ],
+      "features": [
+        "story_map",
+        "attraction_info",
+        "trip_planning"
+      ]
+    },
+    "business": {
+      "enabled": true,
+      "mapStyle": "streets",
+      "layers": [
+        "businesses",
+        "parcels",
+        "cities"
+      ],
+      "features": [
+        "search_properties",
+        "filter_by_zoning",
+        "demographics"
+      ]
+    }
+  },
+  "layers": {
+    "fema_flood_zones": {
+      "source": "local",
+      "display_name": "Flood Zones (All)",
+      "description": "Combined FEMA flood data",
+      "data_freshness": "FEMA NFHL - Effective 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#60A5FA",
+        "fill-opacity": 0.3,
+        "stroke": "#2563EB",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "floodplain_100yr": {
+      "source": "local",
+      "display_name": "100-Year Floodplain",
+      "description": "FEMA Special Flood Hazard Area - 1% annual chance of flooding. Flood insurance required for federally-backed mortgages.",
+      "data_freshness": "FEMA NFHL - Effective 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#60A5FA",
+        "fill-opacity": 0.3,
+        "stroke": "#2563EB",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "floodway": {
+      "source": "local",
+      "display_name": "Floodway",
+      "description": "FEMA Regulatory Floodway - river channel that must remain free of obstruction. No new construction permitted.",
+      "data_freshness": "FEMA NFHL - Effective 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#DC2626",
+        "fill-opacity": 0.35,
+        "stroke": "#7F1D1D",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "FLD_ZONE",
+        "ZONE_SUBTY",
+        "SFHA_TF",
+        "STATIC_BFE"
+      ]
+    },
+    "public_lands": {
+      "source": "local",
+      "display_name": "Public Land",
+      "description": "Federal, State, County, and Municipal owned parcels",
+      "data_freshness": "Updated 2024",
+      "minzoom": 11,
+      "style": {
+        "fill": "#059669",
+        "fill-opacity": 0.25,
+        "stroke": "#047857",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "ownername",
+        "_public_category",
+        "gisacres",
+        "addresslin"
+      ]
+    },
+    "parcels": {
+      "source": "montana_cadastral",
+      "display_name": "Property Parcels",
+      "description": "Property ownership and boundaries from Montana Cadastral",
+      "data_freshness": "Updated weekly",
+      "minzoom": 13,
+      "style": {
+        "fill": "#FBBF24",
+        "fill-opacity": 0.15,
+        "stroke": "#B45309",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "ownername",
+        "addresslin",
+        "citystatez",
+        "gisacres",
+        "proptype",
+        "totalvalue"
+      ]
+    },
+    "subdivisions": {
+      "source": "gallatin_county",
+      "display_name": "Subdivisions",
+      "description": "Recorded subdivision plats",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 0.2,
+        "stroke": "#7C3AED",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "SUB_NAME",
+        "FILINGDATE",
+        "NUMOFPHASE",
+        "NUMOFLOTS"
+      ]
+    },
+    "minor_subdivisions": {
+      "source": "gallatin_county",
+      "display_name": "Minor Subdivisions",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#A78BFA",
+        "fill-opacity": 0.2,
+        "stroke": "#8B5CF6",
+        "stroke-width": 1.5
+      },
+      "popup_fields": [
+        "SUB_NAME",
+        "FILINGDATE"
+      ]
+    },
+    "cities": {
+      "source": "county",
+      "display_name": "City Limits",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "transparent",
+        "fill-opacity": 0,
+        "stroke": "#374151",
+        "stroke-width": 2,
+        "stroke-dasharray": [4, 2]
+      },
+      "popup_fields": []
+    },
+    "buildings": {
+      "source": "microsoft",
+      "display_name": "Building Footprints",
+      "description": "AI-derived building footprints",
+      "data_freshness": "Microsoft 2023",
+      "minzoom": 14,
+      "style": {
+        "fill": "#6B7280",
+        "fill-opacity": 0.6,
+        "stroke": "#374151",
+        "stroke-width": 0.5
+      },
+      "popup_fields": [
+        "area_sqm"
+      ]
+    },
+    "roads": {
+      "source": "county",
+      "display_name": "Roads",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "stroke": "#9CA3AF",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "full_name",
+        "road_type"
+      ]
+    },
+    "streams": {
+      "source": "local",
+      "display_name": "Streams & Rivers",
+      "description": "Regional waterway network",
+      "data_freshness": "Gallatin County GIS 2024",
+      "style": {
+        "stroke": "#2980b9",
+        "stroke-width": 2,
+        "stroke-opacity": 0.85
+      },
+      "popup_fields": [
+        "GCD_NAME",
+        "COM_NAME",
+        "DLG_STATUS",
+        "TYPE"
+      ]
+    },
+    "firedistricts": {
+      "source": "county",
+      "display_name": "Fire Districts",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#EF4444",
+        "fill-opacity": 0.15,
+        "stroke": "#DC2626",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "area_acres"
+      ]
+    },
+    "schooldistricts": {
+      "source": "county",
+      "display_name": "School Districts",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#8B5CF6",
+        "fill-opacity": 0.15,
+        "stroke": "#7C3AED",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "elementary",
+        "high_schoo"
+      ]
+    },
+    "emergency_services": {
+      "source": "local",
+      "display_name": "Essential Services",
+      "description": "Town services, schools, fire, medical, and public facilities",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#DC2626",
+        "fill-opacity": 1,
+        "stroke": "#B91C1C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "type",
+        "address",
+        "phone",
+        "hours",
+        "services"
+      ]
+    },
+    "businesses": {
+      "source": "local",
+      "display_name": "Local Businesses",
+      "data_freshness": "Community sourced",
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 1,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "category",
+        "address",
+        "phone",
+        "website"
+      ]
+    },
+    "attractions": {
+      "source": "local",
+      "display_name": "Points of Interest",
+      "data_freshness": "Updated 2024",
+      "style": {
+        "fill": "#F59E0B",
+        "fill-opacity": 1,
+        "stroke": "#D97706",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "name",
+        "category",
+        "description",
+        "hours",
+        "fee"
+      ]
+    },
+    "groundwater_wells": {
+      "source": "gallatin_county",
+      "display_name": "Groundwater Monitor Wells",
+      "data_freshness": "GWIC 2024",
+      "style": {
+        "fill": "#0EA5E9",
+        "fill-opacity": 1,
+        "stroke": "#0284C7",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "GW_MONITOR",
+        "MONITOR_TY",
+        "NOTES"
+      ]
+    },
+    "hydrants": {
+      "source": "gallatin_county",
+      "display_name": "Fire Hydrants & Fill Sites",
+      "description": "Fire hydrants and water fill sites for emergency response",
+      "data_freshness": "County 2024",
+      "style": {
+        "fill": "#EF4444",
+        "fill-opacity": 1,
+        "stroke": "#B91C1C",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "ADDRESS",
+        "TYPE",
+        "SOURCE",
+        "USABILITY",
+        "FIRE_AREA",
+        "TOWN",
+        "COMMENTS"
+      ]
+    }
+  },
+  "branding": {
+    "logo": null,
+    "seal": null,
+    "primary_color": "#1E40AF",
+    "secondary_color": "#ffffff",
+    "accent_color": "#059669",
+    "title": "Manhattan HomeTownMap",
+    "subtitle": "Interactive Planning & Community Map"
+  },
+  "contact": {
+    "city_hall": "207 S 6th Street, Manhattan, MT 59741",
+    "phone": "(406) 284-3235",
+    "email": "townofmanhattan@gmail.com",
+    "website": "http://www.townofmanhattan.com"
+  },
+  "demographics": {
+    "population": 2086,
+    "median_income": 69671,
+    "median_age": 41.5,
+    "growth_rate": "+37.2% (2010-2020)"
+  },
+  "resources": [
+    {
+      "name": "Gallatin County GIS",
+      "url": "https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map/",
+      "description": "County GIS portal and property records"
+    },
+    {
+      "name": "Montana Cadastral",
+      "url": "https://svc.mt.gov/msl/cadastral/",
+      "description": "Statewide property ownership database"
+    },
+    {
+      "name": "Town of Manhattan",
+      "url": "http://www.townofmanhattan.com",
+      "description": "Official town website and services"
+    }
+  ]
+}

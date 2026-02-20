@@ -255,7 +255,7 @@ export default function TourismPanel({
       {/* Header */}
       <div className="p-3 border-b bg-white/80 backdrop-blur shrink-0">
         <div className="mb-2">
-          <h2 className="font-bold text-gray-900">Explore Three Forks</h2>
+          <h2 className="font-bold text-gray-900">Explore</h2>
           <p className="text-xs text-gray-500">Your guide to adventure</p>
         </div>
 

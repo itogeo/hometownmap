@@ -1,0 +1,219 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3362,
+          45.86
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Town Hall",
+        "type": "Government",
+        "address": "207 S 6th St, Manhattan, MT 59741",
+        "phone": "(406) 284-3235",
+        "hours": "Mon-Fri 8:30 AM - 5:00 PM",
+        "services": "Town Office, Police, City Court, Planning Board"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3362,
+          45.86
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Volunteer Fire Department",
+        "type": "Fire Station",
+        "address": "207 S 6th St, Manhattan, MT 59741",
+        "phone": "(406) 284-6224",
+        "services": "Fire suppression, emergency medical services"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3362,
+          45.86
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Police Department",
+        "type": "Police",
+        "address": "207 S 6th St, Manhattan, MT 59741",
+        "phone": "(406) 284-6630",
+        "services": "Law enforcement, non-emergency services"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.333,
+          45.8625
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Post Office",
+        "type": "Post Office",
+        "address": "201 N Railroad Ave E, Manhattan, MT 59741",
+        "phone": "(406) 284-6585",
+        "hours": "Mon-Fri 9:00 AM - 5:00 PM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.337,
+          45.862
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Community Library",
+        "type": "Library",
+        "address": "200 W Fulton Ave, Manhattan, MT 59741",
+        "phone": "(406) 284-3341",
+        "hours": "Mon-Thu 1-7 PM, Fri 10 AM-4 PM, Sat 11 AM-3 PM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.334,
+          45.864
+        ]
+      },
+      "properties": {
+        "name": "Bair Memorial Clinic",
+        "type": "Medical Clinic",
+        "address": "530 3rd St NW, Manhattan, MT 59741",
+        "phone": "(406) 284-3393",
+        "services": "Primary care, medical services"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.864
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Elementary School",
+        "type": "School",
+        "address": "416 N Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-3250"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.864
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Middle School",
+        "type": "School",
+        "address": "416 N Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-2671"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.864
+        ]
+      },
+      "properties": {
+        "name": "Manhattan High School",
+        "type": "School",
+        "address": "416 N Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-3341"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.863
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Presbyterian Church",
+        "type": "Church",
+        "address": "214 N Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-6961"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3355,
+          45.8604
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Bible Church",
+        "type": "Church",
+        "address": "123 S 5th St, Manhattan, MT 59741",
+        "phone": "(406) 284-3210"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.336,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Keystone Church",
+        "type": "Church",
+        "address": "102 W Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-2300"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3355,
+          45.8625
+        ]
+      },
+      "properties": {
+        "name": "Gethsemane Episcopal Church",
+        "type": "Church",
+        "address": "305 N 5th St, Manhattan, MT 59741"
+      }
+    }
+  ]
+}

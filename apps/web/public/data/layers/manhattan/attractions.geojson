@@ -1,0 +1,101 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Potato Festival",
+        "category": "Festival",
+        "description": "Annual mid-August festival celebrating Manhattan's potato farming heritage. Parade, 5K, car show, live music.",
+        "address": "Main St, Manhattan, MT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.8606
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Area Museum",
+        "category": "Museum",
+        "description": "Local history museum with exhibits on settlement, agriculture, and community milestones.",
+        "address": "105 S Broadway, Manhattan, MT 59741"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.337,
+          45.8625
+        ]
+      },
+      "properties": {
+        "name": "Taylor Park",
+        "category": "Park",
+        "description": "Main town park with green spaces, picnic areas, playground, and walking paths.",
+        "address": "Manhattan, MT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.34,
+          45.857
+        ]
+      },
+      "properties": {
+        "name": "Altenbrand Park",
+        "category": "Park",
+        "description": "Community park at Yadon Road and W Dry Creek Road.",
+        "address": "Manhattan, MT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.337,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Farmers Market",
+        "category": "Market",
+        "description": "Weekly farmers market held Wednesdays in season with fresh produce and crafts.",
+        "address": "120 W Main St, Manhattan, MT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.325,
+          45.855
+        ]
+      },
+      "properties": {
+        "name": "Gallatin River Access",
+        "category": "Recreation",
+        "description": "Access point for fishing, rafting, and kayaking on the Gallatin River.",
+        "address": "Manhattan, MT"
+      }
+    }
+  ]
+}

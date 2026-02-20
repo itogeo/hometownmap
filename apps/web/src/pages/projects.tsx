@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
+import { getCityConfigPath, getCityLayerPath } from '@/lib/cityConfig'
 
 interface ProjectUpdate {
   date: string
@@ -304,7 +305,7 @@ export default function ProjectsPage() {
 
   // Load city config
   useEffect(() => {
-    fetch('/data/config/three-forks.json')
+    fetch(getCityConfigPath())
       .then((res) => res.json())
       .then((config) => setCityConfig(config))
       .catch((err) => console.error('Failed to load config:', err))
@@ -312,7 +313,7 @@ export default function ProjectsPage() {
 
   // Load projects
   useEffect(() => {
-    fetch('/data/layers/three-forks/projects.geojson')
+    fetch(getCityLayerPath('projects.geojson'))
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {

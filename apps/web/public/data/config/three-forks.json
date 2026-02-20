@@ -994,6 +994,7 @@
   },
   "branding": {
     "logo": null,
+    "seal": "/images/three-forks-seal.png",
     "primary_color": "#1E40AF",
     "secondary_color": "#ffffff",
     "accent_color": "#059669",

@@ -12,6 +12,7 @@ import TourismPanel from '@/components/TourismPanel'
 import MobileMenu from '@/components/MobileMenu'
 import BottomSheet from '@/components/BottomSheet'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import { getCityConfigPath, getCityLayerPath } from '@/lib/cityConfig'
 import { MapMode } from '@/types'
 
 // Parse URL state
@@ -146,7 +147,7 @@ export default function Home() {
 
   // Load city configuration
   useEffect(() => {
-    fetch('/data/config/three-forks.json')
+    fetch(getCityConfigPath())
       .then((res) => res.json())
       .then((config) => {
         setCityConfig(config)
@@ -166,7 +167,7 @@ export default function Home() {
 
   // Load businesses data
   useEffect(() => {
-    fetch('/data/layers/three-forks/businesses.geojson')
+    fetch(getCityLayerPath('businesses.geojson'))
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {
@@ -187,7 +188,7 @@ export default function Home() {
 
   // Load attractions data
   useEffect(() => {
-    fetch('/data/layers/three-forks/attractions.geojson')
+    fetch(getCityLayerPath('attractions.geojson'))
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {
@@ -328,6 +329,7 @@ export default function Home() {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         cityName={cityConfig.name}
+        contact={cityConfig.contact}
       />
 
       <div className="relative h-screen w-screen overflow-hidden">
@@ -339,11 +341,13 @@ export default function Home() {
           <div className="flex items-center justify-between px-4 py-2">
             <div className="flex items-center gap-2">
               {/* City Seal */}
-              <img
-                src="/images/three-forks-seal.png"
-                alt="City of Three Forks Seal"
-                className="w-9 h-9 rounded-full shadow-sm"
-              />
+              {cityConfig.branding?.seal && (
+                <img
+                  src={cityConfig.branding.seal}
+                  alt={`${cityConfig.name} Seal`}
+                  className="w-9 h-9 rounded-full shadow-sm"
+                />
+              )}
               <div>
                 <h1 className="text-base font-bold text-gray-900 leading-tight">
                   {cityConfig.branding?.title || 'CityView'}
@@ -359,6 +363,7 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <SearchBar
                 cityId={cityConfig.id}
+                mapCenter={cityConfig.map.center}
                 onResultSelect={handleSearchSelect}
                 className="w-full sm:w-64"
               />
@@ -577,11 +582,17 @@ export default function Home() {
             <div className="pointer-events-auto bg-white/95 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2 text-[11px]">
               <div className="font-medium text-tf-river-700">City Hall</div>
               <div className="flex items-center gap-2 text-tf-stone-600">
-                <a href="tel:4062853431" className="text-tf-forest-600 hover:text-tf-forest-700 hover:underline">
-                  (406) 285-3431
-                </a>
-                <span className="text-tf-stone-300">•</span>
-                <span>206 Main St</span>
+                {cityConfig.contact?.phone && (
+                  <a href={`tel:${cityConfig.contact.phone.replace(/\D/g, '')}`} className="text-tf-forest-600 hover:text-tf-forest-700 hover:underline">
+                    {cityConfig.contact.phone}
+                  </a>
+                )}
+                {cityConfig.contact?.phone && cityConfig.contact?.city_hall && (
+                  <span className="text-tf-stone-300">&bull;</span>
+                )}
+                {cityConfig.contact?.city_hall && (
+                  <span>{cityConfig.contact.city_hall.split(',')[0]}</span>
+                )}
               </div>
             </div>
 

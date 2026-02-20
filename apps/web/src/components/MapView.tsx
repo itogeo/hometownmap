@@ -891,6 +891,7 @@ export default function MapView({
             <PopupContent
               features={popupInfo.features}
               onClose={() => setPopupInfo(null)}
+              contact={cityConfig.contact}
             />
           </Popup>
           )

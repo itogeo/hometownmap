@@ -18,9 +18,12 @@ export interface CityConfig {
   }
   branding: {
     logo?: string
+    seal?: string
     primary_color: string
     secondary_color: string
+    accent_color?: string
     title: string
+    subtitle?: string
   }
   contact?: {
     city_hall?: string

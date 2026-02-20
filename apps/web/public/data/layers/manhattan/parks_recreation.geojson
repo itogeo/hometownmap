@@ -1,0 +1,55 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.337,
+          45.8625
+        ]
+      },
+      "properties": {
+        "name": "Taylor Park",
+        "type": "Town Park",
+        "amenities": "Playground, picnic areas, walking paths, mature trees",
+        "hours": "Dawn to dusk",
+        "description": "Manhattan's main town park with green spaces and recreation facilities"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.34,
+          45.857
+        ]
+      },
+      "properties": {
+        "name": "Altenbrand Park",
+        "type": "Community Park",
+        "amenities": "Open space, play area",
+        "hours": "Dawn to dusk",
+        "description": "Community park at the west side of Manhattan"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3345,
+          45.865
+        ]
+      },
+      "properties": {
+        "name": "Manhattan School Athletic Fields",
+        "type": "Athletic Complex",
+        "amenities": "Football field, track, baseball diamond, basketball courts",
+        "description": "School district athletic facilities"
+      }
+    }
+  ]
+}

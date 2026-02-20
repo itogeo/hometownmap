@@ -1,0 +1,483 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.338,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Saloon",
+        "category": "Restaurant",
+        "address": "204 W Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-2115"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.327,
+          45.859
+        ]
+      },
+      "properties": {
+        "name": "The Porch at Nogan's",
+        "category": "Restaurant",
+        "address": "220 Wooden Shoe Ln, Manhattan, MT 59741",
+        "phone": "(406) 284-6464"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.338,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Land of Magic Steakhouse",
+        "category": "Restaurant",
+        "address": "204 W Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-3794",
+        "website": "https://landofmagicsteakhouse.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3325,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "The Auto Inn",
+        "category": "Restaurant",
+        "address": "208 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-2081",
+        "website": "https://www.historicautoinn.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3325,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Broken Arrow Bar & Casino",
+        "category": "Bar",
+        "address": "208 E Main St, Manhattan, MT 59741"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3365,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Harvest Moon Coffee Shoppe",
+        "category": "Coffee Shop",
+        "address": "110 W Main St, Manhattan, MT 59741",
+        "phone": "(406) 595-5122"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.331,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "406 Brewing Company",
+        "category": "Brewery",
+        "address": "308 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-2211",
+        "website": "https://406brewing.com"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3333,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Gluten-Free Prairie",
+        "category": "Specialty Food",
+        "address": "116 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 282-4280"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3337,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "L&F Market",
+        "category": "Grocery",
+        "address": "106 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-3221"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.858
+        ]
+      },
+      "properties": {
+        "name": "Thriftway Super Stops",
+        "category": "Gas Station",
+        "address": "404 S Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-3343"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.86
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Bank",
+        "category": "Bank",
+        "address": "124 S Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-3255"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.329,
+          45.859
+        ]
+      },
+      "properties": {
+        "name": "Stockman Bank",
+        "category": "Bank",
+        "address": "100 E Wooden Shoe Ln, Manhattan, MT 59741",
+        "phone": "(406) 284-3100"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.336,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "AmeriMont Broker Group",
+        "category": "Insurance",
+        "address": "102 W Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-6546"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3333,
+          45.862
+        ]
+      },
+      "properties": {
+        "name": "Tri Peaks Dental",
+        "category": "Dental",
+        "address": "115 E Gallatin Ave, Manhattan, MT 59741",
+        "phone": "(406) 282-4011"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.334,
+          45.8605
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Dental",
+        "category": "Dental",
+        "address": "118 S 4th St, Manhattan, MT 59741",
+        "phone": "(406) 284-3251"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3333,
+          45.862
+        ]
+      },
+      "properties": {
+        "name": "CoreMed Health",
+        "category": "Healthcare",
+        "address": "115 E Gallatin Ave, Manhattan, MT 59741",
+        "phone": "(406) 581-5891"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3285,
+          45.859
+        ]
+      },
+      "properties": {
+        "name": "Ace Hardware",
+        "category": "Hardware",
+        "address": "130 E Wooden Shoe Ln, Manhattan, MT 59741",
+        "phone": "(406) 282-4900"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3335,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Jen's Rustic Charms",
+        "category": "Retail",
+        "address": "110 E Main St, Manhattan, MT 59741"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.333,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Palomino Ranch Boutique",
+        "category": "Retail",
+        "address": "122 E Main St, Manhattan, MT 59741"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.337,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Efflorescence",
+        "category": "Retail",
+        "address": "120 W Main St, Manhattan, MT 59741"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.337,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "DesignHouse",
+        "category": "Home Decor",
+        "address": "120 W Main St, Manhattan, MT 59741"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3332,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Hair Co",
+        "category": "Salon",
+        "address": "118 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-4111"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.335,
+          45.8607
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Plumbing & Heating",
+        "category": "Services",
+        "address": "106 S Broadway, Manhattan, MT 59741",
+        "phone": "(406) 284-4133"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.329,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Bridger Mountain Fireplaces",
+        "category": "Home Improvement",
+        "address": "502 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-2134"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3265,
+          45.859
+        ]
+      },
+      "properties": {
+        "name": "Rocksolid Stone Corp",
+        "category": "Construction",
+        "address": "265 Wooden Shoe Ln, Manhattan, MT 59741",
+        "phone": "(406) 579-8058"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.327,
+          45.859
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Athletic Club",
+        "category": "Fitness",
+        "address": "220 Wooden Shoe Ln, Manhattan, MT 59741",
+        "phone": "(406) 282-2080"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3321,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "American Legion Club #87",
+        "category": "Community",
+        "address": "218 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-6138"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.334,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Manhattan Senior Center",
+        "category": "Community",
+        "address": "102 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-6501"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.334,
+          45.8595
+        ]
+      },
+      "properties": {
+        "name": "Parkhaven Retirement",
+        "category": "Senior Living",
+        "address": "100 Hamilton Ct, Manhattan, MT 59741",
+        "phone": "(406) 282-7488"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.331,
+          45.861
+        ]
+      },
+      "properties": {
+        "name": "Empire Arms & Ammunition",
+        "category": "Retail",
+        "address": "308 E Main St, Manhattan, MT 59741",
+        "phone": "(406) 284-3000"
+      }
+    }
+  ]
+}

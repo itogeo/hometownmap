@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
+import { getCityConfigPath, getCityLayerPath } from '@/lib/cityConfig'
 
 interface Attraction {
   name: string
@@ -46,14 +47,14 @@ export default function VisitPage() {
   } | null>(null)
 
   useEffect(() => {
-    fetch('/data/config/three-forks.json')
+    fetch(getCityConfigPath())
       .then((res) => res.json())
       .then(setCityConfig)
       .catch((err) => console.error('Failed to load config:', err))
   }, [])
 
   useEffect(() => {
-    fetch('/data/layers/three-forks/attractions.geojson')
+    fetch(getCityLayerPath('attractions.geojson'))
       .then((res) => res.json())
       .then((data) => {
         if (data.features) {

@@ -3,6 +3,7 @@ import Map, { Source, Layer, NavigationControl, Popup } from 'react-map-gl'
 import type { MapRef, MapLayerMouseEvent } from 'react-map-gl'
 import Head from 'next/head'
 import SearchBar from './SearchBar'
+import { getCitySlug, getCityLayerPath } from '@/lib/cityConfig'
 
 interface PopupInfo {
   longitude: number
@@ -33,7 +34,7 @@ export default function SimpleMap() {
   // Load data on mount
   useEffect(() => {
     // Load parcels
-    fetch('/data/layers/three-forks/parcels.geojson')
+    fetch(getCityLayerPath('parcels.geojson'))
       .then(res => res.json())
       .then(data => {
         console.log('✅ Loaded parcels:', data.features?.length)
@@ -45,7 +46,7 @@ export default function SimpleMap() {
       })
 
     // Load zoning districts
-    fetch('/data/layers/three-forks/zoningdistricts.geojson')
+    fetch(getCityLayerPath('zoningdistricts.geojson'))
       .then(res => res.json())
       .then(data => {
         console.log('✅ Loaded zoning:', data.features?.length)
@@ -276,7 +277,7 @@ export default function SimpleMap() {
           left: 10,
           zIndex: 1000
         }}>
-          <SearchBar cityId="three-forks" onResultSelect={handleSearchResult} />
+          <SearchBar cityId={getCitySlug()} onResultSelect={handleSearchResult} />
         </div>
 
         {/* Status overlay */}

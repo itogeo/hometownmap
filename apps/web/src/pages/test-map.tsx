@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import { getCityLayerPath } from '@/lib/cityConfig'
 
 const Map = dynamic(
   () => import('react-map-gl').then((mod) => mod.default),
@@ -133,8 +134,8 @@ export default function TestMap() {
     })
 
     try {
-      console.log(`Loading layer: ${layerId} from /data/layers/three-forks/${layerPath}.geojson`)
-      const response = await fetch(`/data/layers/three-forks/${layerPath}.geojson`)
+      console.log(`Loading layer: ${layerId} from ${getCityLayerPath(`${layerPath}.geojson`)}`)
+      const response = await fetch(getCityLayerPath(`${layerPath}.geojson`))
       if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
       const data = await response.json()

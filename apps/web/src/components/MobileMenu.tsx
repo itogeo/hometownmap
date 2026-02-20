@@ -4,9 +4,13 @@ interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
   cityName: string
+  contact?: {
+    phone?: string
+    website?: string
+  }
 }
 
-export default function MobileMenu({ isOpen, onClose, cityName }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, cityName, contact }: MobileMenuProps) {
   if (!isOpen) return null
 
   return (
@@ -107,18 +111,24 @@ export default function MobileMenu({ isOpen, onClose, cityName }: MobileMenuProp
         {/* Footer */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
           <div className="text-xs text-gray-500 text-center">
-            <a
-              href="https://threeforksmontana.us"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-600"
-            >
-              Official City Website
-            </a>
-            <span className="mx-2">|</span>
-            <a href="tel:4062853431" className="hover:text-blue-600">
-              (406) 285-3431
-            </a>
+            {contact?.website && (
+              <a
+                href={contact.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600"
+              >
+                Official City Website
+              </a>
+            )}
+            {contact?.website && contact?.phone && (
+              <span className="mx-2">|</span>
+            )}
+            {contact?.phone && (
+              <a href={`tel:${contact.phone.replace(/\D/g, '')}`} className="hover:text-blue-600">
+                {contact.phone}
+              </a>
+            )}
           </div>
         </div>
       </div>

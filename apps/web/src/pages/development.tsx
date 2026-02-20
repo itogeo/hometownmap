@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
+import { getCityConfigPath } from '@/lib/cityConfig'
 
 const MapView = dynamic(() => import('@/components/MapView'), {
   ssr: false,
@@ -112,7 +113,7 @@ export default function DevelopmentPage() {
   const [expandedCategory, setExpandedCategory] = useState<string | null>('Zoning & Land Use')
 
   useEffect(() => {
-    fetch('/data/config/three-forks.json')
+    fetch(getCityConfigPath())
       .then((res) => res.json())
       .then(setCityConfig)
       .catch((err) => console.error('Failed to load config:', err))

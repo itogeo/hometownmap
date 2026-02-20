@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { getCityConfigPath, getCityLayerPath } from '@/lib/cityConfig'
 
 interface CityConfig {
   name: string
@@ -40,16 +41,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     // Load city config
-    fetch('/data/config/three-forks.json')
+    fetch(getCityConfigPath())
       .then(res => res.json())
       .then(config => setCityConfig(config))
       .catch(err => console.error('Failed to load config:', err))
 
     // Load parcel data for stats
     Promise.all([
-      fetch('/data/three-forks/parcels.geojson').then(r => r.json()).catch(() => ({ features: [] })),
-      fetch('/data/layers/three-forks/building_permits.geojson').then(r => r.json()).catch(() => ({ features: [] })),
-      fetch('/data/layers/three-forks/public_lands.geojson').then(r => r.json()).catch(() => ({ features: [] })),
+      fetch(getCityLayerPath('parcels.geojson')).then(r => r.json()).catch(() => ({ features: [] })),
+      fetch(getCityLayerPath('building_permits.geojson')).then(r => r.json()).catch(() => ({ features: [] })),
+      fetch(getCityLayerPath('public_lands.geojson')).then(r => r.json()).catch(() => ({ features: [] })),
     ]).then(([parcels, permits, publicLands]) => {
       const parcelFeatures = parcels.features || []
       const permitFeatures = permits.features || []
@@ -107,8 +108,8 @@ export default function Dashboard() {
   return (
     <>
       <Head>
-        <title>City Dashboard | Three Forks CityView</title>
-        <meta name="description" content="Three Forks city statistics and development dashboard" />
+        <title>City Dashboard | {cityConfig?.name || 'CityView'}</title>
+        <meta name="description" content={`${cityConfig?.name || 'City'} statistics and development dashboard`} />
       </Head>
 
       <div className="min-h-screen bg-gray-50">
@@ -124,7 +125,7 @@ export default function Dashboard() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                     </svg>
                   </div>
-                  <span className="font-bold text-gray-900">Three Forks CityView</span>
+                  <span className="font-bold text-gray-900">{cityConfig?.name || 'CityView'}</span>
                 </Link>
                 <span className="text-gray-300">/</span>
                 <h1 className="text-gray-600 font-medium">City Dashboard</h1>

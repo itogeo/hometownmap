@@ -7,9 +7,15 @@ interface FeatureInfo {
   properties: any
 }
 
+interface ContactInfo {
+  phone?: string
+  website?: string
+}
+
 interface PopupContentProps {
   features: FeatureInfo[]
   onClose: () => void
+  contact?: ContactInfo
 }
 
 type TabId = 'property' | 'zoning' | 'services' | 'hazards' | 'history'
@@ -198,7 +204,7 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
   )
 }
 
-function ZoningTab({ zoning, parcel }: { zoning: any; parcel: any }) {
+function ZoningTab({ zoning, parcel, contact }: { zoning: any; parcel: any; contact?: ContactInfo }) {
   const props = zoning?.properties || {}
   const zoneCode = props.zone_code || props.ZONE_CODE || props.zoned || props.ZONED
   const zoneName = props.zone_name || props.ZONE_NAME
@@ -222,12 +228,14 @@ function ZoningTab({ zoning, parcel }: { zoning: any; parcel: any }) {
         <div className="text-gray-400 text-[10px] mt-1">
           This area may be in county jurisdiction.
         </div>
-        <a
-          href="tel:4062853431"
-          className="inline-block mt-3 px-3 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-medium rounded-full hover:bg-blue-100 transition-colors"
-        >
-          Call City Hall for zoning info
-        </a>
+        {contact?.phone && (
+          <a
+            href={`tel:${contact.phone.replace(/\D/g, '')}`}
+            className="inline-block mt-3 px-3 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-medium rounded-full hover:bg-blue-100 transition-colors"
+          >
+            Call City Hall for zoning info
+          </a>
+        )}
       </div>
     )
   }
@@ -278,14 +286,16 @@ function ZoningTab({ zoning, parcel }: { zoning: any; parcel: any }) {
         )}
       </div>
 
-      <div className="text-[9px] text-gray-400 mt-2">
-        Contact City Hall at (406) 285-3431 for detailed zoning regulations.
-      </div>
+      {contact?.phone && (
+        <div className="text-[9px] text-gray-400 mt-2">
+          Contact City Hall at {contact.phone} for detailed zoning regulations.
+        </div>
+      )}
     </div>
   )
 }
 
-function ServicesTab({ features }: { features: FeatureInfo[] }) {
+function ServicesTab({ features, contact }: { features: FeatureInfo[]; contact?: ContactInfo }) {
   const fireDistrict = features.find(f => f.layerId === 'firedistricts')
   const schoolDistrict = features.find(f => f.layerId === 'schooldistricts')
   const waterSewer = features.find(f => f.layerId === 'water_sewer_districts')
@@ -306,14 +316,16 @@ function ServicesTab({ features }: { features: FeatureInfo[] }) {
         <div className="text-gray-400 text-[10px] mt-1">
           Enable service layers to see district boundaries.
         </div>
-        <a
-          href="https://threeforksmontana.us"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-3 px-3 py-1.5 bg-cyan-50 text-cyan-600 text-[10px] font-medium rounded-full hover:bg-cyan-100 transition-colors"
-        >
-          View city services
-        </a>
+        {contact?.website && (
+          <a
+            href={contact.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-3 px-3 py-1.5 bg-cyan-50 text-cyan-600 text-[10px] font-medium rounded-full hover:bg-cyan-100 transition-colors"
+          >
+            View city services
+          </a>
+        )}
       </div>
     )
   }
@@ -329,7 +341,7 @@ function ServicesTab({ features }: { features: FeatureInfo[] }) {
           </div>
           <div>
             <div className="text-[9px] text-red-600 uppercase font-medium">Fire District</div>
-            <div className="text-gray-900 text-[11px]">{fireDistrict.properties.name || 'Three Forks Rural Fire'}</div>
+            <div className="text-gray-900 text-[11px]">{fireDistrict.properties.name || 'Rural Fire District'}</div>
           </div>
         </div>
       )}
@@ -344,7 +356,7 @@ function ServicesTab({ features }: { features: FeatureInfo[] }) {
           <div>
             <div className="text-[9px] text-purple-600 uppercase font-medium">School District</div>
             <div className="text-gray-900 text-[11px]">
-              {schoolDistrict.properties.elementary || 'Three Forks Schools'}
+              {schoolDistrict.properties.elementary || 'School District'}
             </div>
           </div>
         </div>
@@ -548,7 +560,7 @@ function HazardsTab({ features }: { features: FeatureInfo[] }) {
   )
 }
 
-function HistoryTab({ features }: { features: FeatureInfo[] }) {
+function HistoryTab({ features, contact }: { features: FeatureInfo[]; contact?: ContactInfo }) {
   const permits = features.filter(f => f.layerId === 'building_permits')
 
   if (permits.length === 0) {
@@ -563,12 +575,14 @@ function HistoryTab({ features }: { features: FeatureInfo[] }) {
         <div className="text-gray-400 text-[10px] mt-1">
           State permit data covers 2016-2023.
         </div>
-        <a
-          href="tel:4062853431"
-          className="inline-block mt-3 px-3 py-1.5 bg-purple-50 text-purple-600 text-[10px] font-medium rounded-full hover:bg-purple-100 transition-colors"
-        >
-          Inquire about permits
-        </a>
+        {contact?.phone && (
+          <a
+            href={`tel:${contact.phone.replace(/\D/g, '')}`}
+            className="inline-block mt-3 px-3 py-1.5 bg-purple-50 text-purple-600 text-[10px] font-medium rounded-full hover:bg-purple-100 transition-colors"
+          >
+            Inquire about permits
+          </a>
+        )}
       </div>
     )
   }
@@ -607,7 +621,7 @@ function HistoryTab({ features }: { features: FeatureInfo[] }) {
   )
 }
 
-export default function PopupContent({ features, onClose }: PopupContentProps) {
+export default function PopupContent({ features, onClose, contact }: PopupContentProps) {
   // Filter out non-relevant layers
   const validFeatures = features.filter(f => f.layerId !== 'cities' && f.layerId !== 'buildings')
   if (validFeatures.length === 0) return null
@@ -684,16 +698,16 @@ export default function PopupContent({ features, onClose }: PopupContentProps) {
             <PropertyTab parcel={parcel} publicLand={publicLand} subdivision={subdivision} />
           )}
           {activeTab === 'zoning' && (
-            <ZoningTab zoning={zoning} parcel={parcel} />
+            <ZoningTab zoning={zoning} parcel={parcel} contact={contact} />
           )}
           {activeTab === 'services' && (
-            <ServicesTab features={validFeatures} />
+            <ServicesTab features={validFeatures} contact={contact} />
           )}
           {activeTab === 'hazards' && (
             <HazardsTab features={validFeatures} />
           )}
           {activeTab === 'history' && (
-            <HistoryTab features={validFeatures} />
+            <HistoryTab features={validFeatures} contact={contact} />
           )}
         </div>
 

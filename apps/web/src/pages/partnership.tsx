@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { getCityConfigPath } from '@/lib/cityConfig'
 import { useState, useEffect } from 'react'
 
 interface CityConfig {
@@ -98,7 +99,7 @@ export default function PartnershipPage() {
   const [cityConfig, setCityConfig] = useState<CityConfig | null>(null)
 
   useEffect(() => {
-    fetch('/data/config/three-forks.json')
+    fetch(getCityConfigPath())
       .then((res) => res.json())
       .then((config) => setCityConfig(config))
       .catch((err) => console.error('Failed to load city config:', err))

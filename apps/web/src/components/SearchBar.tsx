@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 interface SearchBarProps {
   cityId: string
+  mapCenter?: [number, number]
   onResultSelect?: (result: any) => void
   className?: string
 }
@@ -187,7 +188,7 @@ function searchBusinesses(query: string): any[] {
   return results
 }
 
-export default function SearchBar({ cityId, onResultSelect, className = '' }: SearchBarProps) {
+export default function SearchBar({ cityId, mapCenter, onResultSelect, className = '' }: SearchBarProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<any[]>([])
   const [isSearching, setIsSearching] = useState(false)
@@ -218,9 +219,10 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
       let mapboxResults: any[] = []
       if (mapboxToken) {
         try {
-          // Bias search to Three Forks, MT area with 40-mile bounding box
-          const proximity = '-111.5514,45.8925'
-          const bbox = '-112.35,45.31,-110.75,46.47'
+          // Bias search to city area with ~40-mile bounding box around center
+          const [cLng, cLat] = mapCenter || [-111.5514, 45.8925]
+          const proximity = `${cLng},${cLat}`
+          const bbox = `${cLng - 0.8},${cLat - 0.58},${cLng + 0.8},${cLat + 0.58}`
           const mapboxResponse = await fetch(
             `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json?` +
             `access_token=${mapboxToken}&` +
@@ -234,9 +236,9 @@ export default function SearchBar({ cityId, onResultSelect, className = '' }: Se
           if (mapboxResponse.ok) {
             const mapboxData = await mapboxResponse.json()
             mapboxResults = (mapboxData.features || []).map((feature: any) => {
-              // Check if result is within Three Forks area (higher priority)
+              // Check if result is within city area (higher priority)
               const [lng, lat] = feature.center
-              const isLocal = lng >= -111.7 && lng <= -111.4 && lat >= 45.8 && lat <= 46.0
+              const isLocal = lng >= cLng - 0.15 && lng <= cLng + 0.15 && lat >= cLat - 0.1 && lat <= cLat + 0.1
               const placeContext = feature.context?.find((c: any) => c.id?.startsWith('place.'))
 
               return {
