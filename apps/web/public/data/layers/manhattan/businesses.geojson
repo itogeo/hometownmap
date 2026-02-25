@@ -478,6 +478,22 @@
         "address": "308 E Main St, Manhattan, MT 59741",
         "phone": "(406) 284-3000"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.3399,
+          45.8659
+        ]
+      },
+      "properties": {
+        "name": "Cookies & Crumbs Bake Shop",
+        "category": "Bakery",
+        "address": "185 NW Passage Ln, Manhattan, MT 59741",
+        "phone": "(406) 599-5548"
+      }
     }
   ]
 }

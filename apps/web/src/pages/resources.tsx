@@ -142,6 +142,8 @@ export default function ResourcesPage() {
             <ContactSection title="Utilities" items={contacts.utilities} />
             <ContactSection title="Schools" items={contacts.schools} />
             <ContactSection title="Community" items={contacts.community} />
+            <ContactSection title="Town Council" items={contacts.town_council} />
+            <ContactSection title="Boards & Commissions" items={contacts.boards} />
 
             {/* Quick Links from resources */}
             {cityConfig.resources && cityConfig.resources.length > 0 && (

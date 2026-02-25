@@ -43,7 +43,12 @@
         "senate_districts",
         "zipcodes",
         "planning_jurisdictions",
-        "annexation_history"
+        "annexation_history",
+        "schools_education",
+        "civic_facilities",
+        "cell_towers",
+        "bridges",
+        "power_infrastructure"
       ],
       "layerGroups": [
         {
@@ -67,7 +72,13 @@
         {
           "id": "services",
           "name": "Services & Facilities",
-          "layers": ["emergency_services", "town_facilities", "school_buildings"],
+          "layers": ["emergency_services", "town_facilities", "school_buildings", "schools_education", "civic_facilities"],
+          "defaultExpanded": false
+        },
+        {
+          "id": "infrastructure_property",
+          "name": "Infrastructure",
+          "layers": ["cell_towers", "bridges", "power_infrastructure"],
           "defaultExpanded": false
         }
       ],
@@ -120,7 +131,12 @@
         "public_lands_county",
         "soils",
         "rail_lines",
-        "zipcodes"
+        "zipcodes",
+        "census_tracts",
+        "census_blocks",
+        "wetlands",
+        "irrigation_canals",
+        "bridges"
       ],
       "layerGroups": [
         {
@@ -136,15 +152,21 @@
           "defaultExpanded": false
         },
         {
+          "id": "demographics",
+          "name": "Demographics (Census 2020)",
+          "layers": ["census_tracts", "census_blocks"],
+          "defaultExpanded": false
+        },
+        {
           "id": "land_use",
-          "name": "Conservation & Public Lands",
-          "layers": ["conservation_easements", "public_lands", "public_lands_county", "soils"],
+          "name": "Conservation & Environment",
+          "layers": ["conservation_easements", "public_lands", "public_lands_county", "wetlands", "soils"],
           "defaultExpanded": false
         },
         {
           "id": "infrastructure",
           "name": "Infrastructure & Utilities",
-          "layers": ["roads", "rail_lines", "trails", "town_trails", "town_parks", "public_water_supply", "public_wastewater", "wastewater", "water_supply", "water_sewer_districts", "zipcodes"],
+          "layers": ["roads", "rail_lines", "bridges", "irrigation_canals", "trails", "town_trails", "town_parks", "public_water_supply", "public_wastewater", "wastewater", "water_supply", "water_sewer_districts", "zipcodes"],
           "defaultExpanded": false
         }
       ],
@@ -185,6 +207,8 @@
         "agency_response",
         "glwqd_wells",
         "surface_water_monitoring",
+        "wetlands",
+        "irrigation_canals",
         "cities"
       ],
       "layerGroups": [
@@ -203,7 +227,7 @@
         {
           "id": "geologic",
           "name": "Geologic & Environmental",
-          "layers": ["landslides", "soils", "groundwater_wells", "glwqd_wells", "surface_water_monitoring"],
+          "layers": ["landslides", "soils", "wetlands", "irrigation_canals", "groundwater_wells", "glwqd_wells", "surface_water_monitoring"],
           "defaultExpanded": false
         },
         {
@@ -251,14 +275,34 @@
         "house_districts",
         "senate_districts",
         "zipcodes",
+        "restaurants",
+        "shops",
+        "churches",
+        "cemeteries",
+        "recreation",
+        "tourism_pois",
+        "schools_education",
+        "civic_facilities",
         "cities"
       ],
       "layerGroups": [
         {
+          "id": "dining_shopping",
+          "name": "Dining & Shopping",
+          "layers": ["restaurants", "shops"],
+          "defaultExpanded": true
+        },
+        {
           "id": "recreation",
           "name": "Parks, Trails & Attractions",
-          "layers": ["attractions", "town_parks", "town_trails", "town_facilities", "parks_recreation", "trails"],
+          "layers": ["attractions", "town_parks", "town_trails", "town_facilities", "parks_recreation", "trails", "recreation", "tourism_pois"],
           "defaultExpanded": true
+        },
+        {
+          "id": "community_places",
+          "name": "Community Places",
+          "layers": ["churches", "schools_education", "civic_facilities", "cemeteries"],
+          "defaultExpanded": false
         },
         {
           "id": "nature",
@@ -268,7 +312,7 @@
         },
         {
           "id": "community",
-          "name": "Community & Districts",
+          "name": "Districts & Boundaries",
           "layers": ["school_buildings", "voting_precincts", "high_school_districts", "elementary_districts", "house_districts", "senate_districts", "zipcodes"],
           "defaultExpanded": false
         },
@@ -295,24 +339,35 @@
       ],
       "availableLayers": [
         "businesses",
+        "restaurants",
+        "shops",
         "parcels",
         "structures",
         "buildings",
+        "manhattan_zoning",
         "roads",
         "emergency_services",
+        "civic_facilities",
+        "census_tracts",
         "cities"
       ],
       "layerGroups": [
         {
           "id": "commercial",
-          "name": "Business & Property",
-          "layers": ["businesses", "parcels", "structures", "buildings"],
+          "name": "Business & Commerce",
+          "layers": ["businesses", "restaurants", "shops"],
           "defaultExpanded": true
         },
         {
+          "id": "property_biz",
+          "name": "Property & Zoning",
+          "layers": ["parcels", "structures", "buildings", "manhattan_zoning", "census_tracts"],
+          "defaultExpanded": false
+        },
+        {
           "id": "context",
-          "name": "Context",
-          "layers": ["roads", "emergency_services"],
+          "name": "Services & Infrastructure",
+          "layers": ["roads", "emergency_services", "civic_facilities"],
           "defaultExpanded": false
         }
       ],
@@ -858,18 +913,21 @@
     "school_buildings": {
       "source": "gallatin_county",
       "display_name": "School Buildings",
-      "description": "School facility locations",
+      "description": "School facility locations including Manhattan High School, Manhattan Elementary, and Manhattan Christian School",
       "data_freshness": "Gallatin County 2024",
+      "type": "point",
       "style": {
-        "fill": "#F59E0B",
-        "fill-opacity": 1,
-        "stroke": "#D97706",
-        "stroke-width": 2
+        "circle-radius": 7,
+        "circle-color": "#F59E0B",
+        "circle-stroke-color": "#D97706",
+        "circle-stroke-width": 2
       },
       "popup_fields": [
-        "ADDRESS_CONCAT",
-        "TYPE",
-        "YEAR_BUILT"
+        "name",
+        "COMMENTS",
+        "JURISDICTION",
+        "ADDRESS",
+        "ROADNAME"
       ]
     },
     "high_school_districts": {
@@ -1656,6 +1714,334 @@
         "DATE_SURV",
         "GEOCODE"
       ]
+    },
+    "restaurants": {
+      "source": "openstreetmap",
+      "display_name": "Restaurants & Dining",
+      "description": "Restaurants, cafes, bars, and dining establishments from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 6,
+        "circle-color": "#E63946",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "cuisine",
+        "phone",
+        "opening_hours",
+        "addr:street"
+      ]
+    },
+    "shops": {
+      "source": "openstreetmap",
+      "display_name": "Shops & Services",
+      "description": "Retail stores, grocery, hardware, and service businesses from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 6,
+        "circle-color": "#F59E0B",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "shop",
+        "phone",
+        "opening_hours",
+        "addr:street"
+      ]
+    },
+    "churches": {
+      "source": "openstreetmap",
+      "display_name": "Places of Worship",
+      "description": "Churches, temples, and places of worship from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 6,
+        "circle-color": "#8B5CF6",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "religion",
+        "denomination",
+        "addr:street"
+      ]
+    },
+    "schools_education": {
+      "source": "openstreetmap",
+      "display_name": "Schools & Education",
+      "description": "Schools, libraries, and educational facilities from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 6,
+        "circle-color": "#2563EB",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "amenity",
+        "operator",
+        "addr:street"
+      ]
+    },
+    "civic_facilities": {
+      "source": "openstreetmap",
+      "display_name": "Civic & Government",
+      "description": "Town hall, post office, fire station, and government facilities from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 7,
+        "circle-color": "#1E40AF",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "amenity",
+        "phone",
+        "addr:street"
+      ]
+    },
+    "recreation": {
+      "source": "openstreetmap",
+      "display_name": "Recreation & Sports",
+      "description": "Parks, playgrounds, sports fields, and recreation facilities from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 5,
+        "circle-color": "#10B981",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 1.5
+      },
+      "popup_fields": [
+        "display_name",
+        "leisure",
+        "sport",
+        "surface"
+      ]
+    },
+    "cemeteries": {
+      "source": "openstreetmap",
+      "display_name": "Cemeteries",
+      "description": "Cemetery locations from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 6,
+        "circle-color": "#6B7280",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "name"
+      ]
+    },
+    "tourism_pois": {
+      "source": "openstreetmap",
+      "display_name": "Tourism & Attractions",
+      "description": "Hotels, campgrounds, viewpoints, museums, and tourist attractions from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 11,
+      "type": "point",
+      "style": {
+        "circle-radius": 7,
+        "circle-color": "#EC4899",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "tourism",
+        "phone",
+        "website"
+      ]
+    },
+    "census_tracts": {
+      "source": "census_tiger",
+      "display_name": "Census Tracts (2020)",
+      "description": "Census tract boundaries with 2020 population and housing unit counts from the US Census Bureau",
+      "data_freshness": "Census 2020",
+      "minzoom": 10,
+      "style": {
+        "fill": "#3B82F6",
+        "fill-opacity": 0.08,
+        "stroke": "#1D4ED8",
+        "stroke-width": 2
+      },
+      "popup_fields": [
+        "BASENAME",
+        "GEOID",
+        "POP100",
+        "HU100",
+        "AREALAND"
+      ]
+    },
+    "census_blocks": {
+      "source": "census_tiger",
+      "display_name": "Census Blocks (2020)",
+      "description": "Census block boundaries with 2020 population and housing unit counts from the US Census Bureau",
+      "data_freshness": "Census 2020",
+      "minzoom": 13,
+      "style": {
+        "fill": "#6366F1",
+        "fill-opacity": 0.06,
+        "stroke": "#4F46E5",
+        "stroke-width": 0.8
+      },
+      "popup_fields": [
+        "GEOID",
+        "BLOCK",
+        "TRACT",
+        "POP100",
+        "HU100"
+      ]
+    },
+    "wetlands": {
+      "source": "usfws_nwi",
+      "display_name": "Wetlands (NWI)",
+      "description": "National Wetlands Inventory from the US Fish & Wildlife Service. Shows freshwater emergent, forested/shrub wetlands, ponds, and riverine features.",
+      "data_freshness": "NWI 2024",
+      "minzoom": 11,
+      "style": {
+        "fill": "#0EA5E9",
+        "fill-opacity": 0.25,
+        "stroke": "#0284C7",
+        "stroke-width": 1
+      },
+      "style_by_field": "WETLAND_TYPE",
+      "styles": {
+        "Freshwater Emergent Wetland": {
+          "name": "Freshwater Emergent",
+          "fill": "#34D399",
+          "fill-opacity": 0.35,
+          "stroke": "#059669",
+          "stroke-width": 0.8
+        },
+        "Freshwater Forested/Shrub Wetland": {
+          "name": "Forested/Shrub Wetland",
+          "fill": "#166534",
+          "fill-opacity": 0.35,
+          "stroke": "#14532D",
+          "stroke-width": 0.8
+        },
+        "Freshwater Pond": {
+          "name": "Freshwater Pond",
+          "fill": "#38BDF8",
+          "fill-opacity": 0.4,
+          "stroke": "#0284C7",
+          "stroke-width": 0.8
+        },
+        "Riverine": {
+          "name": "Riverine",
+          "fill": "#2563EB",
+          "fill-opacity": 0.3,
+          "stroke": "#1D4ED8",
+          "stroke-width": 1
+        }
+      },
+      "popup_fields": [
+        "WETLAND_TYPE",
+        "ACRES",
+        "NWI_CLASS_NAME",
+        "WATER_REGIME_NAME"
+      ]
+    },
+    "irrigation_canals": {
+      "source": "openstreetmap",
+      "display_name": "Irrigation Canals & Ditches",
+      "description": "Irrigation canals, ditches, and drains from OpenStreetMap. Critical agricultural infrastructure for the Gallatin Valley.",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "line",
+      "style": {
+        "stroke": "#0891B2",
+        "stroke-width": 2,
+        "stroke-opacity": 0.7
+      },
+      "popup_fields": [
+        "display_name",
+        "waterway",
+        "name"
+      ]
+    },
+    "cell_towers": {
+      "source": "openstreetmap",
+      "display_name": "Cell Towers",
+      "description": "Communication towers and cell phone masts from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 10,
+      "type": "point",
+      "style": {
+        "circle-radius": 7,
+        "circle-color": "#EF4444",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      },
+      "popup_fields": [
+        "display_name",
+        "man_made",
+        "tower:type",
+        "height"
+      ]
+    },
+    "bridges": {
+      "source": "openstreetmap",
+      "display_name": "Bridges",
+      "description": "Road and railroad bridge locations from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 5,
+        "circle-color": "#78716C",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 1.5
+      },
+      "popup_fields": [
+        "display_name",
+        "highway",
+        "bridge",
+        "name"
+      ]
+    },
+    "power_infrastructure": {
+      "source": "openstreetmap",
+      "display_name": "Power Lines & Towers",
+      "description": "Electric power transmission lines, poles, and towers from OpenStreetMap",
+      "data_freshness": "OpenStreetMap Feb 2026",
+      "minzoom": 12,
+      "type": "point",
+      "style": {
+        "circle-radius": 4,
+        "circle-color": "#F97316",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 1
+      },
+      "popup_fields": [
+        "display_name",
+        "power",
+        "voltage",
+        "operator"
+      ]
     }
   },
   "branding": {
@@ -1734,25 +2120,43 @@
   "contacts": {
     "emergency": [
       { "title": "Emergency Services", "description": "Fire, Police, Ambulance", "phone": "911" },
-      { "title": "Gallatin County Sheriff", "description": "Non-emergency police services", "phone": "(406) 582-2100" },
-      { "title": "Manhattan Volunteer Fire", "description": "Non-emergency fire department", "phone": "(406) 284-3312" }
+      { "title": "Manhattan Police Department", "description": "Non-emergency police", "phone": "(406) 284-6630", "email": "manpdmt@mpdmt.com" },
+      { "title": "Gallatin County Sheriff", "description": "Non-emergency county services", "phone": "(406) 582-2100" },
+      { "title": "Manhattan Volunteer Fire Dept", "description": "Chief Mike Ulmen, Asst. Chief Derek Ulmen", "phone": "(406) 284-6224", "email": "mhtnvfd@yahoo.com" }
     ],
     "city_services": [
-      { "title": "Town Hall", "description": "General inquiries, permits, licenses", "phone": "(406) 284-3235", "email": "townofmanhattan@gmail.com", "address": "207 S 6th Street, Manhattan, MT 59741", "hours": "Mon-Fri 8:00 AM - 5:00 PM", "website": "http://www.townofmanhattan.com" },
-      { "title": "Water & Sewer", "description": "Water service, billing, report leaks", "phone": "(406) 284-3235" },
-      { "title": "Streets & Roads", "description": "Potholes, street lights, snow removal", "phone": "(406) 284-3235" },
-      { "title": "Building Permits", "description": "Construction permits, inspections, zoning", "phone": "(406) 595-9300" }
+      { "title": "Town Hall", "description": "Pam Humphrey, Clerk/Treasurer — General inquiries, permits, licenses", "phone": "(406) 284-3235", "email": "townofmanhattan@gmail.com", "address": "207 S 6th Street, Manhattan, MT 59741", "hours": "Mon-Fri 8:00 AM - 5:00 PM", "website": "http://www.townofmanhattan.com" },
+      { "title": "Mayor", "description": "Mayor Traig Howells", "phone": "(406) 284-3235", "email": "manhattanmayor@gmail.com" },
+      { "title": "Public Works", "description": "Jeff McAllister, Supervisor — Streets, water, sewer, infrastructure", "phone": "(406) 284-3278" },
+      { "title": "Building & Zoning", "description": "Brandon Yung, Building Official — Construction permits, inspections, zoning", "phone": "(406) 595-9300", "email": "byung.town@gmail.com" },
+      { "title": "Water & Sewer Billing", "description": "Water/sewer service, billing, report leaks", "phone": "(406) 284-3235", "website": "https://townofmanhattan.payacp.com" },
+      { "title": "Parks Department", "description": "Audrey Ulmen, Supervisor — Parks and recreation facilities", "phone": "(406) 284-3235" },
+      { "title": "City Court", "description": "Judge Pamela Waggener, Attorney Jane Mersen — Every Monday at 1:00 PM", "phone": "(406) 284-3235" }
     ],
     "utilities": [
       { "title": "NorthWestern Energy", "description": "Electric and natural gas service", "phone": "(888) 467-2669", "website": "https://www.northwesternenergy.com" },
       { "title": "Republic Services", "description": "Garbage and recycling pickup", "phone": "(406) 587-6075", "website": "https://www.republicservices.com" }
     ],
     "schools": [
-      { "title": "Manhattan School District", "description": "K-12 public school district", "phone": "(406) 284-3431", "website": "https://www.manhattan.k12.mt.us" }
+      { "title": "Manhattan School District", "description": "K-12 public school district", "phone": "(406) 284-3431", "website": "https://www.manhattan.k12.mt.us" },
+      { "title": "Manhattan Christian School", "description": "Private school, preschool through 12th grade", "phone": "(406) 282-7261", "website": "https://www.manhattanchristian.org" }
     ],
     "community": [
-      { "title": "Manhattan Community Library", "description": "Public library services", "phone": "(406) 284-3373", "address": "120 S 6th Street" },
-      { "title": "Manhattan Senior Center", "description": "Senior services and activities", "phone": "(406) 284-3420" }
+      { "title": "Manhattan Community Library", "description": "Trudy Dundas, Director — Public library services", "phone": "(406) 284-3341 ext 1", "address": "200 W Fulton Ave" },
+      { "title": "Manhattan Senior Center", "description": "Meals Tue/Wed/Thu at noon, activities, event rental", "phone": "(406) 284-6501", "address": "102 E Main St" },
+      { "title": "Manhattan Area Chamber of Commerce", "description": "Business directory, community events", "phone": "(406) 284-4162", "address": "103 S Broadway" }
+    ],
+    "town_council": [
+      { "title": "Town Council Meetings", "description": "2nd Thursday of each month at 7:00 PM — Town Hall, 207 S 6th St" },
+      { "title": "Ryan Miller", "description": "Street Commissioner" },
+      { "title": "Betsy Mancuso", "description": "Sewer Commissioner" },
+      { "title": "Josh Sinnema", "description": "Park Commissioner" },
+      { "title": "Steffan Simpkins", "description": "Water Commissioner" }
+    ],
+    "boards": [
+      { "title": "Planning Board", "description": "3rd Wednesday of each month at 7:00 PM — Scott Hazelton, Town Planner" },
+      { "title": "Park Board", "description": "1st Monday of each month at 7:00 PM" },
+      { "title": "Board of Adjustment", "description": "Meets as needed — handles variance requests" }
     ]
   },
   "development": {
@@ -1770,19 +2174,42 @@
       {
         "title": "Building",
         "forms": [
-          { "name": "Building Permit Application", "url": "https://townofmanhattan.com/s/BuildingPermit_Draft-rbyf.pdf" }
+          { "name": "Building Permit Application", "url": "https://townofmanhattan.com/s/BuildingPermit_Draft-rbyf.pdf" },
+          { "name": "How to Obtain a Building Permit", "url": "http://www.townofmanhattan.com/building-zoning" },
+          { "name": "Plan Review Checklist", "url": "http://www.townofmanhattan.com/building-zoning" }
+        ]
+      },
+      {
+        "title": "Business & Licensing",
+        "forms": [
+          { "name": "Business License Application", "url": "http://www.townofmanhattan.com/building-zoning" },
+          { "name": "Alcohol Sales License Application", "url": "http://www.townofmanhattan.com/building-zoning" },
+          { "name": "Amusement for Gain Permit", "url": "http://www.townofmanhattan.com/building-zoning" }
+        ]
+      },
+      {
+        "title": "Special Permits",
+        "forms": [
+          { "name": "Camper/RV Permit Application", "url": "http://www.townofmanhattan.com/building-zoning" },
+          { "name": "Kennel License", "url": "http://www.townofmanhattan.com/building-zoning" },
+          { "name": "Chicken Coop License", "url": "http://www.townofmanhattan.com/building-zoning" }
         ]
       }
     ],
     "key_documents": [
-      { "name": "Growth Policy", "url": "https://townofmanhattan.com/s/Final_Document_Reduced-pnt9.pdf", "description": "Manhattan City-County Growth Policy" },
+      { "name": "Growth Policy", "url": "https://townofmanhattan.com/s/Final_Document_Reduced-pnt9.pdf", "description": "Manhattan City-County Growth Policy (May 2024)" },
       { "name": "Design Standards", "url": "https://townofmanhattan.com/s/Manhattan_Design_Standards.pdf", "description": "Manhattan design standards and guidelines" },
-      { "name": "Town Code (Zoning)", "url": "https://codelibrary.amlegal.com/codes/manhattanmt/latest/overview", "description": "Municipal code including zoning regulations" }
+      { "name": "Manhattan Modifications", "url": "http://www.townofmanhattan.com/public-works", "description": "Modifications to subdivision regulations" },
+      { "name": "Transportation Plan", "url": "http://www.townofmanhattan.com/public-works", "description": "Manhattan transportation plan with staff comments" },
+      { "name": "Town Code (Full)", "url": "https://codelibrary.amlegal.com/codes/manhattanmt/latest/overview", "description": "Complete municipal code including zoning regulations" }
     ],
     "additional_resources": [
       { "name": "Building & Zoning Page", "url": "http://www.townofmanhattan.com/building-zoning", "description": "Official building and zoning information" },
+      { "name": "Pay Water/Sewer Bill Online", "url": "https://townofmanhattan.payacp.com", "description": "Online payment portal for utility billing" },
       { "name": "Gallatin County Clerk & Recorder", "url": "https://experience.arcgis.com/experience/6c5d3097540f4895be52c11b0bda0731/page/Clerk-%26-Recorder-Map", "description": "Property records, deeds, plats" },
-      { "name": "Envision Gallatin", "url": "https://envisiongallatin.com/", "description": "Regional planning initiative" }
+      { "name": "Envision Gallatin", "url": "https://envisiongallatin.com/", "description": "Regional growth and planning initiative" },
+      { "name": "Manhattan Trails System", "url": "https://manhattantrailsystem.com", "description": "Trail maps and recreation info" },
+      { "name": "Ready Gallatin (Emergency Alerts)", "url": "https://readygallatin.com", "description": "Sign up for emergency notifications" }
     ],
     "zoning_layer": "manhattan_zoning",
     "forms_url": "http://www.townofmanhattan.com/building-zoning"
