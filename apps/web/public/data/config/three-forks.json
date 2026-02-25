@@ -146,6 +146,11 @@
         "parcels",
         "cities"
       ],
+      "availableLayers": [
+        "businesses",
+        "parcels",
+        "cities"
+      ],
       "features": [
         "search_properties",
         "filter_by_zoning",

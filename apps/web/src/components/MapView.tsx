@@ -173,6 +173,26 @@ export default function MapView({
     const config = cityConfig.layers[layerId]
     if (!config) return null
 
+    // Data-driven styling: generate Mapbox match expression from style_by_field + styles
+    if (config.style_by_field && config.styles) {
+      const matchExpr: any[] = ['match', ['get', config.style_by_field]]
+      const opacityExpr: any[] = ['match', ['get', config.style_by_field]]
+
+      for (const [fieldValue, styleObj] of Object.entries(config.styles as Record<string, any>)) {
+        matchExpr.push(fieldValue, styleObj.fill || '#3388ff')
+        opacityExpr.push(fieldValue, styleObj['fill-opacity'] ?? 0.35)
+      }
+
+      const fallbackStyle = config.style || {}
+      matchExpr.push(fallbackStyle.fill || '#3388ff')
+      opacityExpr.push(fallbackStyle['fill-opacity'] ?? 0.2)
+
+      return {
+        'fill-color': matchExpr,
+        'fill-opacity': opacityExpr,
+      }
+    }
+
     const style = config.style || {}
     const baseOpacity = style['fill-opacity'] || 0.2
     return {
@@ -184,6 +204,27 @@ export default function MapView({
   const getLayerLineStyle = (layerId: string) => {
     const config = cityConfig.layers[layerId]
     if (!config) return null
+
+    // Data-driven line styling from style_by_field + styles
+    if (config.style_by_field && config.styles) {
+      const colorExpr: any[] = ['match', ['get', config.style_by_field]]
+      const widthExpr: any[] = ['match', ['get', config.style_by_field]]
+
+      for (const [fieldValue, styleObj] of Object.entries(config.styles as Record<string, any>)) {
+        colorExpr.push(fieldValue, styleObj.stroke || styleObj.fill || '#3388ff')
+        widthExpr.push(fieldValue, styleObj['stroke-width'] ?? 2)
+      }
+
+      const fallbackStyle = config.style || {}
+      colorExpr.push(fallbackStyle.stroke || '#3388ff')
+      widthExpr.push(fallbackStyle['stroke-width'] ?? 2)
+
+      return {
+        'line-color': colorExpr,
+        'line-width': widthExpr,
+        'line-opacity': 0.8,
+      }
+    }
 
     const style = config.style || {}
 

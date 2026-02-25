@@ -82,12 +82,15 @@
       "enabled": true,
       "mapStyle": "streets",
       "layers": [
+        "future_land_use_parcels",
         "manhattan_zoning",
         "jurisdiction_boundary",
         "parcels",
         "cities"
       ],
       "availableLayers": [
+        "future_land_use_parcels",
+        "future_land_use",
         "manhattan_zoning",
         "zoning",
         "county_zoning",
@@ -123,7 +126,7 @@
         {
           "id": "zoning_land_use",
           "name": "Zoning & Land Use",
-          "layers": ["manhattan_zoning", "zoning", "county_zoning", "jurisdiction_boundary", "neighborhood_plans", "planning_jurisdictions", "annexation_history"],
+          "layers": ["future_land_use_parcels", "future_land_use", "manhattan_zoning", "zoning", "county_zoning", "jurisdiction_boundary", "neighborhood_plans", "planning_jurisdictions", "annexation_history"],
           "defaultExpanded": true
         },
         {
@@ -1200,7 +1203,7 @@
     "manhattan_zoning": {
       "source": "national_zoning_atlas",
       "display_name": "Town Zoning Districts",
-      "description": "Official Town of Manhattan municipal zoning districts - 7 zones including residential, commercial, industrial, and parks",
+      "description": "Official Town of Manhattan municipal zoning districts from the Growth Policy - 7 zones including residential, commercial, industrial, and parks",
       "data_freshness": "National Zoning Atlas 2023 (Town Ordinance)",
       "minzoom": 11,
       "style": {
@@ -1208,6 +1211,58 @@
         "fill-opacity": 0.35,
         "stroke": "#6D28D9",
         "stroke-width": 2.5
+      },
+      "style_by_field": "zone_name",
+      "styles": {
+        "Low density residential district": {
+          "name": "Low Density Residential",
+          "fill": "#F4A582",
+          "fill-opacity": 0.5,
+          "stroke": "#C05E3C",
+          "stroke-width": 2
+        },
+        "Medium density residential district": {
+          "name": "Medium Density Residential",
+          "fill": "#92D1E8",
+          "fill-opacity": 0.5,
+          "stroke": "#4A90A8",
+          "stroke-width": 2
+        },
+        "Residential transition district": {
+          "name": "Residential Transition",
+          "fill": "#6BAED6",
+          "fill-opacity": 0.5,
+          "stroke": "#2171B5",
+          "stroke-width": 2
+        },
+        "Central business district": {
+          "name": "Central Business District",
+          "fill": "#9E9AC8",
+          "fill-opacity": 0.5,
+          "stroke": "#6A51A3",
+          "stroke-width": 2
+        },
+        "Neighborhood highway business district": {
+          "name": "Neighborhood Highway Business",
+          "fill": "#E377C2",
+          "fill-opacity": 0.5,
+          "stroke": "#AD3E8A",
+          "stroke-width": 2
+        },
+        "Light industrial district": {
+          "name": "Light Industrial",
+          "fill": "#74C476",
+          "fill-opacity": 0.5,
+          "stroke": "#238B45",
+          "stroke-width": 2
+        },
+        "Parks and open space district": {
+          "name": "Parks & Open Space",
+          "fill": "#D4E89E",
+          "fill-opacity": 0.5,
+          "stroke": "#8BA84A",
+          "stroke-width": 2
+        }
       },
       "popup_fields": [
         "zone_name",
@@ -1444,6 +1499,140 @@
       },
       "popup_fields": [
         "jurisdiction"
+      ]
+    },
+    "future_land_use": {
+      "source": "local",
+      "display_name": "Future Land Use (Overview)",
+      "description": "Simplified Future Land Use overview from the Manhattan Growth Policy. Shows broad land use categories for the Planning Jurisdictional Area.",
+      "data_freshness": "Growth Policy May 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#A8D08D",
+        "fill-opacity": 0.3,
+        "stroke": "#548235",
+        "stroke-width": 1.5
+      },
+      "style_by_field": "category",
+      "styles": {
+        "Agriculture": {
+          "name": "Agriculture",
+          "fill": "#A8D08D",
+          "fill-opacity": 0.35,
+          "stroke": "#548235",
+          "stroke-width": 1.5
+        },
+        "Future Residential": {
+          "name": "Future Residential",
+          "fill": "#FFEB99",
+          "fill-opacity": 0.4,
+          "stroke": "#BF9B30",
+          "stroke-width": 1.5
+        },
+        "Conservation/Open Space": {
+          "name": "Conservation / Open Space",
+          "fill": "#2D8C3C",
+          "fill-opacity": 0.4,
+          "stroke": "#1A5C27",
+          "stroke-width": 1.5
+        },
+        "Floodplain": {
+          "name": "Floodplain (100-Year)",
+          "fill": "#6CB4EE",
+          "fill-opacity": 0.35,
+          "stroke": "#2171B5",
+          "stroke-width": 1.5
+        },
+        "Town Zoned Area": {
+          "name": "Town Zoned Area (see Zoning layer)",
+          "fill": "#D4C4A8",
+          "fill-opacity": 0.25,
+          "stroke": "#8B7355",
+          "stroke-width": 2
+        }
+      },
+      "popup_fields": [
+        "category",
+        "description",
+        "density",
+        "primary_uses"
+      ]
+    },
+    "future_land_use_parcels": {
+      "source": "local",
+      "display_name": "Future Land Use (Parcel Detail)",
+      "description": "Parcel-by-parcel Future Land Use Map matching Growth Policy Figure 15. Each parcel in the Planning Jurisdictional Area is classified into one of 8 future land use categories.",
+      "data_freshness": "Growth Policy May 2024",
+      "minzoom": 10,
+      "style": {
+        "fill": "#A8D08D",
+        "fill-opacity": 0.35,
+        "stroke": "#666666",
+        "stroke-width": 0.5
+      },
+      "style_by_field": "category",
+      "styles": {
+        "Future Open Space": {
+          "name": "Future Open Space",
+          "fill": "#1B7A2B",
+          "fill-opacity": 0.5,
+          "stroke": "#0D5C1A",
+          "stroke-width": 0.5
+        },
+        "Future Residential": {
+          "name": "Future Residential",
+          "fill": "#FFD700",
+          "fill-opacity": 0.45,
+          "stroke": "#B8960F",
+          "stroke-width": 0.5
+        },
+        "Future Commercial": {
+          "name": "Future Commercial",
+          "fill": "#E63946",
+          "fill-opacity": 0.5,
+          "stroke": "#A62833",
+          "stroke-width": 0.5
+        },
+        "Agriculture and Residential": {
+          "name": "Agriculture & Residential",
+          "fill": "#F4A460",
+          "fill-opacity": 0.45,
+          "stroke": "#C07830",
+          "stroke-width": 0.5
+        },
+        "Agriculture Only": {
+          "name": "Agriculture Only",
+          "fill": "#90C46E",
+          "fill-opacity": 0.4,
+          "stroke": "#5A8C3C",
+          "stroke-width": 0.5
+        },
+        "Residential Only": {
+          "name": "Residential Only",
+          "fill": "#D946A8",
+          "fill-opacity": 0.45,
+          "stroke": "#A33080",
+          "stroke-width": 0.5
+        },
+        "Publicly Owned Property": {
+          "name": "Publicly Owned Property",
+          "fill": "#6A5ACD",
+          "fill-opacity": 0.45,
+          "stroke": "#4B3D99",
+          "stroke-width": 0.5
+        },
+        "Conservation Easements": {
+          "name": "Conservation Easements",
+          "fill": "#8B8B00",
+          "fill-opacity": 0.45,
+          "stroke": "#5C5C00",
+          "stroke-width": 0.5
+        }
+      },
+      "popup_fields": [
+        "category",
+        "parcel_id",
+        "geocode"
       ]
     },
     "county_parcels": {

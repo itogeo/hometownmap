@@ -105,21 +105,43 @@ export default function LayerControl({
           </button>
         </div>
 
-        {/* Expanded: opacity slider */}
-        {isExpanded && isVisible && onOpacityChange && (
-          <div className="px-6 pb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] text-gray-400 w-10">Opacity</span>
-              <input
-                type="range"
-                min="10"
-                max="100"
-                value={opacity}
-                onChange={(e) => onOpacityChange(layerId, parseInt(e.target.value))}
-                className="flex-1 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
-              />
-              <span className="text-[10px] text-gray-500 w-7 text-right">{opacity}%</span>
-            </div>
+        {/* Expanded: opacity slider + zone legend */}
+        {isExpanded && isVisible && (
+          <div className="px-6 pb-2 space-y-2">
+            {onOpacityChange && (
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-gray-400 w-10">Opacity</span>
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  value={opacity}
+                  onChange={(e) => onOpacityChange(layerId, parseInt(e.target.value))}
+                  className="flex-1 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                />
+                <span className="text-[10px] text-gray-500 w-7 text-right">{opacity}%</span>
+              </div>
+            )}
+            {/* Color legend for data-driven layers */}
+            {config.styles && (
+              <div className="space-y-0.5 pt-1">
+                {Object.entries(config.styles).map(([key, style]: [string, any]) => (
+                  <div key={key} className="flex items-center gap-1.5">
+                    <div
+                      className="w-3 h-3 rounded-sm flex-shrink-0 border"
+                      style={{
+                        backgroundColor: style.fill || '#888',
+                        borderColor: style.stroke || style.fill || '#888',
+                        opacity: style['fill-opacity'] ?? 0.6,
+                      }}
+                    />
+                    <span className="text-[11px] text-gray-600 leading-tight">
+                      {style.name || key}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
