@@ -76,9 +76,10 @@ function searchParcels(query: string): any[] {
   for (const feature of cachedParcels) {
     const props = feature.properties || {}
     const ownerName = (props.ownername || props.OWNERNAME || '').toLowerCase()
-    const address = (props.addresslin || props.ADDRESSLIN || '').toLowerCase()
-    const addressNormalized = normalizeAddress(address)
-    const parcelId = (props.parcelid || props.PARCELID || '').toLowerCase()
+    const address = (props.addressline1 || props.addresslin || props.ADDRESSLIN || '').toLowerCase()
+    const addressFull = address + ' ' + (props.citystatezip || '').toLowerCase()
+    const addressNormalized = normalizeAddress(addressFull)
+    const parcelId = (props.PARCEL_ID || props.parcelid || props.PARCELID || '').toString().toLowerCase()
 
     let score = 0
     let matchType = ''
@@ -129,10 +130,10 @@ function searchParcels(query: string): any[] {
         matchType,
         name: props.ownername || props.OWNERNAME || 'Unknown Owner',
         owner_name: props.ownername || props.OWNERNAME,
-        address: props.addresslin || props.ADDRESSLIN || 'No address',
+        address: props.addressline1 || props.addresslin || props.ADDRESSLIN || 'No address',
         acreage: props.gisacres || props.GISACRES,
         total_value: props.totalvalue || props.TOTALVALUE,
-        parcelId: props.parcelid || props.PARCELID,
+        parcelId: props.PARCEL_ID || props.parcelid || props.PARCELID,
         center,
         score,
       })

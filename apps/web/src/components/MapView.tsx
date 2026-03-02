@@ -142,7 +142,7 @@ export default function MapView({
             enrichedProperties._isSFHA = floodZone.isSFHA
           }
           // Track selected parcel for highlighting
-          const parcelId = feature.properties?.parcelid || feature.properties?.PARCELID
+          const parcelId = feature.properties?.PARCEL_ID || feature.properties?.parcelid || feature.properties?.PARCELID
           if (parcelId) {
             setInternalSelectedParcelId(parcelId)
           }
@@ -331,6 +331,7 @@ export default function MapView({
                 ? ['all',
                     ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'MultiPolygon']],
                     ['any',
+                      ['==', ['get', 'PARCEL_ID'], selectedParcelId],
                       ['==', ['get', 'parcelid'], selectedParcelId],
                       ['==', ['get', 'PARCELID'], selectedParcelId]
                     ]

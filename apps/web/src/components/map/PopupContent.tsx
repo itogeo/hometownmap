@@ -59,16 +59,16 @@ function PropertyTab({ parcel, publicLand, subdivision }: { parcel: any; publicL
   const isPublic = !!publicLand
 
   const ownerName = props.ownername || props.OWNERNAME || 'Unknown Owner'
-  const address = props.addresslin || props.ADDRESSLIN
-  const cityStateZip = props.citystatez || props.CITYSTATEZ
-  const acreage = props.gisacres || props.GISACRES
+  const address = props.addressline1 || props.addresslin || props.ADDRESSLIN
+  const cityStateZip = props.citystatezip || props.citystatez || props.CITYSTATEZ
+  const acreage = props.gisacres || props.GISACRES || props.totalacres
   const totalValue = props.totalvalue || props.TOTALVALUE
-  const landValue = props.landvalue || props.LANDVALUE
-  const improvValue = props.improvvalue || props.IMPROVVALUE
-  const parcelId = props.parcelid || props.PARCELID
+  const landValue = props.totallandvalue || props.landvalue || props.LANDVALUE
+  const improvValue = props.totalbuildingvalue || props.improvvalue || props.IMPROVVALUE
+  const parcelId = props.PARCEL_ID || props.parcelid || props.PARCELID
   const propType = props.proptype || props.PROPTYPE
-  const legalDesc = props.legal1 || props.LEGAL1
-  const subdivName = parcel?.properties._subdivision || subdivision?.properties.SUB_NAME
+  const legalDesc = props.legaldescriptionshort || props.legal1 || props.LEGAL1
+  const subdivName = props.subdivision || parcel?.properties._subdivision || props.SUB_NAME || subdivision?.properties.SUB_NAME
 
   const publicCategory = publicLand?.properties._public_category
   const publicCategoryLabels: { [key: string]: string } = {

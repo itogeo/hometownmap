@@ -458,8 +458,8 @@
     "parcels": {
       "source": "gallatin_county",
       "display_name": "Property Parcels",
-      "description": "8,372 property parcels from Gallatin County GIS with subdivision, lot, and tax data",
-      "data_freshness": "Gallatin County GIS 2024",
+      "description": "8,372 property parcels enriched with Montana Cadastral ownership, address, and property value data (Tax Year 2026)",
+      "data_freshness": "Montana Cadastral Framework 2026",
       "minzoom": 13,
       "style": {
         "fill": "#FBBF24",
@@ -468,13 +468,19 @@
         "stroke-width": 1.5
       },
       "popup_fields": [
+        "ownername",
+        "addressline1",
+        "citystatezip",
+        "proptype",
+        "totalvalue",
+        "totallandvalue",
+        "totalbuildingvalue",
+        "gisacres",
+        "legaldescriptionshort",
         "PARCEL_ID",
-        "CLASS",
-        "SUB_NAME",
-        "BLOCK",
-        "LOT",
         "GEOCODE",
-        "TAXCODE"
+        "SUB_NAME",
+        "LOT"
       ]
     },
     "subdivisions": {
